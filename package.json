@@ -12,9 +12,13 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "dayjs": "^1.11.10",
+    "geist": "^1.2.2",
+    "million": "^3.0.6",
+    "next": "14.2.0-canary.24",
     "react": "^18",
     "react-dom": "^18",
-    "next": "14.2.0-canary.24"
+    "server-only": "^0.0.1"
   },
   "devDependencies": {
     "typescript": "^5",
