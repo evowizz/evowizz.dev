@@ -1,6 +1,7 @@
 import './globals.css'
 import { GeistSans } from 'geist/font/sans'
 import { GeistMono } from 'geist/font/mono'
+import { BlobBackground } from '@/components/blob-background'
 
 export default function RootLayout({
   children,
@@ -9,7 +10,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable}`}>
-      <body>{children}</body>
+      <body className="bg-background">
+        <BlobBackground />
+        {children}
+      </body>
     </html>
   )
 }
