@@ -1,4 +1,4 @@
-# evowizz.dev
+# evowizz.dev (WIP - 2024 Redesign)
 
 This repository hosts the source code for my personal website.
 
