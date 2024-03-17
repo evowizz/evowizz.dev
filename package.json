@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "clsx": "^2.1.0",
+    "cva": "npm:class-variance-authority",
     "dayjs": "^1.11.10",
     "geist": "^1.2.2",
     "million": "^3.0.6",
