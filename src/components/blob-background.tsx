@@ -9,7 +9,7 @@ export const BlobBackground = (props: BlobBackgroundProps) => {
     <>
       <div
         className={cn(
-          'fixed inset-0 blur-3xl flex items-center justify-center',
+          'fixed inset-0 blur-3xl flex items-center justify-center -z-[9999]',
           props.className,
         )}
       >
@@ -27,7 +27,7 @@ export const BlobBackground = (props: BlobBackgroundProps) => {
         </svg>
       </div>
       {/* Noise */}
-      <div className="absolute inset-0 overlay-noise" />
+      <div className="absolute inset-0 overlay-noise -z-[9999]" />
     </>
   )
 }
