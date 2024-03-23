@@ -19,6 +19,7 @@ const config: Config = {
       },
       colors: {
         background: 'var(--color-background)',
+        foreground: 'var(--color-foreground)',
       }
     },
   },

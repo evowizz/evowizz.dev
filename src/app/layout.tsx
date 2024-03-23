@@ -10,7 +10,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable}`}>
-      <body className="bg-background">
+      <body className="bg-background text-foreground">
         <BlobBackground />
         {children}
       </body>

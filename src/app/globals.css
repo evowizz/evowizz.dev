@@ -3,15 +3,26 @@
 @tailwind utilities;
 
 :root {
+  --theme-base-white: oklch(100% 0 0); /* #FFFFFF */
+  --theme-base-white-soft: oklch(97.91% 0 0); /* #F8F8F8 */
+  --theme-base-white-softer: oklch(95.51% 0 0); /* #F0F0F0 */
+
+  --theme-base-black: oklch(0% 0 0); /* #000000 */
+  --theme-base-black-soft: oklch(17.76% 0 0); /* #111111 */
+  --theme-base-black-softer: oklch(25.2% 0 0); /* #222222 */
+
+
   --noise-overlay: url('/static/bg/light-noise.png');
 
-  --color-background: oklch(98.51% 0 89.88);
+  --color-background: var(--theme-base-white-soft);
+  --color-foreground: var(--theme-base-black-soft);
 }
 
 [data-theme='dark'] {
   --noise-overlay: url('/static/bg/dark-noise.png');
 
-  --color-background: oklch(17.76% 0 89.88);
+  --color-background: var(--theme-base-black-soft);
+  --color-foreground: var(--theme-base-white-soft);
 }
 
 @layer utilities {
