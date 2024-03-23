@@ -12,14 +12,11 @@
   --theme-base-black-softer: oklch(25.2% 0 0); /* #222222 */
 
 
-  --noise-overlay: url('/static/bg/light-noise.png');
-
   --color-background: var(--theme-base-white-soft);
   --color-foreground: var(--theme-base-black-soft);
 }
 
 [data-theme='dark'] {
-  --noise-overlay: url('/static/bg/dark-noise.png');
 
   --color-background: var(--theme-base-black-soft);
   --color-foreground: var(--theme-base-white-soft);
@@ -27,7 +24,7 @@
 
 @layer utilities {
   .overlay-noise {
-    background-image: var(--noise-overlay);
+    background-image: url('/static/bg/noise.png');
   }
 
   .text-balance {
