@@ -15,8 +15,8 @@
     /* Create a vignette effect on top of the noise, as a mask */
     mask-image: radial-gradient(
       circle,
-      rgba(0, 0, 0, 0.5) 0%,
-      rgba(0, 0, 0, 0.2) 100%
+      rgba(0, 0, 0, 0.3) 0%,
+      rgba(0, 0, 0, 0.05) 100%
     );
     background-image: url('/static/bg/noise.png');
   }
