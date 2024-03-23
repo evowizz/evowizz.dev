@@ -27,7 +27,7 @@ export const BlobBackground = (props: BlobBackgroundProps) => {
         </svg>
       </div>
       {/* Noise */}
-      <div className="absolute inset-0 overlay-noise dark:invert" />
+      <div className="absolute inset-0 overlay-noise" />
     </>
   )
 }

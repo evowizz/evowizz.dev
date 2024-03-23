@@ -3,22 +3,20 @@
 @tailwind utilities;
 
 :root {
+  --noise-overlay: url('/static/bg/light-noise.png');
+
   --color-background: oklch(98.51% 0 89.88);
 }
 
 [data-theme='dark'] {
+  --noise-overlay: url('/static/bg/dark-noise.png');
+
   --color-background: oklch(17.76% 0 89.88);
 }
 
 @layer utilities {
   .overlay-noise {
-    /* Create a vignette effect on top of the noise, as a mask */
-    mask-image: radial-gradient(
-      circle,
-      rgba(0, 0, 0, 0.3) 0%,
-      rgba(0, 0, 0, 0.05) 100%
-    );
-    background-image: url('/static/bg/noise.png');
+    background-image: var(--noise-overlay);
   }
 
   .text-balance {
