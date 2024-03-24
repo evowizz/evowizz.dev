@@ -31,7 +31,10 @@ export const Nav = ({ destinations }: NavProps) => {
                 className={cn('group px-4 py-1 text-5xl font-600 flex items-center', !isSelected && 'gap-2')}
               >
                 {nav.label}
-                <span className="transition-transform group-hover:translate-x-2 motion-reduce:transform-none">
+                <span className={cn({
+                  'transition-transform group-hover:translate-x-2 motion-reduce:transform-none': !isSelected,
+                  'group-hover:animate-pulse': isSelected
+                })}>
                   {isSelected ? <MiddleDot /> : <ArrowRight />}
                 </span>
               </Link>

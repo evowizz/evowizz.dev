@@ -25,11 +25,11 @@ export const Header = () => {
         >
           <Wordmark />
           <button onClick={toggleDrawer}>
-            <Menu className='text-lg' />
+            <Menu className="text-lg" />
           </button>
         </BoxBlock>
       </header>
-      <Drawer destinations={destinations} isOpen={isDrawerOpen} onOutsideClick={closeDrawer} />
+      <Drawer destinations={destinations} isOpen={isDrawerOpen} closeDrawer={closeDrawer} />
     </>
   )
 }
