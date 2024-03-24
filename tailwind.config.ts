@@ -18,8 +18,22 @@ const config: Config = {
         mono: ['var(--font-geist-mono)'],
       },
       colors: {
+        base: {
+          white: {
+            DEFAULT: 'var(--theme-base-white)',
+            soft: 'var(--theme-base-white-soft)',
+            softer: 'var(--theme-base-white-softer)',
+          },
+          black: {
+            DEFAULT: 'var(--theme-base-black)',
+            soft: 'var(--theme-base-black-soft)',
+            softer: 'var(--theme-base-black-softer)',
+          },
+        },
         background: 'var(--color-background)',
+        'background-inv': 'var(--color-background-inv)',
         foreground: 'var(--color-foreground)',
+        'foreground-inv': 'var(--color-foreground-inv)',
       },
       fontWeight: {
         100: '100',

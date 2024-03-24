@@ -13,11 +13,23 @@
 
   --color-background: var(--theme-base-white-soft);
   --color-foreground: var(--theme-base-black-soft);
+
+  --color-background-inv: var(--theme-base-black-soft);
+  --color-foreground-inv: var(--theme-base-white-soft);
 }
 
 [data-theme='dark'] {
   --color-background: var(--theme-base-black-soft);
   --color-foreground: var(--theme-base-white-soft);
+
+  --color-background-inv: var(--theme-base-white-soft);
+  --color-foreground-inv: var(--theme-base-black-soft);
+}
+
+@layer base {
+  html {
+    font-feature-settings: 'ss04', 'ss08', 'liga';
+  }
 }
 
 @layer utilities {
