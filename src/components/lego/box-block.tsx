@@ -26,17 +26,12 @@ const boxBlockVariants = cva(undefined, {
   },
 })
 
-type BoxBlockProps = React.HTMLAttributes<HTMLDivElement> &
-  VariantProps<typeof boxBlockVariants>
+type BoxBlockProps = React.HTMLAttributes<HTMLDivElement> & VariantProps<typeof boxBlockVariants>
 
 const BoxBlock = forwardRef<HTMLDivElement, BoxBlockProps>(
   ({ className, margin, padding, ...props }, ref) => {
     return (
-      <div
-        className={cn(boxBlockVariants({ margin, padding, className }))}
-        ref={ref}
-        {...props}
-      />
+      <div className={cn(boxBlockVariants({ margin, padding, className }))} ref={ref} {...props} />
     )
   },
 )

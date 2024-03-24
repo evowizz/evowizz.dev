@@ -11,13 +11,11 @@
   --theme-base-black-soft: oklch(17.76% 0 0); /* #111111 */
   --theme-base-black-softer: oklch(25.2% 0 0); /* #222222 */
 
-
   --color-background: var(--theme-base-white-soft);
   --color-foreground: var(--theme-base-black-soft);
 }
 
 [data-theme='dark'] {
-
   --color-background: var(--theme-base-black-soft);
   --color-foreground: var(--theme-base-white-soft);
 }
