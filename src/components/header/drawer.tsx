@@ -22,7 +22,7 @@ export const Drawer = ({ destinations, isOpen, onOutsideClick }: DrawerProps) =>
         padding="both"
       >
         {/* Close Button */}
-        <div className="relative h-16 md:h-24 flex items-center justify-end text-lg">
+        <div className="relative h-16 my-4 md:h-24 md:my-0 flex items-center justify-end text-lg">
           <button onClick={onOutsideClick}>
             <Close />
           </button>
