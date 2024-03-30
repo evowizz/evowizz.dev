@@ -32,8 +32,8 @@ export const Nav = ({ destinations }: NavProps) => {
               >
                 {nav.label}
                 <span className={cn({
-                  'transition-transform group-hover:translate-x-2 motion-reduce:transform-none': !isSelected,
-                  'group-hover:animate-pulse': isSelected
+                  'transition-transform motion-safe:md:group-hover:translate-x-2': !isSelected,
+                  'motion-safe:md:group-hover:animate-pulse': isSelected
                 })}>
                   {isSelected ? <MiddleDot /> : <ArrowRight />}
                 </span>
