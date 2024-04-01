@@ -1,5 +1,7 @@
 import type { Config } from "tailwindcss";
 
+const oklch = (cssVar: string) => `oklch(var(${cssVar}) / <alpha-value>)`;
+
 const config: Config = {
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -20,20 +22,20 @@ const config: Config = {
       colors: {
         base: {
           white: {
-            DEFAULT: 'var(--theme-base-white)',
-            soft: 'var(--theme-base-white-soft)',
-            softer: 'var(--theme-base-white-softer)',
+            DEFAULT: oklch('--theme-base-white-raw'),
+            soft: oklch('--theme-base-white-soft-raw'),
+            softer: oklch('--theme-base-white-softer-raw'),
           },
           black: {
-            DEFAULT: 'var(--theme-base-black)',
-            soft: 'var(--theme-base-black-soft)',
-            softer: 'var(--theme-base-black-softer)',
+            DEFAULT: oklch('--theme-base-black-raw'),
+            soft: oklch('--theme-base-black-soft-raw'),
+            softer: oklch('--theme-base-black-softer-raw'),
           },
         },
-        background: 'var(--color-background)',
-        'background-inv': 'var(--color-background-inv)',
-        foreground: 'var(--color-foreground)',
-        'foreground-inv': 'var(--color-foreground-inv)',
+        background: oklch('--color-background'),
+        'background-inv': oklch('--color-background-inv'),
+        foreground: oklch('--color-foreground'),
+        'foreground-inv': oklch('--color-foreground-inv'),
       },
       fontWeight: {
         100: '100',

@@ -3,27 +3,33 @@
 @tailwind utilities;
 
 :root {
-  --theme-base-white: oklch(100% 0 0); /* #FFFFFF */
-  --theme-base-white-soft: oklch(97.91% 0 0); /* #F8F8F8 */
-  --theme-base-white-softer: oklch(95.51% 0 0); /* #F0F0F0 */
+  --theme-base-white-raw: 100% 0 0; /* #FFFFFF */
+  --theme-base-white-soft-raw: 97.91% 0 0; /* #F8F8F8 */
+  --theme-base-white-softer-raw: 95.51% 0 0; /* #F0F0F0 */
+  --theme-base-white: oklch(var(--theme-base-white-raw));
+  --theme-base-white-soft: oklch(var(--theme-base-white-soft-raw));
+  --theme-base-white-softer: oklch(var(--theme-base-white-softer-raw));
 
-  --theme-base-black: oklch(0% 0 0); /* #000000 */
-  --theme-base-black-soft: oklch(17.76% 0 0); /* #111111 */
-  --theme-base-black-softer: oklch(25.2% 0 0); /* #222222 */
+  --theme-base-black-raw: 0% 0 0; /* #000000 */
+  --theme-base-black-soft-raw: 17.76% 0 0; /* #111111 */
+  --theme-base-black-softer-raw: 25.2% 0 0; /* #222222 */
+  --theme-base-black: oklch(var(--theme-base-black-raw));
+  --theme-base-black-soft: oklch(var(--theme-base-black-soft-raw));
+  --theme-base-black-softer: oklch(var(--theme-base-black-softer-raw));
 
-  --color-background: var(--theme-base-white-soft);
-  --color-foreground: var(--theme-base-black-soft);
+  --color-background: var(--theme-base-white-soft-raw);
+  --color-foreground: var(--theme-base-black-soft-raw);
 
-  --color-background-inv: var(--theme-base-black-soft);
-  --color-foreground-inv: var(--theme-base-white-soft);
+  --color-background-inv: var(--theme-base-black-soft-raw);
+  --color-foreground-inv: var(--theme-base-white-soft-raw);
 }
 
 [data-theme='dark'] {
-  --color-background: var(--theme-base-black-soft);
-  --color-foreground: var(--theme-base-white-soft);
+  --color-background: var(--theme-base-black-soft-raw);
+  --color-foreground: var(--theme-base-white-soft-raw);
 
-  --color-background-inv: var(--theme-base-white-soft);
-  --color-foreground-inv: var(--theme-base-black-soft);
+  --color-background-inv: var(--theme-base-white-soft-raw);
+  --color-foreground-inv: var(--theme-base-black-soft-raw);
 }
 
 @layer base {
