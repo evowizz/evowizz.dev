@@ -20,7 +20,7 @@ export const Nav = ({ destinations }: NavProps) => {
   const isHome = pathname === '/'
 
   return (
-    <nav className="flex flex-col items-start">
+    <nav>
       <ul className="space-y-8">
         {destinations.map((nav) => {
           const isSelected = nav.path === '/' ? isHome : pathname.startsWith(nav.path)

@@ -17,11 +17,16 @@
   --theme-base-black-soft: oklch(var(--theme-base-black-soft-raw));
   --theme-base-black-softer: oklch(var(--theme-base-black-softer-raw));
 
+  --theme-base-accent-raw: 67.84% 0.09 174.44; /* #55AA94 */
+  --theme-base-accent: oklch(var(--theme-base-accent-raw));
+
   --color-background: var(--theme-base-white-soft-raw);
   --color-foreground: var(--theme-base-black-soft-raw);
 
   --color-background-inv: var(--theme-base-black-soft-raw);
   --color-foreground-inv: var(--theme-base-white-soft-raw);
+
+  --color-accent: var(--theme-base-accent-raw);
 }
 
 [data-theme='dark'] {

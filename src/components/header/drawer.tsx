@@ -2,6 +2,7 @@ import { cn } from '@/lib/utils'
 import { BoxBlock } from '../lego/box-block'
 import { Nav, NavDestination } from './nav'
 import { Close } from '../svg'
+import { DrawerFooter } from './drawer-footer'
 
 type DrawerProps = {
   destinations: NavDestination[]
@@ -14,7 +15,7 @@ export const Drawer = ({ destinations, isOpen, closeDrawer }: DrawerProps) => {
     <>
       <BoxBlock
         className={cn(
-          'fixed top-0 right-0 w-full md:w-1/3 bg-base-black-soft text-base-white-soft z-50',
+          'flex flex-col fixed top-0 right-0 h-screen w-full md:w-1/3 bg-base-black-soft text-base-white-soft z-50',
           'translate-x-full transition-transform duration-300 ease-out transform-gpu will-change-transform',
           isOpen && 'transform translate-x-0',
         )}
@@ -28,8 +29,9 @@ export const Drawer = ({ destinations, isOpen, closeDrawer }: DrawerProps) => {
           </button>
         </div>
         {/* Nav */}
-        <BoxBlock className="h-screen" margin="none" padding="none">
+        <BoxBlock className="h-full flex flex-col justify-between flex-wrap" margin="none" padding="none">
           <Nav destinations={destinations} />
+          <DrawerFooter className="border-t border-t-foreground-inv/20 pb-16" />
         </BoxBlock>
       </BoxBlock>
 

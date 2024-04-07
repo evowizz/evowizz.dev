@@ -36,6 +36,8 @@ const config: Config = {
         'background-inv': oklch('--color-background-inv'),
         foreground: oklch('--color-foreground'),
         'foreground-inv': oklch('--color-foreground-inv'),
+        accent: oklch('--color-accent'),
+        'accent-inv': oklch('--color-accent-inv'),
       },
       fontWeight: {
         100: '100',
