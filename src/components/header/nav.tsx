@@ -28,13 +28,15 @@ export const Nav = ({ destinations }: NavProps) => {
             <li key={nav.path}>
               <Link
                 href={nav.path}
-                className={cn('group px-4 py-1 text-5xl font-600 flex items-center', !isSelected && 'gap-2')}
+                className={cn('group text-5xl font-600 flex items-center', !isSelected && 'gap-2')}
               >
                 {nav.label}
-                <span className={cn({
-                  'transition-transform motion-safe:md:group-hover:translate-x-2': !isSelected,
-                  'motion-safe:md:group-hover:animate-pulse': isSelected
-                })}>
+                <span
+                  className={cn({
+                    'transition-transform motion-safe:md:group-hover:translate-x-2': !isSelected,
+                    'motion-safe:md:group-hover:animate-pulse': isSelected,
+                  })}
+                >
                   {isSelected ? <MiddleDot /> : <ArrowRight />}
                 </span>
               </Link>
