@@ -18,7 +18,7 @@ export const Header = () => {
 
   return (
     <>
-      <header className="w-full flex items-center justify-center z-50">
+      <header className="w-full flex items-center justify-center z-50 absolute">
         <BoxBlock
           className="flex flex-row items-center justify-between w-full h-16 my-4 md:h-24 md:my-0"
           margin="both"
