@@ -67,4 +67,32 @@
   .animation-delay-800 {
     animation-delay: 800ms;
   }
+
+  /* Modified from: www.hover.dev/components/text#bubble-text */
+  .hover-bubble {
+    transition: all 0.3s;
+  }
+
+  .hover-bubble:hover {
+    font-weight: 900;
+    letter-spacing: 0.1em;
+  }
+
+  /* To the right */
+  .hover-bubble:hover + .hover-bubble {
+    font-weight: 800;
+  }
+
+  .hover-bubble:hover + .hover-bubble + .hover-bubble {
+    font-weight: 700;
+  }
+
+  /* To the left */
+  .hover-bubble:has(+ .hover-bubble:hover) {
+    font-weight: 800;
+  }
+
+  .hover-bubble:has(+ .hover-bubble + .hover-bubble:hover) {
+    font-weight: 700;
+  }
 }
