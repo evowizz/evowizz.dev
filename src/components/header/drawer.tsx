@@ -15,7 +15,7 @@ export const Drawer = ({ destinations, isOpen, closeDrawer }: DrawerProps) => {
     <>
       <BoxBlock
         className={cn(
-          'flex flex-col fixed top-0 right-0 h-screen w-full md:w-1/2 xl:w-1/3 bg-base-black-soft text-base-white-soft z-50',
+          'flex flex-col fixed top-0 right-0 h-dvh w-full md:w-1/2 xl:w-1/3 bg-base-black-soft text-base-white-soft z-50',
           'translate-x-full transition-transform duration-300 ease-out transform-gpu will-change-transform',
           isOpen && 'transform translate-x-0',
         )}
@@ -39,7 +39,7 @@ export const Drawer = ({ destinations, isOpen, closeDrawer }: DrawerProps) => {
       <div
         className={cn(
           'pointer-events-none',
-          'fixed top-0 right-0 h-screen w-full bg-black z-40 opacity-0 transition-opacity duration-300',
+          'fixed top-0 right-0 h-dvh w-full bg-black z-40 opacity-0 transition-opacity duration-300',
           isOpen && 'opacity-75 pointer-events-auto',
         )}
         onClick={closeDrawer}

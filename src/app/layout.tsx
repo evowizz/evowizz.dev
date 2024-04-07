@@ -13,7 +13,7 @@ export default function RootLayout({
     <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable}`}>
       <body className="bg-background text-foreground">
         <BlobBackground />
-        <div className="min-h-screen">
+        <div className="min-h-dvh">
           <Header />
           {children}
         </div>
