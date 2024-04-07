@@ -31,7 +31,7 @@ export const Drawer = ({ destinations, isOpen, closeDrawer }: DrawerProps) => {
         {/* Nav */}
         <BoxBlock className="h-full flex flex-col justify-between flex-wrap" margin="none" padding="none">
           <Nav destinations={destinations} />
-          <DrawerFooter className="border-t border-t-foreground-inv/20 pb-16" />
+          <DrawerFooter className="border-t border-t-foreground-inv/20 pb-16 -mx-4 px-4" />
         </BoxBlock>
       </BoxBlock>
 
