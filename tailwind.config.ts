@@ -12,8 +12,20 @@ const config: Config = {
   theme: {
     extend: {
       animation: {
-        'slow-spin': 'spin 80s linear infinite',
-        'slower-spin': 'spin 100s linear infinite',
+        'hero-appear': 'hero-slide 0.5s ease-in-out forwards, hero-opacity 0.5s ease-in-out forwards',
+        'hero-slide': 'hero-slide 0.5s ease-in-out forwards',
+        'hero-opacity': 'hero-opacity 0.5s ease-in-out forwards',
+        'spin-slow': 'spin 48s linear infinite',
+      },
+      keyframes: {
+        'hero-opacity': {
+          from: { opacity: '0' },
+          to: { opacity: '1' },
+        }
+      },
+      transitionTimingFunction: {
+        'slow-in': 'cubic-bezier(0, 0, 0, 1)',
+        'slow-in-out': 'cubic-bezier(0.5, 0, 0.25, 1)',
       },
       fontFamily: {
         sans: ['var(--font-geist-sans)'],
