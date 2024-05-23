@@ -20,7 +20,7 @@
   --theme-base-accent-raw: 67.84% 0.09 174.44; /* #55AA94 */
   --theme-base-accent: oklch(var(--theme-base-accent-raw));
 
-  --color-background: var(--theme-base-white-soft-raw);
+  --color-background: 88.53% 0 0; /* #D9D9D9 */
   --color-foreground: var(--theme-base-black-soft-raw);
 
   --color-background-inv: var(--theme-base-black-soft-raw);
