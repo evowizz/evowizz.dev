@@ -68,31 +68,46 @@
     animation-delay: 800ms;
   }
 
-  /* Modified from: www.hover.dev/components/text#bubble-text */
-  .hover-bubble {
+  /* Inspired from: www.hover.dev/components/text#bubble-text */
+  .hover-light {
     transition: all 0.3s;
+    --light-offset-x: 0;
+    --light-offset-y: 8px;
+    --light-blur: 0;
+    --light-alpha: 0;
+    --light-color: rgba(0, 0, 0, var(--light-alpha));
+    text-shadow: var(--light-offset-x) var(--light-offset-y) var(--light-blur) var(--light-color);
   }
 
-  .hover-bubble:hover {
-    font-weight: 900;
-    letter-spacing: 0.1em;
+  .hover-light:hover {
+    --light-offset-x: 0px;
+    --light-alpha: 0.40;
+    --light-blur: 1px;
   }
 
   /* To the right */
-  .hover-bubble:hover + .hover-bubble {
-    font-weight: 800;
+  .hover-light:hover + .hover-light {
+    --light-offset-x: 4px;
+    --light-alpha: 0.33;
+    --light-blur: 4px;
   }
 
-  .hover-bubble:hover + .hover-bubble + .hover-bubble {
-    font-weight: 700;
+  .hover-light:hover + .hover-light + .hover-light {
+    --light-offset-x: 6px;
+    --light-alpha: 0.25;
+    --light-blur: 6px;
   }
 
   /* To the left */
-  .hover-bubble:has(+ .hover-bubble:hover) {
-    font-weight: 800;
+  .hover-light:has(+ .hover-light:hover) {
+    --light-offset-x: -4px;
+    --light-alpha: 0.33;
+    --light-blur: 4px;
   }
 
-  .hover-bubble:has(+ .hover-bubble + .hover-bubble:hover) {
-    font-weight: 700;
+  .hover-light:has(+ .hover-light + .hover-light:hover) {
+    --bubble-offset-x: -4px;
+    --bubble-alpha: 0.25;
+    --bubble-blur: 6px;
   }
 }
