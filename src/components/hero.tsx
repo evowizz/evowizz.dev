@@ -33,7 +33,10 @@ const Line = ({ className, children, ...props }: React.HTMLAttributes<HTMLParagr
         )}
       >
         {letters.map((letter, i) => (
-          <span key={i} className="inline-block hover-light">
+          <span
+            key={i}
+            className="inline-block md:hover-light md:[--light-multiplier:0.75] lg:[--light-multiplier:1]"
+          >
             {letter === ' ' ? '\u00A0' : letter}
           </span>
         ))}

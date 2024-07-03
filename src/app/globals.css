@@ -72,8 +72,9 @@
     /* Inspired from: www.hover.dev/components/text#bubble-text */
     .hover-light {
       transition: all 0.3s;
+      --light-multiplier: 1;
       --light-offset-x: 0;
-      --light-offset-y: 8px;
+      --light-offset-y: calc(8px * var(--light-multiplier));
       --light-blur: 0;
       --light-alpha: 0;
       --light-color: rgba(0, 0, 0, var(--light-alpha));
@@ -83,33 +84,33 @@
     .hover-light:hover {
       --light-offset-x: 0px;
       --light-alpha: 0.40;
-      --light-blur: 1px;
+      --light-blur: calc(1px * var(--light-multiplier));
     }
 
     /* To the right */
     .hover-light:hover + .hover-light {
-      --light-offset-x: 4px;
+      --light-offset-x:calc(4px * var(--light-multiplier));
       --light-alpha: 0.33;
-      --light-blur: 4px;
+      --light-blur: calc(4px * var(--light-multiplier));
     }
 
     .hover-light:hover + .hover-light + .hover-light {
-      --light-offset-x: 6px;
+      --light-offset-x:calc(6px * var(--light-multiplier));
       --light-alpha: 0.25;
-      --light-blur: 6px;
+      --light-blur: calc(6px * var(--light-multiplier));
     }
 
     /* To the left */
     .hover-light:has(+ .hover-light:hover) {
-      --light-offset-x: -4px;
+      --light-offset-x:calc(-4px * var(--light-multiplier));
       --light-alpha: 0.33;
-      --light-blur: 4px;
+      --light-blur: calc(4px * var(--light-multiplier));
     }
 
     .hover-light:has(+ .hover-light + .hover-light:hover) {
-      --bubble-offset-x: -4px;
+      --bubble-offset-x:calc(-4px * var(--light-multiplier));
       --bubble-alpha: 0.25;
-      --bubble-blur: 6px;
+      --bubble-blur: calc(6px * var(--light-multiplier));
     }
   }
 }
