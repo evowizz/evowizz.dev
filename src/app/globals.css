@@ -30,7 +30,7 @@
 }
 
 [data-theme='dark'] {
-  --color-background: var(--theme-base-black-soft-raw);
+  --color-background: 20.02% 0 0; /* #161616 */
   --color-foreground: var(--theme-base-white-soft-raw);
 
   --color-background-inv: var(--theme-base-white-soft-raw);
