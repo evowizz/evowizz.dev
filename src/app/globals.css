@@ -26,6 +26,8 @@
   --color-background-inv: var(--theme-base-black-soft-raw);
   --color-foreground-inv: var(--theme-base-white-soft-raw);
 
+  --color-shadow: var(--theme-base-black-raw);
+
   --color-accent: var(--theme-base-accent-raw);
 }
 
@@ -35,6 +37,8 @@
 
   --color-background-inv: var(--theme-base-white-soft-raw);
   --color-foreground-inv: var(--theme-base-black-soft-raw);
+
+  --color-shadow: var(--theme-base-white-raw);
 }
 
 @layer base {
@@ -77,7 +81,7 @@
       --light-offset-y: calc(8px * var(--light-multiplier));
       --light-blur: 0;
       --light-alpha: 0;
-      --light-color: rgba(0, 0, 0, var(--light-alpha));
+      --light-color: oklch(var(--color-shadow) / var(--light-alpha));
       text-shadow: var(--light-offset-x) var(--light-offset-y) var(--light-blur) var(--light-color);
     }
 
