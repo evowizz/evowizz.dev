@@ -38,7 +38,7 @@ const SocialLink: React.FC<LinkProps> = ({ className, ...props }) => (
     <Link
       {...props}
       className={cn(
-        'underline text-foreground-inv/80 transition-all',
+        'underline text-base-white-soft/80 transition-all',
         'hover:text-accent',
         className,
       )}
