@@ -18,7 +18,7 @@ export const Header = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
   const toggleDrawer = () => setIsDrawerOpen((prev) => !prev)
   const closeDrawer = () => setIsDrawerOpen(false)
-  const { theme, setTheme } = useTheme()
+  const { resolvedTheme, setTheme } = useTheme()
 
   return (
     <>
@@ -31,7 +31,7 @@ export const Header = () => {
           <div className="flex flex-row items-center space-x-4">
             <DarkModeButton
               onClick={() => {
-                setTheme(theme === 'dark' ? 'light' : 'dark')
+                setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')
               }}
               visible
             />
