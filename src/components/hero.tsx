@@ -28,7 +28,6 @@ const Line = ({ className, children, ...props }: React.HTMLAttributes<HTMLParagr
         className={cn(
           'inline-block',
           'motion-safe:opacity-0 motion-safe:animate-hero-appear',
-          'duration-300 ease-slow-in transition-colors',
           className,
         )}
       >

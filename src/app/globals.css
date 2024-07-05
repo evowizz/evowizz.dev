@@ -71,7 +71,7 @@
   @media (hover: hover) and (pointer: fine) {
     /* Inspired from: www.hover.dev/components/text#bubble-text */
     .hover-light {
-      transition: all 0.3s;
+      transition: text-shadow 0.3s;
       --light-multiplier: 1;
       --light-offset-x: 0;
       --light-offset-y: calc(8px * var(--light-multiplier));

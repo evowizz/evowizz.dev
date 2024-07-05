@@ -12,7 +12,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable}`}>
-      <body className="bg-background text-foreground transition-colors">
+      <body className="bg-background text-foreground transition-colors duration-300 ease-slow-in">
         <ThemeProvider>
           <BlobBackground />
           <div className="min-h-dvh">
