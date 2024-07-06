@@ -5,5 +5,5 @@ type BlobBackgroundProps = {
 }
 
 export const BlobBackground = (props: BlobBackgroundProps) => {
-  return <div className="absolute inset-0 overlay-noise -z-[9999]" />
+  return <div className="fixed inset-0 overlay-noise -z-[9999]" />
 }
