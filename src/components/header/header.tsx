@@ -5,7 +5,7 @@ import { BoxBlock } from '../lego/box-block'
 import { Drawer } from './drawer'
 import { useState } from 'react'
 import { Menu } from '../svg'
-import { Sun } from '../svg/sun'
+import { Sun } from '../svg'
 import { cn } from '@/lib/utils'
 import { useTheme } from 'next-themes'
 

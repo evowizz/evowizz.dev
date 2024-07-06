@@ -1,6 +1,6 @@
 import { HeroText } from '@/components/hero'
 import { BoxBlock } from '@/components/lego/box-block'
-import { StarShape } from '@/components/svg/star-shape'
+import { StarShape } from '@/components/svg'
 import avatar from './avatar.png'
 import Image from 'next/image'
 import Link from 'next/link'
