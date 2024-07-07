@@ -4,6 +4,8 @@ import { StarShape } from '@/components/svg'
 import avatar from './avatar.png'
 import Image from 'next/image'
 import Link from 'next/link'
+import { SkillsGrid } from '@/components/skill'
+import { skills } from '@/lib/skills'
 
 export default function Home() {
   return (
@@ -54,7 +56,7 @@ export default function Home() {
               <StarShape variant="asterisk" className="w-20 h-20" />
               <h1 className="text-4xl font-800 mb-3">Skills</h1>
             </div>
-            {/* <SkillsGrid skills={skills} /> */}
+            <SkillsGrid skills={skills} />
           </div>
         </BoxBlock>
       </section>
