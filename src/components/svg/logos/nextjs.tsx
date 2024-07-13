@@ -21,8 +21,8 @@ export const NextJS = (props: React.SVGProps<SVGSVGElement>) => (
         y2="14.267"
         gradientUnits="userSpaceOnUse"
       >
-        <stop stop-color="currentColor" />
-        <stop offset="1" stop-color="currentColor" stop-opacity="0" />
+        <stop stopColor="currentColor" />
+        <stop offset="1" stopColor="currentColor" stopOpacity="0" />
       </linearGradient>
       <linearGradient
         id="b"
@@ -32,8 +32,8 @@ export const NextJS = (props: React.SVGProps<SVGSVGElement>) => (
         y2="9.5"
         gradientUnits="userSpaceOnUse"
       >
-        <stop stop-color="currentColor" />
-        <stop offset="1" stop-color="currentColor" stop-opacity="0" />
+        <stop stopColor="currentColor" />
+        <stop offset="1" stopColor="currentColor" stopOpacity="0" />
       </linearGradient>
     </defs>
   </svg>
