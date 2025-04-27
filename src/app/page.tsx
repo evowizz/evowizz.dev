@@ -26,7 +26,7 @@ export default function Home() {
       </section>
       <section id="about">
         <BoxBlock className="flex flex-col justify-center items-center">
-          <div className="flex flex-col md:flex-row py-24 gap-4 max-w-screen-xl w-full">
+          <div className="flex flex-col md:flex-row py-24 gap-4 max-w-(--breakpoint-xl) w-full">
             <div className="flex flex-row gap-4 flex-1 shrink-0">
               <div>
                 <Image
@@ -51,7 +51,7 @@ export default function Home() {
           </div>
         </BoxBlock>
         <BoxBlock className="flex flex-col justify-center items-center">
-          <div className="flex flex-col py-24 gap-4 max-w-screen-xl w-full">
+          <div className="flex flex-col py-24 gap-4 max-w-(--breakpoint-xl) w-full">
             <div className="flex flex-col gap-4">
               <StarShape variant="asterisk" className="w-20 h-20" />
               <h1 className="text-4xl font-800 mb-3">Skills</h1>

@@ -1,120 +1,139 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
 
-:root {
-  --theme-base-white-raw: 100% 0 0; /* #FFFFFF */
-  --theme-base-white-soft-raw: 97.91% 0 0; /* #F8F8F8 */
-  --theme-base-white-softer-raw: 95.51% 0 0; /* #F0F0F0 */
-  --theme-base-white: oklch(var(--theme-base-white-raw));
-  --theme-base-white-soft: oklch(var(--theme-base-white-soft-raw));
-  --theme-base-white-softer: oklch(var(--theme-base-white-softer-raw));
+@config '../../tailwind.config.ts';
 
-  --theme-base-black-raw: 0% 0 0; /* #000000 */
-  --theme-base-black-soft-raw: 17.76% 0 0; /* #111111 */
-  --theme-base-black-softer-raw: 25.2% 0 0; /* #222222 */
-  --theme-base-black: oklch(var(--theme-base-black-raw));
-  --theme-base-black-soft: oklch(var(--theme-base-black-soft-raw));
-  --theme-base-black-softer: oklch(var(--theme-base-black-softer-raw));
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
 
-  --theme-base-accent-raw: 67.84% 0.09 174.44; /* #55AA94 */
-  --theme-base-accent: oklch(var(--theme-base-accent-raw));
-
-  --color-background: 88.53% 0 0; /* #D9D9D9 */
-  --color-foreground: var(--theme-base-black-soft-raw);
-
-  --color-background-inv: var(--theme-base-black-soft-raw);
-  --color-foreground-inv: var(--theme-base-white-soft-raw);
-
-  --color-shadow: var(--theme-base-black-raw);
-
-  --color-accent: var(--theme-base-accent-raw);
-}
-
-[data-theme='dark'] {
-  --color-background: 20.02% 0 0; /* #161616 */
-  --color-foreground: var(--theme-base-white-soft-raw);
-
-  --color-background-inv: var(--theme-base-white-soft-raw);
-  --color-foreground-inv: var(--theme-base-black-soft-raw);
-
-  --color-shadow: var(--theme-base-white-raw);
-}
-
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
 @layer base {
-  html {
-    font-feature-settings: 'ss04', 'ss08', 'liga';
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
   }
 }
 
-@layer utilities {
-  .overlay-noise {
-    background-image: url('/static/bg/noise.png');
-  }
+@utility overlay-noise {
+  background-image: url('/static/bg/noise.png');
+}
 
-  .text-balance {
-    text-wrap: balance;
-  }
+@utility text-balance {
+  text-wrap: balance;
+}
 
-  .animation-delay-200 {
-    animation-delay: 200ms;
-  }
+@utility animation-delay-200 {
+  animation-delay: 200ms;
+}
 
-  .animation-delay-400 {
-    animation-delay: 400ms;
-  }
+@utility animation-delay-400 {
+  animation-delay: 400ms;
+}
 
-  .animation-delay-600 {
-    animation-delay: 600ms;
-  }
+@utility animation-delay-600 {
+  animation-delay: 600ms;
+}
 
-  .animation-delay-800 {
-    animation-delay: 800ms;
-  }
+@utility animation-delay-800 {
+  animation-delay: 800ms;
+}
 
+@utility hover-light {
   @media (hover: hover) and (pointer: fine) {
     /* Inspired from: www.hover.dev/components/text#bubble-text */
-    .hover-light {
-      transition: text-shadow 0.3s;
-      --light-multiplier: 1;
-      --light-offset-x: 0;
-      --light-offset-y: calc(8px * var(--light-multiplier));
-      --light-blur: 0;
-      --light-alpha: 0;
-      --light-color: oklch(var(--color-shadow) / var(--light-alpha));
-      text-shadow: var(--light-offset-x) var(--light-offset-y) var(--light-blur) var(--light-color);
-    }
+    transition: text-shadow 0.3s;
+    --light-multiplier: 1;
+    --light-offset-x: 0;
+    --light-offset-y: calc(8px * var(--light-multiplier));
+    --light-blur: 0;
+    --light-alpha: 0;
+    --light-color: oklch(var(--color-shadow) / var(--light-alpha));
+    text-shadow: var(--light-offset-x) var(--light-offset-y) var(--light-blur)
+      var(--light-color);
 
-    .hover-light:hover {
+    &:hover {
       --light-offset-x: 0px;
-      --light-alpha: 0.40;
+      --light-alpha: 0.4;
       --light-blur: calc(1px * var(--light-multiplier));
     }
 
     /* To the right */
-    .hover-light:hover + .hover-light {
-      --light-offset-x:calc(4px * var(--light-multiplier));
+    &:hover + & {
+      --light-offset-x: calc(4px * var(--light-multiplier));
       --light-alpha: 0.33;
       --light-blur: calc(4px * var(--light-multiplier));
     }
 
-    .hover-light:hover + .hover-light + .hover-light {
-      --light-offset-x:calc(6px * var(--light-multiplier));
+    &:hover + & + & {
+      --light-offset-x: calc(6px * var(--light-multiplier));
       --light-alpha: 0.25;
       --light-blur: calc(6px * var(--light-multiplier));
     }
 
     /* To the left */
-    .hover-light:has(+ .hover-light:hover) {
-      --light-offset-x:calc(-4px * var(--light-multiplier));
+    &:has(+ &:hover) {
+      --light-offset-x: calc(-4px * var(--light-multiplier));
       --light-alpha: 0.33;
       --light-blur: calc(4px * var(--light-multiplier));
     }
 
-    .hover-light:has(+ .hover-light + .hover-light:hover) {
-      --bubble-offset-x:calc(-4px * var(--light-multiplier));
+    &:has(+ & + &:hover) {
+      --bubble-offset-x: calc(-4px * var(--light-multiplier));
       --bubble-alpha: 0.25;
       --bubble-blur: calc(6px * var(--light-multiplier));
     }
+  }
+}
+
+@layer utilities {
+  :root {
+    --theme-base-white-raw: 100% 0 0; /* #FFFFFF */
+    --theme-base-white-soft-raw: 97.91% 0 0; /* #F8F8F8 */
+    --theme-base-white-softer-raw: 95.51% 0 0; /* #F0F0F0 */
+    --theme-base-white: oklch(var(--theme-base-white-raw));
+    --theme-base-white-soft: oklch(var(--theme-base-white-soft-raw));
+    --theme-base-white-softer: oklch(var(--theme-base-white-softer-raw));
+
+    --theme-base-black-raw: 0% 0 0; /* #000000 */
+    --theme-base-black-soft-raw: 17.76% 0 0; /* #111111 */
+    --theme-base-black-softer-raw: 25.2% 0 0; /* #222222 */
+    --theme-base-black: oklch(var(--theme-base-black-raw));
+    --theme-base-black-soft: oklch(var(--theme-base-black-soft-raw));
+    --theme-base-black-softer: oklch(var(--theme-base-black-softer-raw));
+
+    --theme-base-accent-raw: 67.84% 0.09 174.44; /* #55AA94 */
+    --theme-base-accent: oklch(var(--theme-base-accent-raw));
+
+    --color-background: 88.53% 0 0; /* #D9D9D9 */
+    --color-foreground: var(--theme-base-black-soft-raw);
+
+    --color-background-inv: var(--theme-base-black-soft-raw);
+    --color-foreground-inv: var(--theme-base-white-soft-raw);
+
+    --color-shadow: var(--theme-base-black-raw);
+
+    --color-accent: var(--theme-base-accent-raw);
+  }
+
+  [data-theme='dark'] {
+    --color-background: 20.02% 0 0; /* #161616 */
+    --color-foreground: var(--theme-base-white-soft-raw);
+
+    --color-background-inv: var(--theme-base-white-soft-raw);
+    --color-foreground-inv: var(--theme-base-black-soft-raw);
+
+    --color-shadow: var(--theme-base-white-raw);
+  }
+}
+
+@layer base {
+  html {
+    font-feature-settings: 'ss04', 'ss08', 'liga';
   }
 }

@@ -11,7 +11,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable}`}>
+    <html suppressHydrationWarning lang="en" className={`${GeistSans.variable} ${GeistMono.variable}`}>
       <body className="bg-background text-foreground transition-colors duration-300 ease-slow-in">
         <ThemeProvider>
           <BlobBackground />

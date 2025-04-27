@@ -60,14 +60,14 @@ const DarkModeButton = ({ onClick, visible }: DarkModeButtonProps) => {
     'before:transition-all',
     'before:duration-300',
     'before:inset-0',
-    'before:scale-[1]',
+    'before:scale-1',
     'before:opacity-0',
     'before:absolute',
     'before:rounded-full',
     'before:bg-background-inv',
     "before:content-['']",
-    'before:hover:scale-[2.7]',
-    'before:hover:opacity-100',
+    'hover:before:scale-[2.7]',
+    'hover:before:opacity-100',
     'before:-z-10',
   ].join(' ')
 
