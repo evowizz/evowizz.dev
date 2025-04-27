@@ -139,8 +139,13 @@
     --light-offset-y: calc(8px * var(--light-multiplier));
     --light-blur: 0;
     --light-alpha: 0;
-    --light-color: oklch(var(--color-shadow) / var(--light-alpha));
+    --light-color: oklch(var(--light-color-raw) / var(--light-alpha));
     text-shadow: var(--light-offset-x) var(--light-offset-y) var(--light-blur) var(--light-color);
+    
+    --light-color-raw: var(--theme-base-black-soft-raw);
+    &:where([data-theme=dark], [data-theme=dark] *) {
+      --light-color-raw: var(--theme-base-white-soft-raw);
+    }
 
     &:hover {
       --light-offset-x: 0px;
