@@ -1,6 +1,88 @@
 @import 'tailwindcss';
 
-@config '../../tailwind.config.ts';
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+@theme inline {
+  /* Keyframes */
+  @keyframes hero-opacity {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  /* Animation */
+  --animate-hero-appear: hero-slide 0.5s ease-in-out forwards,
+    hero-opacity 0.5s ease-in-out forwards;
+  --animate-hero-slide: hero-slide 0.5s ease-in-out forwards;
+  --animate-hero-opacity: hero-opacity 0.5s ease-in-out forwards;
+  --animate-spin-slow: spin 48s linear infinite;
+
+  /* Animation easing */
+  --ease-slow-in: cubic-bezier(0, 0, 0, 1);
+  --ease-slow-in-out: cubic-bezier(0.5, 0, 0.25, 1);
+
+  /* Font families */
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+
+  /* Font weights */
+  --font-weight-100: 100;
+  --font-weight-200: 200;
+  --font-weight-300: 300;
+  --font-weight-400: 400;
+  --font-weight-500: 500;
+  --font-weight-600: 600;
+  --font-weight-700: 700;
+  --font-weight-800: 800;
+  --font-weight-900: 900;
+
+  /* Colors */
+  --theme-base-white-raw: 100% 0 0; /* #FFFFFF */
+  --theme-base-white-soft-raw: 97.91% 0 0; /* #F8F8F8 */
+  --theme-base-white-softer-raw: 95.51% 0 0; /* #F0F0F0 */
+  --theme-base-white-softest-raw: 88.53% 0 0; /* #D9D9D9 */
+  --theme-base-white: oklch(var(--theme-base-white-raw));
+  --theme-base-white-soft: oklch(var(--theme-base-white-soft-raw));
+  --theme-base-white-softer: oklch(var(--theme-base-white-softer-raw));
+  --theme-base-white-softest: oklch(var(--theme-base-white-softest-raw));
+
+  --theme-base-black-raw: 0% 0 0; /* #000000 */
+  --theme-base-black-soft-raw: 17.76% 0 0; /* #111111 */
+  --theme-base-black-softer-raw: 25.2% 0 0; /* #222222 */
+  --theme-base-black-softest-raw: 20.02% 0 0; /* #161616 */
+  --theme-base-black: oklch(var(--theme-base-black-raw));
+  --theme-base-black-soft: oklch(var(--theme-base-black-soft-raw));
+  --theme-base-black-softer: oklch(var(--theme-base-black-softer-raw));
+  --theme-base-black-softest: oklch(var(--theme-base-black-softest-raw));
+
+  --theme-base-accent-raw: 67.84% 0.09 174.44; /* #55AA94 */
+  --theme-base-accent: oklch(var(--theme-base-accent-raw));
+
+  --color-base-white: var(--theme-base-white);
+  --color-base-white-soft: var(--theme-base-white-soft);
+  --color-base-white-softer: var(--theme-base-white-softer);
+
+  --color-base-black: var(--theme-base-black);
+  --color-base-black-soft: var(--theme-base-black-soft);
+  --color-base-black-softer: var(--theme-base-black-softer);
+
+  --color-*: initial;
+
+  --color-white: var(--theme-base-white);
+  --color-white-soft: var(--theme-base-white-soft);
+  --color-white-softer: var(--theme-base-white-softer);
+  --color-white-softest: var(--theme-base-white-softest);
+
+  --color-black: var(--theme-base-black);
+  --color-black-soft: var(--theme-base-black-soft);
+  --color-black-softer: var(--theme-base-black-softer);
+  --color-black-softest: var(--theme-base-black-softest);
+
+  --color-accent: var(--theme-base-accent);
+}
 
 /*
   The default border color has changed to `currentcolor` in Tailwind CSS v4,
@@ -17,6 +99,10 @@
   ::backdrop,
   ::file-selector-button {
     border-color: var(--color-gray-200, currentcolor);
+  }
+
+  button {
+    @apply cursor-pointer;
   }
 }
 
@@ -54,8 +140,7 @@
     --light-blur: 0;
     --light-alpha: 0;
     --light-color: oklch(var(--color-shadow) / var(--light-alpha));
-    text-shadow: var(--light-offset-x) var(--light-offset-y) var(--light-blur)
-      var(--light-color);
+    text-shadow: var(--light-offset-x) var(--light-offset-y) var(--light-blur) var(--light-color);
 
     &:hover {
       --light-offset-x: 0px;
@@ -91,49 +176,16 @@
   }
 }
 
-@layer utilities {
-  :root {
-    --theme-base-white-raw: 100% 0 0; /* #FFFFFF */
-    --theme-base-white-soft-raw: 97.91% 0 0; /* #F8F8F8 */
-    --theme-base-white-softer-raw: 95.51% 0 0; /* #F0F0F0 */
-    --theme-base-white: oklch(var(--theme-base-white-raw));
-    --theme-base-white-soft: oklch(var(--theme-base-white-soft-raw));
-    --theme-base-white-softer: oklch(var(--theme-base-white-softer-raw));
-
-    --theme-base-black-raw: 0% 0 0; /* #000000 */
-    --theme-base-black-soft-raw: 17.76% 0 0; /* #111111 */
-    --theme-base-black-softer-raw: 25.2% 0 0; /* #222222 */
-    --theme-base-black: oklch(var(--theme-base-black-raw));
-    --theme-base-black-soft: oklch(var(--theme-base-black-soft-raw));
-    --theme-base-black-softer: oklch(var(--theme-base-black-softer-raw));
-
-    --theme-base-accent-raw: 67.84% 0.09 174.44; /* #55AA94 */
-    --theme-base-accent: oklch(var(--theme-base-accent-raw));
-
-    --color-background: 88.53% 0 0; /* #D9D9D9 */
-    --color-foreground: var(--theme-base-black-soft-raw);
-
-    --color-background-inv: var(--theme-base-black-soft-raw);
-    --color-foreground-inv: var(--theme-base-white-soft-raw);
-
-    --color-shadow: var(--theme-base-black-raw);
-
-    --color-accent: var(--theme-base-accent-raw);
-  }
-
-  [data-theme='dark'] {
-    --color-background: 20.02% 0 0; /* #161616 */
-    --color-foreground: var(--theme-base-white-soft-raw);
-
-    --color-background-inv: var(--theme-base-white-soft-raw);
-    --color-foreground-inv: var(--theme-base-black-soft-raw);
-
-    --color-shadow: var(--theme-base-white-raw);
+@layer base {
+  html {
+    font-feature-settings: 'ss04', 'ss08', 'liga';
   }
 }
 
 @layer base {
-  html {
-    font-feature-settings: 'ss04', 'ss08', 'liga';
+  :root {
+  }
+
+  [data-theme='dark'] {
   }
 }

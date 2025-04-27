@@ -15,7 +15,7 @@ export const Drawer = ({ destinations, isOpen, closeDrawer }: DrawerProps) => {
     <>
       <BoxBlock
         className={cn(
-          'flex flex-col fixed top-0 right-0 h-dvh w-full md:w-1/2 xl:w-1/3 bg-base-black text-base-white-soft z-50',
+          'flex flex-col fixed top-0 right-0 h-dvh w-full md:w-1/2 xl:w-1/3 bg-black text-white-soft z-50',
           'translate-x-full transition-transform duration-300 ease-out transform-gpu',
           isOpen && 'transform translate-x-0',
         )}
@@ -31,7 +31,7 @@ export const Drawer = ({ destinations, isOpen, closeDrawer }: DrawerProps) => {
         {/* Nav */}
         <BoxBlock className="h-full flex flex-col justify-between flex-wrap" margin="none" padding="none">
           <Nav destinations={destinations} />
-          <DrawerFooter className="border-t border-t-foreground-inv/20 pb-16 -mx-4 px-4" />
+          <DrawerFooter className="border-t border-t-black-softest/20 dark:border-t-white-softest/20 pb-16 -mx-4 px-4" />
         </BoxBlock>
       </BoxBlock>
 

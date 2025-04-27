@@ -12,7 +12,7 @@ export default function RootLayout({
 }>) {
   return (
     <html suppressHydrationWarning lang="en" className={`${GeistSans.variable} ${GeistMono.variable}`}>
-      <body className="bg-background text-foreground transition-colors duration-300 ease-slow-in">
+      <body className="bg-white-softest dark:bg-black-softest text-black-soft dark:text-white-soft transition-colors duration-300 ease-slow-in">
         <ThemeProvider>
           <BlobBackground />
           <div className="min-h-dvh">
