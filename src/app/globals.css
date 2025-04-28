@@ -186,11 +186,3 @@
     font-feature-settings: 'ss04', 'ss08', 'liga';
   }
 }
-
-@layer base {
-  :root {
-  }
-
-  [data-theme='dark'] {
-  }
-}
