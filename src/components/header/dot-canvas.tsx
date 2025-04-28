@@ -49,7 +49,7 @@ const DotCanvas = ({
     const dotsWidth = canvas.clientWidth - DOT_PADDING
     const dotsHeight = canvas.clientHeight - DOT_PADDING
 
-    let d: ShapedDot[] = []
+    const d: ShapedDot[] = []
     for (let i = DOT_PADDING; i < dotsWidth; i += DOT_SPACE) {
       for (let j = DOT_PADDING; j < dotsHeight; j += DOT_SPACE) {
         const x = i + DOT_SPACE / 2
@@ -175,7 +175,7 @@ class ShapedDot {
   update(mouseMoved: boolean, clientX: number, clientY: number) {
     const dx = clientX - this.x
     const dy = clientY - this.y
-    let distance = Math.sqrt(dx * dx + dy * dy)
+    const distance = Math.sqrt(dx * dx + dy * dy)
 
     if (mouseMoved && distance < MIN_DISTANCE) {
       this.transparency = 1
