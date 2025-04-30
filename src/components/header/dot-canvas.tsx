@@ -34,6 +34,7 @@ const DotCanvas = ({
     x: -1,
     y: -1,
   })
+  const prevMousePositionRef = useRef<{ x: number; y: number }>({ x: -1, y: -1 })
   const mouseMovedRef = useRef<boolean>(false)
   const mouseTimeoutRef = useRef<NodeJS.Timeout | null>(null)
   const [dots, setDots] = useState<ShapedDot[]>([])
@@ -96,6 +97,7 @@ const DotCanvas = ({
     const mouseX = e.clientX - canvasRect.left
     const mouseY = e.clientY - canvasRect.top
 
+    prevMousePositionRef.current = mousePositionRef.current
     mouseMovedRef.current = true
     mousePositionRef.current = {
       x: mouseX,
@@ -108,6 +110,7 @@ const DotCanvas = ({
 
     mouseTimeoutRef.current = setTimeout(() => {
       mouseMovedRef.current = false
+      prevMousePositionRef.current = { x: -1, y: -1 }
     }, 100)
   }, [])
 
@@ -120,16 +123,29 @@ const DotCanvas = ({
 
     const draw = () => {
       ctx.clearRect(0, 0, size.width, size.height)
-      dots.forEach((dot) => {
-        dot.update(
-          mouseMovedRef.current,
-          mousePositionRef.current.x,
-          mousePositionRef.current.y,
-        )
+      if (mouseMovedRef.current) {
+        // First, we retrieve the previous mouse position and the current mouse position
+        const { x: x1, y: y1 } = prevMousePositionRef.current
+        const { x: x2, y: y2 } = mousePositionRef.current
+        // Then, we calculate the distance between the two points
+        const distance = Math.hypot(x2 - x1, y2 - y1)
+        // We divide the distance by the number of lightened dots possible
+        // divided by 2 (since it's lightened around the mouse position)
+        const steps = Math.max(1, Math.floor(distance / (MIN_DISTANCE / 2)))
 
-        dot.draw(ctx)
-      })
-
+        // We update dots between the two points
+        // We use a for loop to iterate over the number of steps
+        // and calculate the position of each dot
+        for (let i = 0; i <= steps; i++) {
+          const t = i / steps
+          const x = x1 + (x2 - x1) * t
+          const y = y1 + (y2 - y1) * t
+          dots.forEach(dot => dot.update(true, x, y))
+        }
+      } else {
+        dots.forEach(dot => dot.update(false, -1, -1))
+      }
+      dots.forEach(dot => dot.draw(ctx))
       requestAnimationFrame(draw)
     }
 
