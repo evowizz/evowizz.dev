@@ -1,5 +1,6 @@
 'use client'
 
+import { debounce } from '@/lib/utils'
 import { useInView } from 'framer-motion'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
@@ -235,17 +236,6 @@ class ShapedDot {
   draw(ctx: CanvasRenderingContext2D) {
     throw new Error('Method not implemented.')
   }
-}
-
-function debounce<F extends (...args: any[]) => any>(func: F, waitFor: number) {
-  let timeoutId: NodeJS.Timeout | null = null;
-
-  return (...args: Parameters<F>): void => {
-    if (timeoutId !== null) {
-      clearTimeout(timeoutId);
-    }
-    timeoutId = setTimeout(() => func(...args), waitFor);
-  };
 }
 
 class CircleDot extends ShapedDot {
