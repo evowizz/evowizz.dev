@@ -1,7 +1,7 @@
 'use client'
 
 import { useInView } from 'framer-motion'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 type DotCanvasProps = React.HTMLAttributes<HTMLCanvasElement> & {
   color?: string
@@ -82,6 +82,11 @@ const DotCanvas = ({
     setDots(d)
   }, [color, shape])
 
+  const debouncedUpdateCanvasSize = useMemo(
+    () => debounce(updateCanvasSize, 250),
+    [updateCanvasSize]
+  );
+
   const updateMousePosition = useCallback((e: MouseEvent) => {
     const canvas = canvasRef.current
     if (!canvas) return
@@ -137,14 +142,15 @@ const DotCanvas = ({
 
     if (!isInView) return
 
-    updateAndDraw()
+    const animationFrameId = requestAnimationFrame(updateAndDraw)
 
     window.addEventListener('mousemove', updateMousePosition)
-    window.addEventListener('resize', updateCanvasSize)
+    window.addEventListener('resize', debouncedUpdateCanvasSize)
 
     return () => {
+      cancelAnimationFrame(animationFrameId)
       window.removeEventListener('mousemove', updateMousePosition)
-      window.removeEventListener('resize', updateCanvasSize)
+      window.removeEventListener('resize', debouncedUpdateCanvasSize)
     }
   }, [
     size,
@@ -152,6 +158,7 @@ const DotCanvas = ({
     isInView,
     updateMousePosition,
     updateCanvasSize,
+    debouncedUpdateCanvasSize,
     updateAndDraw,
   ])
 
@@ -199,6 +206,17 @@ class ShapedDot {
   draw(ctx: CanvasRenderingContext2D) {
     throw new Error('Method not implemented.')
   }
+}
+
+function debounce<F extends (...args: any[]) => any>(func: F, waitFor: number) {
+  let timeoutId: NodeJS.Timeout | null = null;
+
+  return (...args: Parameters<F>): void => {
+    if (timeoutId !== null) {
+      clearTimeout(timeoutId);
+    }
+    timeoutId = setTimeout(() => func(...args), waitFor);
+  };
 }
 
 class CircleDot extends ShapedDot {
