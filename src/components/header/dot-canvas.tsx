@@ -127,20 +127,28 @@ const DotCanvas = ({
         // First, we retrieve the previous mouse position and the current mouse position
         const { x: x1, y: y1 } = prevMousePositionRef.current
         const { x: x2, y: y2 } = mousePositionRef.current
-        // Then, we calculate the distance between the two points
-        const distance = Math.hypot(x2 - x1, y2 - y1)
-        // We divide the distance by the number of lightened dots possible
-        // divided by 2 (since it's lightened around the mouse position)
-        const steps = Math.max(1, Math.floor(distance / (MIN_DISTANCE / 2)))
 
-        // We update dots between the two points
-        // We use a for loop to iterate over the number of steps
-        // and calculate the position of each dot
-        for (let i = 0; i <= steps; i++) {
-          const t = i / steps
-          const x = x1 + (x2 - x1) * t
-          const y = y1 + (y2 - y1) * t
-          dots.forEach(dot => dot.update(true, x, y))
+        if (x1 < 0 && y1 < 0) {
+          // If the previous mouse position is outside the canvas,
+          // we update all dots to the current mouse position
+          // This can happen when the previous mouse position is -1, -1.
+          dots.forEach(dot => dot.update(true, x2, y2))
+        } else {
+          // We calculate the distance between the two points
+          const distance = Math.hypot(x2 - x1, y2 - y1)
+          // We divide the distance by the number of lightened dots possible
+          // divided by 2 (since it's lightened aroud the mouse position)
+          const steps = Math.max(1, Math.floor(distance / (MIN_DISTANCE / 2)))
+          
+          // We update dots between the two points
+          // We use a for loop to iterate over the number of steps
+          // and calculate the position of each dot
+          for (let i = 0; i <= steps; i++) {
+            const t = i / steps
+            const x = x1 + (x2 - x1) * t
+            const y = y1 + (y2 - y1) * t
+            dots.forEach(dot => dot.update(true, x, y))
+          }
         }
       } else {
         dots.forEach(dot => dot.update(false, -1, -1))
