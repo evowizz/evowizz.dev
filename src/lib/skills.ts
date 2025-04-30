@@ -45,12 +45,6 @@ export const skills: Skill[] = [
     kind: 'language',
   },
   {
-    name: 'V lang',
-    logo: 'vlang',
-    url: 'https://vlang.io/',
-    kind: 'language',
-  },
-  {
     name: 'Jetpack Compose',
     logo: 'compose',
     url: 'https://developer.android.com/jetpack/compose',
