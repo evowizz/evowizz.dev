@@ -13,6 +13,7 @@ const DOT_SPACE = 20
 const DOT_PADDING = 0
 const ADDTIONAL_SIZE = 2
 const MIN_DISTANCE = 50
+const MIN_DISTANCE_SQ = MIN_DISTANCE * MIN_DISTANCE
 const MIN_TRANSPARENCY = 0
 const REDUCTION = 0.01
 
@@ -185,9 +186,13 @@ class ShapedDot {
   update(mouseMoved: boolean, clientX: number, clientY: number) {
     const dx = clientX - this.x
     const dy = clientY - this.y
-    const distance = Math.sqrt(dx * dx + dy * dy)
 
-    if (mouseMoved && distance < MIN_DISTANCE) {
+    // Rather than comparing the distance square root to the MIN_DISTANCE,
+    // we compare the distance square to the MIN_DISTANCE_SQ. So we no longer
+    // need to calculate the square root on every frame. :)
+    const distanceSq = dx * dx + dy * dy
+
+    if (mouseMoved && distanceSq < MIN_DISTANCE_SQ) {
       this.transparency = 1
       this.size = DOT_SIZE + ADDTIONAL_SIZE
     } else {
