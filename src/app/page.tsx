@@ -11,7 +11,7 @@ import { DotBackground } from '@/components/header/dot-background'
 export default function Home() {
   return (
     <main>
-      <DotBackground shape='triangle'>
+      <DotBackground shape='starburst'>
         <section className="relative h-dvh flex flex-col justify-end overflow-hidden">
           <BoxBlock className="flex flex-col md:flex-row md:items-end justify-between md:pb-24 z-10 motion-reduce:animate-hero-opacity group">
             <div className="flex flex-col justify-center items-start shrink-0 pb-16 md:pb-0">

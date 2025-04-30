@@ -5,11 +5,11 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 
 type DotCanvasProps = React.HTMLAttributes<HTMLCanvasElement> & {
   color?: string
-  shape?: 'circle' | 'triangle' | 'cross' | 'hexagon'
+  shape?: 'circle' | 'triangle' | 'cross' | 'hexagon' | 'starburst'
 }
 
-const DOT_SIZE = 2
-const DOT_SPACE = 14
+const DOT_SIZE = 4
+const DOT_SPACE = 20
 const DOT_PADDING = 0
 const ADDTIONAL_SIZE = 2
 const MIN_DISTANCE = 50
@@ -65,6 +65,9 @@ const DotCanvas = ({
             break
           case 'hexagon':
             dot = new HexagonDot(x, y, DOT_SIZE, color)
+            break
+          case 'starburst':
+            dot = new StarburstDot(x, y, DOT_SIZE, color)
             break
           case 'circle':
           default:
@@ -246,5 +249,23 @@ class HexagonDot extends ShapedDot {
     ctx.closePath()
     ctx.fillStyle = this.getColor()
     ctx.fill()
+  }
+}
+
+class StarburstDot extends ShapedDot {
+  draw(ctx: CanvasRenderingContext2D) {
+    const angleStep = (Math.PI * 2) / 8
+
+    ctx.beginPath()
+    for (let i = 0; i < 8; i++) {
+      const angle = i * angleStep
+      const dx = Math.cos(angle) * this.size
+      const dy = Math.sin(angle) * this.size
+      ctx.moveTo(this.x, this.y)
+      ctx.lineTo(this.x + dx, this.y + dy)
+    }
+    ctx.closePath()
+    ctx.strokeStyle = this.getColor()
+    ctx.stroke()
   }
 }
