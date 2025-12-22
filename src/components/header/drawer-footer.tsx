@@ -23,7 +23,7 @@ export const DrawerFooter = ({ className }: DrawerFooterProps) => (
     {/* Inspired by Google Design (with Link) */}
     <p className="text-sm">
       Inspired by{' '}
-      <Link href="https://design.google" className="text-accent">
+      <Link href="https://design.google" className="text-primary">
         Google Design
       </Link>
       .
@@ -38,8 +38,8 @@ const SocialLink: React.FC<LinkProps> = ({ className, ...props }) => (
     <Link
       {...props}
       className={cn(
-        'underline text-base-white-soft/80 transition-all',
-        'hover:text-accent',
+        'underline text-on-surface transition-all',
+        'hover:text-primary',
         className,
       )}
     />

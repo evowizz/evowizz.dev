@@ -42,9 +42,9 @@ const SkillChip = ({ skill, className }: SkillChipProps) => {
       <div
         className={cn(
           'flex items-center border-2 select-none rounded-md py-1 px-2',
-          'border-black-softest dark:border-white-softest bg-white-softest dark:bg-black-softest',
+          'border-outline-variant bg-surface-container',
           'transition-all duration-300 ease-slow-in shadow-2xs group-hover:shadow-[4px_4px_0px]',
-          'group-hover:shadow-black-softest dark:group-hover:shadow-white-softest',
+          'group-hover:shadow-on-surface',
           'group-hover:-translate-x-1 group-hover:-translate-y-1',
           'group-active:translate-x-0 group-active:translate-y-0 group-active:shadow-none',
           className,

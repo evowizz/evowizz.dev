@@ -1,9 +1,24 @@
 import './globals.css'
-import { GeistSans } from 'geist/font/sans'
-import { GeistMono } from 'geist/font/mono'
-import { BlobBackground } from '@/components/blob-background'
+import { Google_Sans_Code, Google_Sans_Flex, Noto_Serif, Roboto_Serif } from 'next/font/google'
 import { Header } from '@/components/header'
+import { MaterialThemeProvider } from '@/components/material-theme-context'
+import { DebugPanel } from '@/components/debug'
 import { ThemeProvider } from 'next-themes'
+
+const googleSansFlex = Google_Sans_Flex({
+  subsets: ['latin'],
+  variable: '--font-google-sans-flex',
+})
+
+const googleSansCode = Google_Sans_Code({
+  subsets: ['latin-ext'],
+  variable: '--font-google-sans-code',
+})
+
+const robotoSerif = Noto_Serif({
+  subsets: ['latin'],
+  variable: '--font-noto-serif',
+})
 
 export default function RootLayout({
   children,
@@ -11,14 +26,17 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html suppressHydrationWarning lang="en" className={`${GeistSans.variable} ${GeistMono.variable}`}>
-      <body className="bg-white-softest dark:bg-black-softest text-black-soft dark:text-white-soft transition-colors duration-300 ease-slow-in">
+    <html suppressHydrationWarning lang="en" className={`${googleSansFlex.variable} ${googleSansCode.variable} ${robotoSerif.variable}`}>
+      <body className="bg-surface-container text-on-surface transition-colors duration-300 ease-slow-in">
         <ThemeProvider>
-          <BlobBackground />
-          <div className="min-h-dvh">
-            <Header />
-            {children}
-          </div>
+          <MaterialThemeProvider>
+            <div className="fixed inset-0 overlay-noise -z-50" />
+            <div className="min-h-dvh">
+              <Header />
+              {children}
+            </div>
+            <DebugPanel />
+          </MaterialThemeProvider>
         </ThemeProvider>
       </body>
     </html>
