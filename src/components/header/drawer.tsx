@@ -30,7 +30,7 @@ export const Drawer = ({ destinations, isOpen, closeDrawer }: DrawerProps) => {
     <>
       <BoxBlock
         className={cn(
-          'flex flex-col fixed top-0 right-0 h-dvh w-full md:w-1/2 xl:w-1/3 bg-surface-container text-on-surface-variant z-50',
+          'flex flex-col fixed top-0 right-0 h-dvh w-full md:w-1/2 xl:w-1/3 bg-surface-container text-on-surface-variant z-50 rounded-l-4xl',
           'translate-x-full transition-transform duration-300 ease-out transform-gpu',
           isOpen && 'transform translate-x-0',
         )}
