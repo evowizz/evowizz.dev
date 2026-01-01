@@ -290,6 +290,14 @@
   animation-delay: 800ms;
 }
 
+@utility hide-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
 @utility hover-light {
   @media (hover: hover) and (pointer: fine) {
     /* Inspired from: www.hover.dev/components/text#bubble-text */

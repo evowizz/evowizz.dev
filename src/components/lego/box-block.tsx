@@ -19,19 +19,30 @@ const boxBlockVariants = cva(undefined, {
       both: 'px-[max(calc(100vw/24),1rem)]',
       none: '',
     },
+    scrollPadding: {
+      left: 'scroll-pl-[max(calc(100vw/24),1rem)]',
+      right: 'scroll-pr-[max(calc(100vw/24),1rem)]',
+      both: 'scroll-px-[max(calc(100vw/24),1rem)]',
+      none: '',
+    },
   },
   defaultVariants: {
     margin: 'both',
     padding: 'none',
+    scrollPadding: 'none',
   },
 })
 
 type BoxBlockProps = React.HTMLAttributes<HTMLDivElement> & VariantProps<typeof boxBlockVariants>
 
 const BoxBlock = forwardRef<HTMLDivElement, BoxBlockProps>(
-  ({ className, margin, padding, ...props }, ref) => {
+  ({ className, margin, padding, scrollPadding, ...props }, ref) => {
     return (
-      <div className={cn(boxBlockVariants({ margin, padding, className }))} ref={ref} {...props} />
+      <div
+        className={cn(boxBlockVariants({ margin, padding, scrollPadding, className }))}
+        ref={ref}
+        {...props}
+      />
     )
   },
 )

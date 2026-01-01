@@ -1,6 +1,5 @@
 'use client'
 
-import { cn } from '@/lib/utils'
 import { ArrowRight } from '@/components/svg'
 import Link from 'next/link'
 
@@ -24,9 +23,7 @@ export function Hero() {
           Building
         </span>
         <span className="block motion-safe:animate-hero-appear motion-safe:opacity-0 motion-safe:animation-delay-200">
-          <span className="italic font-serif text-primary">
-            Android
-          </span>
+          <span className="italic font-serif text-primary">Android</span>
         </span>
         <span className="block motion-safe:animate-hero-appear motion-safe:opacity-0 motion-safe:animation-delay-300">
           experiences.

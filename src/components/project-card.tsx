@@ -1,112 +1,202 @@
 import { Project } from '@/lib/projects'
 import Link from 'next/link'
+import Image from 'next/image'
 import { cn } from '@/lib/utils'
 import { ArrowRight } from './svg/arrow-right'
+import { StyleableProps } from '@/types/component'
 
-type ProjectCardProps = {
+type ProjectProps = StyleableProps<{
   project: Project
-  className?: string
-  index?: number
-  total?: number
-}
+  index?: number // Optional for CompactProject, required used for FeaturedProject
+}>
 
-export const ProjectCard = ({ project, className, index = 0, total = 0 }: ProjectCardProps) => {
+// Default placeholder for projects without images
+const DEFAULT_PLACEHOLDER = '/api/placeholder/1200/750'
+
+export const FeaturedProject = ({ project, index = 0, className }: ProjectProps) => {
+  const isReversed = index % 2 === 1
   const hasLinks = project.links.github || project.links.demo || project.links.playStore
   const primaryLink = project.links.demo || project.links.github || project.links.playStore
 
-  // Calculate if this is in the last row or last column
-  const isLastColumn = (index + 1) % 3 === 0
-  const isLastRow = index >= total - (total % 3 || 3)
+  const imageContent = (
+    <div
+      className={cn(
+        'relative aspect-16/10 w-full overflow-hidden rounded-3xl',
+        'bg-surface-container border border-outline-variant',
+        'transition-all duration-500',
+        hasLinks && 'group-hover:border-primary',
+      )}
+    >
+      <Image
+        src={project.image || DEFAULT_PLACEHOLDER}
+        alt={project.title}
+        fill
+        className="object-cover"
+        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 50vw"
+      />
+
+      {/* Badges */}
+      <div className="absolute top-4 left-4 flex gap-2">
+        {project.openSource && (
+          <span className="px-3 py-1 text-xs font-semibold tracking-wide rounded-full bg-surface-container/90 backdrop-blur-md text-primary border border-primary/20 shadow-sm">
+            Open Source
+          </span>
+        )}
+      </div>
+    </div>
+  )
 
   return (
     <article
       className={cn(
-        'group relative h-full flex flex-col p-8 md:p-10',
-        'border-outline-variant',
-        'transition-all duration-300 ease-out',
-        'hover:bg-on-surface/5',
-        'overflow-hidden',
-        'min-h-80',
-        {
-          'lg:border-r': !isLastColumn,
-          'border-b': !isLastRow,
-        },
+        'flex flex-col gap-8 items-center lg:gap-16',
+        isReversed ? 'lg:flex-row-reverse' : 'lg:flex-row',
         className,
       )}
     >
-      {/* Corner marks on hover */}
-      {/* This is the top left corner */}
-      <span className="absolute top-0 left-0 h-3 w-0.5 origin-top bg-primary scale-0 group-hover:scale-100 transition-all duration-300"/>
-      <span className="absolute top-0 left-0 h-0.5 w-3 origin-left bg-primary scale-0 group-hover:scale-100 transition-all duration-300" />
-
-      {/* This is the top right corner */}
-      <span className="absolute top-0 right-0 h-3 w-0.5 origin-top bg-primary scale-0 group-hover:scale-100 transition-all duration-300"/>
-      <span className="absolute top-0 right-0 h-0.5 w-3 origin-right bg-primary scale-0 group-hover:scale-100 transition-all duration-300" />
-
-      {/* This is the bottom left corner */}
-      <span className="absolute bottom-0 left-0 h-3 w-0.5 origin-bottom bg-primary scale-0 group-hover:scale-100 transition-all duration-300"/>
-      <span className="absolute bottom-0 left-0 h-0.5 w-3 origin-left bg-primary scale-0 group-hover:scale-100 transition-all duration-300" />
-
-      {/* This is the bottom right corner */}
-      <span className="absolute bottom-0 right-0 h-3 w-0.5 origin-bottom bg-primary scale-0 group-hover:scale-100 transition-all duration-300"/>
-      <span className="absolute bottom-0 right-0 h-0.5 w-3 origin-right bg-primary scale-0 group-hover:scale-100 transition-all duration-300" />
-    
-
-      {/* Top metadata row */}
-      <div className="flex items-start justify-between mb-8">
-        {/* Status Badges */}
-        <div className="flex gap-2 flex-wrap">
-          {project.openSource && (
-            <span className="px-3 py-1.5 text-xs font-600 bg-primary/10 text-primary border border-primary/20">
-              Open Source
-            </span>
-          )}
-          {project.deprecated && (
-            <span className="px-3 py-1.5 text-xs font-600 bg-yellow-500/10 text-yellow-600 dark:text-yellow-400 border border-yellow-500/20">
-              Deprecated
-            </span>
-          )}
-        </div>
-
-        {/* Arrow Link */}
-        {hasLinks && primaryLink && (
+      {/* Visual / Image Side */}
+      <div className="flex-1 w-full">
+        {primaryLink ? (
           <Link
             href={primaryLink}
             target="_blank"
             rel="noopener noreferrer"
-            className="p-2 -m-2 rounded-md hover:bg-primary/10 transition-all duration-300 group/link"
-            aria-label="View project"
+            className="block group"
           >
-            <ArrowRight className="w-6 h-6 text-on-surface group-hover/link:text-primary -rotate-45 transition-all duration-300 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5" />
+            {imageContent}
           </Link>
+        ) : (
+          <div className="block">{imageContent}</div>
         )}
       </div>
-      {/* Content */}
-      <div className="flex-1 flex flex-col gap-4">
-        <h3 className="text-2xl md:text-3xl font-800 group-hover:text-primary transition-colors duration-300">
-          {project.title}
-        </h3>
 
-        <p className="text-base text-on-surface leading-relaxed line-clamp-3">
-          {project.description}
-        </p>
-
-        {/* Tech Stack */}
-        <div className="flex flex-wrap gap-2 mt-auto pt-4">
-          {project.techStack.slice(0, 4).map((tech, techIndex) => (
-            <span
-              key={techIndex}
-              className="text-xs px-3 py-1.5 border border-outline-variant text-on-surface font-500 hover:border-primary hover:text-primary transition-colors duration-300"
-            >
-              {tech}
-            </span>
-          ))}
-          {project.techStack.length > 4 && (
-            <span className="text-xs px-3 py-1.5 text-on-surface font-500">
-              +{project.techStack.length - 4} more
-            </span>
-          )}
+      {/* Content Side */}
+      <div className="flex-1 w-full flex flex-col items-start gap-4">
+        {/* Title & Link */}
+        <div className="flex flex-col gap-2">
+          <h3 className="font-bold tracking-tight text-3xl">{project.title}</h3>
+          {/* Tech Stack - Top */}
+          <div className="flex flex-wrap gap-2">
+            {project.techStack.map((tech, techIndex) => (
+              <span
+                key={techIndex}
+                className="text-xs font-medium text-primary uppercase tracking-wider"
+              >
+                {tech}
+                {techIndex < project.techStack.length - 1 && (
+                  <span className="text-outline-variant mx-1">•</span>
+                )}
+              </span>
+            ))}
+          </div>
         </div>
+
+        <p className="text-on-surface/70 leading-relaxed text-lg">{project.description}</p>
+
+        {hasLinks && primaryLink && (
+          <div className="pt-4">
+            <Link
+              href={primaryLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-sm font-semibold text-on-surface hover:text-primary transition-colors duration-200 group/link"
+            >
+              View Project
+              <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover/link:translate-x-1" />
+            </Link>
+          </div>
+        )}
+      </div>
+    </article>
+  )
+}
+
+export const CompactProject = ({ project, className }: ProjectProps) => {
+  const hasLinks = project.links.github || project.links.demo || project.links.playStore
+  const primaryLink = project.links.demo || project.links.github || project.links.playStore
+
+  const imageContent = (
+    <div
+      className={cn(
+        'relative aspect-16/10 w-full overflow-hidden rounded-3xl',
+        'bg-surface-container border border-outline-variant',
+        'transition-all duration-500',
+        hasLinks && 'group-hover:border-primary',
+      )}
+    >
+      <Image
+        src={project.image || DEFAULT_PLACEHOLDER}
+        alt={project.title}
+        fill
+        className="object-cover"
+        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+      />
+
+      {/* Badges */}
+      <div className="absolute top-4 left-4 flex gap-2">
+        {project.openSource && (
+          <span className="px-3 py-1 text-xs font-semibold tracking-wide rounded-full bg-surface-container/90 backdrop-blur-md text-primary border border-primary/20 shadow-sm">
+            Open Source
+          </span>
+        )}
+      </div>
+    </div>
+  )
+
+  return (
+    <article className={cn('flex flex-col gap-6 items-center h-full', className)}>
+      {/* Visual / Image Side */}
+      <div className="flex-1 w-full">
+        {primaryLink ? (
+          <Link
+            href={primaryLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block group"
+          >
+            {imageContent}
+          </Link>
+        ) : (
+          <div className="block">{imageContent}</div>
+        )}
+      </div>
+
+      {/* Content Side */}
+      <div className="flex-1 w-full flex flex-col items-start gap-4">
+        {/* Title & Link */}
+        <div className="flex flex-col gap-2">
+          <h3 className="font-bold tracking-tight text-2xl">{project.title}</h3>
+          {/* Tech Stack - Top */}
+          <div className="flex flex-wrap gap-2">
+            {project.techStack.map((tech, techIndex) => (
+              <span
+                key={techIndex}
+                className="text-xs font-medium text-primary uppercase tracking-wider"
+              >
+                {tech}
+                {techIndex < project.techStack.length - 1 && (
+                  <span className="text-outline-variant mx-1">•</span>
+                )}
+              </span>
+            ))}
+          </div>
+        </div>
+
+        <p className="text-on-surface/70 leading-relaxed text-base">{project.description}</p>
+
+        {hasLinks && primaryLink && (
+          <div className="pt-4 mt-auto">
+            <Link
+              href={primaryLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-sm font-semibold text-on-surface hover:text-primary transition-colors duration-200 group/link"
+            >
+              View Project
+              <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover/link:translate-x-1" />
+            </Link>
+          </div>
+        )}
       </div>
     </article>
   )

@@ -10,15 +10,13 @@ type SkillsGridProps = {
 
 export const SkillsGrid = ({ skills }: SkillsGridProps) => {
   const skillsByKind = skills.reduce((acc, skill) => {
-    if (!acc[skill.kind]) {
-      acc[skill.kind] = []
-    }
+    if (!acc[skill.kind]) acc[skill.kind] = []
     acc[skill.kind].push(skill)
     return acc
   }, {} as Record<string, Skill[]>)
 
   return (
-    <>
+    <div className='flex flex-col gap-4'>
       {Object.keys(skillsByKind).map((kind) => (
         <div key={kind} className="flex flex-wrap gap-4">
           {skillsByKind[kind].map((skill, index) => (
@@ -26,7 +24,7 @@ export const SkillsGrid = ({ skills }: SkillsGridProps) => {
           ))}
         </div>
       ))}
-    </>
+    </div>
   )
 }
 
@@ -41,12 +39,11 @@ const SkillChip = ({ skill, className }: SkillChipProps) => {
     <Link href={skill.url} rel="noopener noreferrer" target="_blank" className="group">
       <div
         className={cn(
-          'flex items-center border-2 select-none rounded-md py-1 px-2',
+          'flex items-center border select-none rounded-2xl py-1.5 px-3',
           'border-outline-variant bg-surface-container',
-          'transition-all duration-300 ease-slow-in shadow-2xs group-hover:shadow-[4px_4px_0px]',
-          'group-hover:shadow-on-surface',
-          'group-hover:-translate-x-1 group-hover:-translate-y-1',
-          'group-active:translate-x-0 group-active:translate-y-0 group-active:shadow-none',
+          'transition-all duration-300 ease-slow-in',
+          'group-hover:bg-tertiary-container group-hover:border-tertiary-fixed-dim',
+          'group-hover:text-on-tertiary-container group-hover:rounded-lg',
           className,
         )}
       >
