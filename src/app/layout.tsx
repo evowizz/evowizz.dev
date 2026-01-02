@@ -8,6 +8,7 @@ import { ThemeProvider } from 'next-themes'
 const googleSansFlex = Google_Sans_Flex({
   subsets: ['latin'],
   variable: '--font-google-sans-flex',
+  axes: ['wdth', 'GRAD', 'slnt'],
 })
 
 const googleSansCode = Google_Sans_Code({
@@ -15,7 +16,7 @@ const googleSansCode = Google_Sans_Code({
   variable: '--font-google-sans-code',
 })
 
-const robotoSerif = Noto_Serif({
+const notoSerif = Noto_Serif({
   subsets: ['latin'],
   variable: '--font-noto-serif',
 })
@@ -29,7 +30,7 @@ export default function RootLayout({
     <html
       suppressHydrationWarning
       lang="en"
-      className={`${googleSansFlex.variable} ${googleSansCode.variable} ${robotoSerif.variable}`}
+      className={`${googleSansFlex.variable} ${googleSansCode.variable} ${notoSerif.variable}`}
     >
       <body className="bg-surface-container text-on-surface ease-slow-in transition-colors duration-300">
         <ThemeProvider>
