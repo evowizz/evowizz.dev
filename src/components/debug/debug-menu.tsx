@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useCallback } from 'react'
 import { useTheme } from 'next-themes'
 import { HctColorPicker } from './hct-color-picker'
 import { RgbColorPicker } from './rgb-color-picker'
@@ -8,6 +8,7 @@ import { ColorTokenPreview } from './color-token-preview'
 import { useMaterialTheme } from '../material-theme-context'
 import { Variant } from '@/lib/material'
 import { cn } from '@/lib/utils'
+import { useIsSSR } from '@/lib/use-is-ssr'
 
 const VARIANT_NAMES: Record<Variant, string> = {
   [Variant.MONOCHROME]: 'Monochrome',
@@ -79,14 +80,10 @@ type PickerMode = 'hct' | 'rgb'
 export function DebugMenu() {
   const [activeTab, setActiveTab] = useState<Tab>('picker')
   const [pickerMode, setPickerMode] = useState<PickerMode>('hct')
-  const [mounted, setMounted] = useState(false)
   const [copied, setCopied] = useState(false)
   const { theme, setTheme } = useTheme()
   const { variant, setVariant } = useMaterialTheme()
-
-  useEffect(() => {
-    setMounted(true)
-  }, [])
+  const isSSR = useIsSSR()
 
   const copyCSS = useCallback(() => {
     const styles = getComputedStyle(document.documentElement)
@@ -113,7 +110,7 @@ export function DebugMenu() {
             onClick={() => setTheme('light')}
             className={cn(
               'flex-1 rounded-md border px-3 py-2 text-xs font-medium transition-colors',
-              mounted && theme === 'light'
+              !isSSR && theme === 'light'
                 ? 'bg-primary text-on-primary border-primary'
                 : 'bg-surface-container border-outline-variant hover:bg-surface-container-high',
             )}
@@ -124,7 +121,7 @@ export function DebugMenu() {
             onClick={() => setTheme('dark')}
             className={cn(
               'flex-1 rounded-md border px-3 py-2 text-xs font-medium transition-colors',
-              mounted && theme === 'dark'
+              !isSSR && theme === 'dark'
                 ? 'bg-primary text-on-primary border-primary'
                 : 'bg-surface-container border-outline-variant hover:bg-surface-container-high',
             )}
@@ -135,7 +132,7 @@ export function DebugMenu() {
             onClick={() => setTheme('system')}
             className={cn(
               'flex-1 rounded-md border px-3 py-2 text-xs font-medium transition-colors',
-              mounted && theme === 'system'
+              !isSSR && theme === 'system'
                 ? 'bg-primary text-on-primary border-primary'
                 : 'bg-surface-container border-outline-variant hover:bg-surface-container-high',
             )}

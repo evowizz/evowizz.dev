@@ -11,6 +11,7 @@ import {
 } from 'react'
 import { useTheme } from 'next-themes'
 import { Variant, Hct, argbFromHex, hexFromArgb, createScheme, applyScheme } from '@/lib/material'
+import { useIsSSR } from '@/lib/use-is-ssr'
 
 const DEFAULT_SEED_COLOR = '#33CC7A'
 const DEFAULT_HCT = Hct.fromInt(argbFromHex(DEFAULT_SEED_COLOR))
@@ -34,12 +35,9 @@ type MaterialThemeProviderProps = {
 export function MaterialThemeProvider({ children }: MaterialThemeProviderProps) {
   const [hct, setHctState] = useState<Hct>(DEFAULT_HCT)
   const [variant, setVariant] = useState<Variant>(DEFAULT_VARIANT)
-  const [mounted, setMounted] = useState(false)
   const { resolvedTheme } = useTheme()
-
-  useEffect(() => {
-    setMounted(true)
-  }, [])
+  const isSSR = useIsSSR()
+  const hasResolvedTheme = resolvedTheme !== undefined
 
   // seedColor is derived from HCT (HCT is the source of truth)
   const seedColor = useMemo(() => {
@@ -62,7 +60,7 @@ export function MaterialThemeProvider({ children }: MaterialThemeProviderProps) 
   const isDark = resolvedTheme === 'dark'
 
   useEffect(() => {
-    if (!mounted) return
+    if (isSSR || !hasResolvedTheme) return
     try {
       const scheme = createScheme({
         sourceColorHct: hct,
@@ -74,7 +72,7 @@ export function MaterialThemeProvider({ children }: MaterialThemeProviderProps) 
     } catch {
       // Scheme application failed
     }
-  }, [hct, isDark, variant, mounted])
+  }, [hct, isDark, variant, hasResolvedTheme, isSSR])
 
   const value = useMemo(
     () => ({ seedColor, setSeedColor, hct, setHct, variant, setVariant }),
