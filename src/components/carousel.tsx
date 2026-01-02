@@ -182,7 +182,7 @@ export const CarouselContent = ({ children, className }: StyleablePropsWithChild
       padding="left"
       scrollPadding="left"
       className={cn(
-        'flex gap-6 overflow-x-auto snap-x snap-mandatory pb-8 hide-scrollbar pr-[max(calc(100vw/24),1rem)]',
+        'hide-scrollbar flex snap-x snap-mandatory gap-6 overflow-x-auto pr-[max(calc(100vw/24),1rem)] pb-8',
         className,
       )}
     >
@@ -201,10 +201,10 @@ export const CarouselButtons = ({ className }: StyleableProps) => {
   return (
     <div className={cn('flex gap-2', className)}>
       <CarouselButton onClick={scrollLeft} aria-label="Scroll left" disabled={!canScrollLeft}>
-        <ArrowRight className="w-5 h-5 rotate-180" />
+        <ArrowRight className="h-5 w-5 rotate-180" />
       </CarouselButton>
       <CarouselButton onClick={scrollRight} aria-label="Scroll right" disabled={!canScrollRight}>
-        <ArrowRight className="w-5 h-5" />
+        <ArrowRight className="h-5 w-5" />
       </CarouselButton>
     </div>
   )
@@ -214,7 +214,7 @@ const CarouselButton = ({ className, ...props }: React.ComponentProps<'button'>)
   return (
     <button
       className={cn(
-        'px-6 py-3 rounded-full bg-secondary-fixed text-on-secondary-fixed transition',
+        'bg-secondary-fixed text-on-secondary-fixed rounded-full px-6 py-3 transition',
         'hover:enabled:bg-secondary-fixed-dim disabled:opacity-50',
         className,
       )}
@@ -224,5 +224,5 @@ const CarouselButton = ({ className, ...props }: React.ComponentProps<'button'>)
 }
 
 export const CarouselItem = ({ children, className }: StyleablePropsWithChildren) => {
-  return <div className={cn('flex-none w-[85vw] md:w-112.5 snap-start', className)}>{children}</div>
+  return <div className={cn('w-[85vw] flex-none snap-start md:w-112.5', className)}>{children}</div>
 }

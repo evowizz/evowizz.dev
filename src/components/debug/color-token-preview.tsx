@@ -48,10 +48,7 @@ const COLOR_GROUPS: Record<string, ColorToken[]> = {
     { token: 'surface-container-high' },
     { token: 'surface-container-highest' },
   ],
-  Outline: [
-    { token: 'outline' },
-    { token: 'outline-variant' },
-  ],
+  Outline: [{ token: 'outline' }, { token: 'outline-variant' }],
   Fixed: [
     { token: 'primary-fixed', onToken: 'on-primary-fixed' },
     { token: 'on-primary-fixed', onToken: 'primary-fixed' },
@@ -83,24 +80,19 @@ type ColorSwatchProps = {
 function ColorSwatch({ token, onToken }: ColorSwatchProps) {
   return (
     <div
-      className="rounded-md overflow-hidden border border-outline-variant/30 h-20 relative group"
+      className="border-outline-variant/30 group relative h-20 overflow-hidden rounded-md border"
       style={{ backgroundColor: `var(--md-sys-color-${token})` }}
       title={token}
     >
       <div className="absolute inset-0 flex items-center justify-center">
         {onToken && (
-          <span
-            className="text-sm font-medium"
-            style={{ color: `var(--md-sys-color-${onToken})` }}
-          >
+          <span className="text-sm font-medium" style={{ color: `var(--md-sys-color-${onToken})` }}>
             Aa
           </span>
         )}
       </div>
-      <div className="absolute bottom-0 left-0 right-0 px-2 py-1.5 backdrop-blur-sm bg-black/75">
-        <span className="text-[8px] truncate block text-white">
-          {token}
-        </span>
+      <div className="absolute right-0 bottom-0 left-0 bg-black/75 px-2 py-1.5 backdrop-blur-sm">
+        <span className="block truncate text-[8px] text-white">{token}</span>
       </div>
     </div>
   )
@@ -108,12 +100,10 @@ function ColorSwatch({ token, onToken }: ColorSwatchProps) {
 
 export function ColorTokenPreview() {
   return (
-    <div className="flex flex-col gap-4 max-h-[60vh] overflow-y-auto pr-2">
+    <div className="flex max-h-[60vh] flex-col gap-4 overflow-y-auto pr-2">
       {Object.entries(COLOR_GROUPS).map(([groupName, colors]) => (
         <div key={groupName} className="flex flex-col gap-2">
-          <h4 className="text-xs font-semibold opacity-60 uppercase tracking-wider">
-            {groupName}
-          </h4>
+          <h4 className="text-xs font-semibold tracking-wider uppercase opacity-60">{groupName}</h4>
           <div className="grid grid-cols-3 gap-1.5">
             {colors.map((color) => (
               <ColorSwatch key={color.token} token={color.token} onToken={color.onToken} />

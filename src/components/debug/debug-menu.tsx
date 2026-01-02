@@ -22,21 +22,55 @@ const VARIANT_NAMES: Record<Variant, string> = {
 }
 
 const COLOR_TOKENS = [
-  'primary', 'on-primary', 'primary-container', 'on-primary-container', 'inverse-primary',
-  'secondary', 'on-secondary', 'secondary-container', 'on-secondary-container',
-  'tertiary', 'on-tertiary', 'tertiary-container', 'on-tertiary-container',
-  'error', 'on-error', 'error-container', 'on-error-container',
-  'background', 'on-background',
-  'surface', 'on-surface', 'surface-variant', 'on-surface-variant',
-  'surface-dim', 'surface-bright',
-  'surface-container-lowest', 'surface-container-low', 'surface-container',
-  'surface-container-high', 'surface-container-highest',
-  'outline', 'outline-variant',
-  'shadow', 'scrim',
-  'inverse-surface', 'inverse-on-surface', 'surface-tint',
-  'primary-fixed', 'primary-fixed-dim', 'on-primary-fixed', 'on-primary-fixed-variant',
-  'secondary-fixed', 'secondary-fixed-dim', 'on-secondary-fixed', 'on-secondary-fixed-variant',
-  'tertiary-fixed', 'tertiary-fixed-dim', 'on-tertiary-fixed', 'on-tertiary-fixed-variant',
+  'primary',
+  'on-primary',
+  'primary-container',
+  'on-primary-container',
+  'inverse-primary',
+  'secondary',
+  'on-secondary',
+  'secondary-container',
+  'on-secondary-container',
+  'tertiary',
+  'on-tertiary',
+  'tertiary-container',
+  'on-tertiary-container',
+  'error',
+  'on-error',
+  'error-container',
+  'on-error-container',
+  'background',
+  'on-background',
+  'surface',
+  'on-surface',
+  'surface-variant',
+  'on-surface-variant',
+  'surface-dim',
+  'surface-bright',
+  'surface-container-lowest',
+  'surface-container-low',
+  'surface-container',
+  'surface-container-high',
+  'surface-container-highest',
+  'outline',
+  'outline-variant',
+  'shadow',
+  'scrim',
+  'inverse-surface',
+  'inverse-on-surface',
+  'surface-tint',
+  'primary-fixed',
+  'primary-fixed-dim',
+  'on-primary-fixed',
+  'on-primary-fixed-variant',
+  'secondary-fixed',
+  'secondary-fixed-dim',
+  'on-secondary-fixed',
+  'on-secondary-fixed-variant',
+  'tertiary-fixed',
+  'tertiary-fixed-dim',
+  'on-tertiary-fixed',
+  'on-tertiary-fixed-variant',
 ]
 
 type Tab = 'picker' | 'tokens'
@@ -56,12 +90,10 @@ export function DebugMenu() {
 
   const copyCSS = useCallback(() => {
     const styles = getComputedStyle(document.documentElement)
-    const css = COLOR_TOKENS
-      .map(token => {
-        const value = styles.getPropertyValue(`--md-sys-color-${token}`).trim()
-        return `--md-sys-color-${token}: ${value};`
-      })
-      .join('\n')
+    const css = COLOR_TOKENS.map((token) => {
+      const value = styles.getPropertyValue(`--md-sys-color-${token}`).trim()
+      return `--md-sys-color-${token}: ${value};`
+    }).join('\n')
 
     navigator.clipboard.writeText(css).then(() => {
       setCopied(true)
@@ -70,10 +102,8 @@ export function DebugMenu() {
   }, [])
 
   return (
-    <div className="flex flex-col gap-4 p-4 text-on-surface">
-      <h3 className="text-sm font-semibold uppercase tracking-wider opacity-60">
-        Theme Debug
-      </h3>
+    <div className="text-on-surface flex flex-col gap-4 p-4">
+      <h3 className="text-sm font-semibold tracking-wider uppercase opacity-60">Theme Debug</h3>
 
       {/* Theme Toggle */}
       <div className="flex flex-col gap-2">
@@ -82,10 +112,10 @@ export function DebugMenu() {
           <button
             onClick={() => setTheme('light')}
             className={cn(
-              'flex-1 px-3 py-2 text-xs font-medium rounded-md border transition-colors',
+              'flex-1 rounded-md border px-3 py-2 text-xs font-medium transition-colors',
               mounted && theme === 'light'
                 ? 'bg-primary text-on-primary border-primary'
-                : 'bg-surface-container border-outline-variant hover:bg-surface-container-high'
+                : 'bg-surface-container border-outline-variant hover:bg-surface-container-high',
             )}
           >
             Light
@@ -93,10 +123,10 @@ export function DebugMenu() {
           <button
             onClick={() => setTheme('dark')}
             className={cn(
-              'flex-1 px-3 py-2 text-xs font-medium rounded-md border transition-colors',
+              'flex-1 rounded-md border px-3 py-2 text-xs font-medium transition-colors',
               mounted && theme === 'dark'
                 ? 'bg-primary text-on-primary border-primary'
-                : 'bg-surface-container border-outline-variant hover:bg-surface-container-high'
+                : 'bg-surface-container border-outline-variant hover:bg-surface-container-high',
             )}
           >
             Dark
@@ -104,10 +134,10 @@ export function DebugMenu() {
           <button
             onClick={() => setTheme('system')}
             className={cn(
-              'flex-1 px-3 py-2 text-xs font-medium rounded-md border transition-colors',
+              'flex-1 rounded-md border px-3 py-2 text-xs font-medium transition-colors',
               mounted && theme === 'system'
                 ? 'bg-primary text-on-primary border-primary'
-                : 'bg-surface-container border-outline-variant hover:bg-surface-container-high'
+                : 'bg-surface-container border-outline-variant hover:bg-surface-container-high',
             )}
           >
             System
@@ -121,7 +151,7 @@ export function DebugMenu() {
         <select
           value={variant}
           onChange={(e) => setVariant(Number(e.target.value) as Variant)}
-          className="px-3 py-2 text-xs font-medium rounded-md border border-outline-variant bg-surface-container text-on-surface appearance-none cursor-pointer"
+          className="border-outline-variant bg-surface-container text-on-surface cursor-pointer appearance-none rounded-md border px-3 py-2 text-xs font-medium"
         >
           {Object.entries(VARIANT_NAMES).map(([value, name]) => (
             <option key={value} value={value}>
@@ -135,24 +165,24 @@ export function DebugMenu() {
       <button
         onClick={copyCSS}
         className={cn(
-          'px-3 py-2 text-xs font-medium rounded-md border transition-colors',
+          'rounded-md border px-3 py-2 text-xs font-medium transition-colors',
           copied
             ? 'bg-primary text-on-primary border-primary'
-            : 'bg-surface-container border-outline-variant hover:bg-surface-container-high'
+            : 'bg-surface-container border-outline-variant hover:bg-surface-container-high',
         )}
       >
         {copied ? 'Copied!' : 'Copy CSS Variables'}
       </button>
 
       {/* Tabs */}
-      <div className="flex gap-1 border-b border-outline-variant">
+      <div className="border-outline-variant flex gap-1 border-b">
         <button
           onClick={() => setActiveTab('picker')}
           className={cn(
-            'px-3 py-2 text-xs font-medium transition-colors border-b-2 -mb-px',
+            '-mb-px border-b-2 px-3 py-2 text-xs font-medium transition-colors',
             activeTab === 'picker'
               ? 'border-primary text-primary'
-              : 'border-transparent opacity-60 hover:opacity-100'
+              : 'border-transparent opacity-60 hover:opacity-100',
           )}
         >
           Color Picker
@@ -160,10 +190,10 @@ export function DebugMenu() {
         <button
           onClick={() => setActiveTab('tokens')}
           className={cn(
-            'px-3 py-2 text-xs font-medium transition-colors border-b-2 -mb-px',
+            '-mb-px border-b-2 px-3 py-2 text-xs font-medium transition-colors',
             activeTab === 'tokens'
               ? 'border-primary text-primary'
-              : 'border-transparent opacity-60 hover:opacity-100'
+              : 'border-transparent opacity-60 hover:opacity-100',
           )}
         >
           Color Tokens
@@ -179,10 +209,10 @@ export function DebugMenu() {
               <button
                 onClick={() => setPickerMode('hct')}
                 className={cn(
-                  'flex-1 px-3 py-1.5 text-xs font-medium rounded-md border transition-colors',
+                  'flex-1 rounded-md border px-3 py-1.5 text-xs font-medium transition-colors',
                   pickerMode === 'hct'
                     ? 'bg-primary text-on-primary border-primary'
-                    : 'bg-surface-container border-outline-variant hover:bg-surface-container-high'
+                    : 'bg-surface-container border-outline-variant hover:bg-surface-container-high',
                 )}
               >
                 HCT
@@ -190,10 +220,10 @@ export function DebugMenu() {
               <button
                 onClick={() => setPickerMode('rgb')}
                 className={cn(
-                  'flex-1 px-3 py-1.5 text-xs font-medium rounded-md border transition-colors',
+                  'flex-1 rounded-md border px-3 py-1.5 text-xs font-medium transition-colors',
                   pickerMode === 'rgb'
                     ? 'bg-primary text-on-primary border-primary'
-                    : 'bg-surface-container border-outline-variant hover:bg-surface-container-high'
+                    : 'bg-surface-container border-outline-variant hover:bg-surface-container-high',
                 )}
               >
                 RGB

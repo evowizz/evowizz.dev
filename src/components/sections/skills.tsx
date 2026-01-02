@@ -7,10 +7,10 @@ export const Skills = () => {
     <div className="flex flex-col gap-12">
       <BoxBlock>
         <div className="flex flex-col gap-3">
-          <span className="text-xs font-medium tracking-[0.2em] uppercase text-primary">
+          <span className="text-primary text-xs font-medium tracking-[0.2em] uppercase">
             Expertise
           </span>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight">
+          <h2 className="text-3xl font-semibold tracking-tight md:text-4xl lg:text-5xl">
             Tools & Technologies
           </h2>
         </div>

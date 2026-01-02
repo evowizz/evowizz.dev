@@ -5,8 +5,6 @@ export type StyleableProps<P = {}> = P & {
   style?: CSSProperties
 }
 
-export type StyleablePropsWithChildren<P = {}> = PropsWithChildren<
-  StyleableProps<P>
->
+export type StyleablePropsWithChildren<P = {}> = PropsWithChildren<StyleableProps<P>>
 
 export type NoChildren<P = {}> = P & { children?: never }

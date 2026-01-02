@@ -9,14 +9,17 @@ type SkillsGridProps = {
 }
 
 export const SkillsGrid = ({ skills }: SkillsGridProps) => {
-  const skillsByKind = skills.reduce((acc, skill) => {
-    if (!acc[skill.kind]) acc[skill.kind] = []
-    acc[skill.kind].push(skill)
-    return acc
-  }, {} as Record<string, Skill[]>)
+  const skillsByKind = skills.reduce(
+    (acc, skill) => {
+      if (!acc[skill.kind]) acc[skill.kind] = []
+      acc[skill.kind].push(skill)
+      return acc
+    },
+    {} as Record<string, Skill[]>,
+  )
 
   return (
-    <div className='flex flex-col gap-4'>
+    <div className="flex flex-col gap-4">
       {Object.keys(skillsByKind).map((kind) => (
         <div key={kind} className="flex flex-wrap gap-4">
           {skillsByKind[kind].map((skill, index) => (
@@ -39,15 +42,15 @@ const SkillChip = ({ skill, className }: SkillChipProps) => {
     <Link href={skill.url} rel="noopener noreferrer" target="_blank" className="group">
       <div
         className={cn(
-          'flex items-center border select-none rounded-2xl py-1.5 px-3',
+          'flex items-center rounded-2xl border px-3 py-1.5 select-none',
           'border-outline-variant bg-surface-container',
-          'transition-all duration-300 ease-slow-in',
+          'ease-slow-in transition-all duration-300',
           'group-hover:bg-tertiary-container group-hover:border-tertiary-fixed-dim',
           'group-hover:text-on-tertiary-container group-hover:rounded-lg',
           className,
         )}
       >
-        <SkillLogo className="w-4 h-4 mr-2" />
+        <SkillLogo className="mr-2 h-4 w-4" />
         <span className="pr-1">{skill.name}</span>
       </div>
     </Link>

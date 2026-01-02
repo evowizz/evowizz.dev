@@ -45,16 +45,16 @@ export function RgbColorPicker() {
     <div className="flex flex-col gap-4">
       <div className="flex items-center gap-3">
         <div
-          className="w-12 h-12 rounded-md border border-outline-variant shrink-0"
+          className="border-outline-variant h-12 w-12 shrink-0 rounded-md border"
           style={{ backgroundColor: seedColor }}
         />
-        <div className="flex flex-col flex-1">
+        <div className="flex flex-1 flex-col">
           <span className="text-sm font-medium">Seed Color</span>
           <input
             type="text"
             value={seedColor.toUpperCase()}
             onChange={handleHexChange}
-            className="text-xs opacity-60 font-mono bg-transparent border-none outline-none w-full"
+            className="w-full border-none bg-transparent font-mono text-xs opacity-60 outline-none"
             pattern="^#[0-9A-Fa-f]{6}$"
           />
         </div>
@@ -74,7 +74,7 @@ export function RgbColorPicker() {
             step="1"
             value={r}
             onChange={handleRedChange}
-            className="w-full h-2 rounded-full appearance-none cursor-pointer"
+            className="h-2 w-full cursor-pointer appearance-none rounded-full"
             style={{
               background: `linear-gradient(to right, rgb(0, ${g}, ${b}), rgb(255, ${g}, ${b}))`,
             }}
@@ -94,7 +94,7 @@ export function RgbColorPicker() {
             step="1"
             value={g}
             onChange={handleGreenChange}
-            className="w-full h-2 rounded-full appearance-none cursor-pointer"
+            className="h-2 w-full cursor-pointer appearance-none rounded-full"
             style={{
               background: `linear-gradient(to right, rgb(${r}, 0, ${b}), rgb(${r}, 255, ${b}))`,
             }}
@@ -114,7 +114,7 @@ export function RgbColorPicker() {
             step="1"
             value={b}
             onChange={handleBlueChange}
-            className="w-full h-2 rounded-full appearance-none cursor-pointer"
+            className="h-2 w-full cursor-pointer appearance-none rounded-full"
             style={{
               background: `linear-gradient(to right, rgb(${r}, ${g}, 0), rgb(${r}, ${g}, 255))`,
             }}

@@ -30,25 +30,25 @@ export const Drawer = ({ destinations, isOpen, closeDrawer }: DrawerProps) => {
     <>
       <BoxBlock
         className={cn(
-          'flex flex-col fixed top-0 right-0 h-dvh w-full md:w-1/2 xl:w-1/3 bg-surface-container text-on-surface-variant z-50 rounded-l-4xl',
-          'translate-x-full transition-transform duration-300 ease-out transform-gpu',
-          isOpen && 'transform translate-x-0',
+          'bg-surface-container text-on-surface-variant fixed top-0 right-0 z-50 flex h-dvh w-full flex-col rounded-l-4xl md:w-1/2 xl:w-1/3',
+          'translate-x-full transform-gpu transition-transform duration-300 ease-out',
+          isOpen && 'translate-x-0 transform',
         )}
         margin="none"
         padding="both"
       >
         {/* Header */}
-        <div className="relative h-16 my-4 md:h-24 md:my-0 flex items-center justify-end text-lg">
+        <div className="relative my-4 flex h-16 items-center justify-end text-lg md:my-0 md:h-24">
           <button onClick={closeDrawer}>
             <Close />
           </button>
         </div>
 
         {/* Content */}
-        <BoxBlock className="flex-1 flex flex-col" margin="none" padding="none">
+        <BoxBlock className="flex flex-1 flex-col" margin="none" padding="none">
           <Nav destinations={destinations} />
           <div className="flex-1" />
-          <DrawerFooter className="border-t border-t-outline-variant/20 pb-16 -mx-4 px-4 shrink-0" />
+          <DrawerFooter className="border-t-outline-variant/20 -mx-4 shrink-0 border-t px-4 pb-16" />
         </BoxBlock>
       </BoxBlock>
 
@@ -56,8 +56,8 @@ export const Drawer = ({ destinations, isOpen, closeDrawer }: DrawerProps) => {
       <div
         className={cn(
           'pointer-events-none',
-          'fixed top-0 right-0 h-dvh w-full bg-scrim z-40 opacity-0 transition-opacity duration-300',
-          isOpen && 'opacity-75 pointer-events-auto',
+          'bg-scrim fixed top-0 right-0 z-40 h-dvh w-full opacity-0 transition-opacity duration-300',
+          isOpen && 'pointer-events-auto opacity-75',
         )}
         onClick={closeDrawer}
       />

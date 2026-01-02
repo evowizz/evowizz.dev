@@ -8,12 +8,12 @@ export const Projects = () => {
   return (
     <div className="flex flex-col gap-24 md:gap-32">
       <BoxBlock className="flex flex-col gap-12">
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+        <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <div className="flex flex-col gap-3">
-            <span className="text-xs font-medium tracking-[0.2em] uppercase text-primary">
+            <span className="text-primary text-xs font-medium tracking-[0.2em] uppercase">
               Portfolio
             </span>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight">
+            <h2 className="text-3xl font-semibold tracking-tight md:text-4xl lg:text-5xl">
               Selected Work
             </h2>
           </div>
@@ -25,7 +25,7 @@ export const Projects = () => {
       <Carousel>
         <div className="flex flex-col gap-6">
           <BoxBlock>
-            <h3 className="text-2xl md:text-3xl font-semibold tracking-tight">Other Projects</h3>
+            <h3 className="text-2xl font-semibold tracking-tight md:text-3xl">Other Projects</h3>
           </BoxBlock>
 
           <CarouselContent>

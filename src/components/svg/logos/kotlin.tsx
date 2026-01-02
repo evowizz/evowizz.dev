@@ -15,4 +15,3 @@ export const Kotlin = (props: React.SVGProps<SVGSVGElement>) => (
     />
   </svg>
 )
-

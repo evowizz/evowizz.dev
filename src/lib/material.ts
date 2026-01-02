@@ -19,39 +19,42 @@ export function createSchemeFromHex(
   sourceColorHex: string,
   isDark: boolean,
   variant: Variant = Variant.TONAL_SPOT,
-  contrastLevel: number = 0
+  contrastLevel: number = 0,
 ): DynamicScheme {
   return new DynamicScheme({
     sourceColorHct: Hct.fromInt(argbFromHex(sourceColorHex)),
     variant,
     contrastLevel,
     isDark,
-    specVersion: "2025"
+    specVersion: '2025',
   })
 }
 
-export function applyScheme(scheme: DynamicScheme, target: HTMLElement = document.documentElement): void {
+export function applyScheme(
+  scheme: DynamicScheme,
+  target: HTMLElement = document.documentElement,
+): void {
   const colors: Record<string, number> = {
-    'primary': scheme.primary,
+    primary: scheme.primary,
     'on-primary': scheme.onPrimary,
     'primary-container': scheme.primaryContainer,
     'on-primary-container': scheme.onPrimaryContainer,
     'inverse-primary': scheme.inversePrimary,
-    'secondary': scheme.secondary,
+    secondary: scheme.secondary,
     'on-secondary': scheme.onSecondary,
     'secondary-container': scheme.secondaryContainer,
     'on-secondary-container': scheme.onSecondaryContainer,
-    'tertiary': scheme.tertiary,
+    tertiary: scheme.tertiary,
     'on-tertiary': scheme.onTertiary,
     'tertiary-container': scheme.tertiaryContainer,
     'on-tertiary-container': scheme.onTertiaryContainer,
-    'error': scheme.error,
+    error: scheme.error,
     'on-error': scheme.onError,
     'error-container': scheme.errorContainer,
     'on-error-container': scheme.onErrorContainer,
-    'background': scheme.background,
+    background: scheme.background,
     'on-background': scheme.onBackground,
-    'surface': scheme.surface,
+    surface: scheme.surface,
     'on-surface': scheme.onSurface,
     'surface-variant': scheme.surfaceVariant,
     'on-surface-variant': scheme.onSurfaceVariant,
@@ -62,10 +65,10 @@ export function applyScheme(scheme: DynamicScheme, target: HTMLElement = documen
     'surface-container': scheme.surfaceContainer,
     'surface-container-high': scheme.surfaceContainerHigh,
     'surface-container-highest': scheme.surfaceContainerHighest,
-    'outline': scheme.outline,
+    outline: scheme.outline,
     'outline-variant': scheme.outlineVariant,
-    'shadow': scheme.shadow,
-    'scrim': scheme.scrim,
+    shadow: scheme.shadow,
+    scrim: scheme.scrim,
     'inverse-surface': scheme.inverseSurface,
     'inverse-on-surface': scheme.inverseOnSurface,
     'surface-tint': scheme.surfaceTint,

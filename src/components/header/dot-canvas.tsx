@@ -18,11 +18,7 @@ const MIN_DISTANCE_SQ = MIN_DISTANCE * MIN_DISTANCE
 const MIN_TRANSPARENCY = 0
 const REDUCTION = 0.01
 
-const DotCanvas = ({
-  color = '0% 0 0',
-  shape = 'circle',
-  ...props
-}: DotCanvasProps) => {
+const DotCanvas = ({ color = '0% 0 0', shape = 'circle', ...props }: DotCanvasProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   // Amount represents the amount of the element that must be visible before the callback is called.
   // So amount 'some' is equivalent to threshold 0, meaning the callback will be called as soon as any part of the element is visible.
@@ -87,8 +83,8 @@ const DotCanvas = ({
 
   const debouncedUpdateCanvasSize = useMemo(
     () => debounce(updateCanvasSize, 250),
-    [updateCanvasSize]
-  );
+    [updateCanvasSize],
+  )
 
   const updateMousePosition = useCallback((e: MouseEvent) => {
     const canvas = canvasRef.current
@@ -133,14 +129,14 @@ const DotCanvas = ({
           // If the previous mouse position is outside the canvas,
           // we update all dots to the current mouse position
           // This can happen when the previous mouse position is -1, -1.
-          dots.forEach(dot => dot.update(true, x2, y2))
+          dots.forEach((dot) => dot.update(true, x2, y2))
         } else {
           // We calculate the distance between the two points
           const distance = Math.hypot(x2 - x1, y2 - y1)
           // We divide the distance by the number of lightened dots possible
           // divided by 2 (since it's lightened aroud the mouse position)
           const steps = Math.max(1, Math.floor(distance / (MIN_DISTANCE / 2)))
-          
+
           // We update dots between the two points
           // We use a for loop to iterate over the number of steps
           // and calculate the position of each dot
@@ -148,13 +144,13 @@ const DotCanvas = ({
             const t = i / steps
             const x = x1 + (x2 - x1) * t
             const y = y1 + (y2 - y1) * t
-            dots.forEach(dot => dot.update(true, x, y))
+            dots.forEach((dot) => dot.update(true, x, y))
           }
         }
       } else {
-        dots.forEach(dot => dot.update(false, -1, -1))
+        dots.forEach((dot) => dot.update(false, -1, -1))
       }
-      dots.forEach(dot => dot.draw(ctx))
+      dots.forEach((dot) => dot.draw(ctx))
       requestAnimationFrame(draw)
     }
 
@@ -221,10 +217,7 @@ class ShapedDot {
       this.transparency = 1
       this.size = DOT_SIZE + ADDTIONAL_SIZE
     } else {
-      this.transparency = Math.max(
-        MIN_TRANSPARENCY,
-        this.transparency - REDUCTION,
-      )
+      this.transparency = Math.max(MIN_TRANSPARENCY, this.transparency - REDUCTION)
       this.size = Math.max(DOT_SIZE, this.size - REDUCTION)
     }
   }

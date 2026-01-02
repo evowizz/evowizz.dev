@@ -13,13 +13,13 @@ const DotBackground = forwardRef<HTMLDivElement, DotBackgroundProps>(
       <div className={cn(className, 'relative')} ref={ref} {...props}>
         <DotCanvas
           shape={shape}
-          color='50% 0 0 / 0.5'
-          className="absolute top-0 left-0 w-full h-full"
+          color="50% 0 0 / 0.5"
+          className="absolute top-0 left-0 h-full w-full"
         />
         <div className="relative">{children}</div>
       </div>
     )
-  }
+  },
 )
 
 DotBackground.displayName = 'DotBackground'

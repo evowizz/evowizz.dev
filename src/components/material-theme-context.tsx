@@ -1,6 +1,14 @@
 'use client'
 
-import { createContext, useContext, useState, useCallback, useMemo, useEffect, type ReactNode } from 'react'
+import {
+  createContext,
+  useContext,
+  useState,
+  useCallback,
+  useMemo,
+  useEffect,
+  type ReactNode,
+} from 'react'
 import { useTheme } from 'next-themes'
 import { Variant, Hct, argbFromHex, hexFromArgb, createScheme, applyScheme } from '@/lib/material'
 
@@ -70,14 +78,10 @@ export function MaterialThemeProvider({ children }: MaterialThemeProviderProps) 
 
   const value = useMemo(
     () => ({ seedColor, setSeedColor, hct, setHct, variant, setVariant }),
-    [seedColor, setSeedColor, hct, setHct, variant, setVariant]
+    [seedColor, setSeedColor, hct, setHct, variant, setVariant],
   )
 
-  return (
-    <MaterialThemeContext.Provider value={value}>
-      {children}
-    </MaterialThemeContext.Provider>
-  )
+  return <MaterialThemeContext.Provider value={value}>{children}</MaterialThemeContext.Provider>
 }
 
 export function useMaterialTheme() {

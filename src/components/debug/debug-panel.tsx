@@ -8,19 +8,19 @@ export function DebugPanel() {
   const [isOpen, setIsOpen] = useState(false)
 
   return (
-    <div className="fixed bottom-4 right-4 z-50">
+    <div className="fixed right-4 bottom-4 z-50">
       {/* Panel */}
       <div
         className={cn(
-          'absolute bottom-14 right-0 w-80 max-h-[70vh] overflow-hidden',
-          'bg-surface-container border border-outline-variant rounded-2xl shadow-xl',
-          'transition-all duration-200 ease-out origin-bottom-right',
+          'absolute right-0 bottom-14 max-h-[70vh] w-80 overflow-hidden',
+          'bg-surface-container border-outline-variant rounded-2xl border shadow-xl',
+          'origin-bottom-right transition-all duration-200 ease-out',
           isOpen
-            ? 'opacity-100 scale-100 translate-y-0'
-            : 'opacity-0 scale-95 translate-y-2 pointer-events-none'
+            ? 'translate-y-0 scale-100 opacity-100'
+            : 'pointer-events-none translate-y-2 scale-95 opacity-0',
         )}
       >
-        <div className="overflow-y-auto max-h-[70vh]">
+        <div className="max-h-[70vh] overflow-y-auto">
           <DebugMenu />
         </div>
       </div>
@@ -29,15 +29,15 @@ export function DebugPanel() {
       <button
         onClick={() => setIsOpen(!isOpen)}
         className={cn(
-          'w-12 h-12 rounded-full flex items-center justify-center',
+          'flex h-12 w-12 items-center justify-center rounded-full',
           'bg-primary text-on-primary shadow-lg',
-          'hover:shadow-xl hover:scale-105 active:scale-95',
-          'transition-all duration-200'
+          'hover:scale-105 hover:shadow-xl active:scale-95',
+          'transition-all duration-200',
         )}
         title="Toggle Debug Menu"
       >
         <svg
-          className={cn('w-5 h-5 transition-transform duration-200', isOpen && 'rotate-45')}
+          className={cn('h-5 w-5 transition-transform duration-200', isOpen && 'rotate-45')}
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"

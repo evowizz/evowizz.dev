@@ -22,7 +22,7 @@ export const FeaturedProject = ({ project, index = 0, className }: ProjectProps)
     <div
       className={cn(
         'relative aspect-16/10 w-full overflow-hidden rounded-3xl',
-        'bg-surface-container border border-outline-variant',
+        'bg-surface-container border-outline-variant border',
         'transition-all duration-500',
         hasLinks && 'group-hover:border-primary',
       )}
@@ -38,7 +38,7 @@ export const FeaturedProject = ({ project, index = 0, className }: ProjectProps)
       {/* Badges */}
       <div className="absolute top-4 left-4 flex gap-2">
         {project.openSource && (
-          <span className="px-3 py-1 text-xs font-semibold tracking-wide rounded-full bg-surface-container/90 backdrop-blur-md text-primary border border-primary/20 shadow-sm">
+          <span className="bg-surface-container/90 text-primary border-primary/20 rounded-full border px-3 py-1 text-xs font-semibold tracking-wide shadow-sm backdrop-blur-md">
             Open Source
           </span>
         )}
@@ -49,19 +49,19 @@ export const FeaturedProject = ({ project, index = 0, className }: ProjectProps)
   return (
     <article
       className={cn(
-        'flex flex-col gap-8 items-center lg:gap-16',
+        'flex flex-col items-center gap-8 lg:gap-16',
         isReversed ? 'lg:flex-row-reverse' : 'lg:flex-row',
         className,
       )}
     >
       {/* Visual / Image Side */}
-      <div className="flex-1 w-full">
+      <div className="w-full flex-1">
         {primaryLink ? (
           <Link
             href={primaryLink}
             target="_blank"
             rel="noopener noreferrer"
-            className="block group"
+            className="group block"
           >
             {imageContent}
           </Link>
@@ -71,16 +71,16 @@ export const FeaturedProject = ({ project, index = 0, className }: ProjectProps)
       </div>
 
       {/* Content Side */}
-      <div className="flex-1 w-full flex flex-col items-start gap-4">
+      <div className="flex w-full flex-1 flex-col items-start gap-4">
         {/* Title & Link */}
         <div className="flex flex-col gap-2">
-          <h3 className="font-bold tracking-tight text-3xl">{project.title}</h3>
+          <h3 className="text-3xl font-bold tracking-tight">{project.title}</h3>
           {/* Tech Stack - Top */}
           <div className="flex flex-wrap gap-2">
             {project.techStack.map((tech, techIndex) => (
               <span
                 key={techIndex}
-                className="text-xs font-medium text-primary uppercase tracking-wider"
+                className="text-primary text-xs font-medium tracking-wider uppercase"
               >
                 {tech}
                 {techIndex < project.techStack.length - 1 && (
@@ -91,7 +91,7 @@ export const FeaturedProject = ({ project, index = 0, className }: ProjectProps)
           </div>
         </div>
 
-        <p className="text-on-surface/70 leading-relaxed text-lg">{project.description}</p>
+        <p className="text-on-surface/70 text-lg leading-relaxed">{project.description}</p>
 
         {hasLinks && primaryLink && (
           <div className="pt-4">
@@ -99,10 +99,10 @@ export const FeaturedProject = ({ project, index = 0, className }: ProjectProps)
               href={primaryLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-sm font-semibold text-on-surface hover:text-primary transition-colors duration-200 group/link"
+              className="text-on-surface hover:text-primary group/link inline-flex items-center gap-2 text-sm font-semibold transition-colors duration-200"
             >
               View Project
-              <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover/link:translate-x-1" />
+              <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover/link:translate-x-1" />
             </Link>
           </div>
         )}
@@ -119,7 +119,7 @@ export const CompactProject = ({ project, className }: ProjectProps) => {
     <div
       className={cn(
         'relative aspect-16/10 w-full overflow-hidden rounded-3xl',
-        'bg-surface-container border border-outline-variant',
+        'bg-surface-container border-outline-variant border',
         'transition-all duration-500',
         hasLinks && 'group-hover:border-primary',
       )}
@@ -135,7 +135,7 @@ export const CompactProject = ({ project, className }: ProjectProps) => {
       {/* Badges */}
       <div className="absolute top-4 left-4 flex gap-2">
         {project.openSource && (
-          <span className="px-3 py-1 text-xs font-semibold tracking-wide rounded-full bg-surface-container/90 backdrop-blur-md text-primary border border-primary/20 shadow-sm">
+          <span className="bg-surface-container/90 text-primary border-primary/20 rounded-full border px-3 py-1 text-xs font-semibold tracking-wide shadow-sm backdrop-blur-md">
             Open Source
           </span>
         )}
@@ -144,15 +144,15 @@ export const CompactProject = ({ project, className }: ProjectProps) => {
   )
 
   return (
-    <article className={cn('flex flex-col gap-6 items-center h-full', className)}>
+    <article className={cn('flex h-full flex-col items-center gap-6', className)}>
       {/* Visual / Image Side */}
-      <div className="flex-1 w-full">
+      <div className="w-full flex-1">
         {primaryLink ? (
           <Link
             href={primaryLink}
             target="_blank"
             rel="noopener noreferrer"
-            className="block group"
+            className="group block"
           >
             {imageContent}
           </Link>
@@ -162,16 +162,16 @@ export const CompactProject = ({ project, className }: ProjectProps) => {
       </div>
 
       {/* Content Side */}
-      <div className="flex-1 w-full flex flex-col items-start gap-4">
+      <div className="flex w-full flex-1 flex-col items-start gap-4">
         {/* Title & Link */}
         <div className="flex flex-col gap-2">
-          <h3 className="font-bold tracking-tight text-2xl">{project.title}</h3>
+          <h3 className="text-2xl font-bold tracking-tight">{project.title}</h3>
           {/* Tech Stack - Top */}
           <div className="flex flex-wrap gap-2">
             {project.techStack.map((tech, techIndex) => (
               <span
                 key={techIndex}
-                className="text-xs font-medium text-primary uppercase tracking-wider"
+                className="text-primary text-xs font-medium tracking-wider uppercase"
               >
                 {tech}
                 {techIndex < project.techStack.length - 1 && (
@@ -182,18 +182,18 @@ export const CompactProject = ({ project, className }: ProjectProps) => {
           </div>
         </div>
 
-        <p className="text-on-surface/70 leading-relaxed text-base">{project.description}</p>
+        <p className="text-on-surface/70 text-base leading-relaxed">{project.description}</p>
 
         {hasLinks && primaryLink && (
-          <div className="pt-4 mt-auto">
+          <div className="mt-auto pt-4">
             <Link
               href={primaryLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-sm font-semibold text-on-surface hover:text-primary transition-colors duration-200 group/link"
+              className="text-on-surface hover:text-primary group/link inline-flex items-center gap-2 text-sm font-semibold transition-colors duration-200"
             >
               View Project
-              <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover/link:translate-x-1" />
+              <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover/link:translate-x-1" />
             </Link>
           </div>
         )}

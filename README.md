@@ -7,16 +7,19 @@ This repository hosts the source code for my personal website.
 To get a local copy up and running, follow these simple steps:
 
 1. Clone the repository:
+
 ```bash
 git clone https://github.com/evowizz/evowizz.dev.git
 ```
 
 2. Install the dependencies:
+
 ```bash
 bun install
 ```
 
 3. Run the development server:
+
 ```bash
 bun dev
 ```

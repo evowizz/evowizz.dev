@@ -26,11 +26,15 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html suppressHydrationWarning lang="en" className={`${googleSansFlex.variable} ${googleSansCode.variable} ${robotoSerif.variable}`}>
-      <body className="bg-surface-container text-on-surface transition-colors duration-300 ease-slow-in">
+    <html
+      suppressHydrationWarning
+      lang="en"
+      className={`${googleSansFlex.variable} ${googleSansCode.variable} ${robotoSerif.variable}`}
+    >
+      <body className="bg-surface-container text-on-surface ease-slow-in transition-colors duration-300">
         <ThemeProvider>
           <MaterialThemeProvider>
-            <div className="fixed inset-0 overlay-noise -z-50" />
+            <div className="overlay-noise fixed inset-0 -z-50" />
             <div className="min-h-svh">
               <Header />
               {children}

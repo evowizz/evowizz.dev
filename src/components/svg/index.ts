@@ -35,33 +35,33 @@ export * from './logos/kotlin'
 // All icons except StarShape (special case)
 export const allIcons = {
   'arrow-right': ArrowRight,
-  'close': Close,
-  'menu': Menu,
+  close: Close,
+  menu: Menu,
   'middle-dot': MiddleDot,
-  'sun': Sun,
+  sun: Sun,
 } as const
 
 export type Icons = keyof typeof allIcons
 
 // All logos
 export const allLogos = {
-  'androidstudio': AndroidStudio,
-  'compose': Compose,
-  'dart': Dart,
-  'figma': Figma,
-  'flutter': Flutter,
-  'intellijidea': IntellijIdea,
-  'java': Java,
-  'javascript': JavaScript,
-  'kotlin': Kotlin,
-  'materialdesign': MaterialDesign,
-  'nextjs': NextJS,
-  'python': Python,
-  'react': React,
-  'tailwindcss': TailwindCSS,
-  'typescript': TypeScript,
-  'vlang': VLang,
-  'vscode': VSCode
+  androidstudio: AndroidStudio,
+  compose: Compose,
+  dart: Dart,
+  figma: Figma,
+  flutter: Flutter,
+  intellijidea: IntellijIdea,
+  java: Java,
+  javascript: JavaScript,
+  kotlin: Kotlin,
+  materialdesign: MaterialDesign,
+  nextjs: NextJS,
+  python: Python,
+  react: React,
+  tailwindcss: TailwindCSS,
+  typescript: TypeScript,
+  vlang: VLang,
+  vscode: VSCode,
 } as const
 
 export type Logos = keyof typeof allLogos

@@ -22,12 +22,12 @@ export function HctColorPicker() {
     <div className="flex flex-col gap-4">
       <div className="flex items-center gap-3">
         <div
-          className="w-12 h-12 rounded-md border border-outline-variant shrink-0"
+          className="border-outline-variant h-12 w-12 shrink-0 rounded-md border"
           style={{ backgroundColor: seedColor }}
         />
         <div className="flex flex-col">
           <span className="text-sm font-medium">Seed Color</span>
-          <span className="text-xs opacity-60 font-mono">{seedColor.toUpperCase()}</span>
+          <span className="font-mono text-xs opacity-60">{seedColor.toUpperCase()}</span>
         </div>
       </div>
 
@@ -45,7 +45,7 @@ export function HctColorPicker() {
             step="1"
             value={hct.hue}
             onChange={handleHueChange}
-            className="w-full h-2 rounded-full appearance-none cursor-pointer"
+            className="h-2 w-full cursor-pointer appearance-none rounded-full"
             style={{
               background: `linear-gradient(to right,
                 hsl(0, 100%, 50%),
@@ -73,7 +73,7 @@ export function HctColorPicker() {
             step="1"
             value={hct.chroma}
             onChange={handleChromaChange}
-            className="w-full h-2 bg-surface-container-high rounded-full appearance-none cursor-pointer"
+            className="bg-surface-container-high h-2 w-full cursor-pointer appearance-none rounded-full"
           />
         </div>
 
@@ -90,7 +90,7 @@ export function HctColorPicker() {
             step="1"
             value={hct.tone}
             onChange={handleToneChange}
-            className="w-full h-2 rounded-full appearance-none cursor-pointer"
+            className="h-2 w-full cursor-pointer appearance-none rounded-full"
             style={{
               background: 'linear-gradient(to right, #000, #fff)',
             }}

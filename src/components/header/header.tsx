@@ -22,9 +22,9 @@ export const Header = () => {
 
   return (
     <>
-      <header className="w-full flex items-center justify-center z-50 absolute">
+      <header className="absolute z-50 flex w-full items-center justify-center">
         <BoxBlock
-          className="flex flex-row items-center justify-between w-full h-16 my-4 md:h-24 md:my-0"
+          className="my-4 flex h-16 w-full flex-row items-center justify-between md:my-0 md:h-24"
           margin="both"
         >
           <Wordmark />
@@ -71,7 +71,7 @@ const DarkModeButton = ({ onClick, visible }: DarkModeButtonProps) => {
   ].join(' ')
 
   return (
-    <div className="px-4 overflow-visible justify-center flex">
+    <div className="flex justify-center overflow-visible px-4">
       <button
         className={cn(containerClassName, visible && 'visible', !visible && 'invisible')}
         onClick={onClick}

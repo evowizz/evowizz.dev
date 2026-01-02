@@ -1,6 +1,6 @@
 /**
  * Helper for Next.js pages to easily support page params.
- * 
+ *
  * Usage:
  * ```
  * type MyPageProps = {

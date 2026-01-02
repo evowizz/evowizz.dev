@@ -7,31 +7,31 @@ export function Hero() {
   return (
     <div className="flex flex-col items-start gap-8">
       {/* Availability chip */}
-      <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-on-surface/5 border border-on-surface/10 motion-safe:animate-hero-opacity">
+      <div className="bg-on-surface/5 border-on-surface/10 motion-safe:animate-hero-opacity inline-flex items-center gap-2 rounded-full border px-4 py-2">
         <span className="relative flex h-2.5 w-2.5 items-center justify-center">
-          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-tertiary opacity-75" />
-          <span className="relative inline-flex rounded-full h-2 w-2 bg-tertiary" />
+          <span className="bg-tertiary absolute inline-flex h-full w-full animate-ping rounded-full opacity-75" />
+          <span className="bg-tertiary relative inline-flex h-2 w-2 rounded-full" />
         </span>
-        <span className="text-xs font-medium tracking-wider uppercase text-on-surface/70">
+        <span className="text-on-surface/70 text-xs font-medium tracking-wider uppercase">
           Available for hire
         </span>
       </div>
 
       {/* Main Headline */}
-      <h1 className="text-5xl md:text-7xl lg:text-8xl font-semibold tracking-tight">
-        <span className="block motion-safe:animate-hero-appear motion-safe:opacity-0 motion-safe:animation-delay-100">
+      <h1 className="text-5xl font-semibold tracking-tight md:text-7xl lg:text-8xl">
+        <span className="motion-safe:animate-hero-appear motion-safe:animation-delay-100 block motion-safe:opacity-0">
           Building
         </span>
-        <span className="block motion-safe:animate-hero-appear motion-safe:opacity-0 motion-safe:animation-delay-200">
-          <span className="italic font-serif text-primary">Android</span>
+        <span className="motion-safe:animate-hero-appear motion-safe:animation-delay-200 block motion-safe:opacity-0">
+          <span className="text-primary font-serif italic">Android</span>
         </span>
-        <span className="block motion-safe:animate-hero-appear motion-safe:opacity-0 motion-safe:animation-delay-300">
+        <span className="motion-safe:animate-hero-appear motion-safe:animation-delay-300 block motion-safe:opacity-0">
           experiences.
         </span>
       </h1>
 
       {/* Subtitle */}
-      <p className="max-w-lg text-lg md:text-xl text-on-surface/60 border-l-2 border-on-surface/20 pl-4 motion-safe:animate-hero-appear motion-safe:opacity-0 motion-safe:animation-delay-400">
+      <p className="text-on-surface/60 border-on-surface/20 motion-safe:animate-hero-appear motion-safe:animation-delay-400 max-w-lg border-l-2 pl-4 text-lg motion-safe:opacity-0 md:text-xl">
         Developer & Designer building intuitive experiences across Android, Web & beyond, with a
         focus on Material Design.
       </p>
@@ -39,16 +39,16 @@ export function Hero() {
       {/* CTA */}
       <Link
         href="#projects"
-        className="group inline-flex items-center gap-2 text-base font-medium border-b border-current pb-1 hover:gap-3 transition-all duration-300 motion-safe:animate-hero-appear motion-safe:opacity-0 motion-safe:animation-delay-500"
+        className="group motion-safe:animate-hero-appear motion-safe:animation-delay-500 inline-flex items-center gap-2 border-b border-current pb-1 text-base font-medium transition-all duration-300 hover:gap-3 motion-safe:opacity-0"
       >
         See my work
-        <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+        <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
       </Link>
 
       {/* Scroll indicator */}
-      <div className="mt-8 motion-safe:animate-hero-appear motion-safe:opacity-0 motion-safe:animation-delay-700">
+      <div className="motion-safe:animate-hero-appear motion-safe:animation-delay-700 mt-8 motion-safe:opacity-0">
         <svg
-          className="w-6 h-6 text-on-surface/40 animate-bounce"
+          className="text-on-surface/40 h-6 w-6 animate-bounce"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
