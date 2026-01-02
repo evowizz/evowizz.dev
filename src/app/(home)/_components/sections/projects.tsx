@@ -1,5 +1,5 @@
-import { ProjectGrid } from '@/components/project-grid'
-import { CompactProject } from '@/components/project-card'
+import { ProjectGrid } from '@/app/(home)/_components/project-grid'
+import { CompactProject } from '@/app/(home)/_components/project-card'
 import { projects } from '@/lib/projects'
 import { Carousel, CarouselItem, CarouselContent, CarouselButtons } from '@/components/carousel'
 import { BoxBlock } from '@/components/lego/box-block'

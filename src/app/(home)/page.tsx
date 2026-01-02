@@ -1,4 +1,4 @@
-import { Hero, About, Skills, Projects } from '@/components/sections'
+import { Hero, About, Skills, Projects } from './_components/sections'
 import { BoxBlock } from '@/components/lego/box-block'
 
 export default function Home() {

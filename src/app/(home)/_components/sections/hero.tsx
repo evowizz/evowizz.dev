@@ -1,5 +1,3 @@
-'use client'
-
 import { ArrowRight } from '@/components/svg'
 import Link from 'next/link'
 

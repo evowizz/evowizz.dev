@@ -1,5 +1,5 @@
 import { BoxBlock } from '@/components/lego/box-block'
-import { SkillsGrid } from '@/components/skill'
+import { SkillsGrid } from '@/app/(home)/_components/skill'
 import { skills } from '@/lib/skills'
 
 export const Skills = () => {

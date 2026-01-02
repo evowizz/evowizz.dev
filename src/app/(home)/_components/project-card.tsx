@@ -2,7 +2,7 @@ import { Project } from '@/lib/projects'
 import Link from 'next/link'
 import Image from 'next/image'
 import { cn } from '@/lib/utils'
-import { ArrowRight } from './svg/arrow-right'
+import { ArrowRight } from '@/components/svg/arrow-right'
 import { StyleableProps } from '@/types/component'
 
 type ProjectProps = StyleableProps<{

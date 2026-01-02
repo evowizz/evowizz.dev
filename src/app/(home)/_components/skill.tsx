@@ -1,6 +1,6 @@
 import { Skill } from '@/lib/skills'
 import Link from 'next/link'
-import { allLogos } from './svg'
+import { allLogos } from '../../../components/svg'
 import { cn } from '@/lib/utils'
 
 type SkillsGridProps = {
