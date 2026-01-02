@@ -14,7 +14,7 @@ import { Variant, Hct, argbFromHex, hexFromArgb, createScheme, applyScheme } fro
 
 const DEFAULT_SEED_COLOR = '#33CC7A'
 const DEFAULT_HCT = Hct.fromInt(argbFromHex(DEFAULT_SEED_COLOR))
-const DEFAULT_VARIANT = Variant.TONAL_SPOT
+const DEFAULT_VARIANT = Variant.RAINBOW
 
 type MaterialThemeContextValue = {
   seedColor: string
