@@ -250,18 +250,18 @@
   background-image: url('/static/bg/noise.png');
 }
 
-@utility font-variation-sans {
+@utility variation-sans {
   font-variation-settings:
     'wdth' var(--font-wdth, 100),
     'GRAD' var(--font-grad, 0),
     'slnt' var(--font-slnt, 0);
 }
 
-@utility font-variation-serif {
+@utility variation-serif {
   font-variation-settings: 'wdth' var(--font-wdth, 100);
 }
 
-@utility font-variation-none {
+@utility variation-none {
   font-variation-settings: normal;
 }
 

@@ -25,19 +25,13 @@ const NavLink = ({ destination: { path, label }, isSelected }: LinkProps) => (
     <Link
       href={path}
       className={cn(
-        'group font-600 flex items-center text-6xl opacity-70 transition-all hover:[font-stretch:150%]',
-        isSelected && 'opacity-100',
-        !isSelected && 'gap-2 hover:opacity-100',
+        'group font-600 variation-sans flex items-center text-6xl opacity-70 transition-all duration-300',
+        isSelected && 'opacity-100 text-primary',
+        !isSelected && 'gap-2 hover:opacity-90 hover:font-800 motion-safe:hover:variation-width-120',
       )}
     >
       {label}
-      <span
-        className={cn({
-          'transition-transform motion-safe:md:group-hover:translate-x-4': !isSelected,
-        })}
-      >
-        {isSelected ? <MiddleDot /> : <ArrowRight />}
-      </span>
+      {isSelected && <MiddleDot />}
     </Link>
   </li>
 )
