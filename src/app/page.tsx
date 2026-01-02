@@ -4,7 +4,7 @@ import { BoxBlock } from '@/components/lego/box-block'
 export default function Home() {
   return (
     <main>
-      <section className="relative min-h-dvh flex flex-col justify-center overflow-hidden">
+      <section className="relative min-h-svh flex flex-col justify-center overflow-hidden">
         <BoxBlock className="py-24 md:py-32 z-10">
           <Hero />
         </BoxBlock>

@@ -31,7 +31,7 @@ export default function RootLayout({
         <ThemeProvider>
           <MaterialThemeProvider>
             <div className="fixed inset-0 overlay-noise -z-50" />
-            <div className="min-h-dvh">
+            <div className="min-h-svh">
               <Header />
               {children}
             </div>
