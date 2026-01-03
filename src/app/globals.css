@@ -316,6 +316,75 @@
   animation-delay: 800ms;
 }
 
+/**
+ * A default spatial motion.
+ *
+ * This motion spec is designed to be applied to animations that may change the shape or bounds
+ * of the component. For color or alpha animations use the `effects` equivalent which ensures a
+ * "non-spatial" motion.
+ */
+@utility motion-spatial-default {
+  transition-timing-function: cubic-bezier(0.38, 1.21, 0.22, 1);
+  transition-duration: 500ms;
+}
+
+/**
+ * A fast spatial motion.
+ *
+ * This motion spec is designed to be applied to animations that may change the shape or bounds
+ * of the component. For color or alpha animations use the `effects` equivalent which ensures a
+ * "non-spatial" motion.
+ */
+@utility motion-spatial-fast {
+  transition-timing-function: cubic-bezier(0.42, 1.67, 0.21, 0.9);
+  transition-duration: 350ms;
+}
+
+/**
+ * A slow spatial motion.
+ *
+ * This motion spec is designed to be applied to animations that may change the shape or bounds
+ * of the component. For color or alpha animations use the `effects` equivalent which ensures a
+ * "non-spatial" motion.
+ */
+@utility motion-spatial-slow {
+  transition-timing-function: cubic-bezier(0.39, 1.29, 0.35, 0.98);
+  transition-duration: 650ms;
+}
+
+/**
+ * A default effects motion.
+ *
+ * This motion spec is designed to be applied to animations that do not change the shape or
+ * bounds of the component. For example, color animation.
+ */
+@utility motion-effects-default {
+  transition-timing-function: cubic-bezier(0.34, 0.8, 0.34, 1);
+  transition-duration: 200ms;
+}
+
+/**
+ * A fast effects motion.
+ *
+ * This motion spec is designed to be applied to animations that do not change the shape or
+ * bounds of the component. For example, color animation.
+ */
+@utility motion-effects-fast {
+  transition-timing-function: cubic-bezier(0.31, 0.94, 0.34, 1);
+  transition-duration: 150ms;
+}
+
+/**
+ * A slow effects motion.
+ *
+ * This motion spec is designed to be applied to animations that do not change the shape or
+ * bounds of the component. For example, color animation.
+ */
+@utility motion-effects-slow {
+  transition-timing-function: cubic-bezier(0.34, 0.88, 0.34, 1);
+  transition-duration: 300ms;
+}
+
 @utility hide-scrollbar {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */

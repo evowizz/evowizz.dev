@@ -23,7 +23,7 @@ export const FeaturedProject = ({ project, index = 0, className }: ProjectProps)
       className={cn(
         'relative aspect-16/10 w-full overflow-hidden rounded-3xl',
         'bg-surface-container border-outline-variant border',
-        'transition-all duration-500',
+        'motion-effects-default transition-all',
         hasLinks && 'group-hover:border-primary',
       )}
     >
@@ -99,10 +99,10 @@ export const FeaturedProject = ({ project, index = 0, className }: ProjectProps)
               href={primaryLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-on-surface hover:text-primary group/link inline-flex items-center gap-2 text-sm font-semibold transition-colors duration-200"
+              className="text-on-surface hover:text-primary group/link motion-effects-default inline-flex items-center gap-2 text-sm font-semibold transition-colors"
             >
               View Project
-              <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover/link:translate-x-1" />
+              <ArrowRight className="motion-spatial-default h-4 w-4 transition-transform group-hover/link:translate-x-1" />
             </Link>
           </div>
         )}
@@ -120,7 +120,7 @@ export const CompactProject = ({ project, className }: ProjectProps) => {
       className={cn(
         'relative aspect-16/10 w-full overflow-hidden rounded-3xl',
         'bg-surface-container border-outline-variant border',
-        'transition-all duration-500',
+        'motion-effects-default transition-all',
         hasLinks && 'group-hover:border-primary',
       )}
     >
@@ -190,10 +190,10 @@ export const CompactProject = ({ project, className }: ProjectProps) => {
               href={primaryLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-on-surface hover:text-primary group/link inline-flex items-center gap-2 text-sm font-semibold transition-colors duration-200"
+              className="text-on-surface hover:text-primary group/link motion-effects-default inline-flex items-center gap-2 text-sm font-semibold transition-colors"
             >
               View Project
-              <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover/link:translate-x-1" />
+              <ArrowRight className="motion-spatial-default h-4 w-4 transition-transform group-hover/link:translate-x-1" />
             </Link>
           </div>
         )}

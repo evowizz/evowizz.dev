@@ -37,10 +37,10 @@ export function Hero() {
       {/* CTA */}
       <Link
         href="#projects"
-        className="group motion-safe:animate-hero-appear motion-safe:animation-delay-500 inline-flex items-center gap-2 border-b border-current pb-1 text-base font-medium transition-all duration-300 hover:gap-3 motion-safe:opacity-0"
+        className="group motion-safe:animate-hero-appear motion-safe:animation-delay-500 motion-effects-default inline-flex items-center gap-2 border-b border-current pb-1 text-base font-medium transition-all hover:gap-3 motion-safe:opacity-0"
       >
         See my work
-        <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+        <ArrowRight className="motion-spatial-default h-4 w-4 transition-transform group-hover:translate-x-1" />
       </Link>
 
       {/* Scroll indicator */}

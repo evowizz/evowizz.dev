@@ -31,8 +31,10 @@ export const Drawer = ({ destinations, isOpen, closeDrawer }: DrawerProps) => {
     <>
       <BoxBlock
         className={cn(
-          'bg-surface-container-high text-on-surface-variant fixed top-0 right-0 z-50 flex h-dvh w-full flex-col md:rounded-l-4xl md:w-1/2 xl:w-1/3',
-          'translate-x-full transform-gpu transition-transform duration-300 ease-out',
+          'bg-surface-container-highest text-on-surface-variant fixed top-0 right-0 z-50 flex h-dvh w-full flex-col md:w-1/2 md:rounded-l-4xl xl:w-1/3',
+          'motion-spatial-default translate-x-full transform-gpu transition-transform',
+          // Show more of the background to prevent a gap on the right when the drawer overshoots
+          'after:absolute after:inset-y-0 after:left-full after:w-screen after:bg-inherit',
           isOpen && 'translate-x-0 transform',
         )}
         margin="none"
@@ -57,7 +59,7 @@ export const Drawer = ({ destinations, isOpen, closeDrawer }: DrawerProps) => {
       <div
         className={cn(
           'pointer-events-none',
-          'bg-scrim/40 fixed top-0 right-0 z-40 h-dvh w-full opacity-0 backdrop-blur-sm transition-opacity duration-300',
+          'bg-scrim/40 motion-effects-default fixed top-0 right-0 z-40 h-dvh w-full opacity-0 backdrop-blur-sm transition-opacity',
           isOpen && 'pointer-events-auto opacity-100',
         )}
         onClick={closeDrawer}

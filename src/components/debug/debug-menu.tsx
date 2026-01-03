@@ -5,6 +5,7 @@ import { useTheme } from 'next-themes'
 import { HctColorPicker } from './hct-color-picker'
 import { RgbColorPicker } from './rgb-color-picker'
 import { ColorTokenPreview } from './color-token-preview'
+import { MotionPreview } from './motion-preview'
 import { useMaterialTheme } from '../material-theme-context'
 import { Variant } from '@/lib/material'
 import { cn } from '@/lib/utils'
@@ -74,7 +75,7 @@ const COLOR_TOKENS = [
   'on-tertiary-fixed-variant',
 ]
 
-type Tab = 'picker' | 'tokens'
+type Tab = 'picker' | 'tokens' | 'motion'
 type PickerMode = 'hct' | 'rgb'
 
 export function DebugMenu() {
@@ -195,6 +196,17 @@ export function DebugMenu() {
         >
           Color Tokens
         </button>
+        <button
+          onClick={() => setActiveTab('motion')}
+          className={cn(
+            '-mb-px border-b-2 px-3 py-2 text-xs font-medium transition-colors',
+            activeTab === 'motion'
+              ? 'border-primary text-primary'
+              : 'border-transparent opacity-60 hover:opacity-100',
+          )}
+        >
+          Motion
+        </button>
       </div>
 
       {/* Tab Content */}
@@ -231,6 +243,7 @@ export function DebugMenu() {
           </div>
         )}
         {activeTab === 'tokens' && <ColorTokenPreview />}
+        {activeTab === 'motion' && <MotionPreview />}
       </div>
     </div>
   )

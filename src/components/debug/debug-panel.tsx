@@ -14,7 +14,7 @@ export function DebugPanel() {
         className={cn(
           'absolute right-0 bottom-14 max-h-[70vh] w-80 overflow-hidden',
           'bg-surface-container border-outline-variant rounded-2xl border shadow-xl',
-          'origin-bottom-right transition-all duration-200 ease-out',
+          'motion-effects-default origin-bottom-right transition-all',
           isOpen
             ? 'translate-y-0 scale-100 opacity-100'
             : 'pointer-events-none translate-y-2 scale-95 opacity-0',
@@ -30,14 +30,16 @@ export function DebugPanel() {
         onClick={() => setIsOpen(!isOpen)}
         className={cn(
           'flex h-12 w-12 items-center justify-center rounded-full',
-          'bg-primary text-on-primary shadow-lg',
-          'hover:scale-105 hover:shadow-xl active:scale-95',
-          'transition-all duration-200',
+          'bg-primary text-on-primary shadow-lg transition-all',
+          'motion-effects-default hover:scale-105 hover:shadow-xl active:scale-95',
         )}
         title="Toggle Debug Menu"
       >
         <svg
-          className={cn('h-5 w-5 transition-transform duration-200', isOpen && 'rotate-45')}
+          className={cn(
+            'motion-spatial-default h-5 w-5 transition-transform',
+            isOpen && 'rotate-45',
+          )}
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"

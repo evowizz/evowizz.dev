@@ -54,10 +54,9 @@ type DarkModeButtonProps = {
 const DarkModeButton = ({ onClick, visible }: DarkModeButtonProps) => {
   const containerClassName = [
     'relative',
-    'duration-500',
     'hover:text-inverse-on-surface',
     'before:transition-all',
-    'before:duration-300',
+    'before:motion-spatial-slow',
     'before:inset-0',
     'before:scale-1',
     'before:opacity-0',

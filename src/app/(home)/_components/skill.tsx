@@ -44,7 +44,7 @@ const SkillChip = ({ skill, className }: SkillChipProps) => {
         className={cn(
           'flex items-center rounded-2xl border px-3 py-1.5 select-none',
           'border-outline-variant bg-surface-container',
-          'ease-slow-in transition-all duration-300',
+          'motion-effects-default transition-all',
           'group-hover:bg-tertiary-container group-hover:border-tertiary-fixed-dim',
           'group-hover:text-on-tertiary-container group-hover:rounded-lg',
           className,

@@ -32,7 +32,7 @@ export default function RootLayout({
       lang="en"
       className={`${googleSansFlex.variable} ${googleSansCode.variable} ${notoSerif.variable}`}
     >
-      <body className="bg-surface-container text-on-surface ease-slow-in transition-colors duration-300">
+      <body className="bg-surface-container text-on-surface motion-effects-default transition-colors">
         <ThemeProvider>
           <MaterialThemeProvider>
             <div className="overlay-noise fixed inset-0 -z-50" />
