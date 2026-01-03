@@ -3,6 +3,7 @@
 import { cn } from '@/lib/utils'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { ArrowRight, MiddleDot } from '../svg'
 
 export type NavDestination = {
   label: string
@@ -23,14 +24,14 @@ const NavLink = ({ destination: { path, label }, isSelected }: LinkProps) => (
     <Link
       href={path}
       className={cn(
-        'group font-600 variation-sans motion-spatial-default relative flex items-center text-6xl opacity-70',
-        isSelected &&
-          'text-primary opacity-100 before:absolute before:top-1/2 before:-left-8 before:block before:h-4 before:w-4 before:-translate-y-1/2 before:rounded-full before:bg-current before:content-[""]',
+        'group font-600 variation-sans motion-spatial-default relative flex w-fit items-center text-6xl opacity-70',
+        isSelected && 'text-primary opacity-100',
         !isSelected &&
           'hover:font-800 motion-safe:hover:variation-width-120 gap-2 hover:opacity-90',
       )}
     >
       {label}
+      {isSelected && <MiddleDot />}
     </Link>
   </li>
 )
