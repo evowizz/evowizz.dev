@@ -8,6 +8,7 @@ import { Menu } from '../svg'
 import { Sun } from '../svg'
 import { cn } from '@/lib/utils'
 import { useTheme } from 'next-themes'
+import Link from 'next/link'
 
 const destinations = [
   { label: 'Home', path: '/' },
@@ -27,7 +28,9 @@ export const Header = () => {
           className="my-4 flex h-16 w-full flex-row items-center justify-between md:my-0 md:h-24"
           margin="both"
         >
-          <Wordmark />
+          <Link href="/" aria-label="Home">
+            <Wordmark />
+          </Link>
           <div className="flex flex-row items-center space-x-4">
             <DarkModeButton
               onClick={() => {
