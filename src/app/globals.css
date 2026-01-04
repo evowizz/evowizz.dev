@@ -1,4 +1,5 @@
 @import 'tailwindcss';
+@import 'material-symbols/rounded.css';
 
 /* Default Material Design 3 Color Tokens */
 :root {
@@ -441,4 +442,31 @@
       --bubble-blur: calc(6px * var(--light-multiplier));
     }
   }
+}
+
+/* Material Symbols Utilities */
+.material-symbols-rounded {
+  font-size: 24px;
+  font-variation-settings:
+    'FILL' var(--icon-fill, 0),
+    'wght' var(--icon-wght, 400),
+    'GRAD' var(--icon-grad, 0),
+    'opsz' 24;
+}
+
+/* Symbol fill utilities */
+@utility symbol-fill-* {
+  --icon-fill: --value('0', '1');
+}
+
+/* Symbol weight utilities */
+@utility symbol-weight-* {
+  --icon-wght: --value(integer);
+  --icon-wght: --value([number]);
+}
+
+/* Symbol grade utilities */
+@utility symbol-grade-* {
+  --icon-grad: --value(integer);
+  --icon-grad: --value([number]);
 }

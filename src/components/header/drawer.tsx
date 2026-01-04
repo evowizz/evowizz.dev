@@ -4,7 +4,6 @@ import { useEffect } from 'react'
 import { cn } from '@/lib/utils'
 import { BoxBlock } from '../lego/box-block'
 import { Nav, NavDestination } from './nav'
-import { Close } from '../svg'
 import { DrawerFooter } from './drawer-footer'
 
 type DrawerProps = {
@@ -30,6 +29,8 @@ export const Drawer = ({ destinations, isOpen, closeDrawer }: DrawerProps) => {
   return (
     <>
       <BoxBlock
+        id="site-drawer"
+        aria-hidden={!isOpen}
         className={cn(
           'bg-surface-container-highest text-on-surface-variant fixed top-0 right-0 z-50 flex h-dvh w-full flex-col md:w-1/2 md:rounded-l-4xl xl:w-1/3',
           'motion-spatial-default translate-x-full transform-gpu transition-transform',
@@ -40,14 +41,8 @@ export const Drawer = ({ destinations, isOpen, closeDrawer }: DrawerProps) => {
         margin="none"
         padding="both"
       >
-        {/* Header */}
-        <div className="relative my-4 flex h-16 items-center justify-end text-lg md:my-0 md:h-24">
-          <button onClick={closeDrawer}>
-            <Close />
-          </button>
-        </div>
+        <div className="my-4 h-16 md:my-0 md:h-24" />
 
-        {/* Content */}
         <BoxBlock className="flex flex-1 flex-col" margin="none" padding="none">
           <Nav destinations={destinations} />
           <div className="flex-1" />
@@ -55,7 +50,6 @@ export const Drawer = ({ destinations, isOpen, closeDrawer }: DrawerProps) => {
         </BoxBlock>
       </BoxBlock>
 
-      {/* Scrim */}
       <div
         className={cn(
           'pointer-events-none',

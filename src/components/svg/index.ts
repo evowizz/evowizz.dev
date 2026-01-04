@@ -19,7 +19,6 @@ import { VLang } from './logos/vlang'
 import { VSCode } from './logos/vscode'
 import { Menu } from './menu'
 import { MiddleDot } from './middle-dot'
-import { Sun } from './sun'
 
 // Icons
 export * from './arrow-right'
@@ -27,7 +26,6 @@ export * from './close'
 export * from './menu'
 export * from './middle-dot'
 export * from './star-shape'
-export * from './sun'
 
 // Logos
 export * from './logos/kotlin'
@@ -38,7 +36,6 @@ export const allIcons = {
   close: Close,
   menu: Menu,
   'middle-dot': MiddleDot,
-  sun: Sun,
 } as const
 
 export type Icons = keyof typeof allIcons

@@ -1,85 +1,70 @@
 'use client'
 
-import { Wordmark } from '../wordmark'
-import { BoxBlock } from '../lego/box-block'
-import { Drawer } from './drawer'
 import { useState } from 'react'
-import { Menu } from '../svg'
-import { Sun } from '../svg'
-import { cn } from '@/lib/utils'
-import { useTheme } from 'next-themes'
 import Link from 'next/link'
-
-const destinations = [
-  { label: 'Home', path: '/' },
-  { label: 'Blog', path: '/blog' },
-]
+import { useScroll, useMotionValueEvent } from 'framer-motion'
+import { useTheme } from 'next-themes'
+import { cn } from '@/lib/utils'
+import { useIsSSR } from '@/lib/use-is-ssr'
+import { Wordmark } from '../wordmark'
+import { Drawer } from './drawer'
+import { destinations } from '@/lib/destinations'
+import { ControlGroup } from './control-group'
 
 export const Header = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
   const toggleDrawer = () => setIsDrawerOpen((prev) => !prev)
   const closeDrawer = () => setIsDrawerOpen(false)
   const { resolvedTheme, setTheme } = useTheme()
+  const isSSR = useIsSSR()
+  const isDark = !isSSR && resolvedTheme === 'dark'
+  const [isScrolled, setIsScrolled] = useState(false)
+
+  const { scrollY } = useScroll()
+
+  useMotionValueEvent(scrollY, 'change', (latest) => {
+    const shouldBeScrolled = latest > 20
+    setIsScrolled((prev) => (prev === shouldBeScrolled ? prev : shouldBeScrolled))
+  })
+
 
   return (
     <>
-      <header className="absolute z-50 flex w-full items-center justify-center">
-        <BoxBlock
-          className="my-4 flex h-16 w-full flex-row items-center justify-between md:my-0 md:h-24"
-          margin="both"
-        >
-          <Link href="/" aria-label="Home">
+      <header className="pointer-events-none fixed top-0 z-10 flex h-24 w-full items-center justify-center">
+        <div className="flex h-full w-full flex-row items-center justify-between px-10 md:px-18">
+          <Link
+            href="/"
+            aria-label="Home"
+            className={cn(
+              'motion-effects-default pointer-events-auto',
+              isScrolled ? 'opacity-0' : 'opacity-100',
+            )}
+          >
             <Wordmark />
           </Link>
-          <div className="flex flex-row items-center space-x-4">
-            <DarkModeButton
-              onClick={() => {
-                setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')
-              }}
-              visible
-            />
-            <button onClick={toggleDrawer}>
-              <Menu className="text-lg" />
-            </button>
-          </div>
-        </BoxBlock>
+        </div>
       </header>
+
+      <div className="pointer-events-none fixed top-0 right-0 z-60 flex h-24 items-center justify-end pr-10 md:pr-18">
+        <div
+          className={cn(
+            'motion-spatial-default transition-all pointer-events-auto flex items-center rounded-full',
+            isScrolled || isDrawerOpen
+              ? 'bg-surface-container-high border-outline-variant -mr-3 border px-3 py-2'
+              : 'mr-0 border border-transparent bg-transparent p-0',
+          )}
+        >
+          <ControlGroup
+            toggleDrawer={toggleDrawer}
+            toggleTheme={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
+            isScrolled={isScrolled}
+            isDrawerOpen={isDrawerOpen}
+            isDark={isDark}
+          />
+        </div>
+      </div>
+
       <Drawer destinations={destinations} isOpen={isDrawerOpen} closeDrawer={closeDrawer} />
     </>
-  )
-}
-
-type DarkModeButtonProps = {
-  onClick: () => void
-  visible: boolean
-}
-
-const DarkModeButton = ({ onClick, visible }: DarkModeButtonProps) => {
-  const containerClassName = [
-    'relative',
-    'hover:text-inverse-on-surface',
-    'before:transition-all',
-    'before:motion-spatial-slow',
-    'before:inset-0',
-    'before:scale-1',
-    'before:opacity-0',
-    'before:absolute',
-    'before:rounded-full',
-    'before:bg-inverse-surface',
-    "before:content-['']",
-    'hover:before:scale-[2.7]',
-    'hover:before:opacity-100',
-    'before:-z-10',
-  ].join(' ')
-
-  return (
-    <div className="flex justify-center overflow-visible px-4">
-      <button
-        className={cn(containerClassName, visible && 'visible', !visible && 'invisible')}
-        onClick={onClick}
-      >
-        <Sun className="text-lg" />
-      </button>
-    </div>
   )
 }

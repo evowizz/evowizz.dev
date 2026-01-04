@@ -1,5 +1,6 @@
 import './globals.css'
-import { Google_Sans_Code, Google_Sans_Flex, Noto_Serif, Roboto_Serif } from 'next/font/google'
+
+import { Google_Sans_Code, Google_Sans_Flex, Noto_Serif } from 'next/font/google'
 import { Header } from '@/components/header'
 import { MaterialThemeProvider } from '@/components/material-theme-context'
 import { DebugPanel } from '@/components/debug'
@@ -32,14 +33,11 @@ export default function RootLayout({
       lang="en"
       className={`${googleSansFlex.variable} ${googleSansCode.variable} ${notoSerif.variable}`}
     >
-      <body className="bg-surface-container text-on-surface motion-effects-default transition-colors">
+      <body className="text-on-surface motion-effects-default bg-background transition-colors">
         <ThemeProvider>
           <MaterialThemeProvider>
-            <div className="overlay-noise fixed inset-0 -z-50" />
-            <div className="min-h-svh">
-              <Header />
-              {children}
-            </div>
+            <Header />
+            <div className="pt-24 pb-8">{children}</div>
             <DebugPanel />
           </MaterialThemeProvider>
         </ThemeProvider>
