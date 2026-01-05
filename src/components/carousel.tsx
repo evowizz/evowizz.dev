@@ -3,7 +3,6 @@
 import React, { createContext, useContext, useRef } from 'react'
 import { ArrowRight } from './svg/arrow-right'
 import { cn } from '@/lib/utils'
-import { BoxBlock } from '@/components/lego/box-block'
 import { StyleablePropsWithChildren, StyleableProps } from '@/types/component'
 
 type CarouselContextType = {

@@ -2,7 +2,6 @@
 
 import { useEffect } from 'react'
 import { cn } from '@/lib/utils'
-import { BoxBlock } from '../lego/box-block'
 import { Nav, NavDestination } from './nav'
 import { DrawerFooter } from './drawer-footer'
 
