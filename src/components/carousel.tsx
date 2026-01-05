@@ -176,18 +176,15 @@ export const CarouselContent = ({ children, className }: StyleablePropsWithChild
   const { scrollContainerRef } = useCarousel()
 
   return (
-    <BoxBlock
+    <div
       ref={scrollContainerRef}
-      margin="none"
-      padding="left"
-      scrollPadding="left"
       className={cn(
-        'hide-scrollbar flex snap-x snap-mandatory gap-6 overflow-x-auto pr-[max(calc(100vw/24),1rem)] pb-8',
+        'hide-scrollbar flex snap-x snap-mandatory gap-6 overflow-x-auto px-8 scroll-px-8 pb-8',
         className,
       )}
     >
       {children}
-    </BoxBlock>
+    </div>
   )
 }
 

@@ -5,7 +5,7 @@ export function Hero() {
   return (
     <div className="flex flex-col items-start gap-8">
       {/* Availability chip */}
-      <div className="bg-on-surface/5 border-on-surface/10 motion-safe:animate-hero-opacity inline-flex items-center gap-2 rounded-full border px-4 py-2">
+      <div className="bg-surface-container-lowest border-outline-variant motion-safe:animate-hero-opacity inline-flex items-center gap-2 rounded-full border px-4 py-2">
         <span className="relative flex h-2.5 w-2.5 items-center justify-center">
           <span className="bg-tertiary absolute inline-flex h-full w-full animate-ping rounded-full opacity-75" />
           <span className="bg-tertiary relative inline-flex h-2 w-2 rounded-full" />
@@ -16,7 +16,7 @@ export function Hero() {
       </div>
 
       {/* Main Headline */}
-      <h1 className="text-5xl font-semibold tracking-tight md:text-7xl lg:text-8xl">
+      <h1 className="text-6xl font-semibold tracking-tight">
         <span className="motion-safe:animate-hero-appear motion-safe:animation-delay-100 block motion-safe:opacity-0">
           Building
         </span>
@@ -29,7 +29,7 @@ export function Hero() {
       </h1>
 
       {/* Subtitle */}
-      <p className="text-on-surface/60 border-on-surface/20 motion-safe:animate-hero-appear motion-safe:animation-delay-400 max-w-lg border-l-2 pl-4 text-lg motion-safe:opacity-0 md:text-xl">
+      <p className="text-on-surface/60 border-on-surface/20 motion-safe:animate-hero-appear motion-safe:animation-delay-400 max-w-lg border-l-2 pl-4 text-lg motion-safe:opacity-0">
         Developer & Designer building intuitive experiences across Android, Web & beyond, with a
         focus on Material Design.
       </p>

@@ -234,6 +234,10 @@
   color utility to any element that depends on these defaults.
 */
 @layer base {
+  :root {
+    font-size: clamp(0.75rem, 0.25vw + 0.75rem, 1.25rem);
+  }
+
   *,
   ::after,
   ::before,
@@ -446,7 +450,7 @@
 
 /* Material Symbols Utilities */
 .material-symbols-rounded {
-  font-size: 24px;
+  font-size: 1.5rem;
   font-variation-settings:
     'FILL' var(--icon-fill, 0),
     'wght' var(--icon-wght, 400),

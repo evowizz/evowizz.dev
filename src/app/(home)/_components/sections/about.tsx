@@ -7,12 +7,12 @@ export const About = () => {
         <span className="text-primary mb-3 block text-xs font-medium tracking-[0.2em] uppercase">
           About
         </span>
-        <h2 className="text-4xl leading-tight font-semibold tracking-tight md:text-5xl">
+        <h2 className="text-4xl leading-tight font-semibold tracking-tight">
           Hi, I&apos;m <span className="text-primary font-serif italic">Dy</span>.
         </h2>
       </div>
 
-      <div className="text-on-surface/80 space-y-6 text-lg leading-relaxed md:text-xl">
+      <div className="text-on-surface/80 space-y-6 text-lg leading-relaxed">
         <p>
           I&apos;m a <strong>Software Engineer</strong> based in France. I wrote my first line of
           code in 2014 and released <strong>Inware</strong>, my first major Android app, in 2018.
@@ -62,7 +62,7 @@ export const About = () => {
           <strong>Material Design</strong>.
         </p>
       </div>
-      <div className="border-outline-variant/30 mt-10 flex gap-16 border-t pt-10">
+      <div className="border-outline-variant mt-10 flex gap-16 border-t pt-10">
         <div>
           <span className="text-primary block text-4xl font-bold tracking-tight">7+</span>
           <span className="text-on-surface/50 text-sm font-medium tracking-wider uppercase">

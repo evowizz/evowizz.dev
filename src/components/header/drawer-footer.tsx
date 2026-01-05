@@ -8,7 +8,7 @@ type DrawerFooterProps = {
 export const DrawerFooter = ({ className }: DrawerFooterProps) => (
   <div className={cn('flex flex-col gap-8 pt-8', className)}>
     <div className="flex flex-col gap-2 text-base text-wrap text-ellipsis">
-      <p>Find me</p>
+      <p className='text-primary uppercase text-xs tracking-[0.2em] font-medium'>Find me</p>
       <div className="grid grid-cols-3 gap-1">
         <SocialLink href="mailto:mail@evowizz.dev">Email</SocialLink>
         <SocialLink href="https://t.me/evowizz">Telegram</SocialLink>

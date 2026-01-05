@@ -28,27 +28,25 @@ export const Drawer = ({ destinations, isOpen, closeDrawer }: DrawerProps) => {
 
   return (
     <>
-      <BoxBlock
+      <div
         id="site-drawer"
         aria-hidden={!isOpen}
         className={cn(
-          'bg-surface-container-highest text-on-surface-variant fixed top-0 right-0 z-50 flex h-dvh w-full flex-col md:w-1/2 md:rounded-l-4xl xl:w-1/3',
+          'bg-surface-container-highest text-on-surface-variant fixed top-0 right-0 z-50 flex h-dvh w-full flex-col md:w-1/2 md:rounded-l-4xl xl:w-1/3 px-8 md:px-12',
           'motion-spatial-default translate-x-full transform-gpu transition-transform',
           // Show more of the background to prevent a gap on the right when the drawer overshoots
           'after:absolute after:inset-y-0 after:left-full after:w-screen after:bg-inherit',
           isOpen && 'translate-x-0 transform',
         )}
-        margin="none"
-        padding="both"
       >
         <div className="my-4 h-16 md:my-0 md:h-24" />
 
-        <BoxBlock className="flex flex-1 flex-col" margin="none" padding="none">
+        <div className="flex flex-1 flex-col">
           <Nav destinations={destinations} />
           <div className="flex-1" />
-          <DrawerFooter className="border-t-outline-variant/20 -mx-4 shrink-0 border-t px-4 pb-16" />
-        </BoxBlock>
-      </BoxBlock>
+          <DrawerFooter className="border-t-outline-variant -mx-4 shrink-0 border-t px-4 pb-16" />
+        </div>
+      </div>
 
       <div
         className={cn(
