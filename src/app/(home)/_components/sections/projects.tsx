@@ -12,9 +12,7 @@ export const Projects = () => {
             <span className="text-primary text-xs font-medium tracking-[0.2em] uppercase">
               Portfolio
             </span>
-            <h2 className="text-3xl font-semibold tracking-tight">
-              Selected Work
-            </h2>
+            <h2 className="text-3xl font-semibold tracking-tight">Selected Work</h2>
           </div>
         </div>
 
@@ -23,7 +21,7 @@ export const Projects = () => {
 
       <Carousel>
         <div className="flex flex-col gap-6">
-          <div className='px-8 md:px-12'>
+          <div className="px-8 md:px-12">
             <h3 className="text-2xl font-semibold tracking-tight">Other Projects</h3>
           </div>
 
@@ -37,7 +35,7 @@ export const Projects = () => {
               ))}
           </CarouselContent>
 
-          <div className='px-8 md:px-12'>
+          <div className="px-8 md:px-12">
             <CarouselButtons className="w-full justify-between" />
           </div>
         </div>

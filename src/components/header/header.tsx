@@ -27,7 +27,6 @@ export const Header = () => {
     setIsScrolled((prev) => (prev === shouldBeScrolled ? prev : shouldBeScrolled))
   })
 
-
   return (
     <>
       <header className="pointer-events-none fixed top-0 z-10 flex h-24 w-full items-center justify-center">
@@ -48,7 +47,7 @@ export const Header = () => {
       <div className="pointer-events-none fixed top-0 right-0 z-60 flex h-24 items-center justify-end pr-10 md:pr-18">
         <div
           className={cn(
-            'motion-spatial-default transition-all pointer-events-auto flex items-center rounded-full',
+            'motion-spatial-default pointer-events-auto flex items-center rounded-full transition-all',
             isScrolled || isDrawerOpen
               ? 'bg-surface-container-high border-outline-variant -mr-3 border px-3 py-2'
               : 'mr-0 border border-transparent bg-transparent p-0',

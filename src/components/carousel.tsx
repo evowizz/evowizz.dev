@@ -191,7 +191,7 @@ export const CarouselContent = ({ children, className }: StyleablePropsWithChild
     <div
       ref={scrollContainerRef}
       className={cn(
-        'hide-scrollbar flex snap-x snap-mandatory scroll-px-8 md:scroll-px-12 gap-6 overflow-x-auto px-8 md:px-12 pb-8',
+        'hide-scrollbar flex snap-x snap-mandatory scroll-px-8 gap-6 overflow-x-auto px-8 pb-8 md:scroll-px-12 md:px-12',
         className,
       )}
     >

@@ -31,7 +31,7 @@ export const Drawer = ({ destinations, isOpen, closeDrawer }: DrawerProps) => {
         id="site-drawer"
         aria-hidden={!isOpen}
         className={cn(
-          'bg-surface-container-highest text-on-surface-variant fixed top-0 right-0 z-50 flex h-dvh w-full flex-col md:w-1/2 md:rounded-l-4xl xl:w-1/3 px-8 md:px-12',
+          'bg-surface-container-highest text-on-surface-variant fixed top-0 right-0 z-50 flex h-dvh w-full flex-col px-8 md:w-1/2 md:rounded-l-4xl md:px-12 xl:w-1/3',
           'motion-spatial-default translate-x-full transform-gpu transition-transform',
           // Show more of the background to prevent a gap on the right when the drawer overshoots
           'after:absolute after:inset-y-0 after:left-full after:w-screen after:bg-inherit',
