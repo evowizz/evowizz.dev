@@ -11,6 +11,7 @@ type CarouselContextType = {
   scrollRight: () => void
   canScrollLeft: boolean
   canScrollRight: boolean
+  isScrollable: boolean
 }
 
 const CarouselContext = createContext<CarouselContextType | null>(null)
@@ -30,10 +31,14 @@ const getScrollBehavior = (): ScrollBehavior => {
   return window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'
 }
 
-export const Carousel = ({ children, className }: StyleablePropsWithChildren) => {
+/**
+ * This is the internal logic for the carousel. It is not intended to be used directly elsewhere.
+ */
+const useCarouselLogic = () => {
   const scrollContainerRef = useRef<HTMLDivElement>(null)
   const [canScrollLeft, setCanScrollLeft] = React.useState(false)
   const [canScrollRight, setCanScrollRight] = React.useState(false)
+  const [isScrollable, setIsScrollable] = React.useState(false)
 
   const visibleIndices = useRef<Set<number>>(new Set())
   const nodeToIndex = useRef<Map<Element, number>>(new Map())
@@ -75,6 +80,9 @@ export const Carousel = ({ children, className }: StyleablePropsWithChildren) =>
 
     const children = Array.from(container.children)
     children.forEach((child, i) => nodeToIndex.current.set(child, i))
+
+    // Check for overflow (scrollability)
+    setIsScrollable(container.scrollWidth > container.clientWidth)
 
     observerRef.current = new IntersectionObserver(
       (entries) => {
@@ -156,16 +164,21 @@ export const Carousel = ({ children, className }: StyleablePropsWithChildren) =>
     }
   }, [])
 
+  return {
+    scrollContainerRef,
+    scrollLeft,
+    scrollRight,
+    canScrollLeft,
+    canScrollRight,
+    isScrollable,
+  }
+}
+
+export const Carousel = ({ children, className }: StyleablePropsWithChildren) => {
+  const carouselLogic = useCarouselLogic()
+
   return (
-    <CarouselContext.Provider
-      value={{
-        scrollContainerRef,
-        scrollLeft,
-        scrollRight,
-        canScrollLeft,
-        canScrollRight,
-      }}
-    >
+    <CarouselContext.Provider value={carouselLogic}>
       <div className={cn('relative', className)}>{children}</div>
     </CarouselContext.Provider>
   )
@@ -178,7 +191,7 @@ export const CarouselContent = ({ children, className }: StyleablePropsWithChild
     <div
       ref={scrollContainerRef}
       className={cn(
-        'hide-scrollbar flex snap-x snap-mandatory gap-6 overflow-x-auto px-8 scroll-px-8 pb-8',
+        'hide-scrollbar flex snap-x snap-mandatory scroll-px-8 md:scroll-px-12 gap-6 overflow-x-auto px-8 md:px-12 pb-8',
         className,
       )}
     >
@@ -188,9 +201,9 @@ export const CarouselContent = ({ children, className }: StyleablePropsWithChild
 }
 
 export const CarouselButtons = ({ className }: StyleableProps) => {
-  const { scrollLeft, scrollRight, canScrollLeft, canScrollRight } = useCarousel()
+  const { scrollLeft, scrollRight, canScrollLeft, canScrollRight, isScrollable } = useCarousel()
 
-  if (!canScrollLeft && !canScrollRight) {
+  if (!isScrollable) {
     return null
   }
 
