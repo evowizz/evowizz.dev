@@ -37,7 +37,7 @@ export default function RootLayout({
         <ThemeProvider>
           <MaterialThemeProvider>
             <Header />
-            <div className="pt-24 pb-8">{children}</div>
+            <div className="pt-24">{children}</div>
             <DebugPanel />
           </MaterialThemeProvider>
         </ThemeProvider>

@@ -398,6 +398,17 @@
   }
 }
 
+@utility mask-fade-sides-* {
+  --mask-fade-value: --value(percentage);
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black var(--mask-fade-value),
+    black calc(100% - var(--mask-fade-value)),
+    transparent
+  );
+}
+
 @utility hover-light {
   @media (hover: hover) and (pointer: fine) {
     /* Inspired from: www.hover.dev/components/text#bubble-text */
