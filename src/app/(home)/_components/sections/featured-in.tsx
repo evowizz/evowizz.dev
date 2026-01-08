@@ -6,13 +6,13 @@ import { motion } from 'framer-motion'
 import React from 'react'
 import { cn } from '@/lib/utils'
 
-export const FeaturedIn = ({className}: StyleableProps) => {
+export const FeaturedIn = ({ className }: StyleableProps) => {
   return (
-    <section className={cn("relative flex w-full flex-col", className)}>
-      <h2 className="text-on-surface-variant text-sm font-medium tracking-widest px-8 md:px-12">
+    <section className={cn('relative flex w-full flex-col', className)}>
+      <h2 className="text-on-surface-variant px-8 text-sm font-medium tracking-widest md:px-12">
         Featured in
       </h2>
-      <div className="flex overflow-hidden mask-fade-sides-20% mt-8">
+      <div className="mask-fade-sides-20% mt-8 flex overflow-hidden">
         <TranslateWrapper>
           <LogoItemsTop />
         </TranslateWrapper>
@@ -23,7 +23,7 @@ export const FeaturedIn = ({className}: StyleableProps) => {
           <LogoItemsTop />
         </TranslateWrapper>
       </div>
-      <div className="flex overflow-hidden mask-fade-sides-20% mt-4">
+      <div className="mask-fade-sides-20% mt-4 flex overflow-hidden">
         <TranslateWrapper reverse>
           <LogoItemsBottom />
         </TranslateWrapper>
