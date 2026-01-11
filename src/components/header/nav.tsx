@@ -12,17 +12,20 @@ export type NavDestination = {
 
 type NavProps = {
   destinations: NavDestination[]
+  onNavClick?: () => void
 }
 
 type LinkProps = {
   destination: NavDestination
   isSelected: boolean
+  onClick?: () => void
 }
 
-const NavLink = ({ destination: { path, label }, isSelected }: LinkProps) => (
+const NavLink = ({ destination: { path, label }, isSelected, onClick }: LinkProps) => (
   <li key={path}>
     <Link
       href={path}
+      onClick={onClick}
       className={cn(
         'group font-600 variation-sans motion-spatial-default relative flex w-fit items-center text-6xl opacity-70',
         isSelected && 'text-primary opacity-100',
@@ -36,7 +39,7 @@ const NavLink = ({ destination: { path, label }, isSelected }: LinkProps) => (
   </li>
 )
 
-export const Nav = ({ destinations }: NavProps) => {
+export const Nav = ({ destinations, onNavClick }: NavProps) => {
   const pathname = usePathname() ?? ''
   const isHome = pathname === '/'
 
@@ -45,7 +48,14 @@ export const Nav = ({ destinations }: NavProps) => {
       <ul className="space-y-6">
         {destinations.map((nav) => {
           const isSelected = nav.path === '/' ? isHome : pathname.startsWith(nav.path)
-          return <NavLink key={nav.path} destination={nav} isSelected={isSelected} />
+          return (
+            <NavLink
+              key={nav.path}
+              destination={nav}
+              isSelected={isSelected}
+              onClick={onNavClick}
+            />
+          )
         })}
       </ul>
     </nav>

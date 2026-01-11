@@ -41,7 +41,7 @@ export const Drawer = ({ destinations, isOpen, closeDrawer }: DrawerProps) => {
         <div className="my-4 h-16 md:my-0 md:h-24" />
 
         <div className="flex flex-1 flex-col">
-          <Nav destinations={destinations} />
+          <Nav destinations={destinations} onNavClick={closeDrawer} />
           <div className="flex-1" />
           <DrawerFooter className="border-t-outline-variant -mx-4 shrink-0 border-t px-4 pb-16" />
         </div>
