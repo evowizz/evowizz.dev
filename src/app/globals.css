@@ -1,5 +1,9 @@
+@layer external {
+  @import 'material-symbols/rounded.css';
+}
+
 @import 'tailwindcss';
-@import 'material-symbols/rounded.css';
+@plugin '@tailwindcss/typography';
 
 /* Default Material Design 3 Color Tokens */
 :root {
@@ -285,6 +289,10 @@
   --font-slnt: --value([number]);
 }
 
+@utility -variation-slant-* {
+  --font-slnt: calc(--value(integer) * -1);
+}
+
 @utility text-balance {
   text-wrap: balance;
 }
@@ -461,7 +469,7 @@
 
 /* Material Symbols Utilities */
 .material-symbols-rounded {
-  font-size: 1.5rem;
+  line-height: 1;
   font-variation-settings:
     'FILL' var(--icon-fill, 0),
     'wght' var(--icon-wght, 400),
@@ -484,4 +492,100 @@
 @utility symbol-grade-* {
   --icon-grad: --value(integer);
   --icon-grad: --value([number]);
+}
+
+/* Ported blog styles */
+@utility prose-quoteless {
+  blockquote p:first-of-type::before {
+    content: none;
+  }
+  blockquote p:first-of-type::after {
+    content: none;
+  }
+  code::before {
+    content: none;
+  }
+  code::after {
+    content: none;
+  }
+}
+
+@layer utilities {
+  .prose {
+    /* Links */
+    a {
+      @apply text-primary no-underline;
+      &:hover {
+        @apply text-primary-fixed-dim;
+      }
+    }
+
+    /* Headings adapted */
+    h1,
+    h2,
+    h3,
+    h4 {
+      @apply variation-sans variation-width-80 mt-8 mb-0 scroll-mt-32 font-normal;
+    }
+
+    /* Reduced italic slant */
+    em,
+    i {
+      /* We use not-italic to be able to have our own slant */
+      @apply variation-sans -variation-slant-10 not-italic;
+    }
+
+    /* Pre / Code Blocks */
+    pre {
+      @apply border-outline-variant bg-surface-container relative overflow-x-auto rounded-b-xl border p-5 text-sm leading-6;
+      &::-webkit-scrollbar {
+        display: none;
+      }
+      scrollbar-width: none;
+
+      /* Ensure it looks connected to the title title */
+      &:where([data-rehype-pretty-code-figure] > pre) {
+        @apply mt-0 rounded-t-none border-t-0;
+      }
+    }
+
+    /* Inline code */
+    :not(pre) > code {
+      @apply text-on-surface-variant border-outline-variant bg-surface-container rounded-md border px-1 py-0.5 font-normal;
+    }
+
+    img {
+      @apply m-0 rounded-xl;
+    }
+
+    :where(figure > div > video):not(:where([class~='not-prose'] *)) {
+      @apply m-0;
+    }
+
+    /* Rehype Pretty Code adaptation */
+    [data-rehype-pretty-code-figure] code {
+      @apply grid min-w-full rounded-none border-0 bg-transparent box-decoration-clone p-0 leading-normal wrap-break-word;
+      counter-reset: line;
+    }
+
+    [data-rehype-pretty-code-figure] [data-line]::before {
+      counter-increment: line;
+      content: counter(line);
+      @apply text-outline mr-4 inline-block w-4 text-right;
+    }
+
+    [data-rehype-pretty-code-title] {
+      @apply border-outline-variant text-on-surface-variant bg-surface-container-high flex items-center rounded-t-xl border border-b-0 px-5 py-3 font-mono text-sm select-none;
+    }
+
+    /* When title exists, ensure the pre block connects properly */
+    [data-rehype-pretty-code-title] + pre {
+      @apply mt-0 rounded-t-none;
+    }
+
+    /* If wrapped in div (rehype-pretty-code usually wraps in div or figure) */
+    [data-rehype-pretty-code-title] + div > pre {
+      @apply mt-0 rounded-t-none border-t-0;
+    }
+  }
 }

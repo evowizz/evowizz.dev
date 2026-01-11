@@ -53,6 +53,7 @@ export const Drawer = ({ destinations, isOpen, closeDrawer }: DrawerProps) => {
           'bg-scrim/40 motion-effects-default fixed top-0 right-0 z-40 h-dvh w-full opacity-0 backdrop-blur-sm transition-opacity',
           isOpen && 'pointer-events-auto opacity-100',
         )}
+        aria-hidden={!isOpen}
         onClick={closeDrawer}
       />
     </>
