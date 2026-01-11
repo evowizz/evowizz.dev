@@ -1,9 +1,9 @@
 import { allPosts } from '@/content'
 import Link from 'next/link'
 import dayjs from 'dayjs'
-import { Suspense } from 'react'
 import { getViewsCount } from '@/app/db/queries'
 import { ViewCounter } from '@/components/view-counter'
+import { Suspense } from 'react'
 
 export const metadata = {
   title: 'Blog',
@@ -67,8 +67,8 @@ export default function BlogPage() {
                           <time dateTime={post.publishedAt}>
                             {dayjs(post.publishedAt).format('MMM DD')}
                           </time>
-                          <span>•</span>
-                          <Suspense fallback={<span>...</span>}>
+                          <Suspense>
+                            <span>•</span>
                             <Views slug={post.slug} />
                           </Suspense>
                         </div>
@@ -93,6 +93,9 @@ export default function BlogPage() {
 }
 
 async function Views({ slug }: { slug: string }) {
-  const views = await getViewsCount()
-  return <ViewCounter allViews={views} slug={slug} />
+  // getViewsCount uses 'use cache' with cacheLife('seconds'), so parallel
+  // calls from multiple Views components share the same cached result.
+  const allViews = await getViewsCount()
+  const view = allViews.find((v) => v.slug === slug)
+  return <ViewCounter count={view?.count ?? 0} />
 }

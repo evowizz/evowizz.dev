@@ -7,6 +7,7 @@ import EnhancedArticle from '@/components/enhanced-article'
 import { ViewCounter } from '@/components/view-counter'
 import { MaterialSymbol } from '@/components/material-symbol'
 import { getViewsCount } from '@/app/db/queries'
+import { getViewsBySlug } from '@/app/db/queries'
 import { increment } from '@/app/db/actions'
 import dayjs from 'dayjs'
 import Image from 'next/image'
@@ -44,15 +45,10 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 const incrementViews = cache(increment)
 
 async function Views({ slug }: { slug: string }) {
-  const views = await getViewsCount().catch((error) => {
-    console.error('DB Error:', error)
-    return null
-  })
-
-  if (views === null) return null
+  const view = await getViewsBySlug(slug)
 
   incrementViews(slug)
-  return <ViewCounter allViews={views} slug={slug} className="text-on-surface-variant text-sm" />
+  return <ViewCounter count={view?.count ?? 0} className="text-on-surface-variant text-sm" />
 }
 
 export default async function BlogPost({ params }: { params: Promise<{ slug: string }> }) {

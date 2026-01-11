@@ -1,10 +1,22 @@
 import './globals.css'
 
+import type { Metadata } from 'next'
 import { Google_Sans_Code, Google_Sans_Flex, Noto_Serif } from 'next/font/google'
 import { Header } from '@/components/header'
 import { MaterialThemeProvider } from '@/components/material-theme-context'
 import { DebugPanel } from '@/components/debug'
 import { ThemeProvider } from 'next-themes'
+
+const metadataBaseUrl =
+  process.env.VERCEL_ENV === 'production'
+    ? 'https://evowizz.dev'
+    : process.env.VERCEL_URL
+      ? `https://${process.env.VERCEL_URL}`
+      : 'http://localhost:3000'
+
+export const metadata: Metadata = {
+  metadataBase: new URL(metadataBaseUrl),
+}
 
 const googleSansFlex = Google_Sans_Flex({
   subsets: ['latin'],

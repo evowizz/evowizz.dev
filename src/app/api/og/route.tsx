@@ -1,8 +1,6 @@
 import { ImageResponse } from 'next/og'
 import { NextRequest } from 'next/server'
 
-export const runtime = 'edge'
-
 // TODO: Replace with specific static background image once available
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url)
