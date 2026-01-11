@@ -587,5 +587,16 @@
     [data-rehype-pretty-code-title] + div > pre {
       @apply mt-0 rounded-t-none border-t-0;
     }
+
+    /* Multi-theme support for rehype-pretty-code */
+    /* Use --shiki-light in light mode */
+    [data-rehype-pretty-code-figure] span[style*='--shiki'] {
+      color: var(--shiki-light);
+    }
+
+    /* Dark mode: use --shiki-dark */
+    html[data-theme='dark'] & [data-rehype-pretty-code-figure] span[style*='--shiki'] {
+      color: var(--shiki-dark);
+    }
   }
 }

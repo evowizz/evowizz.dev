@@ -5,13 +5,12 @@ import Link from 'next/link'
 import MDXContent from '@/components/mdx/mdx-content'
 import EnhancedArticle from '@/components/enhanced-article'
 import { ViewCounter } from '@/components/view-counter'
+import { ReportView } from '@/components/report-view'
 import { MaterialSymbol } from '@/components/material-symbol'
-import { getViewsCount } from '@/app/db/queries'
 import { getViewsBySlug } from '@/app/db/queries'
-import { increment } from '@/app/db/actions'
 import dayjs from 'dayjs'
 import Image from 'next/image'
-import { Suspense, cache } from 'react'
+import { Suspense } from 'react'
 
 export async function generateStaticParams() {
   return allPosts.map((post) => ({
@@ -42,13 +41,15 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   }
 }
 
-const incrementViews = cache(increment)
-
 async function Views({ slug }: { slug: string }) {
   const view = await getViewsBySlug(slug)
 
-  incrementViews(slug)
-  return <ViewCounter count={view?.count ?? 0} className="text-on-surface-variant text-sm" />
+  return (
+    <>
+      <ReportView slug={slug} />
+      <ViewCounter count={view?.count ?? 0} className="text-on-surface-variant text-sm" />
+    </>
+  )
 }
 
 export default async function BlogPost({ params }: { params: Promise<{ slug: string }> }) {

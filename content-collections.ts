@@ -25,7 +25,10 @@ const posts = defineCollection({
         [
           rehypePrettyCode,
           {
-            theme: 'dark-plus',
+            theme: {
+              light: 'github-light',
+              dark: 'dark-plus',
+            },
             keepBackground: false,
           },
         ],

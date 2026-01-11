@@ -3,10 +3,13 @@
 import { db } from '@/db'
 import { views } from '@/db/schema'
 import { sql } from 'drizzle-orm'
-import { unstable_noStore as noStore } from 'next/cache'
+import { cacheLife, cacheTag } from 'next/cache'
 
 export async function increment(slug: string) {
-  noStore()
+  'use cache'
+  cacheLife('minutes')
+  cacheTag(`view-count-${slug}`)
+
   await db
     .insert(views)
     .values({ slug, count: 0 })
