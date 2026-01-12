@@ -1,6 +1,5 @@
-@layer external {
-  @import 'material-symbols/rounded.css';
-}
+@layer external;
+@import 'material-symbols/rounded.css' layer(external);
 
 @import 'tailwindcss';
 @plugin '@tailwindcss/typography';
@@ -240,6 +239,10 @@
 @layer base {
   :root {
     font-size: clamp(0.75rem, 0.25vw + 0.75rem, 1.25rem);
+  }
+
+  ::selection {
+    @apply bg-tertiary-container text-on-tertiary-container;
   }
 
   *,
