@@ -13,9 +13,9 @@ import { useTheme } from 'next-themes'
 import { Variant, Hct, argbFromHex, hexFromArgb, createScheme, applyScheme } from '@/lib/material'
 import { useIsSSR } from '@/lib/use-is-ssr'
 
-const DEFAULT_SEED_COLOR = '#33CC7A'
+const DEFAULT_SEED_COLOR = '#33CC7A' // Inware ref :)
 const DEFAULT_HCT = Hct.fromInt(argbFromHex(DEFAULT_SEED_COLOR))
-const DEFAULT_VARIANT = Variant.RAINBOW
+const DEFAULT_VARIANT = Variant.EXPRESSIVE
 
 type MaterialThemeContextValue = {
   seedColor: string
