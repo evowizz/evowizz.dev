@@ -34,6 +34,12 @@ export const FeaturedIn = ({ className }: StyleableProps) => {
           <LogoItemsBottom />
         </TranslateWrapper>
       </div>
+      <p className="text-right text-xs text-on-surface-variant mt-8 variation-sans -variation-slant-10 px-8 md:px-12">
+        * Section inspired by{' '}
+        <a href="https://thatjoshguy.me" target="_blank" rel="noopener noreferrer" className="text-primary underline-offset-2 transition-all hover:underline">
+          ThatJoshGuy
+        </a>
+      </p>
     </section>
   )
 }
