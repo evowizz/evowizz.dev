@@ -3,7 +3,6 @@
 import { cn } from '@/lib/utils'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { ArrowRight, MiddleDot } from '../svg'
 
 export type NavDestination = {
   label: string
@@ -27,14 +26,14 @@ const NavLink = ({ destination: { path, label }, isSelected, onClick }: LinkProp
       href={path}
       onClick={onClick}
       className={cn(
-        'group font-600 variation-sans motion-spatial-default relative flex w-fit items-center text-6xl opacity-70',
-        isSelected && 'text-primary opacity-100',
-        !isSelected &&
-          'hover:font-800 motion-safe:hover:variation-width-120 gap-2 hover:opacity-90',
+        'group font-600 variation-sans motion-spatial-default relative flex w-fit items-center gap-2 text-6xl opacity-70 transition-all',
+        isSelected
+          ? 'text-primary opacity-100'
+          : 'hover:font-800 motion-safe:hover:variation-width-120 pl-6 hover:opacity-90',
       )}
     >
+      {isSelected && <span className="bg-primary size-4 rounded-full" />}
       {label}
-      {isSelected && <MiddleDot />}
     </Link>
   </li>
 )
@@ -45,7 +44,7 @@ export const Nav = ({ destinations, onNavClick }: NavProps) => {
 
   return (
     <nav>
-      <ul className="space-y-6">
+      <ul className="flex flex-col items-start gap-6">
         {destinations.map((nav) => {
           const isSelected = nav.path === '/' ? isHome : pathname.startsWith(nav.path)
           return (

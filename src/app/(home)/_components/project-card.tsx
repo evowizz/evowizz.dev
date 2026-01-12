@@ -2,7 +2,7 @@ import { Project } from '@/lib/projects'
 import Link from 'next/link'
 import Image from 'next/image'
 import { cn } from '@/lib/utils'
-import { ArrowRight } from '@/components/svg/arrow-right'
+import { MaterialSymbol } from '@/components/material-symbol'
 import { StyleableProps } from '@/types/component'
 
 type ProjectProps = StyleableProps<{
@@ -99,10 +99,13 @@ export const FeaturedProject = ({ project, index = 0, className }: ProjectProps)
               href={primaryLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-on-surface hover:text-primary group/link motion-effects-default inline-flex items-center gap-2 text-sm font-semibold transition-colors"
+              className="text-on-surface hover:text-primary group/link motion-effects-default inline-flex items-center gap-1 text-sm font-semibold transition-colors"
             >
               View Project
-              <ArrowRight className="motion-spatial-default h-4 w-4 transition-transform group-hover/link:translate-x-1" />
+              <MaterialSymbol
+                name="arrow_forward"
+                className="motion-spatial-default text-base transition-transform group-hover/link:translate-x-1"
+              />
             </Link>
           </div>
         )}
@@ -193,7 +196,10 @@ export const CompactProject = ({ project, className }: ProjectProps) => {
               className="text-on-surface hover:text-primary group/link motion-effects-default inline-flex items-center gap-2 text-sm font-semibold transition-colors"
             >
               View Project
-              <ArrowRight className="motion-spatial-default h-4 w-4 transition-transform group-hover/link:translate-x-1" />
+              <MaterialSymbol
+                name="arrow_forward"
+                className="motion-spatial-default text-base transition-transform group-hover/link:translate-x-1"
+              />
             </Link>
           </div>
         )}

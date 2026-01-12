@@ -1,4 +1,4 @@
-import { ArrowRight } from '@/components/svg'
+import { MaterialSymbol } from '@/components/material-symbol'
 import Link from 'next/link'
 
 export function Hero() {
@@ -40,7 +40,10 @@ export function Hero() {
         className="group motion-safe:animate-hero-appear motion-safe:animation-delay-500 motion-effects-default inline-flex items-center gap-2 border-b border-current pb-1 text-base font-medium transition-all hover:gap-3 motion-safe:opacity-0"
       >
         See my work
-        <ArrowRight className="motion-spatial-default h-4 w-4 transition-transform group-hover:translate-x-1" />
+        <MaterialSymbol
+          name="arrow_forward"
+          className="motion-spatial-default text-base transition-transform group-hover:translate-x-1"
+        />
       </Link>
 
       {/* Scroll indicator */}

@@ -32,16 +32,12 @@ import { TypeScript } from './logos/skills/typescript'
 import { VLang } from './logos/skills/vlang'
 import { VSCode } from './logos/skills/vscode'
 import XDADevelopers from './logos/media/xda'
-import { ArrowRight } from './arrow-right'
-import { Close } from './close'
-import { Menu } from './menu'
-import { MiddleDot } from './middle-dot'
+
+
 
 // Icons
-export * from './arrow-right'
-export * from './close'
-export * from './menu'
-export * from './middle-dot'
+
+
 export * from './star-shape'
 
 // Logos
@@ -49,10 +45,6 @@ export * from './logos/skills/kotlin'
 
 // All icons except StarShape (special case)
 export const allIcons = {
-  'arrow-right': ArrowRight,
-  close: Close,
-  menu: Menu,
-  'middle-dot': MiddleDot,
 } as const
 
 export type Icons = keyof typeof allIcons
