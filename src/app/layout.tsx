@@ -50,7 +50,7 @@ export default function RootLayout({
           <MaterialThemeProvider>
             <Header />
             <div className="pt-24">{children}</div>
-            <DebugPanel />
+            { process.env.NODE_ENV === 'development' && <DebugPanel /> }
           </MaterialThemeProvider>
         </ThemeProvider>
       </body>
