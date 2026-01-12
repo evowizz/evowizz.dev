@@ -20,7 +20,7 @@ export const MenuButton = ({ onClick, isOpen }: MenuButtonProps) => {
       aria-label={label}
       className="group motion-effects-default hover:bg-tertiary hover:text-on-tertiary relative flex h-10 w-10 items-center justify-center rounded-full active:scale-95"
     >
-      <MenuIcon isOpen={isOpen} />
+      <MenuIcon isOpen={isOpen} className='group-hover:symbol-weight-700' />
     </button>
   )
 }
@@ -41,7 +41,7 @@ export const DarkModeButton = ({ onClick, isDark }: DarkModeButtonProps) => {
       className="group hover:bg-surface-container-highest motion-effects-default relative flex h-10 w-10 items-center justify-center rounded-full active:scale-95"
       onClick={onClick}
     >
-      <MaterialSymbol name="asterisk" />
+      <MaterialSymbol name="asterisk" className='group-hover:symbol-weight-700 motion-effects-fast' />
     </button>
   )
 }

@@ -5,10 +5,10 @@ export function Hero() {
   return (
     <div className="flex flex-col items-start gap-8">
       {/* Availability chip */}
-      <div className="bg-surface-container-lowest border-outline-variant motion-safe:animate-hero-opacity inline-flex items-center gap-2 rounded-full border px-4 py-2">
-        <span className="relative flex h-2.5 w-2.5 items-center justify-center">
-          <span className="bg-tertiary absolute inline-flex h-full w-full animate-ping rounded-full opacity-75" />
-          <span className="bg-tertiary relative inline-flex h-2 w-2 rounded-full" />
+      <div className="bg-surface-container-lowest border-outline-variant motion-safe:animate-hero-opacity inline-flex items-center gap-2 rounded-full border px-3 py-2">
+        <span className="relative flex size-2.5 items-center justify-center">
+          <span className="bg-tertiary absolute inline-flex size-full animate-ping rounded-full opacity-75" />
+          <span className="bg-tertiary relative inline-flex size-2 rounded-full" />
         </span>
         <span className="text-on-surface/70 text-xs font-medium tracking-wider uppercase">
           Available for hire
@@ -48,19 +48,7 @@ export function Hero() {
 
       {/* Scroll indicator */}
       <div className="motion-safe:animate-hero-appear motion-safe:animation-delay-700 mt-8 motion-safe:opacity-0">
-        <svg
-          className="text-on-surface/40 h-6 w-6 animate-bounce"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M19 14l-7 7m0 0l-7-7m7 7V3"
-          />
-        </svg>
+        <MaterialSymbol name="arrow_cool_down" className="text-on-surface/75 animate-bounce" />
       </div>
     </div>
   )

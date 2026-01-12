@@ -32,22 +32,7 @@ import { TypeScript } from './logos/skills/typescript'
 import { VLang } from './logos/skills/vlang'
 import { VSCode } from './logos/skills/vscode'
 import XDADevelopers from './logos/media/xda'
-
-
-
-// Icons
-
-
-export * from './star-shape'
-
-// Logos
-export * from './logos/skills/kotlin'
-
-// All icons except StarShape (special case)
-export const allIcons = {
-} as const
-
-export type Icons = keyof typeof allIcons
+export { Kotlin } from './logos/skills/kotlin'
 
 // Skill logos
 export const skillLogos = {

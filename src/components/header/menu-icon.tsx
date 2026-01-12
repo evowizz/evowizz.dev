@@ -7,7 +7,7 @@ interface MenuIconProps {
 }
 
 export const MenuIcon = ({ isOpen, className }: MenuIconProps) => {
-  const commonClasses = 'motion-effects-slow group-hover:symbol-weight-700 absolute'
+  const commonClasses = 'motion-effects-slow absolute'
 
   return (
     <div className={cn('relative flex h-6 w-6 items-center justify-center', className)}>
