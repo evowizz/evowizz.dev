@@ -406,6 +406,19 @@
   }
 }
 
+@layer base {
+  body[data-scroll-locked='true'] {
+    overflow: hidden;
+    padding-right: var(--scrollbar-width, 0px);
+  }
+}
+
+@utility scrollbar-stable {
+  body[data-scroll-locked='true'] & {
+    margin-right: var(--scrollbar-width, 0px);
+  }
+}
+
 @utility mask-fade-sides-* {
   --mask-fade-value: --value(percentage);
   mask-image: linear-gradient(

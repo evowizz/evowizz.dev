@@ -1,7 +1,7 @@
 'use client'
 
-import { useEffect } from 'react'
 import { cn } from '@/lib/utils'
+import { useScrollLock } from '@/hooks/use-scroll-lock'
 import { Nav, NavDestination } from './nav'
 import { DrawerFooter } from './drawer-footer'
 
@@ -13,17 +13,7 @@ type DrawerProps = {
 
 export const Drawer = ({ destinations, isOpen, closeDrawer }: DrawerProps) => {
   // We're disabling the scroll on the body when the drawer is open.
-  useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden'
-    } else {
-      document.body.style.overflow = ''
-    }
-
-    return () => {
-      document.body.style.overflow = ''
-    }
-  }, [isOpen])
+  useScrollLock(isOpen)
 
   return (
     <>

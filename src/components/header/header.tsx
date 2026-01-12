@@ -44,7 +44,7 @@ export const Header = () => {
         </div>
       </header>
 
-      <div className="pointer-events-none fixed top-0 right-0 z-60 flex h-24 items-center justify-end pr-10 md:pr-18">
+      <div className="scrollbar-stable pointer-events-none fixed top-0 right-0 z-60 flex h-24 items-center justify-end pr-10 md:pr-18">
         <div
           className={cn(
             'motion-spatial-default pointer-events-auto flex items-center rounded-full transition-all',

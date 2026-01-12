@@ -8,7 +8,7 @@ export function DebugPanel() {
   const [isOpen, setIsOpen] = useState(false)
 
   return (
-    <div className="fixed right-4 bottom-4 z-50">
+    <div className="scrollbar-stable fixed right-4 bottom-4 z-50">
       {/* Panel */}
       <div
         className={cn(
