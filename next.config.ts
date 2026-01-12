@@ -1,7 +1,7 @@
 import { withContentCollections } from '@content-collections/next'
+import type { NextConfig } from 'next'
 
-/** @type {import('next').NextConfig} */
-const nextConfig = {
+const nextConfig: NextConfig = {
   cacheComponents: true,
   serverExternalPackages: ['shiki'],
 
@@ -32,7 +32,7 @@ const nextConfig = {
 }
 
 // Helper for redirect definitions
-function redirect(source, destination, permanent = true) {
+function redirect(source: string, destination: string, permanent: boolean = true) {
   return { source, destination, permanent }
 }
 
