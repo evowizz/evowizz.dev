@@ -223,7 +223,7 @@ const CarouselButton = ({ className, ...props }: React.ComponentProps<'button'>)
   return (
     <button
       className={cn(
-        'flex items-center justify-center bg-secondary-fixed text-on-secondary-fixed rounded-full w-16 h-12 transition',
+        'bg-secondary-fixed text-on-secondary-fixed flex h-12 w-16 items-center justify-center rounded-full transition',
         'hover:enabled:bg-secondary-fixed-dim disabled:opacity-50',
         className,
       )}

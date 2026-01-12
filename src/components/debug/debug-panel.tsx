@@ -36,7 +36,7 @@ export function DebugPanel() {
         )}
         title="Toggle Debug Menu"
       >
-        <MaterialSymbol name='shapes' />
+        <MaterialSymbol name="shapes" />
       </button>
     </div>
   )
