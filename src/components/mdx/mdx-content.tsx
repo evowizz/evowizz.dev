@@ -4,6 +4,7 @@ import Link from 'next/link'
 import Pre from './pre'
 import { LocalVideo } from './local-video'
 import { NoteCard } from './note-card'
+import { Tooltip } from '@/components/ui/tooltip'
 
 const CustomLink = ({ href = '', ...props }: React.AnchorHTMLAttributes<HTMLAnchorElement>) => {
   if (href.startsWith('/')) {
@@ -40,6 +41,7 @@ const components = {
   pre: Pre,
   LocalVideo,
   NoteCard,
+  Tooltip,
 }
 
 export default function MDXContent({ code }: { code: string }) {
