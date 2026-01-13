@@ -578,6 +578,10 @@
       @apply m-0;
     }
 
+    :where(h2, h3, h4) + aside {
+      @apply mt-4;
+    }
+
     /* Rehype Pretty Code adaptation */
     [data-rehype-pretty-code-figure] code {
       @apply grid min-w-full rounded-none border-0 bg-transparent box-decoration-clone p-0 leading-normal wrap-break-word;
