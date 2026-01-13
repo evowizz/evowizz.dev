@@ -2,6 +2,7 @@ import './globals.css'
 
 import type { Metadata } from 'next'
 import { Google_Sans_Code, Google_Sans_Flex, Noto_Serif } from 'next/font/google'
+import { Footer } from '@/components/footer'
 import { Header } from '@/components/header'
 import { MaterialThemeProvider } from '@/components/material-theme-context'
 import { DebugPanel } from '@/components/debug'
@@ -49,7 +50,8 @@ export default function RootLayout({
         <ThemeProvider>
           <MaterialThemeProvider>
             <Header />
-            <div className="pt-24">{children}</div>
+            <div className="pt-24 rounded-b-4xl overflow-hidden">{children}</div>
+            <Footer />
             {process.env.NODE_ENV === 'development' && <DebugPanel />}
           </MaterialThemeProvider>
         </ThemeProvider>

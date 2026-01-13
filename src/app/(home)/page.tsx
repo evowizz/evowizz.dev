@@ -15,11 +15,11 @@ export default function Home() {
         <FeaturedIn />
       </section>
 
-      <section id="skills" className="bg-surface-container-high relative px-8 py-24 md:px-12">
+      <section id="skills" className="bg-surface-container relative px-8 py-24 md:px-12">
         <Skills />
       </section>
 
-      <section id="projects" className="bg-surface-container-low relative py-24">
+      <section id="projects" className="bg-surface-container-highest relative py-24">
         <Projects />
       </section>
     </main>
