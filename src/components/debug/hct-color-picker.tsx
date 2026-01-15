@@ -4,7 +4,7 @@ import { useMaterialTheme } from '../material-theme-context'
 import { Hct } from '@/lib/material'
 
 export function HctColorPicker() {
-  const { hct, setHct, seedColor } = useMaterialTheme()
+  const { hct, setHct, currentSeedColor } = useMaterialTheme()
 
   const handleHueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setHct(Hct.from(parseFloat(e.target.value), hct.chroma, hct.tone))
@@ -23,11 +23,11 @@ export function HctColorPicker() {
       <div className="flex items-center gap-3">
         <div
           className="border-outline-variant h-12 w-12 shrink-0 rounded-md border"
-          style={{ backgroundColor: seedColor }}
+          style={{ backgroundColor: currentSeedColor }}
         />
         <div className="flex flex-col">
           <span className="text-sm font-medium">Seed Color</span>
-          <span className="font-mono text-xs opacity-60">{seedColor.toUpperCase()}</span>
+          <span className="font-mono text-xs opacity-60">{currentSeedColor.toUpperCase()}</span>
         </div>
       </div>
 

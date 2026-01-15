@@ -14,12 +14,12 @@ import { Variant, Hct, argbFromHex, hexFromArgb, createScheme, applyScheme } fro
 import { useIsSSR } from '@/lib/use-is-ssr'
 
 const DEFAULT_SEED_COLOR = '#33CC7A' // Inware ref :)
-const DEFAULT_HCT = Hct.fromInt(argbFromHex(DEFAULT_SEED_COLOR))
 const DEFAULT_VARIANT = Variant.EXPRESSIVE
 
 type MaterialThemeContextValue = {
-  seedColor: string
+  currentSeedColor: string
   setSeedColor: (color: string) => void
+  reset: () => void
   hct: Hct
   setHct: (hct: Hct) => void
   variant: Variant
@@ -30,17 +30,21 @@ const MaterialThemeContext = createContext<MaterialThemeContextValue | null>(nul
 
 type MaterialThemeProviderProps = {
   children: ReactNode
+  seedColor?: string
 }
 
-export function MaterialThemeProvider({ children }: MaterialThemeProviderProps) {
-  const [hct, setHctState] = useState<Hct>(DEFAULT_HCT)
+export function MaterialThemeProvider({
+  children,
+  seedColor = DEFAULT_SEED_COLOR,
+}: MaterialThemeProviderProps) {
+  const [hct, setHctState] = useState<Hct>(() => Hct.fromInt(argbFromHex(seedColor)))
   const [variant, setVariant] = useState<Variant>(DEFAULT_VARIANT)
   const { resolvedTheme } = useTheme()
   const isSSR = useIsSSR()
   const hasResolvedTheme = resolvedTheme !== undefined
 
-  // seedColor is derived from HCT (HCT is the source of truth)
-  const seedColor = useMemo(() => {
+  // currentSeedColor is derived from HCT (HCT is the source of truth)
+  const currentSeedColor = useMemo(() => {
     return hexFromArgb(hct.toInt())
   }, [hct])
 
@@ -55,6 +59,8 @@ export function MaterialThemeProvider({ children }: MaterialThemeProviderProps) 
       // Keep current HCT if conversion fails
     }
   }, [])
+
+  const reset = useCallback(() => setSeedColor(seedColor), [seedColor, setSeedColor])
 
   // Apply Material theme scheme
   const isDark = resolvedTheme === 'dark'
@@ -75,8 +81,16 @@ export function MaterialThemeProvider({ children }: MaterialThemeProviderProps) 
   }, [hct, isDark, variant, hasResolvedTheme, isSSR])
 
   const value = useMemo(
-    () => ({ seedColor, setSeedColor, hct, setHct, variant, setVariant }),
-    [seedColor, setSeedColor, hct, setHct, variant, setVariant],
+    () => ({
+      currentSeedColor,
+      setSeedColor,
+      reset,
+      hct,
+      setHct,
+      variant,
+      setVariant,
+    }),
+    [currentSeedColor, setSeedColor, reset, hct, setHct, variant, setVariant],
   )
 
   return <MaterialThemeContext.Provider value={value}>{children}</MaterialThemeContext.Provider>
@@ -88,4 +102,17 @@ export function useMaterialTheme() {
     throw new Error('useMaterialTheme must be used within a MaterialThemeProvider')
   }
   return context
+}
+
+export function ThemeOverride({ color }: { color?: string }) {
+  const { setSeedColor, reset } = useMaterialTheme()
+
+  useEffect(() => {
+    if (color) {
+      setSeedColor(color)
+    }
+    return () => reset()
+  }, [color, setSeedColor, reset])
+
+  return null
 }

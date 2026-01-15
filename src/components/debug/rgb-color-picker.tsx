@@ -4,7 +4,7 @@ import { useMaterialTheme } from '../material-theme-context'
 import { Hct, argbFromHex } from '@/lib/material'
 
 export function RgbColorPicker() {
-  const { hct, setHct, seedColor } = useMaterialTheme()
+  const { hct, setHct, currentSeedColor } = useMaterialTheme()
 
   // Convert HCT to RGB
   const argb = hct.toInt()
@@ -46,13 +46,13 @@ export function RgbColorPicker() {
       <div className="flex items-center gap-3">
         <div
           className="border-outline-variant h-12 w-12 shrink-0 rounded-md border"
-          style={{ backgroundColor: seedColor }}
+          style={{ backgroundColor: currentSeedColor }}
         />
         <div className="flex flex-1 flex-col">
           <span className="text-sm font-medium">Seed Color</span>
           <input
             type="text"
-            value={seedColor.toUpperCase()}
+            value={currentSeedColor.toUpperCase()}
             onChange={handleHexChange}
             className="w-full border-none bg-transparent font-mono text-xs opacity-60 outline-none"
             pattern="^#[0-9A-Fa-f]{6}$"
