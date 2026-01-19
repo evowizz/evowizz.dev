@@ -680,11 +680,8 @@
     }
 
     /* Headings adapted */
-    h1,
-    h2,
-    h3,
-    h4 {
-      @apply variation-sans variation-width-80 mt-8 mb-0 scroll-mt-32 font-normal;
+    :where(h1, h2, h3, h4):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
+      @apply variation-sans variation-width-80 variation-grade-50 mt-8 mb-2 scroll-mt-32 font-normal;
     }
 
     /* Reduced italic slant */
