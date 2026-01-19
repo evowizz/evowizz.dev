@@ -6,9 +6,13 @@ const year = new Date().getFullYear()
 export function Footer({ className }: StyleableProps) {
   return (
     <footer
-      className={cn('bg-secondary-container text-on-secondary-container flex h-24 items-center justify-center', className)}
+      className={cn(
+        'bg-secondary-container text-on-secondary-container flex h-24 flex-col items-center justify-center px-8 text-center',
+        className,
+      )}
     >
-      © {year} Dylan Roussel. Made with caffeine, crafted with care.
+      <span>© {year} Dylan Roussel.</span>
+      <span>Made with caffeine, crafted with care.</span>
     </footer>
   )
 }
