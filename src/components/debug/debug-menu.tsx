@@ -2,8 +2,7 @@
 
 import { useState, useCallback } from 'react'
 import { useTheme } from 'next-themes'
-import { HctColorPicker } from './hct-color-picker'
-import { RgbColorPicker } from './rgb-color-picker'
+import { ColorPicker } from './color-picker'
 import { ColorTokenPreview } from './color-token-preview'
 import { MotionPreview } from './motion-preview'
 import { useMaterialTheme } from '../material-theme-context'
@@ -76,11 +75,9 @@ const COLOR_TOKENS = [
 ]
 
 type Tab = 'picker' | 'tokens' | 'motion'
-type PickerMode = 'hct' | 'rgb'
 
 export function DebugMenu() {
   const [activeTab, setActiveTab] = useState<Tab>('picker')
-  const [pickerMode, setPickerMode] = useState<PickerMode>('hct')
   const [copied, setCopied] = useState(false)
   const { theme, setTheme } = useTheme()
   const { variant, setVariant } = useMaterialTheme()
@@ -88,10 +85,18 @@ export function DebugMenu() {
 
   const copyCSS = useCallback(() => {
     const styles = getComputedStyle(document.documentElement)
-    const css = COLOR_TOKENS.map((token) => {
-      const value = styles.getPropertyValue(`--md-sys-color-${token}`).trim()
-      return `--md-sys-color-${token}: ${value};`
+
+    const lightCSS = COLOR_TOKENS.map((token) => {
+      const value = styles.getPropertyValue(`--md-sys-color-${token}-light`).trim()
+      return `--md-sys-color-${token}-light: ${value};`
     }).join('\n')
+
+    const darkCSS = COLOR_TOKENS.map((token) => {
+      const value = styles.getPropertyValue(`--md-sys-color-${token}-dark`).trim()
+      return `--md-sys-color-${token}-dark: ${value};`
+    }).join('\n')
+
+    const css = `/* Light mode tokens */\n${lightCSS}\n\n/* Dark mode tokens */\n${darkCSS}`
 
     navigator.clipboard.writeText(css).then(() => {
       setCopied(true)
@@ -211,37 +216,7 @@ export function DebugMenu() {
 
       {/* Tab Content */}
       <div className="pt-2">
-        {activeTab === 'picker' && (
-          <div className="flex flex-col gap-4">
-            {/* Picker Mode Toggle */}
-            <div className="flex gap-1">
-              <button
-                onClick={() => setPickerMode('hct')}
-                className={cn(
-                  'flex-1 rounded-md border px-3 py-1.5 text-xs font-medium transition-colors',
-                  pickerMode === 'hct'
-                    ? 'bg-primary text-on-primary border-primary'
-                    : 'bg-surface-container border-outline-variant hover:bg-surface-container-high',
-                )}
-              >
-                HCT
-              </button>
-              <button
-                onClick={() => setPickerMode('rgb')}
-                className={cn(
-                  'flex-1 rounded-md border px-3 py-1.5 text-xs font-medium transition-colors',
-                  pickerMode === 'rgb'
-                    ? 'bg-primary text-on-primary border-primary'
-                    : 'bg-surface-container border-outline-variant hover:bg-surface-container-high',
-                )}
-              >
-                RGB
-              </button>
-            </div>
-            {pickerMode === 'hct' && <HctColorPicker />}
-            {pickerMode === 'rgb' && <RgbColorPicker />}
-          </div>
-        )}
+        {activeTab === 'picker' && <ColorPicker />}
         {activeTab === 'tokens' && <ColorTokenPreview />}
         {activeTab === 'motion' && <MotionPreview />}
       </div>

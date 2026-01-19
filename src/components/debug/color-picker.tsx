@@ -1,58 +1,60 @@
 'use client'
 
+import {
+  argbFromHex,
+  argbFromRgb,
+  hexFromArgb,
+  redFromArgb,
+  greenFromArgb,
+  blueFromArgb,
+} from '@/lib/material'
 import { useMaterialTheme } from '../material-theme-context'
-import { Hct, argbFromHex } from '@/lib/material'
 
-export function RgbColorPicker() {
-  const { hct, setHct, currentSeedColor } = useMaterialTheme()
+export function ColorPicker() {
+  const { hct, seedColor, setSeedColor } = useMaterialTheme()
 
-  // Convert HCT to RGB
-  const argb = hct.toInt()
-  const r = (argb >> 16) & 0xff
-  const g = (argb >> 8) & 0xff
-  const b = argb & 0xff
+  // Parse RGB from seedColor using material color utilities
+  const argb = argbFromHex(seedColor)
+  const r = redFromArgb(argb)
+  const g = greenFromArgb(argb)
+  const b = blueFromArgb(argb)
+
+  const updateFromRgb = (newR: number, newG: number, newB: number) => {
+    setSeedColor(hexFromArgb(argbFromRgb(newR, newG, newB)))
+  }
 
   const handleRedChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newR = parseInt(e.target.value)
-    const newArgb = (0xff << 24) | (newR << 16) | (g << 8) | b
-    setHct(Hct.fromInt(newArgb))
+    updateFromRgb(parseInt(e.target.value), g, b)
   }
 
   const handleGreenChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newG = parseInt(e.target.value)
-    const newArgb = (0xff << 24) | (r << 16) | (newG << 8) | b
-    setHct(Hct.fromInt(newArgb))
+    updateFromRgb(r, parseInt(e.target.value), b)
   }
 
   const handleBlueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newB = parseInt(e.target.value)
-    const newArgb = (0xff << 24) | (r << 16) | (g << 8) | newB
-    setHct(Hct.fromInt(newArgb))
+    updateFromRgb(r, g, parseInt(e.target.value))
   }
 
   const handleHexChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const hex = e.target.value
     if (/^#[0-9A-Fa-f]{6}$/.test(hex)) {
-      try {
-        setHct(Hct.fromInt(argbFromHex(hex)))
-      } catch {
-        // Invalid hex, ignore
-      }
+      setSeedColor(hex)
     }
   }
 
   return (
     <div className="flex flex-col gap-4">
+      {/* Seed color display */}
       <div className="flex items-center gap-3">
         <div
           className="border-outline-variant h-12 w-12 shrink-0 rounded-md border"
-          style={{ backgroundColor: currentSeedColor }}
+          style={{ backgroundColor: seedColor }}
         />
         <div className="flex flex-1 flex-col">
           <span className="text-sm font-medium">Seed Color</span>
           <input
             type="text"
-            value={currentSeedColor.toUpperCase()}
+            value={seedColor.toUpperCase()}
             onChange={handleHexChange}
             className="w-full border-none bg-transparent font-mono text-xs opacity-60 outline-none"
             pattern="^#[0-9A-Fa-f]{6}$"
@@ -60,6 +62,12 @@ export function RgbColorPicker() {
         </div>
       </div>
 
+      {/* HCT values (read-only) */}
+      <div className="bg-surface-container-high text-on-surface-variant rounded-md px-3 py-2 font-mono text-xs">
+        hct({Math.round(hct.hue)}, {Math.round(hct.chroma)}, {Math.round(hct.tone)})
+      </div>
+
+      {/* RGB sliders */}
       <div className="flex flex-col gap-3">
         {/* Red slider */}
         <div className="flex flex-col gap-1">

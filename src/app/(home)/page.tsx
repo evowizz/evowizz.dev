@@ -19,7 +19,7 @@ export default function Home() {
         <Skills />
       </section>
 
-      <section id="projects" className="bg-surface-container-highest relative py-24">
+      <section id="projects" className="bg-surface-container-high relative py-24">
         <Projects />
       </section>
     </main>
