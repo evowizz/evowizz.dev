@@ -1,8 +1,13 @@
+import { cn } from '@/lib/utils'
+import { StyleableProps } from '@/types/component'
+
 const year = new Date().getFullYear()
 
-export function Footer() {
+export function Footer({ className }: StyleableProps) {
   return (
-    <footer className="h-24 flex items-center justify-center text-sm text-on-background">
+    <footer
+      className={cn('bg-secondary-container text-on-secondary-container flex h-24 items-center justify-center', className)}
+    >
       © {year} Dylan Roussel. Made with caffeine, crafted with care.
     </footer>
   )

@@ -50,8 +50,10 @@ export default function RootLayout({
         <ThemeProvider>
           <MaterialThemeProvider>
             <Header />
-            <div className="pt-24 rounded-b-4xl overflow-hidden">{children}</div>
-            <Footer />
+            <div className="relative overflow-hidden rounded-b-4xl pt-24 bg-inherit">{children}</div>
+
+            {/* Footer overlaps behind the rounded-b-4xl container above */}
+            <Footer className="-z-10 -mt-8 h-32 pt-8" />
             {process.env.NODE_ENV === 'development' && <DebugPanel />}
           </MaterialThemeProvider>
         </ThemeProvider>
