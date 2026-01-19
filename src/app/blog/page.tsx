@@ -31,7 +31,7 @@ export default function BlogPage() {
   return (
     <main className="flex min-h-screen flex-col">
       <section className="px-6 py-24 md:px-12 md:py-32">
-        <div className="mx-auto flex w-full max-w-4xl flex-col gap-6">
+        <div className="mx-auto flex w-full max-w-5xl flex-col gap-6">
           <span className="text-primary text-xs font-medium tracking-[0.2em] uppercase">Blog</span>
           <h1 className="text-4xl font-semibold tracking-tight text-balance md:text-6xl">
             Thoughts, tutorials, <br className="hidden md:block" />
@@ -44,7 +44,7 @@ export default function BlogPage() {
       </section>
 
       <section className="px-6 pb-24 md:px-12">
-        <div className="mx-auto flex w-full max-w-4xl flex-col gap-16">
+        <div className="mx-auto flex w-full max-w-5xl flex-col gap-16">
           {years.map((year) => (
             <div
               key={year}

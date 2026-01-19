@@ -45,9 +45,5 @@ const components = {
 }
 
 export default function MDXContent({ code }: { code: string }) {
-  return (
-    <div className="prose prose-quoteless dark:prose-invert w-full max-w-none">
-      <BaseMDXContent code={code} components={components} />
-    </div>
-  )
+  return <BaseMDXContent code={code} components={components} />
 }

@@ -1,3 +1,24 @@
+export type WriteupLink = {
+  slug: string
+  label: string
+}
+
+export type ProjectLink = {
+  url: string
+  label: string
+}
+
+// Link helper functions
+const githubLink = (repo: string): ProjectLink => ({
+  url: `https://github.com/${repo}`,
+  label: 'See on GitHub',
+})
+
+const playStoreLink = (packageName: string): ProjectLink => ({
+  url: `https://play.google.com/store/apps/details?id=${packageName}`,
+  label: 'Google Play',
+})
+
 export type Project = {
   title: string
   description: string
@@ -6,11 +27,8 @@ export type Project = {
   openSource: boolean
   featured?: boolean
   deprecated?: boolean
-  links: {
-    github?: string
-    demo?: string
-    playStore?: string
-  }
+  writeups?: WriteupLink[]
+  links: ProjectLink[]
 }
 
 export const projects: Project[] = [
@@ -22,15 +40,14 @@ export const projects: Project[] = [
     techStack: ['Kotlin', 'Jetpack Compose', 'Android'],
     openSource: false,
     featured: true,
-    links: {
-      playStore: 'https://play.google.com/store/apps/details?id=com.evo.inware',
-    },
+    writeups: [{ slug: 'inware', label: 'Read More' }],
+    links: [playStoreLink('com.evo.inware')],
   },
   {
     title: 'Beeper',
     description:
       'A universal chat application that unifies all your messages into a single inbox. I worked on both the development and design of the Android app, helping build a fluid messaging experience.',
-    image: '/api/placeholder/1200/750', // Placeholder until provided
+    image: '/api/placeholder/1200/750',
     techStack: ['Kotlin', 'Jetpack Compose', 'Material 3'],
     openSource: false,
     featured: true,
@@ -45,10 +62,7 @@ export const projects: Project[] = [
     techStack: ['Next.js', 'TypeScript', 'Tailwind CSS'],
     openSource: true,
     featured: false,
-    links: {
-      github: 'https://github.com/evowizz/evowizz.dev',
-      demo: 'https://evowizz.dev',
-    },
+    links: [githubLink('evowizz/evowizz.dev')],
   },
   {
     title: 'Cosmose',
@@ -57,9 +71,7 @@ export const projects: Project[] = [
     image: '/api/placeholder/1200/750',
     techStack: ['Kotlin', 'Jetpack Compose', 'Android'],
     openSource: true,
-    links: {
-      github: 'https://github.com/evowizz/cosmose',
-    },
+    links: [githubLink('evowizz/cosmose')],
   },
   {
     title: 'Common',
@@ -68,9 +80,7 @@ export const projects: Project[] = [
     image: '/api/placeholder/1200/750',
     techStack: ['Kotlin', 'Android'],
     openSource: true,
-    links: {
-      github: 'https://github.com/evowizz/common',
-    },
+    links: [githubLink('evowizz/common')],
   },
   {
     title: 'De-Gmojify',
@@ -79,9 +89,7 @@ export const projects: Project[] = [
     image: '/api/placeholder/1200/750',
     techStack: ['JavaScript', 'Chrome Extension'],
     openSource: true,
-    links: {
-      github: 'https://github.com/evowizz/De-Gmojify',
-    },
+    links: [githubLink('evowizz/De-Gmojify')],
   },
   {
     title: 'Actio',
@@ -90,7 +98,7 @@ export const projects: Project[] = [
     image: '/api/placeholder/1200/750',
     techStack: ['TypeScript', 'Figma Plugin API'],
     openSource: false,
-    links: {},
+    links: [],
   },
   {
     title: 'Compose to Edge',
@@ -100,8 +108,6 @@ export const projects: Project[] = [
     techStack: ['Kotlin', 'Jetpack Compose', 'Android'],
     openSource: true,
     deprecated: true,
-    links: {
-      github: 'https://github.com/evowizz/compose-to-edge',
-    },
+    links: [githubLink('evowizz/compose-to-edge')],
   },
 ]

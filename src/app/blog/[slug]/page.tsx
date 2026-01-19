@@ -1,12 +1,12 @@
 import { allPosts, Post } from '@/content'
 import Balancer from 'react-wrap-balancer'
 import { notFound } from 'next/navigation'
-import Link from 'next/link'
 import MDXContent from '@/components/mdx/mdx-content'
 import EnhancedArticle from '@/components/enhanced-article'
 import { ViewCounter } from '@/components/view-counter'
 import { ReportView } from '@/components/report-view'
-import { MaterialSymbol } from '@/components/material-symbol'
+import { BackButton } from '@/components/link-button'
+import { ThemeOverride } from '@/components/material-theme-context'
 import { getViewsBySlug } from '@/app/db/queries'
 import dayjs from 'dayjs'
 import Image from 'next/image'
@@ -62,19 +62,12 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
 
   return (
     <main className="min-h-screen pt-24 pb-12">
+      <ThemeOverride color={post.themeColor} variant={post.themeVariant} />
       <div className="container mx-auto max-w-4xl px-4">
-        <EnhancedArticle className="w-full">
-          <header className="mb-12 flex flex-col gap-2">
-            <Link
-              href="/blog"
-              className="group text-inverse-on-surface bg-inverse-surface motion-spatial-default variation-sans hover:variation-width-120 hover:font-700 mb-4 flex w-fit items-center gap-1 rounded-full py-2 pr-4 pl-3 text-sm font-medium transition-all"
-            >
-              <MaterialSymbol
-                name="arrow_back"
-                className="motion-spatial-default group-hover:symbol-weight-700 text-base transition-all"
-              />
-              All posts
-            </Link>
+        <BackButton href="/blog">All posts</BackButton>
+
+        <EnhancedArticle className="prose prose-quoteless dark:prose-invert w-full max-w-none">
+          <header className="not-prose mb-12 flex flex-col gap-2">
             <h1 className="text-4xl font-bold md:text-5xl">
               <Balancer>{post.title}</Balancer>
             </h1>

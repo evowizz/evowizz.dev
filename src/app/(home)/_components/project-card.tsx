@@ -3,7 +3,9 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { cn } from '@/lib/utils'
 import { MaterialSymbol } from '@/components/material-symbol'
+import { LinkButton } from '@/components/link-button'
 import { StyleableProps } from '@/types/component'
+import { allWriteups } from '@/content'
 
 type ProjectProps = StyleableProps<{
   project: Project
@@ -13,10 +15,20 @@ type ProjectProps = StyleableProps<{
 // Default placeholder for projects without images
 const DEFAULT_PLACEHOLDER = '/api/placeholder/1200/750'
 
+// Filter writeups to only show non-hidden ones
+const getVisibleWriteups = (writeups: Project['writeups']) => {
+  if (!writeups) return []
+  return writeups.filter((writeup) => {
+    const found = allWriteups.find((w) => w.slug === writeup.slug)
+    return found && !found.hidden
+  })
+}
+
 export const FeaturedProject = ({ project, index = 0, className }: ProjectProps) => {
   const isReversed = index % 2 === 1
-  const hasLinks = project.links.github || project.links.demo || project.links.playStore
-  const primaryLink = project.links.demo || project.links.github || project.links.playStore
+  const hasLinks = project.links.length > 0
+  const primaryLink = project.links[0]
+  const visibleWriteups = getVisibleWriteups(project.writeups)
 
   const imageContent = (
     <div
@@ -58,7 +70,7 @@ export const FeaturedProject = ({ project, index = 0, className }: ProjectProps)
       <div className="w-full flex-1">
         {primaryLink ? (
           <Link
-            href={primaryLink}
+            href={primaryLink.url}
             target="_blank"
             rel="noopener noreferrer"
             className="group block"
@@ -93,30 +105,67 @@ export const FeaturedProject = ({ project, index = 0, className }: ProjectProps)
 
         <p className="text-on-surface/70 text-lg leading-relaxed">{project.description}</p>
 
-        {hasLinks && primaryLink && (
-          <div className="pt-4">
+        <div className="flex flex-col gap-2 pt-4">
+          {visibleWriteups.length > 0 && (
+            <>
+              {visibleWriteups.length > 1 && (
+                <span className="text-on-surface-variant text-xs font-medium uppercase tracking-widest">
+                  Writeups
+                </span>
+              )}
+              <div className="flex flex-wrap items-center gap-3">
+                {visibleWriteups.map((writeup) => (
+                  <LinkButton
+                    key={writeup.slug}
+                    href={`/writeups/${writeup.slug}`}
+                    variant="outline"
+                    direction="forward"
+                  >
+                    {visibleWriteups.length === 1 ? 'Writeup' : writeup.label}
+                  </LinkButton>
+                ))}
+
+                {primaryLink && (
+                  <Link
+                    href={primaryLink.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group/link text-on-surface-variant hover:text-on-surface motion-effects-default ml-auto inline-flex items-center gap-1 text-sm font-medium transition-colors"
+                  >
+                    {primaryLink.label}
+                    <MaterialSymbol
+                      name="arrow_forward"
+                      className="motion-spatial-default text-base transition-transform group-hover/link:translate-x-1"
+                    />
+                  </Link>
+                )}
+              </div>
+            </>
+          )}
+
+          {visibleWriteups.length === 0 && primaryLink && (
             <Link
-              href={primaryLink}
+              href={primaryLink.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-on-surface hover:text-primary group/link motion-effects-default inline-flex items-center gap-1 text-sm font-semibold transition-colors"
+              className="group/link text-on-surface hover:text-primary motion-effects-default inline-flex items-center gap-1 text-sm font-medium transition-colors"
             >
-              View Project
+              {primaryLink.label}
               <MaterialSymbol
                 name="arrow_forward"
                 className="motion-spatial-default text-base transition-transform group-hover/link:translate-x-1"
               />
             </Link>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </article>
   )
 }
 
 export const CompactProject = ({ project, className }: ProjectProps) => {
-  const hasLinks = project.links.github || project.links.demo || project.links.playStore
-  const primaryLink = project.links.demo || project.links.github || project.links.playStore
+  const hasLinks = project.links.length > 0
+  const primaryLink = project.links[0]
 
   const imageContent = (
     <div
@@ -152,7 +201,7 @@ export const CompactProject = ({ project, className }: ProjectProps) => {
       <div className="w-full flex-1">
         {primaryLink ? (
           <Link
-            href={primaryLink}
+            href={primaryLink.url}
             target="_blank"
             rel="noopener noreferrer"
             className="group block"
@@ -187,15 +236,15 @@ export const CompactProject = ({ project, className }: ProjectProps) => {
 
         <p className="text-on-surface/70 text-base leading-relaxed">{project.description}</p>
 
-        {hasLinks && primaryLink && (
+        {primaryLink && (
           <div className="mt-auto pt-4">
             <Link
-              href={primaryLink}
+              href={primaryLink.url}
               target="_blank"
               rel="noopener noreferrer"
               className="text-on-surface hover:text-primary group/link motion-effects-default inline-flex items-center gap-2 text-sm font-semibold transition-colors"
             >
-              View Project
+              {primaryLink.label}
               <MaterialSymbol
                 name="arrow_forward"
                 className="motion-spatial-default text-base transition-transform group-hover/link:translate-x-1"

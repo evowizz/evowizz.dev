@@ -1,14 +1,151 @@
 import {
   argbFromHex,
+  argbFromRgb,
   hexFromArgb,
+  redFromArgb,
+  greenFromArgb,
+  blueFromArgb,
   Hct,
   DynamicScheme,
   TonalPalette,
   Variant,
 } from '@evowizz/material-color-utilities-canary'
 
-export { TonalPalette, Hct, Variant, argbFromHex, hexFromArgb }
+export {
+  TonalPalette,
+  Hct,
+  Variant,
+  argbFromHex,
+  argbFromRgb,
+  hexFromArgb,
+  redFromArgb,
+  greenFromArgb,
+  blueFromArgb,
+  DynamicScheme,
+}
 
+export type SpecVersion = '2021' | '2025'
+
+export type Theme = {
+  source: number
+  schemes: {
+    light: DynamicScheme
+    dark: DynamicScheme
+  }
+}
+
+export type ThemeOptions = {
+  variant?: Variant
+  contrastLevel?: number
+  specVersion?: SpecVersion
+}
+
+export function createTheme(sourceColorHex: string, options: ThemeOptions = {}): Theme {
+  const { variant = Variant.TONAL_SPOT, contrastLevel = 0, specVersion = '2025' } = options
+  const source = argbFromHex(sourceColorHex)
+  const sourceColorHct = Hct.fromInt(source)
+
+  return {
+    source,
+    schemes: {
+      light: new DynamicScheme({
+        sourceColorHct,
+        variant,
+        contrastLevel,
+        specVersion,
+        isDark: false,
+      }),
+      dark: new DynamicScheme({
+        sourceColorHct,
+        variant,
+        contrastLevel,
+        specVersion,
+        isDark: true,
+      }),
+    },
+  }
+}
+
+export type ApplyThemeOptions = {
+  target?: HTMLElement
+  brightnessSuffix?: boolean
+}
+
+/**
+ * Apply a theme to the document.
+ * With `brightnessSuffix: true`, applies both light and dark schemes with `-light` and `-dark` suffixes.
+ */
+export function applyTheme(theme: Theme, target: HTMLElement = document.documentElement): void {
+  setSchemeProperties(target, theme.schemes.light, '-light')
+  setSchemeProperties(target, theme.schemes.dark, '-dark')
+}
+
+// All Material Design 3 color tokens available on DynamicScheme
+const COLOR_TOKENS = [
+  'primary',
+  'onPrimary',
+  'primaryContainer',
+  'onPrimaryContainer',
+  'inversePrimary',
+  'secondary',
+  'onSecondary',
+  'secondaryContainer',
+  'onSecondaryContainer',
+  'tertiary',
+  'onTertiary',
+  'tertiaryContainer',
+  'onTertiaryContainer',
+  'error',
+  'onError',
+  'errorContainer',
+  'onErrorContainer',
+  'background',
+  'onBackground',
+  'surface',
+  'onSurface',
+  'surfaceVariant',
+  'onSurfaceVariant',
+  'surfaceDim',
+  'surfaceBright',
+  'surfaceContainerLowest',
+  'surfaceContainerLow',
+  'surfaceContainer',
+  'surfaceContainerHigh',
+  'surfaceContainerHighest',
+  'outline',
+  'outlineVariant',
+  'shadow',
+  'scrim',
+  'inverseSurface',
+  'inverseOnSurface',
+  'surfaceTint',
+  'primaryFixed',
+  'primaryFixedDim',
+  'onPrimaryFixed',
+  'onPrimaryFixedVariant',
+  'secondaryFixed',
+  'secondaryFixedDim',
+  'onSecondaryFixed',
+  'onSecondaryFixedVariant',
+  'tertiaryFixed',
+  'tertiaryFixedDim',
+  'onTertiaryFixed',
+  'onTertiaryFixedVariant',
+] as const
+
+function setSchemeProperties(
+  target: HTMLElement,
+  scheme: DynamicScheme,
+  suffix: string = '',
+): void {
+  for (const key of COLOR_TOKENS) {
+    const value = scheme[key]
+    const token = key.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase()
+    target.style.setProperty(`--md-sys-color-${token}${suffix}`, hexFromArgb(value))
+  }
+}
+
+// Legacy API - kept for backwards compatibility
 export type SchemeOptions = ConstructorParameters<typeof DynamicScheme>[0]
 
 export function createScheme(options: SchemeOptions): DynamicScheme {
@@ -26,67 +163,5 @@ export function createSchemeFromHex(
     variant,
     contrastLevel,
     isDark,
-    specVersion: '2025',
   })
-}
-
-export function applyScheme(
-  scheme: DynamicScheme,
-  target: HTMLElement = document.documentElement,
-): void {
-  const colors: Record<string, number> = {
-    primary: scheme.primary,
-    'on-primary': scheme.onPrimary,
-    'primary-container': scheme.primaryContainer,
-    'on-primary-container': scheme.onPrimaryContainer,
-    'inverse-primary': scheme.inversePrimary,
-    secondary: scheme.secondary,
-    'on-secondary': scheme.onSecondary,
-    'secondary-container': scheme.secondaryContainer,
-    'on-secondary-container': scheme.onSecondaryContainer,
-    tertiary: scheme.tertiary,
-    'on-tertiary': scheme.onTertiary,
-    'tertiary-container': scheme.tertiaryContainer,
-    'on-tertiary-container': scheme.onTertiaryContainer,
-    error: scheme.error,
-    'on-error': scheme.onError,
-    'error-container': scheme.errorContainer,
-    'on-error-container': scheme.onErrorContainer,
-    background: scheme.background,
-    'on-background': scheme.onBackground,
-    surface: scheme.surface,
-    'on-surface': scheme.onSurface,
-    'surface-variant': scheme.surfaceVariant,
-    'on-surface-variant': scheme.onSurfaceVariant,
-    'surface-dim': scheme.surfaceDim,
-    'surface-bright': scheme.surfaceBright,
-    'surface-container-lowest': scheme.surfaceContainerLowest,
-    'surface-container-low': scheme.surfaceContainerLow,
-    'surface-container': scheme.surfaceContainer,
-    'surface-container-high': scheme.surfaceContainerHigh,
-    'surface-container-highest': scheme.surfaceContainerHighest,
-    outline: scheme.outline,
-    'outline-variant': scheme.outlineVariant,
-    shadow: scheme.shadow,
-    scrim: scheme.scrim,
-    'inverse-surface': scheme.inverseSurface,
-    'inverse-on-surface': scheme.inverseOnSurface,
-    'surface-tint': scheme.surfaceTint,
-    'primary-fixed': scheme.primaryFixed,
-    'primary-fixed-dim': scheme.primaryFixedDim,
-    'on-primary-fixed': scheme.onPrimaryFixed,
-    'on-primary-fixed-variant': scheme.onPrimaryFixedVariant,
-    'secondary-fixed': scheme.secondaryFixed,
-    'secondary-fixed-dim': scheme.secondaryFixedDim,
-    'on-secondary-fixed': scheme.onSecondaryFixed,
-    'on-secondary-fixed-variant': scheme.onSecondaryFixedVariant,
-    'tertiary-fixed': scheme.tertiaryFixed,
-    'tertiary-fixed-dim': scheme.tertiaryFixedDim,
-    'on-tertiary-fixed': scheme.onTertiaryFixed,
-    'on-tertiary-fixed-variant': scheme.onTertiaryFixedVariant,
-  }
-
-  for (const [key, value] of Object.entries(colors)) {
-    target.style.setProperty(`--md-sys-color-${key}`, hexFromArgb(value))
-  }
 }
