@@ -51,9 +51,7 @@ export const projects: Project[] = [
     techStack: ['Kotlin', 'Jetpack Compose', 'Material 3'],
     openSource: false,
     featured: true,
-    links: {
-      // demo: 'https://beeper.com' // Placeholder
-    },
+    links: [],
   },
   {
     title: 'Personal Website',
