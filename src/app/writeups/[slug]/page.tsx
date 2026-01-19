@@ -5,6 +5,7 @@ import EnhancedArticle from '@/components/enhanced-article'
 import { BackButton } from '@/components/link-button'
 import { WriteupHeader } from '@/app/writeups/_components/writeup-header'
 import { ThemeOverride } from '@/components/material-theme-context'
+import { EditOnGitHub } from '@/components/edit-on-github'
 
 export async function generateStaticParams() {
   return allWriteups.map((writeup) => ({
@@ -61,6 +62,8 @@ export default async function WriteupPage({ params }: { params: Promise<{ slug: 
 
           <MDXContent code={writeup.mdx} />
         </EnhancedArticle>
+
+        <EditOnGitHub filePath={`content/writeups/${slug}.mdx`} />
       </div>
     </main>
   )

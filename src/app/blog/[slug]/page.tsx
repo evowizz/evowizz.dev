@@ -7,6 +7,7 @@ import { ViewCounter } from '@/components/view-counter'
 import { ReportView } from '@/components/report-view'
 import { BackButton } from '@/components/link-button'
 import { ThemeOverride } from '@/components/material-theme-context'
+import { EditOnGitHub } from '@/components/edit-on-github'
 import { getViewsBySlug } from '@/app/db/queries'
 import dayjs from 'dayjs'
 import Image from 'next/image'
@@ -93,6 +94,8 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
 
           <MDXContent code={post.mdx} />
         </EnhancedArticle>
+
+        <EditOnGitHub filePath={`content/posts/${slug}.mdx`} />
       </div>
     </main>
   )
