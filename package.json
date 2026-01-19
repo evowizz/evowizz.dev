@@ -10,10 +10,11 @@
     "start": "next start",
     "build": "next build",
     "lint": "eslint",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "db:push": "drizzle-kit push:pg --config=drizzle.config.ts"
   },
   "dependencies": {
-    "@evowizz/material-color-utilities-canary": "^0.3.1-canary.1",
+    "@evowizz/material-color-utilities-canary": "0.3.1-canary.2",
     "@neondatabase/serverless": "^1.0.2",
     "@tailwindcss/typography": "^0.5.19",
     "clsx": "^2.1.1",
@@ -36,6 +37,8 @@
     "@content-collections/mdx": "^0.2.2",
     "@content-collections/next": "^0.2.10",
     "@tailwindcss/postcss": "^4.1.18",
+    "@types/colorthief": "^2.6.0",
+    "colorthief": "^2.6.0",
     "@types/mdx": "^2.0.13",
     "@types/node": "^25",
     "@types/react": "^19",
