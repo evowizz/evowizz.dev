@@ -14,7 +14,7 @@ import { Variant, Hct, argbFromHex, createTheme, applyTheme } from '@/lib/materi
 import { useIsSSR } from '@/lib/use-is-ssr'
 
 const DEFAULT_SEED_COLOR = '#33CC7A' // Inware ref :)
-const DEFAULT_VARIANT = Variant.EXPRESSIVE
+const DEFAULT_VARIANT = Variant.RAINBOW
 
 type MaterialThemeContextValue = {
   seedColor: string
