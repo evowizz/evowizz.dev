@@ -263,10 +263,12 @@
 }
 
 @utility variation-sans {
+  font-optical-sizing: auto;
   font-variation-settings:
     'wdth' var(--font-wdth, 100),
     'GRAD' var(--font-grad, 0),
-    'slnt' var(--font-slnt, 0);
+    'slnt' var(--font-slnt, 0),
+    'ROND' var(--font-rond, 0);
 }
 
 @utility variation-serif {
@@ -294,6 +296,11 @@
 
 @utility -variation-slant-* {
   --font-slnt: calc(--value(integer) * -1);
+}
+
+@utility variation-roundness-* {
+  --font-rond: --value(integer);
+  --font-rond: --value([number]);
 }
 
 @utility text-balance {

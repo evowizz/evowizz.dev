@@ -22,7 +22,7 @@ export const metadata: Metadata = {
 const googleSansFlex = Google_Sans_Flex({
   subsets: ['latin'],
   variable: '--font-google-sans-flex',
-  axes: ['wdth', 'GRAD', 'slnt'],
+  axes: ['wdth', 'GRAD', 'slnt', 'ROND'],
 })
 
 const googleSansCode = Google_Sans_Code({
