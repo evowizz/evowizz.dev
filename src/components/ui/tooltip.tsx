@@ -13,7 +13,7 @@ export function Tooltip({ content, children, className }: TooltipProps) {
       <span className="border-b border-dashed border-current">{children}</span>
       <span
         role="tooltip"
-        className="bg-surface-bright text-on-surface border-outline absolute top-full left-0 z-50 hidden min-w-48 rounded-lg border p-3 text-sm shadow-sm group-hover:block"
+        className="bg-surface-bright text-on-surface border-outline absolute top-full left-0 z-50 hidden w-max max-w-xs rounded-lg border p-3 text-sm shadow-sm group-mobile-hover:block"
       >
         {content}
       </span>
