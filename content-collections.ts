@@ -4,8 +4,7 @@ import { compileMDX } from '@content-collections/mdx'
 import rehypePrettyCode from 'rehype-pretty-code'
 import rehypeSlug from 'rehype-slug'
 import remarkGfm from 'remark-gfm'
-// @ts-expect-error - colorthief node version has no types
-import { getColor } from 'colorthief/src/color-thief-node.js'
+import { getColor } from 'colorthief'
 import path from 'path'
 import { argbFromRgb, hexFromArgb, Variant } from '@evowizz/material-color-utilities-canary'
 
@@ -116,7 +115,10 @@ async function extractColorFromImage(imagePath: string): Promise<string | null> 
 
   try {
     const fullPath = path.join(process.cwd(), 'public', imagePath)
-    const [r, g, b] = await getColor(fullPath)
+    // colorthief v3 quantizes in OKLCH by default; pin to rgb to match prior output
+    const color = await getColor(fullPath, { colorSpace: 'rgb' })
+    if (!color) return null
+    const { r, g, b } = color.rgb()
     return hexFromArgb(argbFromRgb(r, g, b))
   } catch (error) {
     console.warn(`Failed to extract color from ${imagePath}:`, error)

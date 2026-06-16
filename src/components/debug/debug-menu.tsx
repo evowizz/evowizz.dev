@@ -20,6 +20,7 @@ const VARIANT_NAMES: Record<Variant, string> = {
   [Variant.CONTENT]: 'Content',
   [Variant.RAINBOW]: 'Rainbow',
   [Variant.FRUIT_SALAD]: 'Fruit Salad',
+  [Variant.CMF]: 'CMF',
 }
 
 const COLOR_TOKENS = [
