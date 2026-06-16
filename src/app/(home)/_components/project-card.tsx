@@ -5,7 +5,7 @@ import { cn } from '@/lib/utils'
 import { MaterialSymbol } from '@/components/material-symbol'
 import { LinkButton } from '@/components/link-button'
 import { StyleableProps } from '@/types/component'
-import { allWriteups } from '@/content'
+import { allFoci } from '@/content'
 
 type ProjectProps = StyleableProps<{
   project: Project
@@ -15,11 +15,11 @@ type ProjectProps = StyleableProps<{
 // Default placeholder for projects without images
 const DEFAULT_PLACEHOLDER = '/api/placeholder/1200/750'
 
-// Filter writeups to only show non-hidden ones
-const getVisibleWriteups = (writeups: Project['writeups']) => {
-  if (!writeups) return []
-  return writeups.filter((writeup) => {
-    const found = allWriteups.find((w) => w.slug === writeup.slug)
+// Filter focus items to only show non-hidden ones
+const getVisibleFocus = (focus: Project['focus']) => {
+  if (!focus) return []
+  return focus.filter((item) => {
+    const found = allFoci.find((f) => f.slug === item.slug)
     return found && !found.hidden
   })
 }
@@ -28,7 +28,7 @@ export const FeaturedProject = ({ project, index = 0, className }: ProjectProps)
   const isReversed = index % 2 === 1
   const hasLinks = project.links.length > 0
   const primaryLink = project.links[0]
-  const visibleWriteups = getVisibleWriteups(project.writeups)
+  const visibleFocus = getVisibleFocus(project.focus)
 
   const imageContent = (
     <div
@@ -106,22 +106,22 @@ export const FeaturedProject = ({ project, index = 0, className }: ProjectProps)
         <p className="text-on-surface/70 text-lg leading-relaxed">{project.description}</p>
 
         <div className="flex flex-col gap-2 pt-4">
-          {visibleWriteups.length > 0 && (
+          {visibleFocus.length > 0 && (
             <>
-              {visibleWriteups.length > 1 && (
+              {visibleFocus.length > 1 && (
                 <span className="text-on-surface-variant text-xs font-medium uppercase tracking-widest">
-                  Writeups
+                  Focus
                 </span>
               )}
               <div className="flex flex-wrap items-center gap-3">
-                {visibleWriteups.map((writeup) => (
+                {visibleFocus.map((item) => (
                   <LinkButton
-                    key={writeup.slug}
-                    href={`/writeups/${writeup.slug}`}
+                    key={item.slug}
+                    href={`/focus/${item.slug}`}
                     variant="outline"
                     direction="forward"
                   >
-                    {visibleWriteups.length === 1 ? 'Writeup' : writeup.label}
+                    {visibleFocus.length === 1 ? 'Focus' : item.label}
                   </LinkButton>
                 ))}
 
@@ -143,7 +143,7 @@ export const FeaturedProject = ({ project, index = 0, className }: ProjectProps)
             </>
           )}
 
-          {visibleWriteups.length === 0 && primaryLink && (
+          {visibleFocus.length === 0 && primaryLink && (
             <Link
               href={primaryLink.url}
               target="_blank"

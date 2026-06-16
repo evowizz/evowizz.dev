@@ -1,6 +1,6 @@
 import Image from 'next/image'
 
-export type WriteupMeta = {
+export type FocusMeta = {
   title: string
   overview: string
   stack: string[]
@@ -8,11 +8,11 @@ export type WriteupMeta = {
   image?: string
 }
 
-type WriteupHeaderProps = {
-  meta: WriteupMeta
+type FocusHeaderProps = {
+  meta: FocusMeta
 }
 
-export function WriteupHeader({ meta }: WriteupHeaderProps) {
+export function FocusHeader({ meta }: FocusHeaderProps) {
   return (
     <header className="not-prose border-outline-variant mb-16 border-b pb-8">
       <div className="mb-8 flex flex-col gap-4">

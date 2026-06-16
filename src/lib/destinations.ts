@@ -1,7 +1,7 @@
 export const destinations = [
   { label: 'Home', path: '/' },
   { label: 'Blog', path: '/blog' },
-  { label: 'Writeups', path: '/writeups' },
+  { label: 'Focus', path: '/focus' },
 ]
 
 export type Destination = (typeof destinations)[number]

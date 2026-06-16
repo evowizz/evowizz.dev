@@ -1,4 +1,4 @@
-export type WriteupLink = {
+export type FocusLink = {
   slug: string
   label: string
 }
@@ -27,7 +27,7 @@ export type Project = {
   openSource: boolean
   featured?: boolean
   deprecated?: boolean
-  writeups?: WriteupLink[]
+  focus?: FocusLink[]
   links: ProjectLink[]
 }
 
@@ -40,7 +40,7 @@ export const projects: Project[] = [
     techStack: ['Kotlin', 'Jetpack Compose', 'Android'],
     openSource: false,
     featured: true,
-    writeups: [{ slug: 'inware', label: 'Read More' }],
+    focus: [{ slug: 'inware', label: 'Read More' }],
     links: [playStoreLink('com.evo.inware')],
   },
   {
