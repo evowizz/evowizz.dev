@@ -134,7 +134,6 @@
     hero-slide 0.5s ease-in-out forwards, hero-opacity 0.5s ease-in-out forwards;
   --animate-hero-slide: hero-slide 0.5s ease-in-out forwards;
   --animate-hero-opacity: hero-opacity 0.5s ease-in-out forwards;
-  --animate-spin-slow: spin 48s linear infinite;
 
   /* Animation easing */
   --ease-slow-in: cubic-bezier(0, 0, 0, 1);
@@ -144,7 +143,7 @@
   --font-sans: var(--font-google-sans-flex), system-ui, sans-serif;
   --font-sans--font-feature-settings: 'calt';
 
-  --font-serif: var(--font-noto-serif), Georgia, serif;
+  --font-serif: Georgia, serif;
 
   --font-mono: var(--font-google-sans-code), ui-monospace, monospace;
   --font-mono--font-feature-settings: 'ss01';
@@ -394,6 +393,19 @@
   }
 }
 
+@layer base {
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    ::before,
+    ::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
 @utility overlay-noise {
   background-image: url('/static/bg/noise.png');
 }
@@ -441,6 +453,20 @@
 
 @utility text-balance {
   text-wrap: balance;
+}
+
+@utility text-display {
+  font-size: clamp(2.75rem, 9vw, 6.5rem);
+  line-height: 0.85;
+  letter-spacing: -0.03em;
+}
+
+@utility running-head {
+  @apply text-outline font-mono text-xs tracking-[0.2em] uppercase;
+  @media (min-width: 48rem) {
+    writing-mode: vertical-rl;
+    rotate: 180deg;
+  }
 }
 
 @utility animation-delay-100 {
@@ -542,6 +568,44 @@
 @utility motion-effects-slow {
   transition-timing-function: cubic-bezier(0.34, 0.88, 0.34, 1);
   transition-duration: 300ms;
+}
+
+@utility text-emphasized {
+  font-weight: 700;
+  --font-wdth: 115;
+}
+
+@utility text-poster {
+  font-size: clamp(3.25rem, 13vw, 10rem);
+  line-height: 0.82;
+  letter-spacing: -0.045em;
+}
+
+@utility text-condensed {
+  --font-wdth: 80;
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+}
+
+@utility text-measure {
+  max-inline-size: 60ch;
+}
+
+@utility drop-cap {
+  &::first-letter {
+    float: left;
+    margin-right: 0.08em;
+    font-size: 2.8em;
+    line-height: 0.72;
+    font-weight: 800;
+    font-optical-sizing: auto;
+    font-variation-settings:
+      'wdth' 110,
+      'GRAD' 0,
+      'slnt' 0,
+      'ROND' 0;
+    color: var(--color-primary);
+  }
 }
 
 @utility hide-scrollbar {
@@ -666,6 +730,48 @@
   }
   code::after {
     content: none;
+  }
+}
+
+/* Breaks an element out of its container to near the viewport edges, leaving
+   a small fluid gutter. The nearest ancestor needs overflow-x-clip to absorb
+   the breakout. */
+@utility full-bleed {
+  --bleed-gutter: clamp(0.75rem, 1.6vw, 2rem);
+  position: relative;
+  left: 50%;
+  width: calc(100vw - 2 * var(--bleed-gutter));
+  max-width: none;
+  transform: translateX(-50%);
+}
+
+/* Case-study imagery floats on a tinted panel inset from the viewport edges:
+   figures break out of the container with a fluid gutter and get a surface
+   background; captions sit inside the panel below the image. The nearest
+   ancestor needs overflow-x-clip to absorb the breakout. */
+@utility prose-bleed {
+  figure {
+    --bleed-gutter: clamp(0.75rem, 1.6vw, 2rem);
+    position: relative;
+    left: 50%;
+    width: calc(100vw - 2 * var(--bleed-gutter));
+    max-width: none;
+    transform: translateX(-50%);
+    background-color: var(--color-surface-container-low);
+    padding: clamp(1rem, 3vw, 3rem);
+    border-radius: 1.5rem;
+  }
+  figure img {
+    width: 100%;
+    border-radius: 0.75rem;
+  }
+  figcaption {
+    margin-top: calc(var(--spacing) * 3);
+    padding: 0;
+    text-align: left;
+    font-size: var(--text-sm);
+    line-height: var(--text-sm--line-height);
+    color: var(--color-on-surface-variant);
   }
 }
 

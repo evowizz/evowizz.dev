@@ -1,6 +1,6 @@
 'use client'
 
-import React, { createContext, useContext, useRef } from 'react'
+import React, { createContext, use, useRef } from 'react'
 import { MaterialSymbol } from './material-symbol'
 import { cn } from '@/lib/utils'
 import { StyleablePropsWithChildren, StyleableProps } from '@/types/component'
@@ -17,7 +17,7 @@ type CarouselContextType = {
 const CarouselContext = createContext<CarouselContextType | null>(null)
 
 export const useCarousel = () => {
-  const context = useContext(CarouselContext)
+  const context = use(CarouselContext)
   if (!context) {
     throw new Error('useCarousel must be used within a Carousel')
   }
@@ -191,7 +191,7 @@ export const CarouselContent = ({ children, className }: StyleablePropsWithChild
     <div
       ref={scrollContainerRef}
       className={cn(
-        'hide-scrollbar flex snap-x snap-mandatory scroll-px-8 gap-6 overflow-x-auto px-8 pb-8 md:scroll-px-12 md:px-12',
+        'hide-scrollbar flex snap-x snap-mandatory scroll-px-8 gap-6 overflow-x-auto overscroll-x-contain px-8 pb-8 md:scroll-px-12 md:px-12',
         className,
       )}
     >
@@ -223,8 +223,8 @@ const CarouselButton = ({ className, ...props }: React.ComponentProps<'button'>)
   return (
     <button
       className={cn(
-        'bg-secondary-fixed text-on-secondary-fixed flex h-12 w-16 items-center justify-center rounded-full transition',
-        'hover:enabled:bg-secondary-fixed-dim disabled:opacity-50',
+        'bg-secondary-fixed text-on-secondary-fixed motion-spatial-default flex h-12 w-16 items-center justify-center rounded-[24px] transition-[background-color,border-radius,transform,opacity]',
+        'hover:enabled:bg-secondary-fixed-dim hover:enabled:rounded-2xl active:enabled:scale-90 disabled:opacity-50',
         className,
       )}
       {...props}

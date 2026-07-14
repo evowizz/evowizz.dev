@@ -22,6 +22,8 @@ export const MotionPreview = () => {
           <EffectItemPreview name="Slow" className="motion-effects-slow" />
         </div>
       </div>
+
+      <p className="text-on-surface-variant text-[10px] opacity-70">Hover a tile to preview.</p>
     </div>
   )
 }

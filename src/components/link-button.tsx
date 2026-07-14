@@ -4,7 +4,7 @@ import { MaterialSymbol } from '@/components/material-symbol'
 import { cn } from '@/lib/utils'
 
 const linkButtonVariants = cva(
-  'group inline-flex w-fit items-center gap-1 rounded-full text-sm font-medium transition-all motion-spatial-default variation-sans hover:variation-width-120 hover:font-700',
+  'group inline-flex w-fit items-center gap-1 rounded-full text-sm font-medium transition-[font-variation-settings,font-weight,background-color,border-color,transform] motion-spatial-default variation-sans hover:variation-width-120 hover:font-700 active:scale-95',
   {
     variants: {
       variant: {
@@ -63,14 +63,14 @@ export function LinkButton({
       {isBack && (
         <MaterialSymbol
           name={iconName}
-          className="motion-spatial-default group-hover:symbol-weight-700 text-base transition-all"
+          className="motion-spatial-default group-hover:symbol-weight-700 text-base transition-[font-variation-settings]"
         />
       )}
       {children}
       {!isBack && (
         <MaterialSymbol
           name={iconName}
-          className="motion-spatial-default group-hover:symbol-weight-700 text-base transition-all"
+          className="motion-spatial-default group-hover:symbol-weight-700 text-base transition-[font-variation-settings]"
         />
       )}
     </Link>
