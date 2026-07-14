@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@evowizz/material-color-utilities-canary": "0.4.0-canary.1",
+    "@gsap/react": "^2.1.2",
     "@neondatabase/serverless": "^1.1.0",
     "@tailwindcss/typography": "^0.5.20",
     "clsx": "^2.1.1",
@@ -22,6 +23,7 @@
     "dayjs": "^1.11.21",
     "drizzle-orm": "^0.45.2",
     "framer-motion": "^12.40.0",
+    "gsap": "^3.15.0",
     "material-symbols": "^0.45.1",
     "million": "^3.1.11",
     "next": "^16.2.9",
