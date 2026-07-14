@@ -67,13 +67,14 @@ export function MaterialThemeProvider({
   useEffect(() => {
     if (isSSR) return
 
-    const firstMount = isFirstMount.current
-    isFirstMount.current = false
-
-    // On first mount, if the color and variant are changed,
-    // we need to apply the theme. Otherwise, skip.
-    // This happens on pages using ThemeOverride for example.
-    if (firstMount && seedColor === defaultSeedColor && variant === DEFAULT_VARIANT) return
+    // Only the very first application may be skipped: the CSS already ships
+    // the default values. The flag must never be re-armed afterwards, or
+    // resetting back to the default seed (leaving a ThemeOverride page) gets
+    // skipped too and the article color leaks onto the rest of the site.
+    if (isFirstMount.current) {
+      isFirstMount.current = false
+      if (seedColor === defaultSeedColor && variant === DEFAULT_VARIANT) return
+    }
 
     try {
       const theme = createTheme(seedColor, { variant })
@@ -81,8 +82,6 @@ export function MaterialThemeProvider({
     } catch {
       // Theme application failed
     }
-
-    return () => { isFirstMount.current = true }
   }, [seedColor, variant, isSSR, defaultSeedColor])
 
   const value = useMemo(
