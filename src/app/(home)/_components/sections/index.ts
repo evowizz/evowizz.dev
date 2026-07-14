@@ -1,5 +1,6 @@
 export { Hero } from './hero'
 export { About } from './about'
+export { Work } from './work'
+export { Press } from './press'
 export { Skills } from './skills'
-export { Projects } from './projects'
-export { FeaturedIn } from './featured-in'
+export { Contact } from './contact'

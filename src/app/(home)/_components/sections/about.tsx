@@ -1,87 +1,89 @@
 import Link from 'next/link'
+import { cn } from '@/lib/utils'
+import { Container, focusRing } from '@/components/elements'
+import { SectionTitle } from '@/components/section-title'
+import { CountUp, Reveal } from '@/components/reveal'
 
-export const About = () => {
-  return (
-    <div className="mx-auto max-w-3xl">
-      <div className="mb-12">
-        <span className="text-primary mb-3 block text-xs font-medium tracking-[0.2em] uppercase">
-          About
-        </span>
-        <h2 className="text-4xl leading-tight font-semibold tracking-tight">
-          Hi, I&apos;m <span className="text-primary font-serif italic">Dy</span>.
-        </h2>
-      </div>
+const textLink = cn('text-primary underline-offset-4 hover:underline', focusRing)
 
-      <div className="text-on-surface/80 space-y-6 text-lg leading-relaxed">
-        <p>
-          I&apos;m a <strong>Software Engineer</strong> based in France. I wrote my first line of
-          code in 2014 and released <strong>Inware</strong>, my first major Android app, in 2018.
-          Since then, I&apos;ve been obsessed with creating innovative apps and designing intuitive
-          components.
+export const About = () => (
+  <section id="about" className="scroll-mt-20 py-28 md:py-40">
+    <Container className="flex flex-col gap-12 md:gap-16">
+      <SectionTitle>About</SectionTitle>
+
+      <Reveal className="flex max-w-[44rem] flex-col gap-6 text-lg leading-relaxed md:text-xl">
+        <p className="text-on-surface">
+          Hi, I&apos;m{' '}
+          <span className="variation-sans variation-roundness-100 variation-grade-150 text-primary font-medium">
+            Dy
+          </span>
+          ,
         </p>
-        <p>
-          In late 2023, I uncovered <strong>Nothing&apos;s biggest vulnerability to date</strong>,
-          revealing that <strong>Nothing Chats</strong> (powered by Sunbird) was completely exposed,
-          making over <strong>630,000 private media files</strong> and user data publicly
-          accessible.
+        <p className="text-on-surface">
+          I&apos;m a self-taught developer and designer in Nantes, France, building for
+          Android since 2016. In 2018 I released Inware, an app that shows you exactly what
+          your device is made of. It was the first app on the Play Store to support Material
+          You dynamic color, before the feature was even documented, and has since passed
+          500,000 downloads while holding a 4.7 rating.
         </p>
-        <p>
-          In 2024, I joined{' '}
-          <Link
-            href="https://texts.com"
+        <p className="text-on-surface-variant">
+          Since 2016, I&apos;ve been spotting Android features before they&apos;re
+          announced:{' '}
+          <a
+            href="https://9to5google.com/2019/06/29/google-android-fast-share/"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-primary font-semibold decoration-2 underline-offset-2 transition-all hover:underline"
+            className={textLink}
           >
-            Texts
+            Fast Share
+          </a>
+          , which you now know as Quick Share, and the rename of{' '}
+          <a
+            href="https://9to5google.com/2024/02/01/google-bard-rename-gemini/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={textLink}
+          >
+            Bard to Gemini
+          </a>
+          , days before it was official. That&apos;s how I ended up contributing to
+          9to5Google, where I also wrote a few pieces of my own.
+        </p>
+        <p className="text-on-surface-variant">
+          In 2024 I joined Beeper, where I was both a designer and a developer on their
+          Android app. Among other things, I rewrote the app&apos;s navigation and rebuilt
+          its color system around Material 3.
+        </p>
+        <p className="text-on-surface-variant">
+          I sometimes dig into other people&apos;s software too. Back in 2022, I reported a
+          flaw in{' '}
+          <Link href="/blog/huawei-appgallery-vulnerability" className={textLink}>
+            Huawei&apos;s AppGallery
           </Link>{' '}
-          to work on their desktop app. I later moved to{' '}
-          <Link
-            href="https://beeper.com"
+          that let anyone download paid apps for free. A year later I looked into Nothing
+          Chats, which was built on a service called Sunbird, and what I found{' '}
+          <a
+            href="https://techcrunch.com/2023/11/22/sunbird-pauses-its-efforts-to-bring-imessage-to-android-amid-security-worries/"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-primary font-semibold decoration-2 underline-offset-2 transition-all hover:underline"
+            className={textLink}
           >
-            Beeper
-          </Link>{' '}
-          to work on Android, eventually taking on a dual role as a{' '}
-          <strong>Developer & Designer</strong>.
+            got the app shut down
+          </a>
+          .
         </p>
-        <p>
-          As a contributor to{' '}
-          <Link
-            href="https://9to5google.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-primary font-semibold decoration-2 underline-offset-2 transition-all hover:underline"
-          >
-            9to5Google
-          </Link>
-          , I&apos;ve uncovered hundreds of hidden features in Android betas. I love crafting
-          software that is both beautiful and functional, with a focus on{' '}
-          <strong>Material Design</strong>.
+      </Reveal>
+
+      <Reveal className="flex flex-col gap-3">
+        <CountUp
+          to={630000}
+          group
+          className="variation-sans text-on-surface text-[clamp(3.5rem,11vw,8.5rem)] leading-[0.85] font-bold tracking-tight tabular-nums"
+        />
+        <p className="text-on-surface text-xl leading-snug font-semibold md:text-2xl">
+          private files exposed by the breach I uncovered.
         </p>
-      </div>
-      <div className="border-outline-variant mt-10 flex gap-16 border-t pt-10">
-        <div>
-          <span className="text-primary block text-4xl font-bold tracking-tight">7+</span>
-          <span className="text-on-surface/50 text-sm font-medium tracking-wider uppercase">
-            Years
-          </span>
-        </div>
-        <div>
-          <span className="text-primary block text-4xl font-bold tracking-tight">20+</span>
-          <span className="text-on-surface/50 text-sm font-medium tracking-wider uppercase">
-            Projects
-          </span>
-        </div>
-        <div>
-          <span className="text-primary block text-4xl font-bold tracking-tight">400k+</span>
-          <span className="text-on-surface/50 text-sm font-medium tracking-wider uppercase">
-            Downloads
-          </span>
-        </div>
-      </div>
-    </div>
-  )
-}
+      </Reveal>
+    </Container>
+  </section>
+)

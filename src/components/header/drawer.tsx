@@ -1,51 +1,210 @@
 'use client'
 
+import { useEffect, useRef } from 'react'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
 import { useScrollLock } from '@/hooks/use-scroll-lock'
-import { Nav, NavDestination } from './nav'
-import { DrawerFooter } from './drawer-footer'
+import { useWidthBreath } from '@/hooks/use-width-breath'
+import { destinations } from '@/lib/destinations'
+import { EMAIL } from '@/lib/contact'
+import { Container, focusRing } from '@/components/elements'
+import { Wordmark } from '@/components/wordmark'
+import { MenuIcon } from './menu-icon'
 
-type DrawerProps = {
-  destinations: NavDestination[]
-  isOpen: boolean
-  closeDrawer: () => void
+type DrawerLinkProps = {
+  label: string
+  path: string
+  index: number
+  open: boolean
+  active: boolean
+  onClose: () => void
 }
 
-export const Drawer = ({ destinations, isOpen, closeDrawer }: DrawerProps) => {
-  // We're disabling the scroll on the body when the drawer is open.
-  useScrollLock(isOpen)
+const DrawerLink = ({ label, path, index, open, active, onClose }: DrawerLinkProps) => {
+  const ref = useWidthBreath<HTMLSpanElement>({
+    from: 70,
+    duration: 0.7,
+    delay: 0.3 + index * 0.09,
+    play: open,
+  })
 
   return (
-    <>
-      <div
-        id="site-drawer"
-        aria-hidden={!isOpen}
-        className={cn(
-          'bg-surface-container-highest text-on-surface-variant fixed top-0 right-0 z-50 flex h-dvh w-full flex-col px-8 md:w-1/2 md:rounded-l-4xl md:px-12 xl:w-1/3',
-          'motion-spatial-default translate-x-full transform-gpu transition-transform',
-          // Show more of the background to prevent a gap on the right when the drawer overshoots
-          'after:absolute after:inset-y-0 after:left-full after:w-screen after:bg-inherit',
-          isOpen && 'translate-x-0 transform',
-        )}
+    // The staggered entrance lives on the li so its transition-delay never
+    // bleeds into the hover color transition on the text below.
+    <li
+      className={cn(
+        'motion-spatial-default transition-[opacity,translate]',
+        open ? 'translate-y-0 opacity-100' : 'translate-y-6 opacity-0',
+      )}
+      style={{ transitionDelay: open ? `${250 + index * 90}ms` : '0ms' }}
+    >
+      <Link
+        href={path}
+        onClick={onClose}
+        aria-current={active ? 'page' : undefined}
+        className={cn('block w-fit', focusRing)}
       >
-        <div className="my-4 h-16 md:my-0 md:h-24" />
+        <span
+          ref={ref}
+          className={cn(
+            'variation-sans motion-effects-fast block text-[clamp(3rem,11vw,7rem)] leading-[1.05] font-semibold tracking-tight transition-colors',
+            active ? 'text-primary' : 'text-on-surface hover:text-primary',
+          )}
+        >
+          {label}
+        </span>
+      </Link>
+    </li>
+  )
+}
 
-        <div className="flex flex-1 flex-col">
-          <Nav destinations={destinations} onNavClick={closeDrawer} />
-          <div className="flex-1" />
-          <DrawerFooter className="border-t-outline-variant -mx-4 shrink-0 border-t px-4 pb-16" />
-        </div>
+type DrawerProps = {
+  open: boolean
+  onClose: () => void
+}
+
+export const Drawer = ({ open, onClose }: DrawerProps) => {
+  const pathname = usePathname() ?? ''
+  const panelRef = useRef<HTMLDivElement>(null)
+  const closeButtonRef = useRef<HTMLButtonElement>(null)
+
+  useScrollLock(open)
+
+  useEffect(() => {
+    if (!open) return
+
+    const previouslyFocused = document.activeElement as HTMLElement | null
+    closeButtonRef.current?.focus()
+
+    return () => previouslyFocused?.focus()
+  }, [open])
+
+  useEffect(() => {
+    if (!open) return
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        onClose()
+        return
+      }
+
+      if (event.key !== 'Tab') return
+
+      const panel = panelRef.current
+      if (!panel) return
+
+      const focusable = panel.querySelectorAll<HTMLElement>(
+        'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
+      )
+      if (focusable.length === 0) return
+
+      const first = focusable[0]
+      const last = focusable[focusable.length - 1]
+
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault()
+        last.focus()
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault()
+        first.focus()
+      }
+    }
+
+    document.addEventListener('keydown', handleKeyDown)
+    return () => document.removeEventListener('keydown', handleKeyDown)
+  }, [open, onClose])
+
+  return (
+    <div
+      id="site-drawer"
+      ref={panelRef}
+      role="dialog"
+      aria-modal="true"
+      aria-label="Menu"
+      inert={!open}
+      className={cn(
+        'bg-surface-container motion-effects-slow fixed inset-0 z-50 flex flex-col overflow-y-auto overscroll-contain transition-opacity',
+        open ? 'opacity-100' : 'pointer-events-none opacity-0',
+      )}
+    >
+      <div className="flex h-16 shrink-0 items-center">
+        <Container className="flex items-center justify-between">
+          <Link
+            href="/"
+            onClick={onClose}
+            aria-label="evowizz, home"
+            className={cn(
+              'text-on-surface hover:text-primary motion-effects-default transition-colors',
+              focusRing,
+            )}
+          >
+            <Wordmark />
+          </Link>
+          <button
+            ref={closeButtonRef}
+            type="button"
+            onClick={onClose}
+            aria-label="Close menu"
+            className={cn(
+              'group text-on-surface hover:bg-surface-container-high motion-effects-fast -mr-2 flex size-11 items-center justify-center rounded-full transition-colors',
+              focusRing,
+            )}
+          >
+            <MenuIcon isOpen={open} className="group-hover:symbol-weight-700" />
+          </button>
+        </Container>
+      </div>
+
+      <div className="flex flex-1 items-center py-10">
+        <Container>
+          <nav aria-label="Site">
+            <ul className="flex flex-col gap-1 md:gap-2">
+              {destinations.map((destination, index) => {
+                const active =
+                  destination.path === '/'
+                    ? pathname === '/'
+                    : pathname.startsWith(destination.path)
+                return (
+                  <DrawerLink
+                    key={destination.path}
+                    label={destination.label}
+                    path={destination.path}
+                    index={index}
+                    open={open}
+                    active={active}
+                    onClose={onClose}
+                  />
+                )
+              })}
+            </ul>
+          </nav>
+        </Container>
       </div>
 
       <div
         className={cn(
-          'pointer-events-none',
-          'bg-scrim/40 motion-effects-default fixed top-0 right-0 z-40 h-dvh w-full opacity-0 backdrop-blur-sm transition-opacity',
-          isOpen && 'pointer-events-auto opacity-100',
+          'motion-effects-slow shrink-0 transition-opacity',
+          open ? 'opacity-100' : 'opacity-0',
         )}
-        aria-hidden={!isOpen}
-        onClick={closeDrawer}
-      />
-    </>
+        style={{ transitionDelay: open ? '650ms' : '0ms' }}
+      >
+        <Container className="flex flex-wrap items-center justify-between gap-4 py-8">
+          <p className="text-on-surface flex items-center gap-2 text-sm font-medium">
+            <span aria-hidden className="bg-primary size-2 rounded-full" />
+            Available for hire
+          </p>
+          <a
+            href={`mailto:${EMAIL}`}
+            className={cn(
+              'text-on-surface hover:text-primary motion-effects-default text-sm font-medium transition-colors',
+              focusRing,
+            )}
+          >
+            {EMAIL}
+          </a>
+        </Container>
+      </div>
+    </div>
   )
 }

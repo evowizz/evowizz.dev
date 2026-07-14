@@ -19,6 +19,11 @@ const playStoreLink = (packageName: string): ProjectLink => ({
   label: 'Google Play',
 })
 
+export type SpotlightStat = {
+  value: string
+  label: string
+}
+
 export type Project = {
   title: string
   description: string
@@ -26,6 +31,8 @@ export type Project = {
   techStack: string[]
   openSource: boolean
   featured?: boolean
+  spotlight?: boolean // Rendered as the oversized lead block in Selected Work
+  spotlightStats?: SpotlightStat[]
   deprecated?: boolean
   focus?: FocusLink[]
   links: ProjectLink[]
@@ -35,23 +42,18 @@ export const projects: Project[] = [
   {
     title: 'Inware',
     description:
-      'Get to know the hardware and software specifications of your device. A comprehensive Android application that provides detailed information about device hardware and software specifications, including Android version, display, CPU, RAM, camera, battery, and network details.',
+      "An Android app I've been building since 2018 to answer one question: what is actually inside your phone? It digs into the hardware and software (CPU, display, sensors, camera, battery) and themes itself to your wallpaper with Material You.",
     image: '/api/placeholder/1200/750',
     techStack: ['Kotlin', 'Jetpack Compose', 'Android'],
     openSource: false,
     featured: true,
+    spotlight: true,
+    spotlightStats: [
+      { value: '500k+', label: 'downloads' },
+      { value: '4.7', label: 'rating' },
+    ],
     focus: [{ slug: 'inware', label: 'Read More' }],
     links: [playStoreLink('com.evo.inware')],
-  },
-  {
-    title: 'Beeper',
-    description:
-      'A universal chat application that unifies all your messages into a single inbox. I worked on both the development and design of the Android app, helping build a fluid messaging experience.',
-    image: '/api/placeholder/1200/750',
-    techStack: ['Kotlin', 'Jetpack Compose', 'Material 3'],
-    openSource: false,
-    featured: true,
-    links: [],
   },
   {
     title: 'Personal Website',

@@ -1,7 +1,7 @@
 import './globals.css'
 
 import type { Metadata } from 'next'
-import { Google_Sans_Code, Google_Sans_Flex, Noto_Serif } from 'next/font/google'
+import { Google_Sans_Code, Google_Sans_Flex } from 'next/font/google'
 import { Footer } from '@/components/footer'
 import { Header } from '@/components/header'
 import { MaterialThemeProvider } from '@/components/material-theme-context'
@@ -30,11 +30,6 @@ const googleSansCode = Google_Sans_Code({
   variable: '--font-google-sans-code',
 })
 
-const notoSerif = Noto_Serif({
-  subsets: ['latin'],
-  variable: '--font-noto-serif',
-})
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -44,16 +39,14 @@ export default function RootLayout({
     <html
       suppressHydrationWarning
       lang="en"
-      className={`${googleSansFlex.variable} ${googleSansCode.variable} ${notoSerif.variable}`}
+      className={`${googleSansFlex.variable} ${googleSansCode.variable}`}
     >
-      <body className="text-on-surface motion-effects-default bg-background transition-colors">
+      <body className="text-on-surface motion-effects-default bg-surface transition-colors">
         <ThemeProvider>
           <MaterialThemeProvider>
             <Header />
-            <div className="relative overflow-hidden rounded-b-4xl pt-24 bg-inherit">{children}</div>
-
-            {/* Footer overlaps behind the rounded-b-4xl container above */}
-            <Footer className="-z-10 -mt-8 h-32 pt-8" />
+            {children}
+            <Footer />
             {process.env.NODE_ENV === 'development' && <DebugPanel />}
           </MaterialThemeProvider>
         </ThemeProvider>
