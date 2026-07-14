@@ -1,6 +1,8 @@
-import { allPosts, Post } from '@/content'
-import Balancer from 'react-wrap-balancer'
+import { Suspense } from 'react'
+import Image from 'next/image'
+import dayjs from 'dayjs'
 import { notFound } from 'next/navigation'
+import { allPosts, Post } from '@/content'
 import MDXContent from '@/components/mdx/mdx-content'
 import EnhancedArticle from '@/components/enhanced-article'
 import { ViewCounter } from '@/components/view-counter'
@@ -8,10 +10,9 @@ import { ReportView } from '@/components/report-view'
 import { BackButton } from '@/components/link-button'
 import { ThemeOverride } from '@/components/material-theme-context'
 import { EditOnGitHub } from '@/components/edit-on-github'
+import { Container } from '@/components/elements'
+import { Reveal } from '@/components/reveal'
 import { getViewsBySlug } from '@/app/db/queries'
-import dayjs from 'dayjs'
-import Image from 'next/image'
-import { Suspense } from 'react'
 
 export async function generateStaticParams() {
   return allPosts.map((post) => ({
@@ -44,11 +45,19 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 async function Views({ slug }: { slug: string }) {
   const view = await getViewsBySlug(slug)
+  const count = view?.count ?? 0
 
   return (
     <>
       <ReportView slug={slug} />
-      <ViewCounter count={view?.count ?? 0} className="text-on-surface-variant text-sm" />
+      {count > 0 && (
+        <>
+          <span aria-hidden className="text-outline-variant">
+            /
+          </span>
+          <ViewCounter count={count} className="tabular-nums" />
+        </>
+      )}
     </>
   )
 }
@@ -62,41 +71,50 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
   }
 
   return (
-    <main className="min-h-screen pt-24 pb-12">
+    <main className="min-h-screen pt-10 pb-24 md:pt-16">
       <ThemeOverride color={post.themeColor} variant={post.themeVariant} />
-      <div className="container mx-auto max-w-4xl px-4">
+      <Container>
         <BackButton href="/blog">All posts</BackButton>
 
         <EnhancedArticle className="prose prose-quoteless dark:prose-invert w-full max-w-none">
-          <header className="not-prose mb-12 flex flex-col gap-2">
-            <h1 className="text-4xl font-bold md:text-5xl">
-              <Balancer>{post.title}</Balancer>
-            </h1>
-            <p className="text-on-surface-variant text-xl leading-relaxed">
-              <Balancer>{post.summary}</Balancer>
-            </p>
-            <div className="text-on-surface-variant flex items-center gap-1">
-              <time dateTime={post.publishedAt}>
+          <Reveal immediate stagger y={24} className="not-prose flex flex-col items-start gap-5">
+            <p className="text-on-surface-variant flex flex-wrap items-center gap-x-2 gap-y-1 text-sm font-medium">
+              <time dateTime={post.publishedAt} className="tabular-nums">
                 {dayjs(post.publishedAt).format('MMMM DD, YYYY')}
               </time>
               <Suspense>
-                <span>•</span>
                 <Views slug={post.slug} />
               </Suspense>
-            </div>
-          </header>
+            </p>
+
+            <h1 className="variation-sans text-on-surface text-[clamp(2.5rem,7vw,5rem)] leading-[1.02] font-semibold tracking-tight text-balance">
+              {post.title}
+            </h1>
+
+            <p className="text-on-surface-variant text-lg leading-relaxed md:text-xl">
+              {post.summary}
+            </p>
+          </Reveal>
 
           {post.image && (
-            <div className="border-outline-variant relative mb-12 aspect-video w-full overflow-hidden rounded-3xl border">
-              <Image src={post.image} alt={post.title} fill className="object-cover" priority />
-            </div>
+            <Reveal>
+              <figure className="not-prose mt-12 md:mt-14">
+                <div className="border-outline-variant relative aspect-video w-full overflow-hidden rounded-xl border">
+                  <Image src={post.image} alt={post.title} fill className="object-cover" priority />
+                </div>
+              </figure>
+            </Reveal>
           )}
 
-          <MDXContent code={post.mdx} />
+          <div className="mt-12 md:mt-14">
+            <MDXContent code={post.mdx} />
+          </div>
         </EnhancedArticle>
 
-        <EditOnGitHub filePath={`content/posts/${slug}.mdx`} />
-      </div>
+        <footer className="mt-16 md:mt-24">
+          <EditOnGitHub filePath={`content/posts/${slug}.mdx`} />
+        </footer>
+      </Container>
     </main>
   )
 }

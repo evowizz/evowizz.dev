@@ -1,9 +1,13 @@
-import { allPosts } from '@/content'
+import { Suspense } from 'react'
 import Link from 'next/link'
 import dayjs from 'dayjs'
+import { allPosts } from '@/content'
 import { getViewsCount } from '@/app/db/queries'
 import { ViewCounter } from '@/components/view-counter'
-import { Suspense } from 'react'
+import { Container, focusRing } from '@/components/elements'
+import { PageTitle } from '@/components/section-title'
+import { Reveal } from '@/components/reveal'
+import { cn } from '@/lib/utils'
 
 export const metadata = {
   title: 'Blog',
@@ -15,79 +19,53 @@ export default function BlogPage() {
     .filter((post) => !post.hidden)
     .sort((a, b) => dayjs(b.publishedAt).unix() - dayjs(a.publishedAt).unix())
 
-  // Group posts by year for a nice structured list
-  const postsByYear = posts.reduce(
-    (acc, post) => {
-      const year = dayjs(post.publishedAt).format('YYYY')
-      if (!acc[year]) acc[year] = []
-      acc[year].push(post)
-      return acc
-    },
-    {} as Record<string, typeof posts>,
-  )
-
-  const years = Object.keys(postsByYear).sort((a, b) => Number(b) - Number(a))
-
   return (
-    <main className="flex min-h-screen flex-col">
-      <section className="px-6 py-24 md:px-12 md:py-32">
-        <div className="mx-auto flex w-full max-w-5xl flex-col gap-6">
-          <span className="text-primary text-xs font-medium tracking-[0.2em] uppercase">Blog</span>
-          <h1 className="text-4xl font-semibold tracking-tight text-balance md:text-6xl">
-            Thoughts, tutorials, <br className="hidden md:block" />
-            and stories.
-          </h1>
-          <p className="text-on-surface-variant max-w-2xl text-lg leading-relaxed text-balance md:text-xl">
-            Exploring the world of Android, web development, and design engineering.
-          </p>
+    <main className="min-h-screen pt-16 pb-28 md:pt-24 md:pb-40">
+      <Container className="flex flex-col gap-16 md:gap-24">
+        <div className="flex flex-col gap-4">
+          <PageTitle>Blog</PageTitle>
+          <Reveal immediate delay={0.2}>
+            <p className="text-on-surface-variant max-w-[36rem] text-lg md:text-xl">
+              Notes on Android, web development, and design.
+            </p>
+          </Reveal>
         </div>
-      </section>
 
-      <section className="px-6 pb-24 md:px-12">
-        <div className="mx-auto flex w-full max-w-5xl flex-col gap-16">
-          {years.map((year) => (
-            <div
-              key={year}
-              className="border-outline-variant flex flex-col border-b pb-12 last:border-0 md:grid md:grid-cols-[8rem_1fr]"
-            >
-              <div className="mb-4 md:mt-6 md:mb-0">
-                <span className="text-tertiary sticky top-24 text-2xl font-semibold">{year}</span>
-              </div>
+        <ul className="flex flex-col gap-16 md:gap-24">
+          {posts.map((post) => (
+            <li key={post.slug}>
+              <Reveal>
+                <article className="flex flex-col items-start gap-3">
+                  <p className="text-on-surface-variant flex flex-wrap items-center gap-x-2 gap-y-1 text-sm font-medium">
+                    <time dateTime={post.publishedAt} className="tabular-nums">
+                      {dayjs(post.publishedAt).format('MMMM DD, YYYY')}
+                    </time>
+                    <Suspense>
+                      <Views slug={post.slug} />
+                    </Suspense>
+                  </p>
 
-              <div className="flex w-full flex-col">
-                {postsByYear[year].map((post) => (
-                  <Link
-                    key={post.slug}
-                    href={`/blog/${post.slug}`}
-                    className="group hover:bg-surface-container-low flex flex-col rounded-xl px-4 py-6 transition-colors"
-                  >
-                    <div className="flex flex-col gap-2">
-                      <div className="flex flex-col gap-1 md:items-baseline md:justify-between">
-                        <div className="text-on-surface-variant flex items-center gap-1 text-sm opacity-60 transition-opacity group-hover:opacity-100">
-                          <time dateTime={post.publishedAt}>
-                            {dayjs(post.publishedAt).format('MMM DD')}
-                          </time>
-                          <Suspense>
-                            <span>•</span>
-                            <Views slug={post.slug} />
-                          </Suspense>
-                        </div>
-                        <h2 className="group-hover:text-primary motion-effects-default text-xl font-medium transition-colors md:text-2xl">
-                          {post.title}
-                        </h2>
-                      </div>
+                  <h2>
+                    <Link
+                      href={`/blog/${post.slug}`}
+                      className={cn(
+                        'variation-sans text-on-surface hover:text-primary motion-effects-fast block w-fit text-3xl leading-[1.05] font-semibold tracking-tight transition-colors text-balance md:text-5xl',
+                        focusRing,
+                      )}
+                    >
+                      {post.title}
+                    </Link>
+                  </h2>
 
-                      <p className="text-on-surface-variant line-clamp-2 text-base md:w-11/12">
-                        {post.summary}
-                      </p>
-                    </div>
-                  </Link>
-                ))}
-              </div>
-            </div>
+                  <p className="text-on-surface-variant line-clamp-2 max-w-[44rem] text-lg leading-relaxed">
+                    {post.summary}
+                  </p>
+                </article>
+              </Reveal>
+            </li>
           ))}
-        </div>
-      </section>
+        </ul>
+      </Container>
     </main>
   )
 }
@@ -96,6 +74,16 @@ async function Views({ slug }: { slug: string }) {
   // getViewsCount uses 'use cache' with cacheLife('seconds'), so parallel
   // calls from multiple Views components share the same cached result.
   const allViews = await getViewsCount()
-  const view = allViews.find((v) => v.slug === slug)
-  return <ViewCounter count={view?.count ?? 0} />
+  const count = allViews.find((v) => v.slug === slug)?.count ?? 0
+
+  if (!count) return null
+
+  return (
+    <>
+      <span aria-hidden className="text-outline-variant">
+        /
+      </span>
+      <ViewCounter count={count} className="tabular-nums" />
+    </>
+  )
 }
