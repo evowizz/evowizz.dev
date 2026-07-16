@@ -1,9 +1,6 @@
-import Image from 'next/image'
 import Link from 'next/link'
 import { allFoci } from '@/content'
-import { Container, focusRing, Label } from '@/components/elements'
-import { PageTitle } from '@/components/section-title'
-import { Reveal } from '@/components/reveal'
+import { Container, focusRing, PageTitle } from '@/components/elements'
 import { cn } from '@/lib/utils'
 
 export const metadata = {
@@ -15,65 +12,25 @@ export default function FocusPage() {
   const focus = allFoci.filter((item) => !item.hidden)
 
   return (
-    <main className="min-h-screen pt-16 pb-28 md:pt-24 md:pb-40">
-      <Container className="flex flex-col gap-16 md:gap-24">
+    <main className="min-h-screen py-28 md:py-40">
+      <Container className="flex flex-col gap-12 md:gap-16">
         <div className="flex flex-col gap-4">
           <PageTitle>Focus</PageTitle>
-          <Reveal immediate delay={0.2}>
-            <p className="text-on-surface-variant max-w-[38rem] text-lg md:text-xl">
-              One project at a time, in depth: the design decisions and the development
-              process behind my work.
-            </p>
-          </Reveal>
+          <p className="text-on-surface-variant max-w-[38rem] text-lg md:text-xl">
+            One project at a time, in depth: the design decisions and the development
+            process behind my work.
+          </p>
+          <p className="text-on-surface-variant flex flex-wrap items-center gap-x-2 gap-y-1 pt-2 font-mono text-xs tracking-[0.08em] uppercase">
+            <span>
+              {focus.length} {focus.length === 1 ? 'project' : 'projects'}
+            </span>
+          </p>
         </div>
 
-        <ul className="flex flex-col gap-16 md:gap-24">
+        <ul className="divide-outline-variant -mx-4 flex flex-col divide-y md:-mx-6">
           {focus.map((item) => (
             <li key={item.slug}>
-              <Reveal>
-                <article className="flex flex-col items-start gap-3">
-                  {item.image && (
-                    <Link
-                      href={`/focus/${item.slug}`}
-                      aria-hidden
-                      tabIndex={-1}
-                      className="block w-full"
-                    >
-                      <div className="border-outline-variant relative aspect-2/1 w-full overflow-hidden rounded-xl border">
-                        <Image
-                          src={item.image}
-                          alt=""
-                          fill
-                          sizes="(max-width: 72rem) 100vw, 72rem"
-                          className="object-cover"
-                        />
-                      </div>
-                    </Link>
-                  )}
-
-                  {item.role && <Label>{item.role}</Label>}
-
-                  <h2>
-                    <Link
-                      href={`/focus/${item.slug}`}
-                      className={cn(
-                        'variation-sans text-on-surface hover:text-primary motion-effects-fast block w-fit text-3xl leading-[1.05] font-semibold tracking-tight transition-colors text-balance md:text-5xl',
-                        focusRing,
-                      )}
-                    >
-                      {item.title}
-                    </Link>
-                  </h2>
-
-                  <p className="text-on-surface-variant line-clamp-2 max-w-[44rem] text-lg leading-relaxed">
-                    {item.overview}
-                  </p>
-
-                  <span className="text-on-surface-variant font-mono text-sm">
-                    {item.stack.join(' / ')}
-                  </span>
-                </article>
-              </Reveal>
+              <FocusRow item={item} />
             </li>
           ))}
         </ul>
@@ -81,3 +38,29 @@ export default function FocusPage() {
     </main>
   )
 }
+
+type FocusEntry = (typeof allFoci)[number]
+
+const FocusRow = ({ item }: { item: FocusEntry }) => (
+  <Link
+    href={`/focus/${item.slug}`}
+    className={cn(
+      'group hover:bg-surface-container-low focus-visible:bg-surface-container-low motion-effects-fast block px-4 py-5 transition-colors md:px-6 md:py-7',
+      focusRing,
+    )}
+  >
+    <article className="flex flex-col items-start gap-2.5">
+      <p className="text-on-surface-variant font-mono text-xs tracking-[0.08em] uppercase">
+        {item.stack.join(' / ')}
+      </p>
+
+      <h2 className="variation-sans text-on-surface text-2xl leading-snug font-semibold tracking-tight text-balance md:text-3xl">
+        {item.title}
+      </h2>
+
+      <p className="text-on-surface-variant max-w-[44rem] leading-relaxed md:text-lg">
+        {item.overview}
+      </p>
+    </article>
+  </Link>
+)

@@ -3,10 +3,8 @@ import Link from 'next/link'
 import dayjs from 'dayjs'
 import { allPosts } from '@/content'
 import { getViewsCount } from '@/app/db/queries'
-import { ViewCounter } from '@/components/view-counter'
-import { Container, focusRing } from '@/components/elements'
-import { PageTitle } from '@/components/section-title'
-import { Reveal } from '@/components/reveal'
+import { Container, focusRing, PageTitle } from '@/components/elements'
+import { MaterialSymbol } from '@/components/material-symbol'
 import { cn } from '@/lib/utils'
 
 export const metadata = {
@@ -19,49 +17,34 @@ export default function BlogPage() {
     .filter((post) => !post.hidden)
     .sort((a, b) => dayjs(b.publishedAt).unix() - dayjs(a.publishedAt).unix())
 
+  const years = posts.map((post) => dayjs(post.publishedAt).year())
+  const firstYear = Math.min(...years)
+  const lastYear = Math.max(...years)
+  const span = firstYear === lastYear ? `${firstYear}` : `${firstYear}-${lastYear}`
+
   return (
-    <main className="min-h-screen pt-16 pb-28 md:pt-24 md:pb-40">
-      <Container className="flex flex-col gap-16 md:gap-24">
+    <main className="min-h-screen py-28 md:py-40">
+      <Container className="flex flex-col gap-12 md:gap-16">
         <div className="flex flex-col gap-4">
           <PageTitle>Blog</PageTitle>
-          <Reveal immediate delay={0.2}>
-            <p className="text-on-surface-variant max-w-[36rem] text-lg md:text-xl">
-              Notes on Android, web development, and design.
-            </p>
-          </Reveal>
+          <p className="text-on-surface-variant max-w-[36rem] text-lg md:text-xl">
+            Notes on Android, web development, and design.
+          </p>
+          <p className="text-on-surface-variant flex flex-wrap items-center gap-x-2 gap-y-1 pt-2 font-mono text-xs tracking-[0.08em] uppercase">
+            <span>
+              {posts.length} {posts.length === 1 ? 'entry' : 'entries'}
+            </span>
+            <span aria-hidden className="text-outline-variant">
+              /
+            </span>
+            <span>{span}</span>
+          </p>
         </div>
 
-        <ul className="flex flex-col gap-16 md:gap-24">
-          {posts.map((post) => (
+        <ul className="divide-outline-variant -mx-4 flex flex-col divide-y md:-mx-6">
+          {posts.map((post, index) => (
             <li key={post.slug}>
-              <Reveal>
-                <article className="flex flex-col items-start gap-3">
-                  <p className="text-on-surface-variant flex flex-wrap items-center gap-x-2 gap-y-1 text-sm font-medium">
-                    <time dateTime={post.publishedAt} className="tabular-nums">
-                      {dayjs(post.publishedAt).format('MMMM DD, YYYY')}
-                    </time>
-                    <Suspense>
-                      <Views slug={post.slug} />
-                    </Suspense>
-                  </p>
-
-                  <h2>
-                    <Link
-                      href={`/blog/${post.slug}`}
-                      className={cn(
-                        'variation-sans text-on-surface hover:text-primary motion-effects-fast block w-fit text-3xl leading-[1.05] font-semibold tracking-tight transition-colors text-balance md:text-5xl',
-                        focusRing,
-                      )}
-                    >
-                      {post.title}
-                    </Link>
-                  </h2>
-
-                  <p className="text-on-surface-variant line-clamp-2 max-w-[44rem] text-lg leading-relaxed">
-                    {post.summary}
-                  </p>
-                </article>
-              </Reveal>
+              <PostRow post={post} latest={index === 0} />
             </li>
           ))}
         </ul>
@@ -69,6 +52,47 @@ export default function BlogPage() {
     </main>
   )
 }
+
+type PostEntry = (typeof allPosts)[number]
+
+const PostMeta = ({ post, latest }: { post: PostEntry; latest?: boolean }) => (
+  <p className="text-on-surface-variant flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-xs tracking-[0.08em] uppercase">
+    {latest && (
+      <>
+        <span className="text-primary">Latest</span>
+        <span aria-hidden className="text-outline-variant">
+          /
+        </span>
+      </>
+    )}
+    <time dateTime={post.publishedAt}>{dayjs(post.publishedAt).format('MMMM DD, YYYY')}</time>
+    <Suspense>
+      <Views slug={post.slug} />
+    </Suspense>
+  </p>
+)
+
+const PostRow = ({ post, latest }: { post: PostEntry; latest?: boolean }) => (
+  <Link
+    href={`/blog/${post.slug}`}
+    className={cn(
+      'group hover:bg-surface-container-low focus-visible:bg-surface-container-low motion-effects-fast block px-4 py-5 transition-colors md:px-6 md:py-7',
+      focusRing,
+    )}
+  >
+    <article className="flex flex-col items-start gap-2.5">
+      <PostMeta post={post} latest={latest} />
+
+      <h2 className="variation-sans text-on-surface text-2xl leading-snug font-semibold tracking-tight text-balance md:text-3xl">
+        {post.title}
+      </h2>
+
+      <p className="text-on-surface-variant max-w-[44rem] leading-relaxed md:text-lg">
+        {post.summary}
+      </p>
+    </article>
+  </Link>
+)
 
 async function Views({ slug }: { slug: string }) {
   // getViewsCount uses 'use cache' with cacheLife('seconds'), so parallel
@@ -83,7 +107,11 @@ async function Views({ slug }: { slug: string }) {
       <span aria-hidden className="text-outline-variant">
         /
       </span>
-      <ViewCounter count={count} className="tabular-nums" />
+      <span className="inline-flex items-center gap-1.5">
+        <MaterialSymbol name="visibility" className="text-base" />
+        {count.toLocaleString()}
+        <span className="sr-only">views</span>
+      </span>
     </>
   )
 }

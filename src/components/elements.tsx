@@ -17,6 +17,13 @@ export const Label = ({ children }: { children: ReactNode }) => (
   <span className="text-on-surface-variant text-sm font-medium">{children}</span>
 )
 
+/** Static page-level h1 at the same scale as the home hero. */
+export const PageTitle = ({ children }: { children: ReactNode }) => (
+  <h1 className="variation-sans text-on-surface text-[clamp(3.25rem,11vw,8.5rem)] leading-none font-semibold tracking-[-0.03em]">
+    {children}
+  </h1>
+)
+
 export const ActionLink = ({ href, children }: { href: string; children: ReactNode }) => (
   <a
     href={href}
