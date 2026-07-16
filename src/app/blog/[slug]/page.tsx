@@ -1,18 +1,19 @@
 import { Suspense } from 'react'
-import Image from 'next/image'
 import dayjs from 'dayjs'
 import { notFound } from 'next/navigation'
 import { allPosts, Post } from '@/content'
 import MDXContent from '@/components/mdx/mdx-content'
 import EnhancedArticle from '@/components/enhanced-article'
-import { ViewCounter } from '@/components/view-counter'
 import { ReportView } from '@/components/report-view'
+import { MaterialSymbol } from '@/components/material-symbol'
 import { BackButton } from '@/components/link-button'
 import { ThemeOverride } from '@/components/material-theme-context'
 import { EditOnGitHub } from '@/components/edit-on-github'
 import { Container } from '@/components/elements'
 import { Reveal } from '@/components/reveal'
+import { ReaderToolbar } from '@/components/reader-toolbar'
 import { getViewsBySlug } from '@/app/db/queries'
+import { countWords, formatWords } from '@/lib/words'
 
 export async function generateStaticParams() {
   return allPosts.map((post) => ({
@@ -55,7 +56,11 @@ async function Views({ slug }: { slug: string }) {
           <span aria-hidden className="text-outline-variant">
             /
           </span>
-          <ViewCounter count={count} className="tabular-nums" />
+          <span className="inline-flex items-center gap-1.5" suppressHydrationWarning>
+            <MaterialSymbol name="visibility" className="text-base" />
+            {count.toLocaleString()}
+            <span className="sr-only">views</span>
+          </span>
         </>
       )}
     </>
@@ -74,14 +79,27 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
     <main className="min-h-screen pt-10 pb-24 md:pt-16">
       <ThemeOverride color={post.themeColor} variant={post.themeVariant} />
       <Container>
-        <BackButton href="/blog">All posts</BackButton>
+        <div className="mb-3 flex items-center justify-between gap-4">
+          <BackButton href="/blog" className="mb-0">
+            All posts
+          </BackButton>
+          <ReaderToolbar />
+        </div>
 
-        <EnhancedArticle className="prose prose-quoteless dark:prose-invert w-full max-w-none">
+        <EnhancedArticle className="paper prose prose-quoteless dark:prose-invert w-full max-w-none">
           <Reveal immediate stagger y={24} className="not-prose flex flex-col items-start gap-5">
-            <p className="text-on-surface-variant flex flex-wrap items-center gap-x-2 gap-y-1 text-sm font-medium">
-              <time dateTime={post.publishedAt} className="tabular-nums">
+            <p className="text-on-surface-variant flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-xs tracking-[0.08em] uppercase">
+              <time dateTime={post.publishedAt}>
                 {dayjs(post.publishedAt).format('MMMM DD, YYYY')}
               </time>
+              <span aria-hidden className="text-outline-variant">
+                /
+              </span>
+              <span className="inline-flex items-center gap-1.5">
+                <MaterialSymbol name="match_word" className="text-base" />
+                {formatWords(countWords(post.content))}
+                <span className="sr-only">words</span>
+              </span>
               <Suspense>
                 <Views slug={post.slug} />
               </Suspense>
@@ -91,27 +109,24 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
               {post.title}
             </h1>
 
-            <p className="text-on-surface-variant text-lg leading-relaxed md:text-xl">
+            <p className="text-on-surface-variant max-w-[44rem] text-lg leading-relaxed md:text-xl">
               {post.summary}
             </p>
           </Reveal>
 
-          {post.image && (
-            <Reveal>
-              <figure className="not-prose mt-12 md:mt-14">
-                <div className="border-outline-variant relative aspect-video w-full overflow-hidden rounded-xl border">
-                  <Image src={post.image} alt={post.title} fill className="object-cover" priority />
-                </div>
-              </figure>
-            </Reveal>
-          )}
+          <p
+            aria-hidden
+            className="not-prose text-outline-variant mt-10 text-center font-mono text-sm select-none md:mt-12"
+          >
+            ----
+          </p>
 
-          <div className="mt-12 md:mt-14">
+          <div className="mt-10 md:mt-12">
             <MDXContent code={post.mdx} />
           </div>
         </EnhancedArticle>
 
-        <footer className="mt-16 md:mt-24">
+        <footer className="mt-4">
           <EditOnGitHub filePath={`content/posts/${slug}.mdx`} />
         </footer>
       </Container>

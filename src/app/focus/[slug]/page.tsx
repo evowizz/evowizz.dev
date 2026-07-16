@@ -7,7 +7,7 @@ import { ThemeOverride } from '@/components/material-theme-context'
 import { EditOnGitHub } from '@/components/edit-on-github'
 import { BackButton } from '@/components/link-button'
 import { Container } from '@/components/elements'
-import { cn } from '@/lib/utils'
+import { ReaderToolbar } from '@/components/reader-toolbar'
 
 export async function generateStaticParams() {
   return allFoci.map((item) => ({
@@ -49,9 +49,14 @@ export default async function FocusPage({ params }: { params: Promise<{ slug: st
     <main className="min-h-screen overflow-x-clip pt-10 pb-24 md:pt-16">
       <ThemeOverride color={item.themeColor} variant={item.themeVariant} />
       <Container>
-        <BackButton href="/focus">All Focus</BackButton>
+        <div className="mb-3 flex items-center justify-between gap-4">
+          <BackButton href="/focus" className="mb-0">
+            All Focus
+          </BackButton>
+          <ReaderToolbar />
+        </div>
 
-        <EnhancedArticle className="w-full">
+        <EnhancedArticle className="paper w-full">
           <FocusHeader
             meta={{
               title: item.title,
@@ -67,7 +72,7 @@ export default async function FocusPage({ params }: { params: Promise<{ slug: st
           </div>
         </EnhancedArticle>
 
-        <footer className="mt-16 md:mt-24">
+        <footer className="mt-4">
           <EditOnGitHub filePath={`content/focus/${slug}.mdx`} />
         </footer>
       </Container>

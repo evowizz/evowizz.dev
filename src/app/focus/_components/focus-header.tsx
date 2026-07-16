@@ -16,13 +16,13 @@ type FocusHeaderProps = {
 
 export function FocusHeader({ meta }: FocusHeaderProps) {
   return (
-    <header className="not-prose mb-12 flex flex-col gap-10 md:mb-16">
+    <header className="prose-bleed not-prose mb-12 flex flex-col gap-10 md:mb-16">
       <Reveal immediate stagger y={24} className="flex flex-col items-start gap-5">
         <h1 className="variation-sans text-on-surface text-[clamp(2.5rem,7vw,5rem)] leading-[1.02] font-semibold tracking-tight text-balance">
           {meta.title}
         </h1>
 
-        <p className="text-on-surface-variant text-lg leading-relaxed text-pretty md:text-xl">
+        <p className="text-on-surface-variant max-w-[44rem] text-lg leading-relaxed text-pretty md:text-xl">
           {meta.overview}
         </p>
 
@@ -44,8 +44,8 @@ export function FocusHeader({ meta }: FocusHeaderProps) {
 
       {meta.image && (
         <Reveal>
-          <figure className="full-bleed bg-surface-container-low rounded-[1.5rem] p-3 md:p-6">
-            <div className="relative aspect-2/1 overflow-hidden rounded-xl md:aspect-21/9">
+          <figure>
+            <div className="border-outline-variant relative aspect-2/1 overflow-hidden rounded-xl border md:aspect-21/9 md:rounded-none md:border-x-0">
               <Image
                 src={meta.image}
                 alt={meta.title}

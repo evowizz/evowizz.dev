@@ -733,50 +733,185 @@
   }
 }
 
-/* Breaks an element out of its container to near the viewport edges, leaving
-   a small fluid gutter. The nearest ancestor needs overflow-x-clip to absorb
-   the breakout. */
-@utility full-bleed {
-  --bleed-gutter: clamp(0.75rem, 1.6vw, 2rem);
-  position: relative;
-  left: 50%;
-  width: calc(100vw - 2 * var(--bleed-gutter));
-  max-width: none;
-  transform: translateX(-50%);
-}
-
-/* Case-study imagery floats on a tinted panel inset from the viewport edges:
-   figures break out of the container with a fluid gutter and get a surface
-   background; captions sit inside the panel below the image. The nearest
-   ancestor needs overflow-x-clip to absorb the breakout. */
-@utility prose-bleed {
-  figure {
-    --bleed-gutter: clamp(0.75rem, 1.6vw, 2rem);
-    position: relative;
-    left: 50%;
-    width: calc(100vw - 2 * var(--bleed-gutter));
-    max-width: none;
-    transform: translateX(-50%);
-    background-color: var(--color-surface-container-low);
-    padding: clamp(1rem, 3vw, 3rem);
-    border-radius: 1.5rem;
+@layer utilities {
+  /* Focus imagery breaks out of the text measure to the edge of the paper
+     sheet (see .paper below); without a sheet it stays in the text column. */
+  .prose-bleed figure {
+    margin-inline: calc(-1 * var(--paper-pad, 0px));
+    background-color: transparent;
+    padding: 0;
   }
-  figure img {
+  /* Once figures bleed to the paper edge (md and up) they read as print
+     bleed: square corners, with the caption tucked back into the text
+     column. In-column images (mobile) keep their rounding. */
+  .prose-bleed figure img {
     width: 100%;
     border-radius: 0.75rem;
+    @media (width >= 48rem) {
+      border-radius: 0;
+    }
   }
-  figcaption {
+  .prose-bleed figcaption {
     margin-top: calc(var(--spacing) * 3);
-    padding: 0;
+    padding: 0 var(--paper-pad, 0px);
     text-align: left;
     font-size: var(--text-sm);
     line-height: var(--text-sm--line-height);
     color: var(--color-on-surface-variant);
   }
-}
 
-@layer utilities {
+  /* The sheet articles are printed on: a raised paper card from md up.
+     --paper-pad is the sheet's horizontal padding, which prose-bleed figures
+     extend into. Reading mode lifts the article off the sheet. */
+  .paper {
+    --paper-pad: 0px;
+    border: 1px solid transparent;
+    border-radius: var(--radius-md);
+    @apply motion-effects-slow transition-[background-color,border-color,box-shadow];
+  }
+  @media (width >= 48rem) {
+    .paper {
+      --paper-pad: calc(var(--spacing) * 10);
+      padding: calc(var(--spacing) * 12) var(--paper-pad);
+      background-color: var(--color-surface-container-lowest);
+      border-color: color-mix(in oklab, var(--color-outline-variant) 60%, transparent);
+      box-shadow:
+        0px 1px 4px 1px rgb(0 0 0 / 0.05),
+        0px 1px 1px 0px rgb(0 0 0 / 0.16);
+    }
+    html[data-theme='dark'] .paper {
+      background-color: var(--color-surface-container-low);
+      box-shadow: none;
+    }
+  }
+  @media (width >= 64rem) {
+    .paper {
+      --paper-pad: calc(var(--spacing) * 16);
+      padding: calc(var(--spacing) * 20) var(--paper-pad);
+    }
+  }
+
+  /* Reader preferences: the article toolbar sets these attributes on <html>.
+     Reading mode strips site chrome and the paper sheet; the scale bumps the
+     prose root size, which cascades through the em-based typography styles. */
+  .reading-hide {
+    @apply motion-effects-slow transition-[opacity,margin,visibility];
+  }
+  :root[data-reading-mode] .reading-hide {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+  :root[data-reading-mode] header.reading-hide {
+    margin-top: calc(var(--spacing) * -16);
+  }
+  :root[data-reading-mode] .paper {
+    background-color: transparent;
+    border-color: transparent;
+    box-shadow: none;
+  }
+  :root[data-reading-scale='lg'] .prose {
+    font-size: 1.125rem;
+  }
+  :root[data-reading-scale='xl'] .prose {
+    font-size: 1.25rem;
+  }
+
+  /* Section-map overlay: without a gutter for the ruler, the toolbar summons
+     it over a progressive scrim; only the ruler sits above the scrim. Never
+     animate opacity on the scrim parent: opacity < 1 isolates it as a group
+     whose backdrop-filter children cannot sample the page, so the blur would
+     only appear once the fade ends. The blur radius is transitioned per
+     layer instead, and only the tint layer fades. */
+  .ruler-scrim {
+    visibility: hidden;
+    pointer-events: none;
+    transition: visibility 0s linear 300ms;
+  }
+  .ruler-scrim > div {
+    @apply motion-effects-slow transition-[opacity,backdrop-filter];
+  }
+  .ruler-scrim > div:nth-child(1),
+  .ruler-scrim > div:nth-child(2),
+  .ruler-scrim > div:nth-child(3) {
+    backdrop-filter: blur(0px);
+  }
+  .ruler-scrim > div:nth-child(4) {
+    opacity: 0;
+  }
+  :root[data-ruler-overlay] .ruler-scrim {
+    visibility: visible;
+    pointer-events: auto;
+    transition-delay: 0s;
+  }
+  :root[data-ruler-overlay] .ruler-scrim > div:nth-child(1) {
+    backdrop-filter: blur(4px);
+  }
+  :root[data-ruler-overlay] .ruler-scrim > div:nth-child(2) {
+    backdrop-filter: blur(12px);
+  }
+  :root[data-ruler-overlay] .ruler-scrim > div:nth-child(3) {
+    backdrop-filter: blur(24px);
+  }
+  :root[data-ruler-overlay] .ruler-scrim > div:nth-child(4) {
+    opacity: 1;
+  }
+  :root[data-ruler-overlay] .ruler-root {
+    display: block;
+    z-index: 60;
+  }
+  :root[data-ruler-overlay] .ruler-label {
+    width: max-content;
+    max-width: 11rem;
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* Reader text-size slider: a compact stepped slider with an M3 Expressive
+     bar handle. */
+  .reader-slider {
+    appearance: none;
+    height: 16px;
+    background: transparent;
+  }
+  .reader-slider::-webkit-slider-runnable-track {
+    height: 4px;
+    border-radius: 2px;
+    background-color: var(--color-surface-container-highest);
+  }
+  .reader-slider::-webkit-slider-thumb {
+    appearance: none;
+    margin-top: -4px;
+    height: 12px;
+    width: 4px;
+    border-radius: 2px;
+    background-color: var(--color-primary);
+    @apply motion-effects-fast transition-[width];
+  }
+  .reader-slider:active::-webkit-slider-thumb {
+    width: 2px;
+  }
+  .reader-slider::-moz-range-track {
+    height: 4px;
+    border-radius: 2px;
+    background-color: var(--color-surface-container-highest);
+  }
+  .reader-slider::-moz-range-thumb {
+    border: none;
+    height: 12px;
+    width: 4px;
+    border-radius: 2px;
+    background-color: var(--color-primary);
+    @apply motion-effects-fast transition-[width];
+  }
+  .reader-slider:active::-moz-range-thumb {
+    width: 2px;
+  }
+
   .prose {
+    /* Em-based type tracks the root size, so this animates the reader scale. */
+    @apply motion-effects-slow transition-[font-size];
+
     /* Links */
     a {
       @apply text-primary no-underline;

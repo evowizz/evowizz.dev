@@ -40,7 +40,7 @@ export const Header = () => {
 
   return (
     <>
-      <header className="bg-surface/85 sticky top-0 z-40 backdrop-blur-md">
+      <header className="reading-hide bg-surface/85 sticky top-0 z-40 backdrop-blur-md">
         <Container className="flex h-16 items-center justify-between">
           <Link
             href="/"
