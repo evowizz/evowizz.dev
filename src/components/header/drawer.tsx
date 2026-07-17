@@ -7,12 +7,12 @@ import { cn } from '@/lib/utils'
 import { useScrollLock } from '@/hooks/use-scroll-lock'
 import { useWidthBreath } from '@/hooks/use-width-breath'
 import { destinations } from '@/lib/destinations'
-import { EMAIL } from '@/lib/contact'
+import { EMAIL, SOCIALS } from '@/lib/contact'
 import { Container, focusRing } from '@/components/elements'
-import { Wordmark } from '@/components/wordmark'
-import { MenuIcon } from './menu-icon'
 
-type DrawerLinkProps = {
+const LOCATION = 'Nantes, France'
+
+type DrawerBandProps = {
   label: string
   path: string
   index: number
@@ -21,7 +21,7 @@ type DrawerLinkProps = {
   onClose: () => void
 }
 
-const DrawerLink = ({ label, path, index, open, active, onClose }: DrawerLinkProps) => {
+const DrawerBand = ({ label, path, index, open, active, onClose }: DrawerBandProps) => {
   const ref = useWidthBreath<HTMLSpanElement>({
     from: 70,
     duration: 0.7,
@@ -31,10 +31,10 @@ const DrawerLink = ({ label, path, index, open, active, onClose }: DrawerLinkPro
 
   return (
     // The staggered entrance lives on the li so its transition-delay never
-    // bleeds into the hover color transition on the text below.
+    // bleeds into the hover transition on the band below.
     <li
       className={cn(
-        'motion-spatial-default transition-[opacity,translate]',
+        'motion-spatial-default flex flex-1 transition-[opacity,translate]',
         open ? 'translate-y-0 opacity-100' : 'translate-y-6 opacity-0',
       )}
       style={{ transitionDelay: open ? `${250 + index * 90}ms` : '0ms' }}
@@ -43,13 +43,16 @@ const DrawerLink = ({ label, path, index, open, active, onClose }: DrawerLinkPro
         href={path}
         onClick={onClose}
         aria-current={active ? 'page' : undefined}
-        className={cn('block w-fit', focusRing)}
+        className={cn(
+          'hover:bg-surface-container-low motion-effects-fast flex flex-1 items-center justify-center transition-colors',
+          focusRing,
+        )}
       >
         <span
           ref={ref}
           className={cn(
-            'variation-sans motion-effects-fast block text-[clamp(3rem,11vw,7rem)] leading-[1.05] font-semibold tracking-tight transition-colors',
-            active ? 'text-primary' : 'text-on-surface hover:text-primary',
+            'variation-sans motion-effects-fast text-[clamp(3rem,8vw,5.5rem)] font-semibold tracking-tight transition-colors',
+            active ? 'text-primary' : 'text-on-surface',
           )}
         >
           {label}
@@ -62,12 +65,13 @@ const DrawerLink = ({ label, path, index, open, active, onClose }: DrawerLinkPro
 type DrawerProps = {
   open: boolean
   onClose: () => void
+  /** The header wrapping the drawer; the focus trap cycles through it. */
+  scopeRef: React.RefObject<HTMLElement | null>
 }
 
-export const Drawer = ({ open, onClose }: DrawerProps) => {
+export const Drawer = ({ open, onClose, scopeRef }: DrawerProps) => {
   const pathname = usePathname() ?? ''
   const panelRef = useRef<HTMLDivElement>(null)
-  const closeButtonRef = useRef<HTMLButtonElement>(null)
 
   useScrollLock(open)
 
@@ -75,7 +79,7 @@ export const Drawer = ({ open, onClose }: DrawerProps) => {
     if (!open) return
 
     const previouslyFocused = document.activeElement as HTMLElement | null
-    closeButtonRef.current?.focus()
+    panelRef.current?.focus()
 
     return () => previouslyFocused?.focus()
   }, [open])
@@ -91,10 +95,10 @@ export const Drawer = ({ open, onClose }: DrawerProps) => {
 
       if (event.key !== 'Tab') return
 
-      const panel = panelRef.current
-      if (!panel) return
+      const scope = scopeRef.current
+      if (!scope) return
 
-      const focusable = panel.querySelectorAll<HTMLElement>(
+      const focusable = scope.querySelectorAll<HTMLElement>(
         'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
       )
       if (focusable.length === 0) return
@@ -113,7 +117,7 @@ export const Drawer = ({ open, onClose }: DrawerProps) => {
 
     document.addEventListener('keydown', handleKeyDown)
     return () => document.removeEventListener('keydown', handleKeyDown)
-  }, [open, onClose])
+  }, [open, onClose, scopeRef])
 
   return (
     <div
@@ -122,64 +126,53 @@ export const Drawer = ({ open, onClose }: DrawerProps) => {
       role="dialog"
       aria-modal="true"
       aria-label="Menu"
+      tabIndex={-1}
       inert={!open}
       className={cn(
-        'bg-surface-container motion-effects-slow fixed inset-0 z-50 flex flex-col overflow-y-auto overscroll-contain transition-opacity',
-        open ? 'opacity-100' : 'pointer-events-none opacity-0',
+        'fixed inset-0 isolate flex flex-col overflow-y-auto overscroll-contain',
+        !open && 'pointer-events-none',
       )}
     >
-      <div className="flex h-16 shrink-0 items-center">
-        <Container className="flex items-center justify-between">
-          <Link
-            href="/"
-            onClick={onClose}
-            aria-label="evowizz, home"
-            className={cn(
-              'text-on-surface hover:text-primary motion-effects-default transition-colors',
-              focusRing,
-            )}
-          >
-            <Wordmark />
-          </Link>
-          <button
-            ref={closeButtonRef}
-            type="button"
-            onClick={onClose}
-            aria-label="Close menu"
-            className={cn(
-              'group text-on-surface hover:bg-surface-container-high motion-effects-fast -mr-2 flex size-11 items-center justify-center rounded-full transition-colors',
-              focusRing,
-            )}
-          >
-            <MenuIcon isOpen={open} className="group-hover:symbol-weight-700" />
-          </button>
-        </Container>
-      </div>
+      {/* The wash lives on its own empty layer so the compositor can cache
+          the blurred backdrop while the nav animates above it. Its radius is
+          transitioned instead of opacity: opacity would isolate the
+          backdrop-filter from the page behind it. */}
+      <div
+        aria-hidden
+        className={cn(
+          'motion-effects-slow fixed inset-0 -z-10 transition-[background-color,backdrop-filter]',
+          open ? 'bg-surface/85 backdrop-blur-xl' : 'bg-surface/0 backdrop-blur-[0px]',
+        )}
+      />
 
-      <div className="flex flex-1 items-center py-10">
-        <Container>
-          <nav aria-label="Site">
-            <ul className="flex flex-col gap-1 md:gap-2">
-              {destinations.map((destination, index) => {
-                const active =
+      {/* The band hairlines live inside this fading wrapper so they never
+          show through the closed drawer. */}
+      <div
+        className={cn(
+          'motion-effects-slow flex flex-1 flex-col pt-16 transition-opacity',
+          open ? 'opacity-100' : 'opacity-0',
+        )}
+        style={{ transitionDelay: open ? '150ms' : '0ms' }}
+      >
+        <nav aria-label="Site" className="flex flex-1 flex-col">
+          <ul className="divide-outline-variant border-outline-variant flex flex-1 flex-col divide-y border-y">
+            {destinations.map((destination, index) => (
+              <DrawerBand
+                key={destination.path}
+                label={destination.label}
+                path={destination.path}
+                index={index}
+                open={open}
+                active={
                   destination.path === '/'
                     ? pathname === '/'
                     : pathname.startsWith(destination.path)
-                return (
-                  <DrawerLink
-                    key={destination.path}
-                    label={destination.label}
-                    path={destination.path}
-                    index={index}
-                    open={open}
-                    active={active}
-                    onClose={onClose}
-                  />
-                )
-              })}
-            </ul>
-          </nav>
-        </Container>
+                }
+                onClose={onClose}
+              />
+            ))}
+          </ul>
+        </nav>
       </div>
 
       <div
@@ -189,20 +182,34 @@ export const Drawer = ({ open, onClose }: DrawerProps) => {
         )}
         style={{ transitionDelay: open ? '650ms' : '0ms' }}
       >
-        <Container className="flex flex-wrap items-center justify-between gap-4 py-8">
-          <p className="text-on-surface flex items-center gap-2 text-sm font-medium">
-            <span aria-hidden className="bg-primary size-2 rounded-full" />
-            Available for hire
-          </p>
+        <Container className="flex flex-wrap items-center justify-between gap-x-6 gap-y-2 py-6 text-sm">
           <a
             href={`mailto:${EMAIL}`}
             className={cn(
-              'text-on-surface hover:text-primary motion-effects-default text-sm font-medium transition-colors',
+              'text-on-surface hover:text-primary motion-effects-default font-medium transition-colors',
               focusRing,
             )}
           >
             {EMAIL}
           </a>
+          <ul className="text-on-surface-variant flex flex-wrap gap-x-4 gap-y-1">
+            {SOCIALS.map((social) => (
+              <li key={social.href}>
+                <a
+                  href={social.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  className={cn(
+                    'hover:text-primary motion-effects-default transition-colors',
+                    focusRing,
+                  )}
+                >
+                  {social.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+          <p className="text-on-surface-variant">{LOCATION}</p>
         </Container>
       </div>
     </div>
