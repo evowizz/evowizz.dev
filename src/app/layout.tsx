@@ -5,7 +5,7 @@ import { Google_Sans_Code, Google_Sans_Flex } from 'next/font/google'
 import { Footer } from '@/components/footer'
 import { Header } from '@/components/header'
 import { MaterialThemeProvider } from '@/components/material-theme-context'
-import { DebugPanel } from '@/components/debug'
+import { DevBar } from '@/components/debug/dev-bar'
 import { ThemeProvider } from 'next-themes'
 
 const metadataBaseUrl =
@@ -47,7 +47,7 @@ export default function RootLayout({
             <Header />
             {children}
             <Footer />
-            {process.env.NODE_ENV === 'development' && <DebugPanel />}
+            {process.env.NODE_ENV === 'development' && <DevBar />}
           </MaterialThemeProvider>
         </ThemeProvider>
       </body>
