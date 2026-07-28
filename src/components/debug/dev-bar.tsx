@@ -8,6 +8,9 @@ import { useIsSSR } from '@/lib/use-is-ssr'
 import { MaterialSymbol } from '@/components/material-symbol'
 import { BarButton, Divider } from './bar-button'
 import { DebugMenu } from './debug-menu'
+import { ToolsMenu } from './tools-menu'
+import { useTools } from './use-tools'
+import { OverlayLayer, type Overlay } from './overlays'
 import { SelectionToolbar } from './selection-toolbar'
 import { useSelection } from './use-selection'
 
@@ -39,7 +42,18 @@ export function DevBar() {
   const [scanning, setScanning] = useState(false)
   const [fpsOn, setFpsOn] = useState(false)
   const [debugOpen, setDebugOpen] = useState(false)
+  const [toolsOpen, setToolsOpen] = useState(false)
+  const [overlay, setOverlay] = useState<Overlay>('none')
   const { picking, setPicking, selected, setSelected } = useSelection(!dismissed)
+  const { tools, pinned, togglePin } = useTools({
+    picking,
+    onTogglePicking: () => {
+      setSelected(null)
+      setPicking((value) => !value)
+    },
+    scanning,
+    onToggleScanning: () => setScanning((value) => !value),
+  })
   const breakpointRef = useRef<HTMLSpanElement>(null)
   const sizeRef = useRef<HTMLSpanElement>(null)
   const fpsRef = useRef<HTMLSpanElement>(null)
@@ -98,6 +112,19 @@ export function DevBar() {
   }, [dismissed])
 
   useEffect(() => {
+    if (!debugOpen && !toolsOpen) return
+
+    const close = (event: KeyboardEvent) => {
+      if (event.key !== 'Escape') return
+      setDebugOpen(false)
+      setToolsOpen(false)
+    }
+
+    document.addEventListener('keydown', close)
+    return () => document.removeEventListener('keydown', close)
+  }, [debugOpen, toolsOpen])
+
+  useEffect(() => {
     if (!scanning) return
 
     // react-scan persists its options; clearing them keeps this toggle
@@ -119,15 +146,33 @@ export function DevBar() {
         data-devbar
         inert={!debugOpen}
         className={cn(
-          'border-outline-variant bg-surface-container fixed right-3 bottom-10 z-[85] max-h-[70vh] w-80 overflow-y-auto rounded-3xl border shadow-xl',
-          'motion-spatial-fast origin-bottom-right transition-[transform,opacity]',
-          debugOpen
-            ? 'translate-y-0 scale-100 opacity-100'
-            : 'pointer-events-none translate-y-3 scale-90 opacity-0',
+          'border-outline-variant bg-surface-container-lowest fixed right-3 bottom-10 z-[85] max-h-[70vh] w-96 overflow-y-auto rounded-md border shadow-sm',
+          'motion-spatial-fast origin-bottom-right transition-[translate,scale,opacity]',
+          debugOpen ? 'translate-y-0 scale-100 opacity-100' : 'pointer-events-none translate-y-3 scale-90 opacity-0',
         )}
       >
         <DebugMenu />
       </div>
+
+      <div
+        data-devbar
+        inert={!toolsOpen}
+        className={cn(
+          'border-outline-variant bg-surface-container-lowest fixed right-3 bottom-10 z-[85] max-h-[70vh] w-64 overflow-y-auto rounded-md border shadow-xl',
+          'motion-spatial-fast origin-bottom-right transition-[translate,scale,opacity]',
+          toolsOpen ? 'translate-y-0 scale-100 opacity-100' : 'pointer-events-none translate-y-3 scale-90 opacity-0',
+        )}
+      >
+        <ToolsMenu
+          tools={tools}
+          pinned={pinned}
+          onTogglePin={togglePin}
+          overlay={overlay}
+          onOverlayChange={setOverlay}
+        />
+      </div>
+
+      <OverlayLayer overlay={overlay} />
 
       {selected && <SelectionToolbar selection={selected} onClear={() => setSelected(null)} />}
 
@@ -135,7 +180,9 @@ export function DevBar() {
         data-devbar
         className="border-outline-variant bg-surface-container text-on-surface-variant fixed inset-x-0 bottom-0 z-[80] flex h-[var(--devbar-h)] items-center justify-between overflow-hidden border-t px-3 font-mono text-[11px] tracking-[0.04em] whitespace-nowrap select-none sm:px-5"
       >
-        <div className="flex items-center">
+        {/* The readout is what gives way when the bar runs out of room; the
+            controls on the right must never be the thing that gets clipped. */}
+        <div className="flex min-w-0 items-center overflow-hidden">
           <span className="text-primary uppercase">Dev</span>
           <Divider />
           <BarButton
@@ -153,31 +200,8 @@ export function DevBar() {
           </span>
         </div>
 
-        <div className="flex items-center gap-1">
-          <BarButton
-            onClick={() => {
-              setSelected(null)
-              setPicking((value) => !value)
-            }}
-            title="Select an element or region"
-            active={picking}
-          >
-            <MaterialSymbol name="point_scan" className="text-sm" />
-            <span className="hidden sm:inline">Select</span>
-          </BarButton>
-          <BarButton
-            onClick={() => setScanning((value) => !value)}
-            title="Toggle React Scan"
-            active={scanning}
-          >
-            <MaterialSymbol name="radar" className="text-sm" />
-            <span className="hidden sm:inline">Scan</span>
-          </BarButton>
-          <BarButton
-            onClick={() => setFpsOn((value) => !value)}
-            title="Toggle FPS counter"
-            active={fpsOn}
-          >
+        <div className="flex shrink-0 items-center gap-1">
+          <BarButton onClick={() => setFpsOn((value) => !value)} title="Toggle FPS counter" active={fpsOn}>
             <MaterialSymbol name="speed" className="text-sm" />
             {fpsOn ? (
               <>
@@ -188,9 +212,31 @@ export function DevBar() {
               <span className="hidden sm:inline">Show FPS</span>
             )}
           </BarButton>
+          {tools
+            .filter((tool) => pinned.includes(tool.id))
+            .map((tool) => (
+              <BarButton key={tool.id} onClick={tool.toggle} title={tool.label} active={tool.active}>
+                <MaterialSymbol name={tool.icon} className="text-sm" />
+                <span className="hidden sm:inline">{tool.label}</span>
+              </BarButton>
+            ))}
+          <BarButton
+            onClick={() => {
+              setToolsOpen((value) => !value)
+              setDebugOpen(false)
+            }}
+            title="Toggle tools menu"
+            active={toolsOpen}
+          >
+            <MaterialSymbol name="handyman" className="text-sm" />
+            <span className="hidden sm:inline">Tools</span>
+          </BarButton>
           <Divider />
           <BarButton
-            onClick={() => setDebugOpen((value) => !value)}
+            onClick={() => {
+              setDebugOpen((value) => !value)
+              setToolsOpen(false)
+            }}
             title="Toggle theme debug panel"
             active={debugOpen}
           >
