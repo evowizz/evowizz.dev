@@ -8,14 +8,11 @@ import { CountUp, Reveal } from '@/components/reveal'
 const SENTENCES: Record<string, string> = {
   Inware:
     'The hardware inspector I have been building since 2018, made to answer one question: what is actually inside your phone?',
-  'Personal Website':
-    'The page you are reading, built with Next.js and open source from front to back.',
+  'Personal Website': 'The page you are reading, built with Next.js and open source from front to back.',
   Cosmose: 'A small demo gallery of Jetpack Compose components and animations.',
   Common: 'A Kotlin library of the utilities and extensions I kept rewriting for Android.',
-  'De-Gmojify':
-    'A Chrome extension that swaps Google emojis for the ones your system already ships.',
-  Actio:
-    'A Figma plugin that resizes frames to an aspect ratio, so nobody does the math by hand.',
+  'De-Gmojify': 'A Chrome extension that swaps Google emojis for the ones your system already ships.',
+  Actio: 'A Figma plugin that resizes frames to an aspect ratio, so nobody does the math by hand.',
 }
 
 // Stat captions (the 4.7 comes from about 2,000 reviews).
@@ -29,9 +26,7 @@ const rest = projects.filter((project) => !project.spotlight && !project.depreca
 
 // Mono is reserved for genuinely technical metadata: the stack lines.
 const StackLine = ({ project }: { project: Project }) => (
-  <span className="text-on-surface-variant font-mono text-sm">
-    {project.techStack.join(' / ')}
-  </span>
+  <span className="text-on-surface-variant font-mono text-sm">{project.techStack.join(' / ')}</span>
 )
 
 // Renders "500k+" as a CountUp and leaves non-integer values (like "4.7/5") static.
