@@ -46,7 +46,7 @@ export default async function FocusPage({ params }: { params: Promise<{ slug: st
   }
 
   return (
-    <main className="min-h-screen overflow-x-clip pt-10 pb-24 md:pt-16">
+    <main className="min-h-viewport overflow-x-clip pt-10 pb-24 md:pt-16">
       <ThemeOverride color={item.themeColor} variant={item.themeVariant} />
       <Container>
         <div className="mb-3 flex items-center justify-between gap-4">

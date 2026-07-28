@@ -11,8 +11,6 @@ import { DebugMenu } from './debug-menu'
 import { SelectionToolbar } from './selection-toolbar'
 import { useSelection } from './use-selection'
 
-const BAR_HEIGHT = '1.75rem'
-
 const BREAKPOINTS: Array<[string, number]> = [
   ['2xl', 1536],
   ['xl', 1280],
@@ -21,8 +19,7 @@ const BREAKPOINTS: Array<[string, number]> = [
   ['sm', 640],
 ]
 
-const breakpointFor = (width: number) =>
-  BREAKPOINTS.find(([, min]) => width >= min)?.[0] ?? 'base'
+const breakpointFor = (width: number) => BREAKPOINTS.find(([, min]) => width >= min)?.[0] ?? 'base'
 
 const THEMES = [
   { value: 'light', icon: 'light_mode', label: 'Day' },
@@ -43,7 +40,8 @@ export function DevBar() {
   const [fpsOn, setFpsOn] = useState(false)
   const [debugOpen, setDebugOpen] = useState(false)
   const { picking, setPicking, selected, setSelected } = useSelection(!dismissed)
-  const viewportRef = useRef<HTMLSpanElement>(null)
+  const breakpointRef = useRef<HTMLSpanElement>(null)
+  const sizeRef = useRef<HTMLSpanElement>(null)
   const fpsRef = useRef<HTMLSpanElement>(null)
 
   // The persisted theme is only known on the client; render the system icon
@@ -56,8 +54,12 @@ export function DevBar() {
     if (dismissed) return
 
     const measure = () => {
-      if (!viewportRef.current) return
-      viewportRef.current.textContent = `${breakpointFor(window.innerWidth)} ${window.innerWidth}x${window.innerHeight}`
+      if (breakpointRef.current) {
+        breakpointRef.current.textContent = breakpointFor(window.innerWidth)
+      }
+      if (sizeRef.current) {
+        sizeRef.current.textContent = `${window.innerWidth}x${window.innerHeight}`
+      }
     }
 
     measure()
@@ -87,6 +89,14 @@ export function DevBar() {
     return () => cancelAnimationFrame(raf)
   }, [dismissed, fpsOn])
 
+  // Layout sets this on <html> so the reserve is already in the server markup;
+  // this keeps it in sync once the bar can be dismissed.
+  useEffect(() => {
+    const root = document.documentElement
+    if (dismissed) root.removeAttribute('data-devbar-visible')
+    else root.setAttribute('data-devbar-visible', '')
+  }, [dismissed])
+
   useEffect(() => {
     if (!scanning) return
 
@@ -105,13 +115,6 @@ export function DevBar() {
 
   return (
     <>
-      {/* Reserve the bar's height so it never overlaps page content. */}
-      <style>{`
-        :root { --devbar-h: ${BAR_HEIGHT}; }
-        body { padding-bottom: var(--devbar-h); }
-        .min-h-screen { min-height: calc(100dvh - var(--devbar-h)) !important; }
-      `}</style>
-
       <div
         data-devbar
         inert={!debugOpen}
@@ -130,7 +133,7 @@ export function DevBar() {
 
       <div
         data-devbar
-        className="border-outline-variant bg-surface-container text-on-surface-variant fixed inset-x-0 bottom-0 z-[80] flex h-7 items-center justify-between border-t px-3 font-mono text-[11px] tracking-[0.04em] select-none sm:px-5"
+        className="border-outline-variant bg-surface-container text-on-surface-variant fixed inset-x-0 bottom-0 z-[80] flex h-[var(--devbar-h)] items-center justify-between overflow-hidden border-t px-3 font-mono text-[11px] tracking-[0.04em] whitespace-nowrap select-none sm:px-5"
       >
         <div className="flex items-center">
           <span className="text-primary uppercase">Dev</span>
@@ -142,7 +145,12 @@ export function DevBar() {
             <MaterialSymbol name={currentTheme.icon} className="text-sm" />
           </BarButton>
           <Divider />
-          <span ref={viewportRef} />
+          {/* The breakpoint stays at every width; the exact size is the part that
+              gets dropped when there is no room for it. */}
+          <span className="flex items-center gap-1.5">
+            <span ref={breakpointRef} />
+            <span ref={sizeRef} className="hidden sm:inline" />
+          </span>
         </div>
 
         <div className="flex items-center gap-1">
@@ -155,7 +163,7 @@ export function DevBar() {
             active={picking}
           >
             <MaterialSymbol name="point_scan" className="text-sm" />
-            <span>Select</span>
+            <span className="hidden sm:inline">Select</span>
           </BarButton>
           <BarButton
             onClick={() => setScanning((value) => !value)}
@@ -163,7 +171,7 @@ export function DevBar() {
             active={scanning}
           >
             <MaterialSymbol name="radar" className="text-sm" />
-            <span>Scan</span>
+            <span className="hidden sm:inline">Scan</span>
           </BarButton>
           <BarButton
             onClick={() => setFpsOn((value) => !value)}
@@ -174,10 +182,10 @@ export function DevBar() {
             {fpsOn ? (
               <>
                 <span ref={fpsRef} className="min-w-[3ch] text-right" />
-                <span>FPS</span>
+                <span className="hidden sm:inline">FPS</span>
               </>
             ) : (
-              <span>Show FPS</span>
+              <span className="hidden sm:inline">Show FPS</span>
             )}
           </BarButton>
           <Divider />

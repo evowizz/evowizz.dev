@@ -76,7 +76,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
   }
 
   return (
-    <main className="min-h-screen pt-10 pb-24 md:pt-16">
+    <main className="min-h-viewport pt-10 pb-24 md:pt-16">
       <ThemeOverride color={post.themeColor} variant={post.themeVariant} />
       <Container>
         <div className="mb-3 flex items-center justify-between gap-4">

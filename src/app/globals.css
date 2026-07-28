@@ -374,6 +374,11 @@
 @layer base {
   :root {
     font-size: clamp(1rem, 0.25vw + 0.75rem, 1.25rem);
+
+    /* Height taken off the bottom of the viewport by the dev bar. Zero in
+       production; the bar overrides it in development. Viewport-anchored
+       overlays inset by it, since they ignore the body padding reserve. */
+    --devbar-h: 0px;
   }
 
   ::selection {
@@ -640,6 +645,10 @@
   );
 }
 
+/* Full height of the usable viewport, minus whatever the dev bar takes. */
+@utility min-h-viewport {
+  min-height: calc(100dvh - var(--devbar-h));
+}
 @utility hover-light {
   @media (hover: hover) and (pointer: fine) {
     /* Inspired from: www.hover.dev/components/text#bubble-text */
@@ -789,6 +798,15 @@
       --paper-pad: calc(var(--spacing) * 16);
       padding: calc(var(--spacing) * 20) var(--paper-pad);
     }
+  }
+
+  /* The dev bar marks <html> while it is mounted, shortening the page by its
+     height. --devbar-h is 0px otherwise, so this costs nothing in production. */
+  :root[data-devbar-visible] {
+    --devbar-h: 1.75rem;
+  }
+  :root[data-devbar-visible] body {
+    padding-bottom: var(--devbar-h);
   }
 
   /* Reader preferences: the article toolbar sets these attributes on <html>.

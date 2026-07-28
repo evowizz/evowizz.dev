@@ -12,7 +12,7 @@ export default function FocusPage() {
   const focus = allFoci.filter((item) => !item.hidden)
 
   return (
-    <main className="min-h-screen py-28 md:py-40">
+    <main className="min-h-viewport py-28 md:py-40">
       <Container className="flex flex-col gap-12 md:gap-16">
         <div className="flex flex-col gap-4">
           <PageTitle>Focus</PageTitle>

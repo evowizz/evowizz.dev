@@ -39,6 +39,7 @@ export default function RootLayout({
     <html
       suppressHydrationWarning
       lang="en"
+      data-devbar-visible={process.env.NODE_ENV === 'development' ? '' : undefined}
       className={`${googleSansFlex.variable} ${googleSansCode.variable}`}
     >
       <body className="text-on-surface motion-effects-default bg-surface transition-colors">

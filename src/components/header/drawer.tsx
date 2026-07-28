@@ -129,7 +129,9 @@ export const Drawer = ({ open, onClose, scopeRef }: DrawerProps) => {
       tabIndex={-1}
       inert={!open}
       className={cn(
-        'fixed inset-0 isolate flex flex-col overflow-y-auto overscroll-contain',
+        // Bottom is inset by the dev bar: fixed elements ignore the body padding
+        // it reserves, so without this the imprint sits behind it. Zero in production.
+        'fixed inset-x-0 top-0 bottom-[var(--devbar-h)] isolate flex flex-col overflow-y-auto overscroll-contain',
         !open && 'pointer-events-none',
       )}
     >
