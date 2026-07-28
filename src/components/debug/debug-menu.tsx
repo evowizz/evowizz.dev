@@ -9,6 +9,7 @@ import { useMaterialTheme } from '../material-theme-context'
 import { Variant } from '@/lib/material'
 import { cn } from '@/lib/utils'
 import { useIsSSR } from '@/lib/use-is-ssr'
+import { MicroLabel } from './micro-label'
 
 const VARIANT_NAMES: Record<Variant, string> = {
   [Variant.MONOCHROME]: 'Monochrome',
@@ -75,7 +76,19 @@ const COLOR_TOKENS = [
   'on-tertiary-fixed-variant',
 ]
 
-type Tab = 'picker' | 'tokens' | 'motion'
+const MODES = [
+  { id: 'light', label: 'Light' },
+  { id: 'dark', label: 'Dark' },
+  { id: 'system', label: 'System' },
+] as const
+
+const TABS = [
+  { id: 'picker', label: 'Seed' },
+  { id: 'tokens', label: 'Tokens' },
+  { id: 'motion', label: 'Motion' },
+] as const
+
+type Tab = (typeof TABS)[number]['id']
 
 export function DebugMenu() {
   const [activeTab, setActiveTab] = useState<Tab>('picker')
@@ -106,56 +119,37 @@ export function DebugMenu() {
   }, [])
 
   return (
-    <div className="text-on-surface flex flex-col gap-4 p-4">
-      <h3 className="text-sm font-semibold tracking-wider uppercase opacity-60">Theme Debug</h3>
-
-      {/* Theme Toggle */}
-      <div className="flex flex-col gap-2">
-        <span className="text-xs opacity-60">Theme</span>
-        <div className="flex gap-1">
-          <button
-            onClick={() => setTheme('light')}
-            className={cn(
-              'flex-1 rounded-md border px-3 py-2 text-xs font-medium transition-colors',
-              !isSSR && theme === 'light'
-                ? 'bg-primary text-on-primary border-primary'
-                : 'bg-surface-container border-outline-variant hover:bg-surface-container-high',
-            )}
-          >
-            Light
-          </button>
-          <button
-            onClick={() => setTheme('dark')}
-            className={cn(
-              'flex-1 rounded-md border px-3 py-2 text-xs font-medium transition-colors',
-              !isSSR && theme === 'dark'
-                ? 'bg-primary text-on-primary border-primary'
-                : 'bg-surface-container border-outline-variant hover:bg-surface-container-high',
-            )}
-          >
-            Dark
-          </button>
-          <button
-            onClick={() => setTheme('system')}
-            className={cn(
-              'flex-1 rounded-md border px-3 py-2 text-xs font-medium transition-colors',
-              !isSSR && theme === 'system'
-                ? 'bg-primary text-on-primary border-primary'
-                : 'bg-surface-container border-outline-variant hover:bg-surface-container-high',
-            )}
-          >
-            System
-          </button>
-        </div>
+    <div className="divide-outline-variant text-on-surface flex flex-col divide-y">
+      <div className="flex items-baseline justify-between px-4 py-3">
+        <MicroLabel>Theme</MicroLabel>
+        <span className="text-outline-variant text-[10px] font-medium tracking-[0.08em] uppercase">
+          {VARIANT_NAMES[variant]}
+        </span>
       </div>
 
-      {/* Variant Selector */}
-      <div className="flex flex-col gap-2">
-        <span className="text-xs opacity-60">Variant</span>
+      <div className="divide-outline-variant grid grid-cols-3 divide-x">
+        {MODES.map((mode) => (
+          <button
+            key={mode.id}
+            onClick={() => setTheme(mode.id)}
+            className={cn(
+              'motion-effects-fast focus-ring px-3 py-2.5 text-xs font-medium transition-colors',
+              !isSSR && theme === mode.id
+                ? 'bg-surface-container-low text-primary'
+                : 'text-on-surface-variant hover:bg-surface-container-low',
+            )}
+          >
+            {mode.label}
+          </button>
+        ))}
+      </div>
+
+      <label className="flex items-center justify-between gap-3 px-4 py-2.5">
+        <MicroLabel>Variant</MicroLabel>
         <select
           value={variant}
           onChange={(e) => setVariant(Number(e.target.value) as Variant)}
-          className="border-outline-variant bg-surface-container text-on-surface cursor-pointer appearance-none rounded-md border px-3 py-2 text-xs font-medium"
+          className="text-on-surface focus-ring cursor-pointer appearance-none bg-transparent text-right text-xs font-medium"
         >
           {Object.entries(VARIANT_NAMES).map(([value, name]) => (
             <option key={value} value={value}>
@@ -163,60 +157,36 @@ export function DebugMenu() {
             </option>
           ))}
         </select>
-      </div>
+      </label>
 
-      {/* Copy CSS Button */}
       <button
         onClick={copyCSS}
         className={cn(
-          'rounded-md border px-3 py-2 text-xs font-medium transition-colors',
-          copied
-            ? 'bg-primary text-on-primary border-primary'
-            : 'bg-surface-container border-outline-variant hover:bg-surface-container-high',
+          'motion-effects-fast focus-ring px-4 py-2.5 text-left text-xs font-medium transition-colors',
+          copied ? 'text-primary' : 'text-on-surface-variant hover:bg-surface-container-low',
         )}
       >
-        {copied ? 'Copied!' : 'Copy CSS Variables'}
+        {copied ? 'Copied to clipboard' : 'Copy CSS variables'}
       </button>
 
-      {/* Tabs */}
-      <div className="border-outline-variant flex gap-1 border-b">
-        <button
-          onClick={() => setActiveTab('picker')}
-          className={cn(
-            '-mb-px border-b-2 px-3 py-2 text-xs font-medium transition-colors',
-            activeTab === 'picker'
-              ? 'border-primary text-primary'
-              : 'border-transparent opacity-60 hover:opacity-100',
-          )}
-        >
-          Color Picker
-        </button>
-        <button
-          onClick={() => setActiveTab('tokens')}
-          className={cn(
-            '-mb-px border-b-2 px-3 py-2 text-xs font-medium transition-colors',
-            activeTab === 'tokens'
-              ? 'border-primary text-primary'
-              : 'border-transparent opacity-60 hover:opacity-100',
-          )}
-        >
-          Color Tokens
-        </button>
-        <button
-          onClick={() => setActiveTab('motion')}
-          className={cn(
-            '-mb-px border-b-2 px-3 py-2 text-xs font-medium transition-colors',
-            activeTab === 'motion'
-              ? 'border-primary text-primary'
-              : 'border-transparent opacity-60 hover:opacity-100',
-          )}
-        >
-          Motion
-        </button>
+      <div className="divide-outline-variant grid grid-cols-3 divide-x">
+        {TABS.map((tab) => (
+          <button
+            key={tab.id}
+            onClick={() => setActiveTab(tab.id)}
+            className={cn(
+              'motion-effects-fast focus-ring px-3 py-2.5 text-xs font-medium transition-colors',
+              activeTab === tab.id
+                ? 'bg-surface-container-low text-primary'
+                : 'text-on-surface-variant hover:bg-surface-container-low',
+            )}
+          >
+            {tab.label}
+          </button>
+        ))}
       </div>
 
-      {/* Tab Content */}
-      <div className="pt-2">
+      <div className="p-4">
         {activeTab === 'picker' && <ColorPicker />}
         {activeTab === 'tokens' && <ColorTokenPreview />}
         {activeTab === 'motion' && <MotionPreview />}

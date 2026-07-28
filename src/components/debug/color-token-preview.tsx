@@ -1,125 +1,104 @@
 'use client'
 
 import { cn } from '@/lib/utils'
+import { MicroLabel } from './micro-label'
 
-type ColorToken = {
-  token: string
-  bgClass: string
-  textClass?: string
-}
+/** Classes are written out in full: Tailwind only emits what it finds verbatim. */
+type Swatch = [token: string, bg: string, fg?: string]
 
-const COLOR_GROUPS: Record<string, ColorToken[]> = {
+const COLOR_GROUPS: Record<string, Swatch[]> = {
   Primary: [
-    { token: 'primary', bgClass: 'bg-primary', textClass: 'text-on-primary' },
-    { token: 'on-primary', bgClass: 'bg-on-primary', textClass: 'text-primary' },
-    { token: 'primary-container', bgClass: 'bg-primary-container', textClass: 'text-on-primary-container' },
-    { token: 'on-primary-container', bgClass: 'bg-on-primary-container', textClass: 'text-primary-container' },
-    { token: 'inverse-primary', bgClass: 'bg-inverse-primary' },
+    ['primary', 'bg-primary', 'text-on-primary'],
+    ['on-primary', 'bg-on-primary', 'text-primary'],
+    ['primary-container', 'bg-primary-container', 'text-on-primary-container'],
+    ['on-primary-container', 'bg-on-primary-container', 'text-primary-container'],
+    ['inverse-primary', 'bg-inverse-primary'],
   ],
   Secondary: [
-    { token: 'secondary', bgClass: 'bg-secondary', textClass: 'text-on-secondary' },
-    { token: 'on-secondary', bgClass: 'bg-on-secondary', textClass: 'text-secondary' },
-    { token: 'secondary-container', bgClass: 'bg-secondary-container', textClass: 'text-on-secondary-container' },
-    { token: 'on-secondary-container', bgClass: 'bg-on-secondary-container', textClass: 'text-secondary-container' },
+    ['secondary', 'bg-secondary', 'text-on-secondary'],
+    ['on-secondary', 'bg-on-secondary', 'text-secondary'],
+    ['secondary-container', 'bg-secondary-container', 'text-on-secondary-container'],
+    ['on-secondary-container', 'bg-on-secondary-container', 'text-secondary-container'],
   ],
   Tertiary: [
-    { token: 'tertiary', bgClass: 'bg-tertiary', textClass: 'text-on-tertiary' },
-    { token: 'on-tertiary', bgClass: 'bg-on-tertiary', textClass: 'text-tertiary' },
-    { token: 'tertiary-container', bgClass: 'bg-tertiary-container', textClass: 'text-on-tertiary-container' },
-    { token: 'on-tertiary-container', bgClass: 'bg-on-tertiary-container', textClass: 'text-tertiary-container' },
+    ['tertiary', 'bg-tertiary', 'text-on-tertiary'],
+    ['on-tertiary', 'bg-on-tertiary', 'text-tertiary'],
+    ['tertiary-container', 'bg-tertiary-container', 'text-on-tertiary-container'],
+    ['on-tertiary-container', 'bg-on-tertiary-container', 'text-tertiary-container'],
   ],
   Error: [
-    { token: 'error', bgClass: 'bg-error', textClass: 'text-on-error' },
-    { token: 'on-error', bgClass: 'bg-on-error', textClass: 'text-error' },
-    { token: 'error-container', bgClass: 'bg-error-container', textClass: 'text-on-error-container' },
-    { token: 'on-error-container', bgClass: 'bg-on-error-container', textClass: 'text-error-container' },
+    ['error', 'bg-error', 'text-on-error'],
+    ['on-error', 'bg-on-error', 'text-error'],
+    ['error-container', 'bg-error-container', 'text-on-error-container'],
+    ['on-error-container', 'bg-on-error-container', 'text-error-container'],
   ],
   Surface: [
-    { token: 'surface', bgClass: 'bg-surface', textClass: 'text-on-surface' },
-    { token: 'on-surface', bgClass: 'bg-on-surface', textClass: 'text-surface' },
-    { token: 'surface-variant', bgClass: 'bg-surface-variant', textClass: 'text-on-surface-variant' },
-    { token: 'on-surface-variant', bgClass: 'bg-on-surface-variant', textClass: 'text-surface-variant' },
-    { token: 'surface-dim', bgClass: 'bg-surface-dim' },
-    { token: 'surface-bright', bgClass: 'bg-surface-bright' },
-    { token: 'inverse-surface', bgClass: 'bg-inverse-surface', textClass: 'text-inverse-on-surface' },
-    { token: 'inverse-on-surface', bgClass: 'bg-inverse-on-surface', textClass: 'text-inverse-surface' },
+    ['surface', 'bg-surface', 'text-on-surface'],
+    ['on-surface', 'bg-on-surface', 'text-surface'],
+    ['surface-variant', 'bg-surface-variant', 'text-on-surface-variant'],
+    ['on-surface-variant', 'bg-on-surface-variant', 'text-surface-variant'],
+    ['surface-dim', 'bg-surface-dim'],
+    ['surface-bright', 'bg-surface-bright'],
+    ['inverse-surface', 'bg-inverse-surface', 'text-inverse-on-surface'],
+    ['inverse-on-surface', 'bg-inverse-on-surface', 'text-inverse-surface'],
   ],
   'Surface Container': [
-    { token: 'surface-container-lowest', bgClass: 'bg-surface-container-lowest' },
-    { token: 'surface-container-low', bgClass: 'bg-surface-container-low' },
-    { token: 'surface-container', bgClass: 'bg-surface-container' },
-    { token: 'surface-container-high', bgClass: 'bg-surface-container-high' },
-    { token: 'surface-container-highest', bgClass: 'bg-surface-container-highest' },
+    ['surface-container-lowest', 'bg-surface-container-lowest'],
+    ['surface-container-low', 'bg-surface-container-low'],
+    ['surface-container', 'bg-surface-container'],
+    ['surface-container-high', 'bg-surface-container-high'],
+    ['surface-container-highest', 'bg-surface-container-highest'],
   ],
   Outline: [
-    { token: 'outline', bgClass: 'bg-outline' },
-    { token: 'outline-variant', bgClass: 'bg-outline-variant' },
+    ['outline', 'bg-outline'],
+    ['outline-variant', 'bg-outline-variant'],
   ],
   Fixed: [
-    { token: 'primary-fixed', bgClass: 'bg-primary-fixed', textClass: 'text-on-primary-fixed' },
-    { token: 'on-primary-fixed', bgClass: 'bg-on-primary-fixed', textClass: 'text-primary-fixed' },
-    { token: 'primary-fixed-dim', bgClass: 'bg-primary-fixed-dim', textClass: 'text-on-primary-fixed-variant' },
-    { token: 'on-primary-fixed-variant', bgClass: 'bg-on-primary-fixed-variant', textClass: 'text-primary-fixed-dim' },
-    { token: 'secondary-fixed', bgClass: 'bg-secondary-fixed', textClass: 'text-on-secondary-fixed' },
-    { token: 'on-secondary-fixed', bgClass: 'bg-on-secondary-fixed', textClass: 'text-secondary-fixed' },
-    { token: 'secondary-fixed-dim', bgClass: 'bg-secondary-fixed-dim', textClass: 'text-on-secondary-fixed-variant' },
-    { token: 'on-secondary-fixed-variant', bgClass: 'bg-on-secondary-fixed-variant', textClass: 'text-secondary-fixed-dim' },
-    { token: 'tertiary-fixed', bgClass: 'bg-tertiary-fixed', textClass: 'text-on-tertiary-fixed' },
-    { token: 'on-tertiary-fixed', bgClass: 'bg-on-tertiary-fixed', textClass: 'text-tertiary-fixed' },
-    { token: 'tertiary-fixed-dim', bgClass: 'bg-tertiary-fixed-dim', textClass: 'text-on-tertiary-fixed-variant' },
-    { token: 'on-tertiary-fixed-variant', bgClass: 'bg-on-tertiary-fixed-variant', textClass: 'text-tertiary-fixed-dim' },
+    ['primary-fixed', 'bg-primary-fixed', 'text-on-primary-fixed'],
+    ['on-primary-fixed', 'bg-on-primary-fixed', 'text-primary-fixed'],
+    ['primary-fixed-dim', 'bg-primary-fixed-dim', 'text-on-primary-fixed-variant'],
+    ['on-primary-fixed-variant', 'bg-on-primary-fixed-variant', 'text-primary-fixed-dim'],
+    ['secondary-fixed', 'bg-secondary-fixed', 'text-on-secondary-fixed'],
+    ['on-secondary-fixed', 'bg-on-secondary-fixed', 'text-secondary-fixed'],
+    ['secondary-fixed-dim', 'bg-secondary-fixed-dim', 'text-on-secondary-fixed-variant'],
+    ['on-secondary-fixed-variant', 'bg-on-secondary-fixed-variant', 'text-secondary-fixed-dim'],
+    ['tertiary-fixed', 'bg-tertiary-fixed', 'text-on-tertiary-fixed'],
+    ['on-tertiary-fixed', 'bg-on-tertiary-fixed', 'text-tertiary-fixed'],
+    ['tertiary-fixed-dim', 'bg-tertiary-fixed-dim', 'text-on-tertiary-fixed-variant'],
+    ['on-tertiary-fixed-variant', 'bg-on-tertiary-fixed-variant', 'text-tertiary-fixed-dim'],
   ],
   Other: [
-    { token: 'background', bgClass: 'bg-background', textClass: 'text-on-background' },
-    { token: 'on-background', bgClass: 'bg-on-background', textClass: 'text-background' },
-    { token: 'surface-tint', bgClass: 'bg-surface-tint' },
-    { token: 'scrim', bgClass: 'bg-scrim' },
-    { token: 'shadow', bgClass: 'bg-shadow' },
+    ['background', 'bg-background', 'text-on-background'],
+    ['on-background', 'bg-on-background', 'text-background'],
+    ['surface-tint', 'bg-surface-tint'],
+    ['scrim', 'bg-scrim'],
+    ['shadow', 'bg-shadow'],
   ],
 }
 
-type ColorSwatchProps = {
-  token: string
-  bgClass: string
-  textClass?: string
-}
-
-function ColorSwatch({ token, bgClass, textClass }: ColorSwatchProps) {
-  return (
-    <div
-      className={cn(
-        'border-outline-variant/30 group relative h-20 overflow-hidden rounded-md border',
-        bgClass,
-      )}
-      title={token}
-    >
-      <div className="absolute inset-0 flex items-center justify-center">
-        {textClass && <span className={cn('text-sm font-medium', textClass)}>Aa</span>}
-      </div>
-      <div className="absolute right-0 bottom-0 left-0 bg-black/75 px-2 py-1.5 backdrop-blur-sm">
-        <span className="block truncate text-[8px] text-white">{token}</span>
-      </div>
+const ColorSwatch = ({ token, bg, fg }: { token: string; bg: string; fg?: string }) => (
+  <div className="flex flex-col gap-1">
+    <div className={cn('border-outline-variant flex h-12 items-center justify-center rounded-sm border', bg)}>
+      {fg && <span className={cn('text-xs font-medium', fg)}>Aa</span>}
     </div>
-  )
-}
+    <span className="text-on-surface-variant truncate font-mono text-[11px]" title={token}>
+      {token}
+    </span>
+  </div>
+)
 
 export function ColorTokenPreview() {
   return (
-    <div className="flex max-h-[60vh] flex-col gap-4 overflow-y-auto pr-2">
-      {Object.entries(COLOR_GROUPS).map(([groupName, colors]) => (
-        <div key={groupName} className="flex flex-col gap-2">
-          <h4 className="text-xs font-semibold tracking-wider uppercase opacity-60">{groupName}</h4>
-          <div className="grid grid-cols-3 gap-1.5">
-            {colors.map((color) => (
-              <ColorSwatch
-                key={color.token}
-                token={color.token}
-                bgClass={color.bgClass}
-                textClass={color.textClass}
-              />
+    <div className="divide-outline-variant -my-4 flex max-h-[60vh] flex-col divide-y overflow-y-auto">
+      {Object.entries(COLOR_GROUPS).map(([groupName, swatches]) => (
+        <section key={groupName} className="flex flex-col gap-2.5 py-4">
+          <MicroLabel>{groupName}</MicroLabel>
+          <div className="grid grid-cols-3 gap-2">
+            {swatches.map(([token, bg, fg]) => (
+              <ColorSwatch key={token} token={token} bg={bg} fg={fg} />
             ))}
           </div>
-        </div>
+        </section>
       ))}
     </div>
   )
