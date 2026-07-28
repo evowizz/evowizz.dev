@@ -649,6 +649,14 @@
 @utility min-h-viewport {
   min-height: calc(100dvh - var(--devbar-h));
 }
+
+@utility focus-ring {
+  &:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 4px;
+  }
+}
+
 @utility hover-light {
   @media (hover: hover) and (pointer: fine) {
     /* Inspired from: www.hover.dev/components/text#bubble-text */

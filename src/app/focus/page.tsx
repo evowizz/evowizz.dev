@@ -1,7 +1,6 @@
 import Link from 'next/link'
 import { allFoci } from '@/content'
-import { Container, focusRing, PageTitle } from '@/components/elements'
-import { cn } from '@/lib/utils'
+import { Container, PageTitle } from '@/components/elements'
 
 export const metadata = {
   title: 'Focus',
@@ -17,8 +16,8 @@ export default function FocusPage() {
         <div className="flex flex-col gap-4">
           <PageTitle>Focus</PageTitle>
           <p className="text-on-surface-variant max-w-[38rem] text-lg md:text-xl">
-            One project at a time, in depth: the design decisions and the development
-            process behind my work.
+            One project at a time, in depth: the design decisions and the development process behind
+            my work.
           </p>
           <p className="text-on-surface-variant flex flex-wrap items-center gap-x-2 gap-y-1 pt-2 font-mono text-xs tracking-[0.08em] uppercase">
             <span>
@@ -44,10 +43,7 @@ type FocusEntry = (typeof allFoci)[number]
 const FocusRow = ({ item }: { item: FocusEntry }) => (
   <Link
     href={`/focus/${item.slug}`}
-    className={cn(
-      'group hover:bg-surface-container-low focus-visible:bg-surface-container-low motion-effects-fast block px-4 py-5 transition-colors md:px-6 md:py-7',
-      focusRing,
-    )}
+    className="group hover:bg-surface-container-low focus-visible:bg-surface-container-low motion-effects-fast focus-ring block px-4 py-5 transition-colors md:px-6 md:py-7"
   >
     <article className="flex flex-col items-start gap-2.5">
       <p className="text-on-surface-variant font-mono text-xs tracking-[0.08em] uppercase">

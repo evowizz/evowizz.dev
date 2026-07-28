@@ -1,17 +1,15 @@
 import Link from 'next/link'
 import { cva, type VariantProps } from 'cva'
 import { MaterialSymbol } from '@/components/material-symbol'
-import { focusRing } from '@/components/elements'
 import { cn } from '@/lib/utils'
 
 const linkButtonVariants = cva(
-  `group inline-flex w-fit items-center gap-1 rounded-full text-sm font-medium transition-[font-variation-settings,font-weight,background-color,border-color,transform] motion-spatial-default variation-sans hover:variation-width-120 hover:font-700 active:scale-95 ${focusRing}`,
+  'group inline-flex w-fit items-center gap-1 rounded-full text-sm font-medium transition-[font-variation-settings,font-weight,background-color,border-color,transform] motion-spatial-default variation-sans hover:variation-width-120 hover:font-700 active:scale-95 focus-ring',
   {
     variants: {
       variant: {
         primary: 'bg-inverse-surface text-inverse-on-surface',
-        outline:
-          'border border-outline-variant hover:bg-surface-bright hover:border-transparent',
+        outline: 'border border-outline-variant hover:bg-surface-bright hover:border-transparent',
       },
       direction: {
         back: 'py-2 pr-4 pl-3',

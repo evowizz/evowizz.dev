@@ -1,6 +1,5 @@
 import { Fragment } from 'react'
-import { cn } from '@/lib/utils'
-import { Container, focusRing } from '@/components/elements'
+import { Container } from '@/components/elements'
 import { SectionTitle } from '@/components/section-title'
 import { Reveal } from '@/components/reveal'
 
@@ -31,8 +30,7 @@ export const Press = () => (
 
       <Reveal>
         <p className="text-on-surface-variant max-w-[40rem] text-lg leading-relaxed md:text-xl">
-          My apps, my security research, and the occasional Android scoop have been covered
-          by:
+          My apps, my security research, and the occasional Android scoop have been covered by:
         </p>
       </Reveal>
 
@@ -49,10 +47,7 @@ export const Press = () => (
                 href={outlet.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={cn(
-                  'variation-sans motion-spatial-fast text-on-surface hover:variation-width-104 hover:text-primary whitespace-nowrap transition-[font-variation-settings,color]',
-                  focusRing,
-                )}
+                className="variation-sans motion-spatial-fast text-on-surface hover:variation-width-104 hover:text-primary focus-ring whitespace-nowrap transition-[font-variation-settings,color]"
               >
                 {outlet.name}
               </a>

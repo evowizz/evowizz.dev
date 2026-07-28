@@ -3,9 +3,8 @@ import Link from 'next/link'
 import dayjs from 'dayjs'
 import { allPosts } from '@/content'
 import { getViewsCount } from '@/app/db/queries'
-import { Container, focusRing, PageTitle } from '@/components/elements'
+import { Container, PageTitle } from '@/components/elements'
 import { MaterialSymbol } from '@/components/material-symbol'
-import { cn } from '@/lib/utils'
 
 export const metadata = {
   title: 'Blog',
@@ -75,10 +74,7 @@ const PostMeta = ({ post, latest }: { post: PostEntry; latest?: boolean }) => (
 const PostRow = ({ post, latest }: { post: PostEntry; latest?: boolean }) => (
   <Link
     href={`/blog/${post.slug}`}
-    className={cn(
-      'group hover:bg-surface-container-low focus-visible:bg-surface-container-low motion-effects-fast block px-4 py-5 transition-colors md:px-6 md:py-7',
-      focusRing,
-    )}
+    className="group hover:bg-surface-container-low focus-visible:bg-surface-container-low motion-effects-fast focus-ring block px-4 py-5 transition-colors md:px-6 md:py-7"
   >
     <article className="flex flex-col items-start gap-2.5">
       <PostMeta post={post} latest={latest} />

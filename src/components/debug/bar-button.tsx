@@ -1,5 +1,4 @@
 import { cn } from '@/lib/utils'
-import { focusRing } from '@/components/elements'
 
 type BarButtonProps = {
   onClick: () => void
@@ -16,11 +15,10 @@ export const BarButton = ({ onClick, title, active, children }: BarButtonProps) 
     aria-label={title}
     aria-pressed={active}
     className={cn(
-      'motion-effects-fast flex h-5.5 min-w-6 items-center justify-center gap-1 rounded-md px-1.5 leading-none transition-colors',
+      'motion-effects-fast focus-ring flex h-5.5 min-w-6 items-center justify-center gap-1 rounded-md px-1.5 leading-none transition-colors',
       active
         ? 'bg-primary text-on-primary'
         : 'text-on-surface-variant hover:bg-surface-container-highest hover:text-on-surface',
-      focusRing,
     )}
   >
     {children}

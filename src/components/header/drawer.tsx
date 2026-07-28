@@ -8,7 +8,7 @@ import { useScrollLock } from '@/hooks/use-scroll-lock'
 import { useWidthBreath } from '@/hooks/use-width-breath'
 import { destinations } from '@/lib/destinations'
 import { EMAIL, SOCIALS } from '@/lib/contact'
-import { Container, focusRing } from '@/components/elements'
+import { Container } from '@/components/elements'
 
 const LOCATION = 'Nantes, France'
 
@@ -43,10 +43,7 @@ const DrawerBand = ({ label, path, index, open, active, onClose }: DrawerBandPro
         href={path}
         onClick={onClose}
         aria-current={active ? 'page' : undefined}
-        className={cn(
-          'hover:bg-surface-container-low motion-effects-fast flex flex-1 items-center justify-center transition-colors',
-          focusRing,
-        )}
+        className="hover:bg-surface-container-low motion-effects-fast focus-ring flex flex-1 items-center justify-center transition-colors"
       >
         <span
           ref={ref}
@@ -187,10 +184,7 @@ export const Drawer = ({ open, onClose, scopeRef }: DrawerProps) => {
         <Container className="flex flex-wrap items-center justify-between gap-x-6 gap-y-2 py-6 text-sm">
           <a
             href={`mailto:${EMAIL}`}
-            className={cn(
-              'text-on-surface hover:text-primary motion-effects-default font-medium transition-colors',
-              focusRing,
-            )}
+            className="text-on-surface hover:text-primary motion-effects-default focus-ring font-medium transition-colors"
           >
             {EMAIL}
           </a>
@@ -201,10 +195,7 @@ export const Drawer = ({ open, onClose, scopeRef }: DrawerProps) => {
                   href={social.href}
                   target="_blank"
                   rel="noreferrer"
-                  className={cn(
-                    'hover:text-primary motion-effects-default transition-colors',
-                    focusRing,
-                  )}
+                  className="hover:text-primary motion-effects-default focus-ring transition-colors"
                 >
                   {social.label}
                 </a>

@@ -1,7 +1,5 @@
 import Link from 'next/link'
 import { MaterialSymbol } from './material-symbol'
-import { focusRing } from '@/components/elements'
-import { cn } from '@/lib/utils'
 
 const REPO_URL = 'https://github.com/evowizz/evowizz.dev'
 const BRANCH = 'next'
@@ -19,10 +17,7 @@ export function EditOnGitHub({ filePath }: EditOnGitHubProps) {
         href={editUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className={cn(
-          'text-on-surface-variant hover:text-primary inline-flex items-center gap-2 text-sm transition-colors',
-          focusRing,
-        )}
+        className="text-on-surface-variant hover:text-primary focus-ring inline-flex items-center gap-2 text-sm transition-colors"
       >
         <MaterialSymbol name="edit" className="text-lg" />
         Edit on GitHub

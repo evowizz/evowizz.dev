@@ -5,16 +5,14 @@ import Link from 'next/link'
 import { useTheme } from 'next-themes'
 import { cn } from '@/lib/utils'
 import { useIsSSR } from '@/lib/use-is-ssr'
-import { Container, focusRing } from '@/components/elements'
+import { Container } from '@/components/elements'
 import { Wordmark } from '@/components/wordmark'
 import { MaterialSymbol } from '@/components/material-symbol'
 import { MenuIcon } from './menu-icon'
 import { Drawer } from './drawer'
 
-const controlClass = cn(
-  'group text-on-surface hover:bg-surface-container motion-effects-fast flex size-11 items-center justify-center rounded-full transition-colors',
-  focusRing,
-)
+const controlClass =
+  'group text-on-surface hover:bg-surface-container motion-effects-fast flex size-11 items-center justify-center rounded-full transition-colors focus-ring'
 
 const ThemeButton = () => {
   const { resolvedTheme, setTheme } = useTheme()
@@ -58,7 +56,7 @@ export const Header = () => {
             href="/"
             aria-label="evowizz, home"
             onClick={() => setDrawerOpen(false)}
-            className={cn('text-on-surface', focusRing)}
+            className="text-on-surface focus-ring"
           >
             <Wordmark />
           </Link>

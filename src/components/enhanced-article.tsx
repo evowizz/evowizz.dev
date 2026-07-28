@@ -2,8 +2,6 @@
 
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion'
 import { useEffect, useRef, useState } from 'react'
-import { focusRing } from '@/components/elements'
-import { cn } from '@/lib/utils'
 
 const TICK_COUNT = 121
 const TICKS = Array.from({ length: TICK_COUNT }, (_, index) => index)
@@ -174,12 +172,9 @@ export default function EnhancedArticle(props: React.HTMLAttributes<HTMLElement>
                 window.dispatchEvent(new Event('press-close-ruler-overlay'))
               }}
               style={{ top: `${section.at * 100}%`, transitionDelay: `${index * 50}ms` }}
-              className={cn(
-                // Capped to the gutter (paper right edge = 50vw + 34rem) so
-                // labels wrap beside the sheet instead of crossing onto it.
-                'ruler-label text-on-surface hover:text-primary pointer-events-none absolute right-8 flex w-[min(11rem,50vw_-_36.5rem)] -translate-y-1/2 items-center justify-end text-right font-mono text-[0.625rem] leading-[1.4] tracking-[0.08em] uppercase opacity-0 transition-opacity duration-300 group-hover/ruler:pointer-events-auto group-hover/ruler:opacity-100 focus-visible:opacity-100',
-                focusRing,
-              )}
+              // Capped to the gutter (paper right edge = 50vw + 34rem) so
+              // labels wrap beside the sheet instead of crossing onto it.
+              className="ruler-label text-on-surface hover:text-primary focus-ring pointer-events-none absolute right-8 flex w-[min(11rem,50vw_-_36.5rem)] -translate-y-1/2 items-center justify-end text-right font-mono text-[0.625rem] leading-[1.4] tracking-[0.08em] uppercase opacity-0 transition-opacity duration-300 group-hover/ruler:pointer-events-auto group-hover/ruler:opacity-100 focus-visible:opacity-100"
             >
               {section.title}
             </a>

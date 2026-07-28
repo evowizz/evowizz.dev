@@ -3,8 +3,7 @@
 import Link from 'next/link'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
-import { cn } from '@/lib/utils'
-import { Container, focusRing } from '@/components/elements'
+import { Container } from '@/components/elements'
 import { MaterialSymbol } from '@/components/material-symbol'
 import { Reveal } from '@/components/reveal'
 import { useWidthBreath } from '@/hooks/use-width-breath'
@@ -72,10 +71,7 @@ export const Hero = () => {
 
           <Link
             href="#work"
-            className={cn(
-              'text-primary group inline-flex items-center gap-2 text-lg font-medium',
-              focusRing,
-            )}
+            className="text-primary group focus-ring inline-flex items-center gap-2 text-lg font-medium"
           >
             See the work
             <MaterialSymbol

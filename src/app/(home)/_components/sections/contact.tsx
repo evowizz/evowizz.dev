@@ -1,6 +1,5 @@
-import { cn } from '@/lib/utils'
 import { EMAIL, SOCIALS } from '@/lib/contact'
-import { Container, focusRing } from '@/components/elements'
+import { Container } from '@/components/elements'
 import { SectionTitle } from '@/components/section-title'
 import { Reveal } from '@/components/reveal'
 
@@ -15,10 +14,7 @@ export const Contact = () => (
         </p>
         <a
           href={`mailto:${EMAIL}`}
-          className={cn(
-            'variation-sans text-on-surface hover:text-primary motion-effects-default text-[clamp(1.9rem,8.5vw,7.5rem)] leading-none font-medium tracking-[-0.04em] transition-colors',
-            focusRing,
-          )}
+          className="variation-sans text-on-surface hover:text-primary motion-effects-default focus-ring text-[clamp(1.9rem,8.5vw,7.5rem)] leading-none font-medium tracking-[-0.04em] transition-colors"
         >
           {EMAIL}
         </a>
@@ -29,10 +25,7 @@ export const Contact = () => (
                 href={social.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={cn(
-                  'text-on-surface-variant hover:text-on-surface motion-effects-fast text-sm font-medium transition-colors',
-                  focusRing,
-                )}
+                className="text-on-surface-variant hover:text-on-surface motion-effects-fast focus-ring text-sm font-medium transition-colors"
               >
                 {social.label}
               </a>

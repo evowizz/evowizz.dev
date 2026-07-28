@@ -3,13 +3,11 @@
 import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { cn } from '@/lib/utils'
-import { focusRing } from '@/components/elements'
 import { MaterialSymbol } from '@/components/material-symbol'
 
 const buttonClass = cn(
   'group text-on-surface hover:bg-surface-container motion-effects-fast flex size-11 shrink-0 items-center justify-center rounded-full transition-colors',
-  'aria-[pressed=true]:bg-secondary-container aria-[pressed=true]:text-on-secondary-container',
-  focusRing,
+  'aria-[pressed=true]:bg-secondary-container aria-[pressed=true]:text-on-secondary-container focus-ring',
 )
 
 const SCALES = [
@@ -92,10 +90,7 @@ export function ReaderToolbar() {
                 {...cascadeIn(0)}
                 className="group/slider relative flex items-center gap-2 pr-3"
               >
-                <MaterialSymbol
-                  name="format_size"
-                  className="text-on-surface-variant text-xl"
-                />
+                <MaterialSymbol name="format_size" className="text-on-surface-variant text-xl" />
                 <div className="relative flex items-center">
                   <input
                     type="range"
@@ -107,12 +102,12 @@ export function ReaderToolbar() {
                     onPointerUp={(event) => event.currentTarget.blur()}
                     aria-label="Text size"
                     aria-valuetext={SCALES[scale].label}
-                    className={cn('reader-slider w-24 cursor-pointer', focusRing)}
+                    className="reader-slider focus-ring w-24 cursor-pointer"
                   />
                   <span
                     aria-hidden
                     style={{ left: `${(scale / (SCALES.length - 1)) * 100}%` }}
-                    className="border-outline-variant bg-surface-container-lowest text-on-surface-variant pointer-events-none absolute -top-8 z-10 -translate-x-1/2 rounded-sm border px-1.5 py-0.5 font-mono text-[0.625rem] tracking-[0.08em] whitespace-nowrap uppercase opacity-0 shadow-[0px_1px_2px_0px_rgba(0,0,0,0.10)] transition-opacity duration-150 group-hover/slider:opacity-100 group-focus-within/slider:opacity-100"
+                    className="border-outline-variant bg-surface-container-lowest text-on-surface-variant pointer-events-none absolute -top-8 z-10 -translate-x-1/2 rounded-sm border px-1.5 py-0.5 font-mono text-[0.625rem] tracking-[0.08em] whitespace-nowrap uppercase opacity-0 shadow-[0px_1px_2px_0px_rgba(0,0,0,0.10)] transition-opacity duration-150 group-focus-within/slider:opacity-100 group-hover/slider:opacity-100"
                   >
                     {SCALES[scale].label}
                   </span>

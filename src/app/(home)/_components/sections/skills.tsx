@@ -1,6 +1,5 @@
-import { cn } from '@/lib/utils'
 import { skills } from '@/lib/skills'
-import { Container, focusRing, Label } from '@/components/elements'
+import { Container, Label } from '@/components/elements'
 import { SectionTitle } from '@/components/section-title'
 import { Reveal } from '@/components/reveal'
 
@@ -36,10 +35,7 @@ export const Skills = () => (
                     href={skill.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={cn(
-                      'variation-sans text-on-surface hover:text-primary motion-effects-fast w-fit text-xl font-medium tracking-tight transition-colors md:text-2xl',
-                      focusRing,
-                    )}
+                    className="variation-sans text-on-surface hover:text-primary motion-effects-fast focus-ring w-fit text-xl font-medium tracking-tight transition-colors md:text-2xl"
                   >
                     {skill.name}
                   </a>
