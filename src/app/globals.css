@@ -652,7 +652,18 @@
 
 @utility focus-ring {
   &:focus-visible {
-    outline: 2px solid var(--color-primary);
+    outline-width: 2px;
+    outline-style: solid;
+    outline-color: var(--color-primary);
+    outline-offset: 4px;
+  }
+}
+
+@utility focus-ring-* {
+  &:focus-visible {
+    outline-width: 2px;
+    outline-style: solid;
+    outline-color: --value(--color-*);
     outline-offset: 4px;
   }
 }
