@@ -83,9 +83,7 @@ const PostRow = ({ post, latest }: { post: PostEntry; latest?: boolean }) => (
         {post.title}
       </h2>
 
-      <p className="text-on-surface-variant max-w-[44rem] leading-relaxed md:text-lg">
-        {post.summary}
-      </p>
+      <p className="text-on-surface-variant max-w-[44rem] leading-relaxed md:text-lg">{post.summary}</p>
     </article>
   </Link>
 )

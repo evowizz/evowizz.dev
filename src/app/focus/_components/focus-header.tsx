@@ -35,9 +35,7 @@ export function FocusHeader({ meta }: FocusHeaderProps) {
           )}
           <div className="flex flex-col gap-1.5">
             <Label>Stack</Label>
-            <span className="text-on-surface-variant font-mono text-sm leading-relaxed">
-              {meta.stack.join(' / ')}
-            </span>
+            <span className="text-on-surface-variant font-mono text-sm leading-relaxed">{meta.stack.join(' / ')}</span>
           </div>
         </div>
       </Reveal>
@@ -46,14 +44,7 @@ export function FocusHeader({ meta }: FocusHeaderProps) {
         <Reveal>
           <figure>
             <div className="border-outline-variant relative aspect-2/1 overflow-hidden rounded-xl border md:aspect-21/9 md:rounded-none md:border-x-0">
-              <Image
-                src={meta.image}
-                alt={meta.title}
-                fill
-                priority
-                sizes="100vw"
-                className="object-cover"
-              />
+              <Image src={meta.image} alt={meta.title} fill priority sizes="100vw" className="object-cover" />
             </div>
           </figure>
         </Reveal>

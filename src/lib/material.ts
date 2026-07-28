@@ -133,11 +133,7 @@ const COLOR_TOKENS = [
   'onTertiaryFixedVariant',
 ] as const
 
-function setSchemeProperties(
-  target: HTMLElement,
-  scheme: DynamicScheme,
-  suffix: string = '',
-): void {
+function setSchemeProperties(target: HTMLElement, scheme: DynamicScheme, suffix: string = ''): void {
   for (const key of COLOR_TOKENS) {
     const value = scheme[key]
     const token = key.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase()

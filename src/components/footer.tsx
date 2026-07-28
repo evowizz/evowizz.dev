@@ -5,19 +5,14 @@ import { Container } from '@/components/elements'
 const year = new Date().getFullYear()
 
 const FooterLabel = ({ children }: { children: ReactNode }) => (
-  <p className="text-inverse-on-surface/60 font-mono text-xs tracking-[0.08em] uppercase">
-    {children}
-  </p>
+  <p className="text-inverse-on-surface/60 font-mono text-xs tracking-[0.08em] uppercase">{children}</p>
 )
 
 export function Footer() {
   return (
     <footer className="reading-hide bg-inverse-surface text-inverse-on-surface motion-effects-default transition-colors">
       {/* Page surface over the slab; its bottom corners are the inverted corner. */}
-      <div
-        aria-hidden
-        className="bg-surface motion-effects-default h-10 rounded-b-[2.5rem] transition-colors"
-      />
+      <div aria-hidden className="bg-surface motion-effects-default h-10 rounded-b-[2.5rem] transition-colors" />
 
       <Container className="flex flex-col gap-10 pt-10 pb-14 md:flex-row md:items-start md:justify-between md:gap-6 md:pt-12 md:pb-16">
         <div className="flex flex-col gap-2">

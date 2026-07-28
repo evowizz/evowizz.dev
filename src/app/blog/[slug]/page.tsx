@@ -89,9 +89,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
         <EnhancedArticle className="paper prose prose-quoteless dark:prose-invert w-full max-w-none">
           <Reveal immediate stagger y={24} className="not-prose flex flex-col items-start gap-5">
             <p className="text-on-surface-variant flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-xs tracking-[0.08em] uppercase">
-              <time dateTime={post.publishedAt}>
-                {dayjs(post.publishedAt).format('MMMM DD, YYYY')}
-              </time>
+              <time dateTime={post.publishedAt}>{dayjs(post.publishedAt).format('MMMM DD, YYYY')}</time>
               <span aria-hidden className="text-outline-variant">
                 /
               </span>
@@ -109,9 +107,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
               {post.title}
             </h1>
 
-            <p className="text-on-surface-variant max-w-[44rem] text-lg leading-relaxed md:text-xl">
-              {post.summary}
-            </p>
+            <p className="text-on-surface-variant max-w-[44rem] text-lg leading-relaxed md:text-xl">{post.summary}</p>
           </Reveal>
 
           <p

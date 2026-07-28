@@ -162,11 +162,7 @@ export const Drawer = ({ open, onClose, scopeRef }: DrawerProps) => {
                 path={destination.path}
                 index={index}
                 open={open}
-                active={
-                  destination.path === '/'
-                    ? pathname === '/'
-                    : pathname.startsWith(destination.path)
-                }
+                active={destination.path === '/' ? pathname === '/' : pathname.startsWith(destination.path)}
                 onClose={onClose}
               />
             ))}
@@ -175,10 +171,7 @@ export const Drawer = ({ open, onClose, scopeRef }: DrawerProps) => {
       </div>
 
       <div
-        className={cn(
-          'motion-effects-slow shrink-0 transition-opacity',
-          open ? 'opacity-100' : 'opacity-0',
-        )}
+        className={cn('motion-effects-slow shrink-0 transition-opacity', open ? 'opacity-100' : 'opacity-0')}
         style={{ transitionDelay: open ? '650ms' : '0ms' }}
       >
         <Container className="flex flex-wrap items-center justify-between gap-x-6 gap-y-2 py-6 text-sm">

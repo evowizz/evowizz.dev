@@ -42,14 +42,7 @@ type LinkButtonProps = VariantProps<typeof linkButtonVariants> & {
   external?: boolean
 }
 
-export function LinkButton({
-  href,
-  children,
-  variant,
-  direction,
-  className,
-  external,
-}: LinkButtonProps) {
+export function LinkButton({ href, children, variant, direction, className, external }: LinkButtonProps) {
   const isBack = direction === 'back'
   const iconName = isBack ? 'arrow_back' : 'arrow_forward'
 

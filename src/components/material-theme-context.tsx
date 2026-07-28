@@ -1,15 +1,6 @@
 'use client'
 
-import {
-  createContext,
-  useContext,
-  useState,
-  useCallback,
-  useMemo,
-  useEffect,
-  type ReactNode,
-  useRef,
-} from 'react'
+import { createContext, useContext, useState, useCallback, useMemo, useEffect, type ReactNode, useRef } from 'react'
 import { Variant, Hct, argbFromHex, createTheme, applyTheme } from '@/lib/material'
 import { useIsSSR } from '@/lib/use-is-ssr'
 

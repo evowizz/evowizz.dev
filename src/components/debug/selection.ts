@@ -33,9 +33,7 @@ export const cssPath = (element: Element): string => {
     const parent = current.parentElement
     let part = current.tagName.toLowerCase()
     if (parent) {
-      const sameTag = Array.from(parent.children).filter(
-        (child) => child.tagName === current.tagName,
-      )
+      const sameTag = Array.from(parent.children).filter((child) => child.tagName === current.tagName)
       if (sameTag.length > 1) part += `:nth-of-type(${sameTag.indexOf(current) + 1})`
     }
     parts.unshift(part)
@@ -75,15 +73,9 @@ export const topContainedElements = (bounds: RegionBounds): Element[] => {
 /** Fallback for regions containing nothing: the top element under the region's center. */
 export const topElementAtCenter = (bounds: RegionBounds): Element[] => {
   const element = document
-    .elementsFromPoint(
-      bounds.x - window.scrollX + bounds.width / 2,
-      bounds.y - window.scrollY + bounds.height / 2,
-    )
+    .elementsFromPoint(bounds.x - window.scrollX + bounds.width / 2, bounds.y - window.scrollY + bounds.height / 2)
     .find(
-      (candidate) =>
-        !isDevtoolNode(candidate) &&
-        candidate !== document.documentElement &&
-        candidate !== document.body,
+      (candidate) => !isDevtoolNode(candidate) && candidate !== document.documentElement && candidate !== document.body,
     )
   return element ? [element] : []
 }
@@ -96,9 +88,7 @@ export const cropRegion = (canvas: HTMLCanvasElement, bounds: RegionBounds): Pro
   const out = document.createElement('canvas')
   out.width = Math.max(1, Math.round(bounds.width * scale))
   out.height = Math.max(1, Math.round(bounds.height * scale))
-  out
-    .getContext('2d')!
-    .drawImage(canvas, originX, originY, out.width, out.height, 0, 0, out.width, out.height)
+  out.getContext('2d')!.drawImage(canvas, originX, originY, out.width, out.height, 0, 0, out.width, out.height)
   return new Promise((resolve, reject) => {
     out.toBlob((blob) => (blob ? resolve(blob) : reject(new Error('empty capture'))), 'image/png')
   })

@@ -10,10 +10,7 @@ export const SectionTitle = ({ children }: { children: ReactNode }) => {
 
   return (
     <Reveal>
-      <h2
-        ref={ref}
-        className="variation-sans text-on-surface text-4xl font-bold tracking-tight md:text-5xl"
-      >
+      <h2 ref={ref} className="variation-sans text-on-surface text-4xl font-bold tracking-tight md:text-5xl">
         {children}
       </h2>
     </Reveal>

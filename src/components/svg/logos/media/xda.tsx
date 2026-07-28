@@ -3,10 +3,7 @@ import * as React from 'react'
 const XDADevelopers = (props: React.SVGProps<SVGSVGElement>) => (
   <svg viewBox="0 0 158 47" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
     <g clipPath="url(#clip0_2103_101)">
-      <path
-        d="M22.1446 6.1189V0.139069H37.2307V34.2102H22.1446V28.3694H31.0025V6.1189H22.1446Z"
-        fill="currentColor"
-      />
+      <path d="M22.1446 6.1189V0.139069H37.2307V34.2102H22.1446V28.3694H31.0025V6.1189H22.1446Z" fill="currentColor" />
       <path
         d="M15.086 6.1189V0.139069H0V34.2102H7.61222L15.086 46.7261V28.3694H6.22818V6.1189H15.086Z"
         fill="currentColor"

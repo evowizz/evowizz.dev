@@ -40,9 +40,7 @@ export function SelectionToolbar({ selection, onClear }: SelectionToolbarProps) 
     const filter = (node: Node) =>
       !(
         node instanceof Element &&
-        (node.hasAttribute('data-devbar') ||
-          node.id === 'react-scan-root' ||
-          node.tagName === 'NEXTJS-PORTAL')
+        (node.hasAttribute('data-devbar') || node.id === 'react-scan-root' || node.tagName === 'NEXTJS-PORTAL')
       )
     // The pending blob goes into ClipboardItem directly so the clipboard
     // write stays within the click's transient user activation.
@@ -60,9 +58,7 @@ export function SelectionToolbar({ selection, onClear }: SelectionToolbarProps) 
               return result
             })
         : import('html-to-image')
-            .then(({ toCanvas }) =>
-              toCanvas(document.body, { pixelRatio: window.devicePixelRatio, filter }),
-            )
+            .then(({ toCanvas }) => toCanvas(document.body, { pixelRatio: window.devicePixelRatio, filter }))
             .then((canvas) => cropRegion(canvas, selection))
     navigator.clipboard
       .write([new ClipboardItem({ 'image/png': blob })])

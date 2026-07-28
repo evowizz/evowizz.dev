@@ -7,9 +7,9 @@ export async function GET(request: NextRequest) {
   const text = searchParams.get('text')
 
   // Font loading
-  const fontData = await fetch(
-    new URL('./GoogleSansFlex_120pt-SemiBold.ttf', import.meta.url),
-  ).then((res) => res.arrayBuffer())
+  const fontData = await fetch(new URL('./GoogleSansFlex_120pt-SemiBold.ttf', import.meta.url)).then((res) =>
+    res.arrayBuffer(),
+  )
 
   return new ImageResponse(
     <div

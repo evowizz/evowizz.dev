@@ -1,10 +1,7 @@
 import { ImageResponse } from 'next/og'
 import { NextRequest } from 'next/server'
 
-export async function GET(
-  request: NextRequest,
-  { params }: { params: Promise<{ width: string; height: string }> },
-) {
+export async function GET(request: NextRequest, { params }: { params: Promise<{ width: string; height: string }> }) {
   const { width, height } = await params
   const w = parseInt(width, 10)
   const h = parseInt(height, 10)

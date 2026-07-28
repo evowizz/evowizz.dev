@@ -38,10 +38,7 @@ export default function Pre({ children, ...props }: React.ComponentProps<'pre'>)
         aria-label="Copy code"
       >
         {isCopied ? (
-          <MaterialSymbol
-            name="check"
-            className="motion-effects-slow group-hover:symbol-weight-700 text-base"
-          />
+          <MaterialSymbol name="check" className="motion-effects-slow group-hover:symbol-weight-700 text-base" />
         ) : (
           <MaterialSymbol name="content_copy" className="text-base" />
         )}

@@ -72,13 +72,7 @@ export const useSelection = (active: boolean) => {
         if (dragging || Math.max(bounds.width, bounds.height) > 4) {
           dragging = true
           hover.root.style.display = 'none'
-          placeRect(
-            marquee,
-            bounds.x - window.scrollX,
-            bounds.y - window.scrollY,
-            bounds.width,
-            bounds.height,
-          )
+          placeRect(marquee, bounds.x - window.scrollX, bounds.y - window.scrollY, bounds.width, bounds.height)
           return
         }
       }
@@ -104,9 +98,7 @@ export const useSelection = (active: boolean) => {
         .slice(0, 30)
         .map((element) => ({ element, selector: cssPath(element) }))
       const size = `${Math.round(bounds.width)}x${Math.round(bounds.height)}`
-      console.log(
-        `[devbar] selected ${size} region\n${elements.map((entry) => entry.selector).join('\n')}`,
-      )
+      console.log(`[devbar] selected ${size} region\n${elements.map((entry) => entry.selector).join('\n')}`)
       setSelected({ kind: 'region', ...bounds, elements })
       setPicking(false)
     }
@@ -169,13 +161,7 @@ export const useSelection = (active: boolean) => {
       const outlines = selected.elements.map(() => createOutlineOverlay())
       overlays.push(marquee, ...outlines)
       update = () => {
-        placeRect(
-          marquee,
-          selected.x - window.scrollX,
-          selected.y - window.scrollY,
-          selected.width,
-          selected.height,
-        )
+        placeRect(marquee, selected.x - window.scrollX, selected.y - window.scrollY, selected.width, selected.height)
         selected.elements.forEach((entry, index) => {
           if (!document.contains(entry.element)) {
             outlines[index].style.display = 'none'

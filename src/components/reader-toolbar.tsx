@@ -86,10 +86,7 @@ export function ReaderToolbar() {
             className="flex items-center overflow-x-clip"
           >
             <div className="border-outline-variant bg-surface-container-lowest dark:bg-surface-container-low mr-2 flex items-center gap-1 rounded-full border p-1 pl-4 shadow-[0px_1px_2px_0px_rgba(0,0,0,0.10)] dark:shadow-none">
-              <motion.div
-                {...cascadeIn(0)}
-                className="group/slider relative flex items-center gap-2 pr-3"
-              >
+              <motion.div {...cascadeIn(0)} className="group/slider relative flex items-center gap-2 pr-3">
                 <MaterialSymbol name="format_size" className="text-on-surface-variant text-xl" />
                 <div className="relative flex items-center">
                   <input
@@ -121,10 +118,7 @@ export function ReaderToolbar() {
                   onClick={() => setReadingMode((value) => !value)}
                   className={cn(buttonClass, 'size-9')}
                 >
-                  <MaterialSymbol
-                    name="eyeglasses"
-                    className="group-hover:symbol-weight-700 text-lg"
-                  />
+                  <MaterialSymbol name="eyeglasses" className="group-hover:symbol-weight-700 text-lg" />
                 </button>
               </motion.div>
             </div>
@@ -155,10 +149,7 @@ export function ReaderToolbar() {
           transition={{ type: 'spring', stiffness: 400, damping: 30 }}
           className="flex items-center justify-center"
         >
-          <MaterialSymbol
-            name={expanded ? 'close' : 'tune'}
-            className="group-hover:symbol-weight-700 text-xl"
-          />
+          <MaterialSymbol name={expanded ? 'close' : 'tune'} className="group-hover:symbol-weight-700 text-xl" />
         </motion.span>
       </button>
     </div>

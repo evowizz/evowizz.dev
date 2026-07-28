@@ -16,8 +16,7 @@ export default function FocusPage() {
         <div className="flex flex-col gap-4">
           <PageTitle>Focus</PageTitle>
           <p className="text-on-surface-variant max-w-[38rem] text-lg md:text-xl">
-            One project at a time, in depth: the design decisions and the development process behind
-            my work.
+            One project at a time, in depth: the design decisions and the development process behind my work.
           </p>
           <p className="text-on-surface-variant flex flex-wrap items-center gap-x-2 gap-y-1 pt-2 font-mono text-xs tracking-[0.08em] uppercase">
             <span>
@@ -46,17 +45,13 @@ const FocusRow = ({ item }: { item: FocusEntry }) => (
     className="group hover:bg-surface-container-low focus-visible:bg-surface-container-low motion-effects-fast focus-ring block px-4 py-5 transition-colors md:px-6 md:py-7"
   >
     <article className="flex flex-col items-start gap-2.5">
-      <p className="text-on-surface-variant font-mono text-xs tracking-[0.08em] uppercase">
-        {item.stack.join(' / ')}
-      </p>
+      <p className="text-on-surface-variant font-mono text-xs tracking-[0.08em] uppercase">{item.stack.join(' / ')}</p>
 
       <h2 className="variation-sans text-on-surface text-2xl leading-snug font-semibold tracking-tight text-balance md:text-3xl">
         {item.title}
       </h2>
 
-      <p className="text-on-surface-variant max-w-[44rem] leading-relaxed md:text-lg">
-        {item.overview}
-      </p>
+      <p className="text-on-surface-variant max-w-[44rem] leading-relaxed md:text-lg">{item.overview}</p>
     </article>
   </Link>
 )

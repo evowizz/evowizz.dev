@@ -66,8 +66,7 @@ export const projects: Project[] = [
   },
   {
     title: 'Cosmose',
-    description:
-      'A simple Jetpack Compose demo gallery showcasing various UI components and animations.',
+    description: 'A simple Jetpack Compose demo gallery showcasing various UI components and animations.',
     image: '/api/placeholder/1200/750',
     techStack: ['Kotlin', 'Jetpack Compose', 'Android'],
     openSource: true,

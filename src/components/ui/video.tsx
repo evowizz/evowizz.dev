@@ -83,29 +83,27 @@ type PlayPauseButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   playing: boolean
 }
 
-const PlayPauseButton = forwardRef<HTMLButtonElement, PlayPauseButtonProps>(
-  ({ className, playing, ...props }, ref) => {
-    return (
-      <button
-        ref={ref}
-        className={cn(
-          // Literal black on purpose: it sits on video frames, not on the
-          // theme surface (same exception as the dimming overlay above).
-          'flex size-10 items-center justify-center rounded-full bg-black text-white md:size-14',
-          'opacity-100 hover:opacity-100 md:opacity-60',
-          'motion-effects-default transition-opacity',
-          className,
-        )}
-        role="switch"
-        aria-checked={playing}
-        aria-label={playing ? 'Pause video' : 'Play video'}
-        {...props}
-      >
-        <MaterialSymbol name={playing ? 'pause' : 'play_arrow'} fill />
-      </button>
-    )
-  },
-)
+const PlayPauseButton = forwardRef<HTMLButtonElement, PlayPauseButtonProps>(({ className, playing, ...props }, ref) => {
+  return (
+    <button
+      ref={ref}
+      className={cn(
+        // Literal black on purpose: it sits on video frames, not on the
+        // theme surface (same exception as the dimming overlay above).
+        'flex size-10 items-center justify-center rounded-full bg-black text-white md:size-14',
+        'opacity-100 hover:opacity-100 md:opacity-60',
+        'motion-effects-default transition-opacity',
+        className,
+      )}
+      role="switch"
+      aria-checked={playing}
+      aria-label={playing ? 'Pause video' : 'Play video'}
+      {...props}
+    >
+      <MaterialSymbol name={playing ? 'pause' : 'play_arrow'} fill />
+    </button>
+  )
+})
 
 PlayPauseButton.displayName = 'PlayPauseButton'
 
@@ -113,27 +111,25 @@ type DimButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   active: boolean
 }
 
-const DimButton = forwardRef<HTMLButtonElement, DimButtonProps>(
-  ({ className, active, ...props }, ref) => {
-    return (
-      <button
-        ref={ref}
-        className={cn(
-          'bg-tertiary-container text-on-tertiary-container flex size-8 items-center justify-center rounded-full md:size-10',
-          'opacity-100 hover:opacity-100 md:opacity-60',
-          'motion-effects-default transition-opacity',
-          className,
-        )}
-        role="switch"
-        aria-checked={active}
-        aria-label={active ? 'Disable dimming' : 'Enable dimming'}
-        {...props}
-      >
-        <MaterialSymbol name={active ? 'light_mode' : 'contrast'} fill />
-      </button>
-    )
-  },
-)
+const DimButton = forwardRef<HTMLButtonElement, DimButtonProps>(({ className, active, ...props }, ref) => {
+  return (
+    <button
+      ref={ref}
+      className={cn(
+        'bg-tertiary-container text-on-tertiary-container flex size-8 items-center justify-center rounded-full md:size-10',
+        'opacity-100 hover:opacity-100 md:opacity-60',
+        'motion-effects-default transition-opacity',
+        className,
+      )}
+      role="switch"
+      aria-checked={active}
+      aria-label={active ? 'Disable dimming' : 'Enable dimming'}
+      {...props}
+    >
+      <MaterialSymbol name={active ? 'light_mode' : 'contrast'} fill />
+    </button>
+  )
+})
 
 DimButton.displayName = 'DimButton'
 

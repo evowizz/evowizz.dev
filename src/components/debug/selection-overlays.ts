@@ -1,8 +1,7 @@
 const overlayBase = () => {
   const element = document.createElement('div')
   element.setAttribute('data-devbar', '')
-  element.style.cssText =
-    'position:fixed;z-index:90;pointer-events:none;display:none;box-sizing:border-box;'
+  element.style.cssText = 'position:fixed;z-index:90;pointer-events:none;display:none;box-sizing:border-box;'
   document.body.appendChild(element)
   return element
 }
@@ -82,13 +81,7 @@ export const createOutlineOverlay = () => {
   return element
 }
 
-export const placeRect = (
-  element: HTMLDivElement,
-  x: number,
-  y: number,
-  width: number,
-  height: number,
-) => {
+export const placeRect = (element: HTMLDivElement, x: number, y: number, width: number, height: number) => {
   element.style.display = 'block'
   element.style.top = `${y}px`
   element.style.left = `${x}px`
