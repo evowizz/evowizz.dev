@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
+import { withMotionPreference } from '@/lib/motion-preference'
 import { Container } from '@/components/elements'
 import { MaterialSymbol } from '@/components/material-symbol'
 import { Reveal } from '@/components/reveal'
@@ -20,24 +21,19 @@ export const Hero = () => {
       const el = statementRef.current
       if (!el) return
 
-      const mm = gsap.matchMedia()
-
-      mm.add('(prefers-reduced-motion: no-preference)', () => {
-        gsap.set(el, { filter: 'blur(20px)' })
-        gsap.to(el, {
-          filter: 'blur(0px)',
-          duration: 0.9,
-          delay: 0.15,
-          ease: 'power3.out',
-          onComplete: () => gsap.set(el, { clearProps: 'filter' }),
-        })
-      })
-
-      mm.add('(prefers-reduced-motion: reduce)', () => {
-        gsap.set(el, { clearProps: 'filter' })
-      })
-
-      return () => mm.revert()
+      return withMotionPreference(
+        () => {
+          gsap.set(el, { filter: 'blur(20px)' })
+          gsap.to(el, {
+            filter: 'blur(0px)',
+            duration: 0.9,
+            delay: 0.15,
+            ease: 'power3.out',
+            onComplete: () => gsap.set(el, { clearProps: 'filter' }),
+          })
+        },
+        () => gsap.set(el, { clearProps: 'filter' }),
+      )
     },
     { scope: statementRef },
   )

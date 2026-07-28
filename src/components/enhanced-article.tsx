@@ -2,6 +2,7 @@
 
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion'
 import { useEffect, useRef, useState } from 'react'
+import { reducedMotion } from '@/lib/motion-preference'
 
 const TICK_COUNT = 121
 const TICKS = Array.from({ length: TICK_COUNT }, (_, index) => index)
@@ -87,9 +88,7 @@ export default function EnhancedArticle(props: React.HTMLAttributes<HTMLElement>
     const range = article.offsetHeight - window.innerHeight
     if (range <= 0) return
     const articleTop = article.getBoundingClientRect().top + window.scrollY
-    const behavior = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-      ? 'auto'
-      : 'smooth'
+    const behavior = reducedMotion() ? 'auto' : 'smooth'
     window.scrollTo({
       top: articleTop + Math.min(Math.max(value, 0), 1) * range,
       behavior,
@@ -128,10 +127,7 @@ export default function EnhancedArticle(props: React.HTMLAttributes<HTMLElement>
       {/* Reading ruler, only at widths where the gutter fits it entirely:
           the instrument must never overlap the paper. */}
       <div className="ruler-root pointer-events-none fixed inset-y-0 right-0 z-30 hidden xl:block">
-        <div
-          ref={trackRef}
-          className="group/ruler pointer-events-auto absolute top-20 right-0 bottom-8 w-14"
-        >
+        <div ref={trackRef} className="group/ruler pointer-events-auto absolute top-20 right-0 bottom-8 w-14">
           <div aria-hidden className="absolute inset-0">
             {TICKS.map((index) => (
               <div

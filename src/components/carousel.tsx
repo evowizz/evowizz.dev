@@ -3,6 +3,7 @@
 import React, { createContext, use, useRef } from 'react'
 import { MaterialSymbol } from './material-symbol'
 import { cn } from '@/lib/utils'
+import { reducedMotion } from '@/lib/motion-preference'
 import { StyleablePropsWithChildren, StyleableProps } from '@/types/component'
 
 type CarouselContextType = {
@@ -28,7 +29,7 @@ const VISIBILITY_THRESHOLD = 0.95
 
 const getScrollBehavior = (): ScrollBehavior => {
   if (typeof window === 'undefined') return 'smooth'
-  return window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'
+  return reducedMotion() ? 'auto' : 'smooth'
 }
 
 /**
@@ -155,8 +156,7 @@ const useCarouselLogic = () => {
 
     const indices = Array.from(visibleIndices.current).sort((a, b) => a - b)
     const lastIndex = container.children.length - 1
-    const targetIndex =
-      indices.length > 0 ? Math.min(lastIndex, indices[indices.length - 1] + 1) : lastIndex
+    const targetIndex = indices.length > 0 ? Math.min(lastIndex, indices[indices.length - 1] + 1) : lastIndex
 
     const target = container.children[targetIndex]
     if (target) {

@@ -4,6 +4,7 @@ import { useRef, type RefObject } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useGSAP } from '@gsap/react'
+import { withMotionPreference } from '@/lib/motion-preference'
 
 gsap.registerPlugin(useGSAP, ScrollTrigger)
 
@@ -39,37 +40,30 @@ export function useWidthBreath<T extends HTMLElement>({
       const el = ref.current
       if (!el) return
 
-      const mm = gsap.matchMedia()
+      return withMotionPreference(
+        () => {
+          if (play === false) {
+            gsap.to(el, {
+              '--font-wdth': from,
+              duration: 0.25,
+              ease: 'power2.in',
+              overwrite: 'auto',
+            })
+            return
+          }
 
-      mm.add('(prefers-reduced-motion: no-preference)', () => {
-        if (play === false) {
+          gsap.set(el, { '--font-wdth': from })
           gsap.to(el, {
-            '--font-wdth': from,
-            duration: 0.25,
-            ease: 'power2.in',
+            '--font-wdth': to,
+            duration,
+            delay,
+            ease: 'power3.out',
             overwrite: 'auto',
+            ...(scroll ? { scrollTrigger: { trigger: el, start: 'top 85%', once: true } } : {}),
           })
-          return
-        }
-
-        gsap.set(el, { '--font-wdth': from })
-        gsap.to(el, {
-          '--font-wdth': to,
-          duration,
-          delay,
-          ease: 'power3.out',
-          overwrite: 'auto',
-          ...(scroll
-            ? { scrollTrigger: { trigger: el, start: 'top 85%', once: true } }
-            : {}),
-        })
-      })
-
-      mm.add('(prefers-reduced-motion: reduce)', () => {
-        gsap.set(el, { '--font-wdth': to })
-      })
-
-      return () => mm.revert()
+        },
+        () => gsap.set(el, { '--font-wdth': to }),
+      )
     },
     { dependencies: [play], scope: ref },
   )

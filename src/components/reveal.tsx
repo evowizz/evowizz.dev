@@ -2,6 +2,7 @@
 
 import { useRef, type ReactNode } from 'react'
 import gsap from 'gsap'
+import { withMotionPreference } from '@/lib/motion-preference'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useGSAP } from '@gsap/react'
 
@@ -44,27 +45,26 @@ export function Reveal({
       const el = ref.current
       if (!el) return
 
-      const mm = gsap.matchMedia()
-      mm.add('(prefers-reduced-motion: no-preference)', () => {
-        const targets = stagger ? Array.from(el.children) : el
-        // Explicit hidden start + explicit visible end (opacity 1, y 0) so the
-        // reveal survives re-renders. `gsap.from` would re-capture the current
-        // opacity (already 0) on a re-run and animate 0 -> 0, leaving it hidden.
-        gsap.set(targets, { opacity: 0, y })
-        gsap.to(targets, {
-          opacity: 1,
-          y: 0,
-          duration: 0.9,
-          ease: 'power3.out',
-          delay,
-          stagger: stagger ? staggerEach : 0,
-          ...(immediate
-            ? {}
-            : { scrollTrigger: { trigger: el, start: 'top 85%', once: true } }),
-        })
-      })
+      const targets = stagger ? Array.from(el.children) : el
 
-      return () => mm.revert()
+      return withMotionPreference(
+        () => {
+          // Explicit hidden start + explicit visible end (opacity 1, y 0) so the
+          // reveal survives re-renders. `gsap.from` would re-capture the current
+          // opacity (already 0) on a re-run and animate 0 -> 0, leaving it hidden.
+          gsap.set(targets, { opacity: 0, y })
+          gsap.to(targets, {
+            opacity: 1,
+            y: 0,
+            duration: 0.9,
+            ease: 'power3.out',
+            delay,
+            stagger: stagger ? staggerEach : 0,
+            ...(immediate ? {} : { scrollTrigger: { trigger: el, start: 'top 85%', once: true } }),
+          })
+        },
+        () => gsap.set(targets, { clearProps: 'opacity,transform' }),
+      )
     },
     { scope: ref },
   )
@@ -93,14 +93,7 @@ type CountUpProps = {
  * value on the server (and for reduced-motion / no-JS), then counts for
  * everyone else.
  */
-export function CountUp({
-  to,
-  prefix = '',
-  suffix = '',
-  className,
-  group = false,
-  duration = 1.4,
-}: CountUpProps) {
+export function CountUp({ to, prefix = '', suffix = '', className, group = false, duration = 1.4 }: CountUpProps) {
   const ref = useRef<HTMLSpanElement>(null)
   const render = (n: number) => prefix + (group ? groupDigits(n) : String(n)) + suffix
 
@@ -112,20 +105,20 @@ export function CountUp({
         el.textContent = render(Math.round(v))
       }
 
-      const mm = gsap.matchMedia()
-      mm.add('(prefers-reduced-motion: no-preference)', () => {
-        set(0)
-        const counter = { v: 0 }
-        gsap.to(counter, {
-          v: to,
-          duration,
-          ease: 'power2.out',
-          onUpdate: () => set(counter.v),
-          scrollTrigger: { trigger: el, start: 'top 90%', once: true },
-        })
-      })
-
-      return () => mm.revert()
+      return withMotionPreference(
+        () => {
+          set(0)
+          const counter = { v: 0 }
+          gsap.to(counter, {
+            v: to,
+            duration,
+            ease: 'power2.out',
+            onUpdate: () => set(counter.v),
+            scrollTrigger: { trigger: el, start: 'top 90%', once: true },
+          })
+        },
+        () => set(to),
+      )
     },
     { scope: ref },
   )
@@ -155,20 +148,20 @@ export function Parallax({ children, className, amount = 36 }: ParallaxProps) {
     () => {
       const el = ref.current
       if (!el) return
-      const mm = gsap.matchMedia()
-      mm.add('(prefers-reduced-motion: no-preference)', () => {
-        gsap.fromTo(
-          el,
-          { y: amount },
-          {
-            y: -amount,
-            ease: 'none',
-            scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: true },
-          },
-        )
-      })
-
-      return () => mm.revert()
+      return withMotionPreference(
+        () => {
+          gsap.fromTo(
+            el,
+            { y: amount },
+            {
+              y: -amount,
+              ease: 'none',
+              scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: true },
+            },
+          )
+        },
+        () => gsap.set(el, { clearProps: 'transform' }),
+      )
     },
     { scope: ref },
   )
