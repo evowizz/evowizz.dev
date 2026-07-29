@@ -1,4 +1,4 @@
-import { type ReactNode } from 'react'
+import { type CSSProperties, type Ref, type ReactNode } from 'react'
 import { cn } from '@/lib/utils'
 import { MaterialSymbol } from '@/components/material-symbol'
 
@@ -10,9 +10,27 @@ export const Label = ({ children }: { children: ReactNode }) => (
   <span className="text-on-surface-variant text-sm font-medium">{children}</span>
 )
 
-/** Static page-level h1 at the same scale as the home hero. */
-export const PageTitle = ({ children }: { children: ReactNode }) => (
-  <h1 className="variation-sans text-on-surface text-[clamp(3.25rem,11vw,8.5rem)] leading-none font-semibold tracking-[-0.03em]">
+/** Page-level h1. The home hero renders it too, so the display scale has one home. */
+export const PageTitle = ({
+  ref,
+  className,
+  style,
+  children,
+}: {
+  ref?: Ref<HTMLHeadingElement>
+  className?: string
+  /** The hero passes live font-variation values through here. */
+  style?: CSSProperties
+  children: ReactNode
+}) => (
+  <h1
+    ref={ref}
+    style={style}
+    className={cn(
+      'variation-sans text-on-surface text-[clamp(3.25rem,11vw,8.5rem)] leading-none font-semibold tracking-[-0.03em]',
+      className,
+    )}
+  >
     {children}
   </h1>
 )
