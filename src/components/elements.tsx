@@ -35,6 +35,26 @@ export const PageTitle = ({
   </h1>
 )
 
+/**
+ * A row inside a ruled card, carrying the hover state layer and nothing else.
+ *
+ * Layout is the caller's. Without an `href` it renders a plain row, since a dead
+ * link is worse than no link.
+ */
+export const RowLink = ({ href, className, children }: { href?: string; className?: string; children: ReactNode }) =>
+  href ? (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={cn('hover:bg-surface-container motion-effects-fast focus-ring transition-colors', className)}
+    >
+      {children}
+    </a>
+  ) : (
+    <div className={className}>{children}</div>
+  )
+
 export const ActionLink = ({ href, children }: { href: string; children: ReactNode }) => (
   <a
     href={href}
