@@ -1,5 +1,6 @@
 import { skills } from '@/lib/skills'
-import { Container, Label } from '@/components/elements'
+import { skillLogos } from '@/components/svg'
+import { Container, Label, RowLink } from '@/components/elements'
 import { SectionTitle } from '@/components/section-title'
 import { Reveal } from '@/components/reveal'
 
@@ -13,34 +14,44 @@ const SKILL_GROUPS = [
 }))
 
 export const Skills = () => (
-  <section id="skills" className="scroll-mt-20 py-28 md:py-40">
-    <Container className="flex flex-col gap-12 md:gap-16">
+  <section id="skills" className="bg-surface text-on-surface scroll-mt-20 py-20 md:py-28">
+    <Container className="flex flex-col gap-10 md:gap-12">
       <div className="flex flex-col gap-4">
         <SectionTitle>Skills</SectionTitle>
         <Reveal>
-          <p className="text-on-surface-variant max-w-[36rem] text-lg md:text-xl">
+          <p className="text-on-surface-variant max-w-xl text-lg md:text-xl">
             The languages, frameworks, and tools I reach for every day.
           </p>
         </Reveal>
       </div>
 
-      <Reveal stagger className="grid grid-cols-1 gap-12 sm:grid-cols-2 md:grid-cols-3 md:gap-8">
+      <Reveal stagger className="grid gap-4 md:grid-cols-3 md:gap-5">
         {SKILL_GROUPS.map((group) => (
-          <div key={group.label} className="flex flex-col gap-5">
-            <Label>{group.label}</Label>
-            <ul className="flex flex-col gap-2.5">
-              {group.items.map((skill) => (
-                <li key={skill.name}>
-                  <a
-                    href={skill.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="variation-sans text-on-surface hover:text-primary motion-effects-fast focus-ring w-fit text-xl font-medium tracking-tight transition-colors md:text-2xl"
-                  >
-                    {skill.name}
-                  </a>
-                </li>
-              ))}
+          <div
+            key={group.label}
+            className="border-outline-variant divide-outline-variant divide-y self-start overflow-hidden rounded-2xl border"
+          >
+            <div className="flex items-baseline justify-between gap-3 px-5 py-4">
+              <Label>{group.label}</Label>
+              <span className="text-on-surface-variant text-sm font-medium tabular-nums">{group.items.length}</span>
+            </div>
+
+            <ul className="divide-outline-variant divide-y">
+              {group.items.map((skill) => {
+                const Logo = skillLogos[skill.logo]
+                return (
+                  <li key={skill.name}>
+                    <RowLink href={skill.url} className="flex items-center gap-3.5 px-5 py-3.5">
+                      <span className="bg-secondary-container text-on-secondary-container flex size-9 shrink-0 items-center justify-center rounded-lg text-lg">
+                        <Logo aria-hidden />
+                      </span>
+                      <span className="variation-sans text-on-surface text-base font-semibold tracking-tight md:text-lg">
+                        {skill.name}
+                      </span>
+                    </RowLink>
+                  </li>
+                )
+              })}
             </ul>
           </div>
         ))}
