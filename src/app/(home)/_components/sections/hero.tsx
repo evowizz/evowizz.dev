@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useState } from 'react'
+import { useRef, useState, type ReactNode } from 'react'
 import Link from 'next/link'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
@@ -8,32 +8,43 @@ import { reducedMotion, withMotionPreference } from '@/lib/motion-preference'
 import { Container, PageTitle } from '@/components/elements'
 import { MaterialSymbol } from '@/components/material-symbol'
 import { Reveal } from '@/components/reveal'
-import { AXES, TypeSpecimen, REST, axesToStyle, type Axes } from '../type-specimen'
+import { useParisClock } from '@/hooks/use-paris-clock'
+import { AXES, REST, axesToStyle, type Axes } from '../type-axes'
+import { TypeSpecimen } from '../type-specimen'
 
 gsap.registerPlugin(useGSAP)
 
-/** The width the name breathes out from, matching the rest of the site. */
+/** The width the name breathes out from. */
 const BREATH_FROM = 74
 
-/** Hovering the name recedes everything but the two letters he goes by. */
-const aside = 'motion-effects-slow transition-colors group-hover:text-outline-variant'
+/** Recedes on hover, so only the two letters he goes by stay lit. */
+const Aside = ({ children }: { children: ReactNode }) => (
+  <span className="motion-effects-slow group-hover:text-outline-variant transition-colors">{children}</span>
+)
 
-export const Hero = () => {
+/** flex-1 so the rows share the tile height instead of leaving a void. */
+const Fact = ({ icon, children }: { icon: string; children: ReactNode }) => (
+  <li className="flex flex-1 items-center gap-3 py-3">
+    <MaterialSymbol name={icon} className="text-outline shrink-0 text-lg" />
+    <span className="min-w-0 truncate">{children}</span>
+  </li>
+)
+
+export function Hero() {
   const statementRef = useRef<HTMLHeadingElement>(null)
   const [axes, setAxes] = useState<Axes>(REST)
   const [resetting, setResetting] = useState(false)
   const resetTween = useRef<gsap.core.Tween | null>(null)
+  const clock = useParisClock()
 
-  // Reaching for a ruler cancels a reset in flight, so the two never fight over
-  // the same value.
+  // Reaching for a ruler cancels a reset in flight.
   const change = (next: Axes) => {
     resetTween.current?.kill()
     setResetting(false)
     setAxes(next)
   }
 
-  // One tween per axis, staggered, so the rulers walk home in sequence rather
-  // than snapping back together.
+  // Staggered, so the rulers walk home in sequence.
   const reset = () => {
     resetTween.current?.kill()
 
@@ -54,10 +65,8 @@ export const Hero = () => {
     })
   }
 
-  // The name appears from a uniform 20px blur while it widens, then the filter
-  // is cleared so nothing keeps rendering through it. The width runs through
-  // state rather than the element so the ruler beside it moves too, which is
-  // the only thing that says what the ruler is for.
+  // Width runs through state, not the element, so the specimen ruler sweeps too.
+  // React owns the axis properties on the h1, GSAP owns its filter.
   useGSAP(
     () => {
       const el = statementRef.current
@@ -91,47 +100,60 @@ export const Hero = () => {
   )
 
   return (
-    <section className="flex min-h-[calc(100svh-4rem)] flex-col justify-center">
-      <Container className="grid items-center py-20 xl:grid-cols-[minmax(0,1fr)_22rem] xl:gap-12">
-        <Reveal immediate stagger y={30} className="flex flex-col items-start gap-7 md:gap-9">
-          <p className="text-on-surface-variant flex flex-wrap items-center gap-x-3 gap-y-1 text-sm font-medium">
-            <span className="inline-flex items-center gap-2">
-              <span aria-hidden className="bg-primary size-2 rounded-full" />
-              <span className="text-on-surface">Available for hire</span>
-            </span>
-            <span aria-hidden className="text-outline-variant">
-              /
-            </span>
-            <span>Nantes, France</span>
-          </p>
+    <section className="bg-surface text-on-surface flex min-h-[calc(100svh-4rem)] flex-col justify-center">
+      <Container className="py-16 md:py-20">
+        {/* At lg: name in cols 1-4 across both rows, availability then specimen in 5-6. */}
+        <Reveal immediate stagger y={30} className="grid gap-4 md:grid-cols-2 md:gap-5 lg:grid-cols-6">
+          {/* Centred, not spaced: the column is stretched to the cards beside it. */}
+          <div className="flex flex-col justify-center gap-8 md:col-span-2 md:gap-10 lg:col-span-4 lg:col-start-1 lg:row-span-2 lg:row-start-1">
+            <div className="flex flex-col gap-4 md:gap-5">
+              {/* The space is not rendered, but keeps the name from reading as one word. */}
+              <PageTitle ref={statementRef} className="group" style={axesToStyle(axes)}>
+                <span className="block">
+                  Dy<Aside>lan</Aside>
+                </span>{' '}
+                <span className="block">
+                  <Aside>Roussel</Aside>
+                </span>
+              </PageTitle>
 
-          {/* The space between the two blocks is not rendered, but it keeps the
-              heading from reading as one word to anything walking the text. */}
-          <PageTitle ref={statementRef} className="group" style={axesToStyle(axes)}>
-            <span className="block">
-              Dy<span className={aside}>lan</span>
-            </span>{' '}
-            <span className={`block ${aside}`}>Roussel</span>
-          </PageTitle>
+              <p className="text-on-surface-variant text-lg font-medium md:text-xl">Android developer and designer.</p>
+            </div>
 
-          <p className="text-on-surface-variant -mt-4 text-lg font-medium md:-mt-6 md:text-xl">
-            Android developer and designer.
-          </p>
+            <Link
+              href="#work"
+              className="bg-primary text-on-primary group focus-ring motion-effects-default inline-flex w-fit items-center gap-2 rounded-full py-3 pr-5 pl-6 text-base font-semibold transition-opacity hover:opacity-90"
+            >
+              See the work
+              <MaterialSymbol
+                name="arrow_downward"
+                className="motion-spatial-fast text-xl transition-transform group-hover:translate-y-0.5"
+              />
+            </Link>
+          </div>
 
-          <Link
-            href="#work"
-            className="text-primary group focus-ring inline-flex items-center gap-2 text-lg font-medium"
-          >
-            See the work
-            <MaterialSymbol
-              name="arrow_downward"
-              className="motion-spatial-fast text-xl transition-transform group-hover:translate-y-0.5"
-            />
-          </Link>
-        </Reveal>
+          <div className="border-outline-variant flex flex-col gap-6 rounded-2xl border p-6 md:p-7 lg:col-span-2 lg:col-start-5 lg:row-start-1">
+            <p className="flex items-center gap-2.5 text-xl leading-snug font-medium md:text-2xl">
+              <span aria-hidden className="bg-primary size-2.5 shrink-0 rounded-full" />
+              Available for hire
+            </p>
 
-        <Reveal immediate delay={0.5} className="hidden xl:block">
-          <TypeSpecimen axes={axes} onChange={change} onReset={reset} resetting={resetting} />
+            <ul className="divide-outline-variant border-outline-variant text-on-surface-variant flex flex-1 flex-col divide-y border-t text-base font-medium">
+              <Fact icon="location_on">Nantes, France</Fact>
+              <Fact icon="schedule">
+                <span className="block min-h-[1.5em]">{clock ? `${clock.time} ${clock.zone}` : ''}</span>
+              </Fact>
+              <Fact icon="public">Happy to work remote</Fact>
+            </ul>
+          </div>
+
+          <TypeSpecimen
+            axes={axes}
+            onChange={change}
+            onReset={reset}
+            resetting={resetting}
+            className="hidden md:col-span-2 md:flex lg:col-span-2 lg:col-start-5 lg:row-start-2"
+          />
         </Reveal>
       </Container>
     </section>
