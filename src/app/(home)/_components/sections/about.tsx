@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { Container, Label } from '@/components/elements'
 import { SectionTitle } from '@/components/section-title'
 import { CountUp, Reveal } from '@/components/reveal'
+import { ScrollDrift } from '@/components/scroll-drift'
 
 const FACTS = [
   { term: 'Based', detail: 'Nantes, France' },
@@ -80,9 +81,9 @@ export const About = () => (
           </p>
         </article>
 
-        {/* Side by side as soon as there is room, stacking again only in the lg column. */}
-        <div className="flex flex-col gap-4 md:flex-row md:gap-5 lg:flex-col lg:gap-5">
-          <div className="bg-tertiary-container text-on-tertiary-container flex flex-1 flex-col justify-center gap-3 rounded-2xl p-6 md:p-7">
+        {/* Side by side as soon as there is room, stacked and content-sized at lg. */}
+        <ScrollDrift className="flex flex-col gap-4 md:flex-row md:gap-5 lg:flex-col lg:gap-5 lg:self-start">
+          <div className="bg-tertiary-container text-on-tertiary-container flex flex-1 flex-col justify-center gap-3 rounded-2xl p-6 md:p-7 lg:flex-none">
             <CountUp
               to={630000}
               group
@@ -93,8 +94,8 @@ export const About = () => (
             </p>
           </div>
 
-          {/* Rows share the card height, so it fills the cell with no hole under the last rule. */}
-          <dl className="border-outline-variant divide-outline-variant flex flex-1 flex-col divide-y overflow-hidden rounded-2xl border">
+          {/* Rows split the height only at md, where the two cards stretch to match. */}
+          <dl className="border-outline-variant divide-outline-variant flex flex-1 flex-col divide-y overflow-hidden rounded-2xl border lg:flex-none">
             {FACTS.map((fact) => (
               <div key={fact.term} className="flex flex-1 items-center justify-between gap-4 px-5 py-3.5">
                 <dt>
@@ -104,7 +105,7 @@ export const About = () => (
               </div>
             ))}
           </dl>
-        </div>
+        </ScrollDrift>
       </Reveal>
     </Container>
   </section>
