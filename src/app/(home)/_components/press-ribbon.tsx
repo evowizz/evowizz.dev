@@ -7,7 +7,7 @@ import { Container } from '@/components/elements'
 
 type Outlet = { name: string; url: string; logo: MediaLogos }
 
-/** A selection, not the total, so no count is stated anywhere. */
+/** A curated selection, so nothing on the page states a count. */
 const OUTLETS: Outlet[] = [
   { name: '9to5Google', url: 'https://9to5google.com', logo: '9to5google' },
   { name: 'The Verge', url: 'https://www.theverge.com', logo: 'theverge' },
@@ -32,7 +32,7 @@ const OUTLETS: Outlet[] = [
 const TOP = OUTLETS.slice(0, 8)
 const BOTTOM = OUTLETS.slice(8)
 
-/** Caps the width too: these wordmarks run 2.4:1 to 9.4:1, so one height ragged them. */
+/** One outlet mark. Caps the width too, since the wordmarks run 2.4:1 to 9.4:1. */
 const Mark = ({ outlet }: { outlet: Outlet }) => {
   const Logo = mediaLogos[outlet.logo]
   return (
@@ -74,12 +74,7 @@ const Track = ({ outlets, reverse }: { outlets: Outlet[]; reverse?: boolean }) =
   </div>
 )
 
-/**
- * Runs two rows in opposite directions behind a side fade.
- *
- * Both start still, since the preference is only readable on the client and must
- * not decide the first paint. Reduced motion keeps the still set, wrapped.
- */
+/** Runs two rows in opposite directions behind a side fade. Both start still, since the preference is client-only. */
 export const PressRibbon = () => {
   const [animate, setAnimate] = useState(false)
 

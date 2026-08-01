@@ -2,7 +2,7 @@
 
 import { useParisClock } from '@/hooks/use-paris-clock'
 
-/** `min-h-[1em]` reserves the line, so the value arriving costs no reflow. */
+/** Reserves the line height, so the clock arriving shifts nothing below it. */
 export const LocalTime = () => {
   const clock = useParisClock()
 

@@ -10,7 +10,7 @@ export const Label = ({ children }: { children: ReactNode }) => (
   <span className="text-on-surface-variant text-sm font-medium">{children}</span>
 )
 
-/** Page-level h1. The home hero renders it too, so the display scale has one home. */
+/** The page-level h1, holding the display scale in one place. */
 export const PageTitle = ({
   ref,
   className,
@@ -35,12 +35,7 @@ export const PageTitle = ({
   </h1>
 )
 
-/**
- * A row inside a ruled card, carrying the hover state layer and nothing else.
- *
- * Layout is the caller's. Without an `href` it renders a plain row, since a dead
- * link is worse than no link.
- */
+/** A row in a ruled card, carrying the hover state layer. Without an `href` it renders a plain div. */
 export const RowLink = ({ href, className, children }: { href?: string; className?: string; children: ReactNode }) =>
   href ? (
     <a

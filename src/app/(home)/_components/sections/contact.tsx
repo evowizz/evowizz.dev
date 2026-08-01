@@ -11,7 +11,6 @@ export const Contact = () => (
       <SectionTitle>Contact</SectionTitle>
 
       <Reveal stagger className="grid gap-4 md:grid-cols-2 md:gap-5 lg:grid-cols-4">
-        {/* The biggest card on the page, and it spends no colour: the type carries it. */}
         <div className="border-outline-variant flex flex-col items-start gap-6 rounded-2xl border p-6 md:col-span-2 md:p-7 lg:row-span-2">
           <h3 className="variation-sans text-on-surface text-[clamp(2.5rem,7vw,4.5rem)] leading-none font-medium tracking-[-0.03em]">
             Say hello
@@ -27,13 +26,11 @@ export const Contact = () => (
           </a>
         </div>
 
-        {/* One of the page's three tonal cards. */}
         <div className="bg-tertiary-container text-on-tertiary-container flex flex-col justify-center gap-3 rounded-2xl p-6 md:p-7">
           <span className="text-sm font-medium opacity-80">Nantes, France</span>
           <LocalTime />
         </div>
 
-        {/* No heading: four names nobody needs introduced. */}
         <ul className="border-outline-variant divide-outline-variant flex flex-col divide-y overflow-hidden rounded-2xl border">
           {SOCIALS.map((social) => (
             <li key={social.label} className="flex flex-1">
@@ -45,7 +42,6 @@ export const Contact = () => (
           ))}
         </ul>
 
-        {/* The list is an illustration, not a fence. */}
         <div className="border-outline-variant flex flex-col justify-center gap-3 rounded-2xl border p-6 md:col-span-2 md:p-7">
           <p className="text-on-surface-variant text-lg leading-snug font-medium md:text-xl">
             Open to Android engineering, design systems and Material 3 work, though that list is nowhere near

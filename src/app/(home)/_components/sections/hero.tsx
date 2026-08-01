@@ -22,7 +22,7 @@ const Aside = ({ children }: { children: ReactNode }) => (
   <span className="motion-effects-slow group-hover:text-outline-variant transition-colors">{children}</span>
 )
 
-/** flex-1 so the rows share the tile height instead of leaving a void. */
+/** One line of the availability card. `flex-1` shares the tile height between rows. */
 const Fact = ({ icon, children }: { icon: string; children: ReactNode }) => (
   <li className="flex flex-1 items-center gap-3 py-3">
     <MaterialSymbol name={icon} className="text-outline shrink-0 text-lg" />
@@ -44,7 +44,7 @@ export function Hero() {
     setAxes(next)
   }
 
-  // Staggered, so the rulers walk home in sequence.
+  // Walks the rulers home in sequence, or jumps there when motion is reduced.
   const reset = () => {
     resetTween.current?.kill()
 
@@ -65,8 +65,7 @@ export function Hero() {
     })
   }
 
-  // Width runs through state, not the element, so the specimen ruler sweeps too.
-  // React owns the axis properties on the h1, GSAP owns its filter.
+  // React owns the axes so the specimen ruler sweeps too, GSAP owns only the filter.
   useGSAP(
     () => {
       const el = statementRef.current
@@ -104,10 +103,10 @@ export function Hero() {
       <Container className="py-16 md:py-20">
         {/* At lg: name in cols 1-4 across both rows, availability then specimen in 5-6. */}
         <Reveal immediate stagger y={30} className="grid gap-4 md:grid-cols-2 md:gap-5 lg:grid-cols-6">
-          {/* Centred, not spaced: the column is stretched to the cards beside it. */}
+          {/* Centred, not spaced: the column stretches to the cards beside it. */}
           <div className="flex flex-col justify-center gap-8 md:col-span-2 md:gap-10 lg:col-span-4 lg:col-start-1 lg:row-span-2 lg:row-start-1">
             <div className="flex flex-col gap-4 md:gap-5">
-              {/* The space is not rendered, but keeps the name from reading as one word. */}
+              {/* Keeps the name copyable as two words, though the blocks hide the space. */}
               <PageTitle ref={statementRef} className="group" style={axesToStyle(axes)}>
                 <span className="block">
                   Dy<Aside>lan</Aside>

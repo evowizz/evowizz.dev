@@ -82,7 +82,6 @@ export const About = () => (
 
         {/* Side by side as soon as there is room, stacking again only in the lg column. */}
         <div className="flex flex-col gap-4 md:flex-row md:gap-5 lg:flex-col lg:gap-5">
-          {/* One of the page's three tonal cards. */}
           <div className="bg-tertiary-container text-on-tertiary-container flex flex-1 flex-col justify-center gap-3 rounded-2xl p-6 md:p-7">
             <CountUp
               to={630000}
@@ -94,8 +93,7 @@ export const About = () => (
             </p>
           </div>
 
-          {/* Rows share the card height, so it fills its cell instead of
-              leaving a hole under the last rule. */}
+          {/* Rows share the card height, so it fills the cell with no hole under the last rule. */}
           <dl className="border-outline-variant divide-outline-variant flex flex-1 flex-col divide-y overflow-hidden rounded-2xl border">
             {FACTS.map((fact) => (
               <div key={fact.term} className="flex flex-1 items-center justify-between gap-4 px-5 py-3.5">

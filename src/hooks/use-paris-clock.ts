@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 
 const PARIS = 'Europe/Paris'
 
-/** CET in winter, CEST in summer, so name and offset are read off the zone. */
+/** Reads the name and offset off the zone. Paris is CET in winter, CEST in summer. */
 const readParisClock = () => {
   const now = new Date()
 
@@ -26,7 +26,7 @@ const readParisClock = () => {
   return { time, zone: name && !name.startsWith('GMT') ? `${name} (${offset})` : offset }
 }
 
-/** Null until mounted: the page is static, so a server clock would be build time. */
+/** Null until mounted. The page is static, so a server clock would show build time. */
 export const useParisClock = () => {
   const [clock, setClock] = useState<{ time: string; zone: string } | null>(null)
 

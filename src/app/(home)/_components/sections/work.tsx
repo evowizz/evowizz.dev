@@ -75,7 +75,7 @@ const Lead = ({ project }: { project: Project }) => (
           </div>
         </div>
 
-        {/* flex-col-reverse: a correct dl, with the figure still reading on top. */}
+        {/* flex-col-reverse keeps a valid dt-then-dd order with the figure on top. */}
         <dl className="flex flex-wrap gap-x-10 gap-y-5 lg:shrink-0">
           {project.spotlightStats?.map((stat) => (
             <div key={stat.label} className="flex flex-col-reverse gap-1.5">
@@ -91,7 +91,6 @@ const Lead = ({ project }: { project: Project }) => (
   </article>
 )
 
-// w-56 not w-48: "Personal Website" measures 181px and would wrap at w-48.
 const Row = ({ project }: { project: Project }) => {
   const link = project.links[0]
 
@@ -100,6 +99,7 @@ const Row = ({ project }: { project: Project }) => {
       href={link?.url}
       className="group flex flex-col gap-2 px-5 py-5 md:flex-row md:items-baseline md:gap-8 md:px-6 md:py-6"
     >
+      {/* w-56, not w-48: "Personal Website" measures 181px and would wrap. */}
       <h3 className="variation-sans text-on-surface shrink-0 text-xl font-medium tracking-tight md:w-56 md:text-2xl">
         {project.title}
       </h3>

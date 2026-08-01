@@ -35,10 +35,9 @@ export const TypeSpecimen = ({ axes, onChange, onReset, resetting, className }: 
         <label key={axis.id} className="flex flex-col gap-1.5">
           <span className="flex items-baseline justify-between gap-3">
             <span className="text-on-surface-variant min-w-0 truncate text-sm font-medium">{axis.label}</span>
-            {/* The one place mono earns its keep: a live readout off the axes. */}
             <span className="text-primary shrink-0 font-mono text-xs tabular-nums">{Math.round(axes[axis.id])}</span>
           </span>
-          {/* `any` lets the thumb sit between whole numbers while a tween runs. */}
+          {/* `step="any"` lets the thumb sit between whole numbers while a tween runs. */}
           <input
             type="range"
             aria-label={`${axis.label} axis`}
