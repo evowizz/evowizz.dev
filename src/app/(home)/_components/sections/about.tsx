@@ -6,7 +6,8 @@ import { ScrollDrift } from '@/components/scroll-drift'
 
 const FACTS = [
   { term: 'Based', detail: 'Nantes, France' },
-  { term: 'Building', detail: 'Android since 2016' },
+  { term: 'Speaks', detail: 'French, English' },
+  { term: 'Building', detail: 'Since 2016' },
   { term: 'Previously', detail: 'Beeper' },
   { term: 'Bylines', detail: '9to5Google' },
 ]
