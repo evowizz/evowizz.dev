@@ -26,7 +26,7 @@ export default function BlogPage() {
       <Container className="flex flex-col gap-12 md:gap-16">
         <div className="flex flex-col gap-4">
           <PageTitle>Blog</PageTitle>
-          <p className="text-on-surface-variant max-w-[36rem] text-lg md:text-xl">
+          <p className="text-on-surface-variant max-w-xl text-lg md:text-xl">
             Notes on Android, web development, and design.
           </p>
           <p className="text-on-surface-variant flex flex-wrap items-center gap-x-2 gap-y-1 pt-2 font-mono text-xs tracking-[0.08em] uppercase">

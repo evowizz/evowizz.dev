@@ -170,7 +170,7 @@ export default function EnhancedArticle(props: React.HTMLAttributes<HTMLElement>
               style={{ top: `${section.at * 100}%`, transitionDelay: `${index * 50}ms` }}
               // Capped to the gutter (paper right edge = 50vw + 34rem) so
               // labels wrap beside the sheet instead of crossing onto it.
-              className="ruler-label text-on-surface hover:text-primary focus-ring pointer-events-none absolute right-8 flex w-[min(11rem,50vw_-_36.5rem)] -translate-y-1/2 items-center justify-end text-right font-mono text-[0.625rem] leading-[1.4] tracking-[0.08em] uppercase opacity-0 transition-opacity duration-300 group-hover/ruler:pointer-events-auto group-hover/ruler:opacity-100 focus-visible:opacity-100"
+              className="ruler-label text-on-surface hover:text-primary focus-ring pointer-events-none absolute right-8 flex w-[min(11rem,50vw-36.5rem)] -translate-y-1/2 items-center justify-end text-right font-mono text-[0.625rem] leading-[1.4] tracking-[0.08em] uppercase opacity-0 transition-opacity duration-300 group-hover/ruler:pointer-events-auto group-hover/ruler:opacity-100 focus-visible:opacity-100"
             >
               {section.title}
             </a>

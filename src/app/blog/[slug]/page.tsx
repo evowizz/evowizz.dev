@@ -107,7 +107,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
               {post.title}
             </h1>
 
-            <p className="text-on-surface-variant max-w-[44rem] text-lg leading-relaxed md:text-xl">{post.summary}</p>
+            <p className="text-on-surface-variant max-w-176 text-lg leading-relaxed md:text-xl">{post.summary}</p>
           </Reveal>
 
           <p

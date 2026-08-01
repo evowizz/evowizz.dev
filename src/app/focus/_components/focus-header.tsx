@@ -22,7 +22,7 @@ export function FocusHeader({ meta }: FocusHeaderProps) {
           {meta.title}
         </h1>
 
-        <p className="text-on-surface-variant max-w-[44rem] text-lg leading-relaxed text-pretty md:text-xl">
+        <p className="text-on-surface-variant max-w-176 text-lg leading-relaxed text-pretty md:text-xl">
           {meta.overview}
         </p>
 

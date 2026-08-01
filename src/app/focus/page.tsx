@@ -15,7 +15,7 @@ export default function FocusPage() {
       <Container className="flex flex-col gap-12 md:gap-16">
         <div className="flex flex-col gap-4">
           <PageTitle>Focus</PageTitle>
-          <p className="text-on-surface-variant max-w-[38rem] text-lg md:text-xl">
+          <p className="text-on-surface-variant max-w-152 text-lg md:text-xl">
             One project at a time, in depth: the design decisions and the development process behind my work.
           </p>
           <p className="text-on-surface-variant flex flex-wrap items-center gap-x-2 gap-y-1 pt-2 font-mono text-xs tracking-[0.08em] uppercase">
@@ -51,7 +51,7 @@ const FocusRow = ({ item }: { item: FocusEntry }) => (
         {item.title}
       </h2>
 
-      <p className="text-on-surface-variant max-w-[44rem] leading-relaxed md:text-lg">{item.overview}</p>
+      <p className="text-on-surface-variant max-w-176 leading-relaxed md:text-lg">{item.overview}</p>
     </article>
   </Link>
 )

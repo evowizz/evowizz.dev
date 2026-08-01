@@ -17,7 +17,7 @@ export const OverlayLayer = ({ overlay }: { overlay: Overlay }) => {
       <div
         data-devbar
         aria-hidden
-        className="pointer-events-none fixed inset-0 z-[70]"
+        className="pointer-events-none fixed inset-0 z-70"
         style={{
           backgroundImage: `repeating-linear-gradient(to bottom, ${TINT_SOFT} 0 1px, transparent 1px 8px)`,
         }}
@@ -28,7 +28,7 @@ export const OverlayLayer = ({ overlay }: { overlay: Overlay }) => {
   // Mirrors Container: max-w-6xl with px-5 md:px-8. Outer rules are the column
   // bounds, inner rules are where content actually starts.
   return (
-    <div data-devbar aria-hidden className="pointer-events-none fixed inset-0 z-[70]">
+    <div data-devbar aria-hidden className="pointer-events-none fixed inset-0 z-70">
       <div className="mx-auto h-full w-full max-w-6xl border-x px-5 md:px-8" style={{ borderColor: TINT }}>
         <div className="h-full border-x" style={{ borderColor: TINT_SOFT }} />
       </div>

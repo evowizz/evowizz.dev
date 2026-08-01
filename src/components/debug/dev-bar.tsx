@@ -146,7 +146,7 @@ export function DevBar() {
         data-devbar
         inert={!debugOpen}
         className={cn(
-          'border-outline-variant bg-surface-container-lowest fixed right-3 bottom-10 z-[85] max-h-[70vh] w-96 overflow-y-auto rounded-md border shadow-sm',
+          'border-outline-variant bg-surface-container-lowest fixed right-3 bottom-10 z-85 max-h-[70vh] w-96 overflow-y-auto rounded-md border shadow-sm',
           'motion-spatial-fast origin-bottom-right transition-[translate,scale,opacity]',
           debugOpen ? 'translate-y-0 scale-100 opacity-100' : 'pointer-events-none translate-y-3 scale-90 opacity-0',
         )}
@@ -158,7 +158,7 @@ export function DevBar() {
         data-devbar
         inert={!toolsOpen}
         className={cn(
-          'border-outline-variant bg-surface-container-lowest fixed right-3 bottom-10 z-[85] max-h-[70vh] w-64 overflow-y-auto rounded-md border shadow-xl',
+          'border-outline-variant bg-surface-container-lowest fixed right-3 bottom-10 z-85 max-h-[70vh] w-64 overflow-y-auto rounded-md border shadow-xl',
           'motion-spatial-fast origin-bottom-right transition-[translate,scale,opacity]',
           toolsOpen ? 'translate-y-0 scale-100 opacity-100' : 'pointer-events-none translate-y-3 scale-90 opacity-0',
         )}
@@ -178,7 +178,7 @@ export function DevBar() {
 
       <div
         data-devbar
-        className="border-outline-variant bg-surface-container text-on-surface-variant fixed inset-x-0 bottom-0 z-[80] flex h-[var(--devbar-h)] items-center justify-between overflow-hidden border-t px-3 font-mono text-[11px] tracking-[0.04em] whitespace-nowrap select-none sm:px-5"
+        className="border-outline-variant bg-surface-container text-on-surface-variant fixed inset-x-0 bottom-0 z-80 flex h-(--devbar-h) items-center justify-between overflow-hidden border-t px-3 font-mono text-[11px] tracking-[0.04em] whitespace-nowrap select-none sm:px-5"
       >
         {/* The readout is what gives way when the bar runs out of room; the
             controls on the right must never be the thing that gets clipped. */}

@@ -69,7 +69,7 @@ export function SelectionToolbar({ selection, onClear }: SelectionToolbarProps) 
   return (
     <div
       data-devbar
-      className="border-outline-variant bg-surface-container text-on-surface-variant fixed bottom-10 left-3 z-[85] flex items-center gap-1 rounded-lg border p-1 pl-2 font-mono text-[11px] tracking-[0.04em] shadow-[0px_1px_2px_0px_rgba(0,0,0,0.10)] select-none dark:shadow-none"
+      className="border-outline-variant bg-surface-container text-on-surface-variant fixed bottom-10 left-3 z-85 flex items-center gap-1 rounded-lg border p-1 pl-2 font-mono text-[11px] tracking-[0.04em] shadow-[0px_1px_2px_0px_rgba(0,0,0,0.10)] select-none dark:shadow-none"
     >
       <MaterialSymbol
         name={selection.kind === 'element' ? 'point_scan' : 'screenshot_region'}
