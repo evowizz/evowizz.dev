@@ -145,9 +145,7 @@ export const Work = () => (
             ))}
 
             <li className="flex flex-wrap items-center justify-between gap-x-8 gap-y-3 px-5 py-5 md:px-6 md:py-6">
-              <p className="text-on-surface-variant text-base leading-relaxed">
-                Libraries, experiments and the odd one-off that never got a page of its own.
-              </p>
+              <p className="text-on-surface-variant text-base leading-relaxed">Libraries, experiments and more.</p>
               <ActionLink href="https://github.com/evowizz">Everything else lives on GitHub</ActionLink>
             </li>
           </ul>
