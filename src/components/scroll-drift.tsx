@@ -21,7 +21,8 @@ type ScrollDriftProps = {
 /**
  * Drifts a child down the spare height of its cell as that cell scrolls past.
  *
- * The child climbs slower than whatever sits beside it, and its cell bounds the travel.
+ * The child sits at the top of its cell until that cell is wholly on screen, then climbs
+ * slower than whatever sits beside it. Its cell bounds the travel.
  * `ease` is weight on top of that drift, not the source of it, since damping alone settles
  * at a fixed offset under constant scroll speed and just looks parked lower.
  *
@@ -43,7 +44,7 @@ export function ScrollDrift({
 
       return withMotionPreference(() => {
         const mq = window.matchMedia(media)
-        // The cell's crossing range in document coordinates, and the travel inside it.
+        // The scroll range the drift runs over, in document coordinates, and its travel.
         let from = 0
         let span = 1
         let travel = 0
@@ -66,8 +67,9 @@ export function ScrollDrift({
             docTop += node.offsetTop
           }
 
-          from = docTop - window.innerHeight
-          span = cell.offsetHeight + window.innerHeight
+          // Starts once the cell is wholly on screen, so nothing moves while it arrives.
+          from = docTop + cell.offsetHeight - window.innerHeight
+          span = window.innerHeight
           // Start settled, so loading partway down the page does not animate from the top.
           offset = target()
           place()
