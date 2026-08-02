@@ -1,27 +1,11 @@
 import { MDXContent as BaseMDXContent } from '@content-collections/mdx/react'
 import { Children, isValidElement } from 'react'
 import Image, { type ImageProps } from 'next/image'
-import Link from 'next/link'
 import Pre from './pre'
 import { LocalVideo } from './local-video'
 import { NoteCard } from './note-card'
+import { SmartLink } from '@/components/elements'
 import { Tooltip } from '@/components/ui/tooltip'
-
-const CustomLink = ({ href = '', ...props }: React.AnchorHTMLAttributes<HTMLAnchorElement>) => {
-  if (href.startsWith('/')) {
-    return (
-      <Link href={href} {...props}>
-        {props.children}
-      </Link>
-    )
-  }
-
-  if (href.startsWith('#')) {
-    return <a {...props} />
-  }
-
-  return <a href={href} target="_blank" rel="noopener noreferrer" {...props} />
-}
 
 const CustomImage = ({ alt = '', ...props }: Omit<ImageProps, 'width' | 'height'>) => {
   return (
@@ -78,7 +62,7 @@ const components = {
   Image: CustomImage,
   img: CustomMarkdownImage,
   p: CustomParagraph,
-  a: CustomLink,
+  a: SmartLink,
   pre: Pre,
   LocalVideo,
   NoteCard,
