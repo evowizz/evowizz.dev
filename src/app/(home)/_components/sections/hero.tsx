@@ -24,9 +24,9 @@ const Aside = ({ children }: { children: ReactNode }) => (
 
 /** One line of the availability card. `flex-1` shares the tile height between rows. */
 const Fact = ({ icon, children }: { icon: string; children: ReactNode }) => (
-  <li className="flex flex-1 items-center gap-3 py-3">
+  <li className="flex flex-1 items-center gap-4 p-4">
     <MaterialSymbol name={icon} className="text-outline shrink-0 text-lg" />
-    <span className="min-w-0 truncate">{children}</span>
+    <span className="min-w-0">{children}</span>
   </li>
 )
 
@@ -131,9 +131,13 @@ export function Hero() {
             </Link>
           </div>
 
-          <div className="border-outline-variant flex flex-col gap-6 rounded-2xl border p-6 md:p-7 lg:col-span-2 lg:col-start-5 lg:row-start-1">
-            <p className="flex items-center gap-2.5 text-xl leading-snug font-medium md:text-2xl">
-              <span aria-hidden className="bg-primary size-2.5 shrink-0 rounded-full" />
+          {/* Padding lives on the rows, not the card, so the rules reach its edges. */}
+          <div className="border-outline-variant flex flex-col overflow-hidden rounded-2xl border lg:col-span-2 lg:col-start-5 lg:row-start-1">
+            <p className="flex items-center gap-4 p-4 text-xl leading-snug font-medium md:text-2xl">
+              {/* The dot rides the rows' 18px icon column, so labels share one keyline. */}
+              <span aria-hidden className="flex w-4.5 shrink-0 justify-center">
+                <span className="bg-primary size-2.5 rounded-full" />
+              </span>
               Available for hire
             </p>
 
