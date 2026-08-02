@@ -23,7 +23,7 @@ const CustomImage = ({ alt = '', ...props }: Omit<ImageProps, 'width' | 'height'
 // Markdown images (`![alt](src "caption")`) compile to a plain `<img>` with
 // the title text in the `title` attribute. When present, we pair it with a
 // `<figcaption>` so case studies can caption a screenshot from markdown
-// alone; the `prose-bleed` utility styles the resulting figure. Without a
+// alone. The `prose-bleed` utility styles the resulting figure. Without a
 // title the image renders exactly as before.
 const CustomMarkdownImage = ({ alt = '', title, ...props }: React.ComponentProps<'img'>) => {
   const image = <img alt={alt} {...props} />

@@ -8,7 +8,6 @@ import { getColor } from 'colorthief'
 import path from 'path'
 import { argbFromRgb, hexFromArgb, Variant } from '@evowizz/material-color-utilities-canary'
 
-
 const VARIANT_MAP: Record<string, Variant> = {
   monochrome: Variant.MONOCHROME,
   neutral: Variant.NEUTRAL,
@@ -50,13 +49,11 @@ async function transform<T extends TransformInput>(document: T, context: Context
     ],
   })
 
-  // Extract theme color from image if not explicitly set
   let themeColor = document.themeColor
   if (!themeColor && document.image) {
     themeColor = (await extractColorFromImage(document.image)) ?? undefined
   }
 
-  // Convert variant name to Variant enum
   const themeVariant = document.themeVariant ? VARIANT_MAP[document.themeVariant] : undefined
 
   return {
@@ -108,14 +105,13 @@ export default defineConfig({
 })
 
 async function extractColorFromImage(imagePath: string): Promise<string | null> {
-  // Skip external URLs and API routes
   if (imagePath.startsWith('http') || imagePath.startsWith('/api/')) {
     return null
   }
 
   try {
     const fullPath = path.join(process.cwd(), 'public', imagePath)
-    // colorthief v3 quantizes in OKLCH by default; pin to rgb to match prior output
+    // colorthief v3 quantizes in OKLCH by default, so pin to rgb to match prior output
     const color = await getColor(fullPath, { colorSpace: 'rgb' })
     if (!color) return null
     const { r, g, b } = color.rgb()

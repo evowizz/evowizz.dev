@@ -1,5 +1,5 @@
 /**
- * Helper for Next.js pages to easily support page params.
+ * Types a Next.js page's props from the shape of its route params.
  *
  * Usage:
  * ```

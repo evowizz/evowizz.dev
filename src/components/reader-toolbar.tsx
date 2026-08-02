@@ -23,9 +23,10 @@ const cascadeIn = (index: number) => ({
 })
 
 /**
- * Reader preferences live as attributes on <html> so plain CSS in globals.css
- * can respond to them. Reading mode resets when leaving the article; the text
- * scale persists across client-side navigation.
+ * Reader preferences live as attributes on `<html>`, so plain CSS can respond to them.
+ *
+ * Reading mode resets when leaving the article. The text scale persists across client-side
+ * navigation.
  */
 export function ReaderToolbar() {
   const [expanded, setExpanded] = useState(false)

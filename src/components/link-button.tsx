@@ -69,7 +69,6 @@ export function LinkButton({ href, children, variant, direction, className, exte
   )
 }
 
-// Convenience exports for common use cases
 export function BackButton({
   href,
   children,

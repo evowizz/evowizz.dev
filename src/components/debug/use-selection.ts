@@ -25,7 +25,7 @@ export const useSelection = (active: boolean) => {
   const [picking, setPicking] = useState(false)
   const [selected, setSelected] = useState<Selection | null>(null)
   // A marquee release fires a trailing click after the picking listeners are
-  // gone and the click-away listener is up; this ref bridges the two effects
+  // gone and the click-away listener is up. This ref bridges the two effects
   // so that click neither activates the page nor clears the new selection.
   const suppressClick = useRef(false)
 

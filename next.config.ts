@@ -31,7 +31,6 @@ const nextConfig: NextConfig = {
   },
 }
 
-// Helper for redirect definitions
 function redirect(source: string, destination: string, permanent: boolean = true) {
   return { source, destination, permanent }
 }

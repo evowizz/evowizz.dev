@@ -32,9 +32,6 @@ const getScrollBehavior = (): ScrollBehavior => {
   return reducedMotion() ? 'auto' : 'smooth'
 }
 
-/**
- * This is the internal logic for the carousel. It is not intended to be used directly elsewhere.
- */
 const useCarouselLogic = () => {
   const scrollContainerRef = useRef<HTMLDivElement>(null)
   const [canScrollLeft, setCanScrollLeft] = React.useState(false)
@@ -82,7 +79,6 @@ const useCarouselLogic = () => {
     const children = Array.from(container.children)
     children.forEach((child, i) => nodeToIndex.current.set(child, i))
 
-    // Check for overflow (scrollability)
     setIsScrollable(container.scrollWidth > container.clientWidth)
 
     observerRef.current = new IntersectionObserver(

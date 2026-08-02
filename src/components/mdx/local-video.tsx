@@ -21,19 +21,16 @@ export function LocalVideo({
   className,
   ...props
 }: StyleableProps<LocalVideoProps>) {
-  // Find extension from src by splitting at the dot and taking the last element
   const splitSrc = src.split('.')
   const extension = splitSrc.pop() ?? ''
 
-  // Check if the extension is valid
   if (!['mp4', 'webm'].includes(extension)) {
     throw new Error(`Invalid video extension for src: ${src}. Only mp4 and webm are supported.`)
   }
 
-  // Combine remaining elements to get the filename
   const filename = splitSrc.join('.')
 
-  // Check if a thumbnail exists. No thumbnail is shown if it doesn't exist.
+  // The first thumbnail that exists wins, and the video simply has no poster if none do.
   const poster = ['.jpg', '.webp', '.png']
     .map((ext) => `${THUMBNAIL_PATH}${filename}${ext}`)
     .find((file) => publicFileExists(file))

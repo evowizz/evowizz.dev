@@ -34,7 +34,6 @@ import { VSCode } from './logos/skills/vscode'
 import XDADevelopers from './logos/media/xda'
 export { Kotlin } from './logos/skills/kotlin'
 
-// Skill logos
 export const skillLogos = {
   androidstudio: AndroidStudio,
   compose: Compose,

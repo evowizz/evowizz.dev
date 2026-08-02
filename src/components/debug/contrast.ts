@@ -22,10 +22,10 @@ const paint = (color: string, backdrop: string): [number, number, number] => {
 }
 
 /**
- * Computed colors reach us in whatever form the author wrote: rgb(), oklab()
- * from color-mix(), or a token. Painting the same color over black and over
- * white and comparing the results recovers both its alpha and its true channels
- * without parsing any of those syntaxes.
+ * Recovers a color's alpha and true channels by painting it over black and white.
+ *
+ * Computed colors arrive as rgb(), oklab() from color-mix(), or a token, and comparing the two
+ * paints avoids parsing any of those syntaxes.
  */
 const resolve = (color: string): Rgba => {
   if (!color || color === 'transparent') return [0, 0, 0, 0]

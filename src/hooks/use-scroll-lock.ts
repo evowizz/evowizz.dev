@@ -4,10 +4,8 @@ export const useScrollLock = (shouldLock: boolean) => {
   useEffect(() => {
     if (!shouldLock) return
 
-    // Calculate scrollbar width
     const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth
 
-    // Set CSS variable and attribute
     document.body.style.setProperty('--scrollbar-width', `${scrollbarWidth}px`)
     document.body.setAttribute('data-scroll-locked', 'true')
 

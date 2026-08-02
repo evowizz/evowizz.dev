@@ -52,7 +52,7 @@ export const useTools = ({
       try {
         localStorage.setItem(PINNED_KEY, JSON.stringify(next))
       } catch {
-        // Storage is a convenience here; a failure just means it will not persist.
+        // Storage is a convenience here, so a failure just means it will not persist.
       }
       return next
     })

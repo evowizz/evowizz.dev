@@ -8,7 +8,6 @@ export type ProjectLink = {
   label: string
 }
 
-// Link helper functions
 const githubLink = (repo: string): ProjectLink => ({
   url: `https://github.com/${repo}`,
   label: 'See on GitHub',

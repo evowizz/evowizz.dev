@@ -31,8 +31,8 @@ export default function EnhancedArticle(props: React.HTMLAttributes<HTMLElement>
   const markerTop = useTransform(progress, (value) => `${Math.min(Math.max(value, 0), 1) * 100}%`)
   const readout = useTransform(progress, (value) => Math.min(Math.max(value, 0), 1).toFixed(2))
 
-  // Proportional mapping: jumping to a section tick lands the marker exactly
-  // on it, and at that progress the heading is on screen.
+  // Maps progress proportionally, so a jump to a section tick lands the marker
+  // on it, with the heading on screen at that progress.
   useEffect(() => {
     const article = articleRef.current
     if (!article) return

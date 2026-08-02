@@ -53,7 +53,6 @@ export function Video({ className, controls, autoPlay, onPlay, onPause, ...props
         <p>Your browser doesn&apos;t support HTML5 video.</p>
       </video>
 
-      {/* Dimming overlay */}
       <div
         className={cn(
           'pointer-events-none absolute inset-0 rounded-xl bg-black/50 transition-opacity duration-300',
@@ -64,12 +63,10 @@ export function Video({ className, controls, autoPlay, onPlay, onPause, ...props
 
       {controls && (
         <>
-          {/* Dim toggle button - top right */}
           <div className="motion-effects-default absolute top-2 right-2 opacity-20 transition-opacity group-hover:opacity-100 md:top-4 md:right-4">
             <DimButton active={isDimmed} onClick={() => setIsDimmed(!isDimmed)} />
           </div>
 
-          {/* Play/Pause button - bottom right */}
           <div className="absolute right-2 bottom-2 md:right-4 md:bottom-4">
             <PlayPauseButton playing={isVideoPlaying} onClick={handlePlayPause} />
           </div>

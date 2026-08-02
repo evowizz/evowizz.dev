@@ -138,7 +138,7 @@ type ParallaxProps = {
 }
 
 /**
- * A gentle scroll-linked vertical drift. Scrubbed, so it tracks the scrollbar
+ * A scroll-linked vertical drift. Scrubbed, so it tracks the scrollbar
  * directly. Disabled under reduced-motion.
  */
 export function Parallax({ children, className, amount = 36 }: ParallaxProps) {

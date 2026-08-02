@@ -58,7 +58,7 @@ export function DevBar() {
   const sizeRef = useRef<HTMLSpanElement>(null)
   const fpsRef = useRef<HTMLSpanElement>(null)
 
-  // The persisted theme is only known on the client; render the system icon
+  // The persisted theme is only known on the client, so render the system icon
   // until mounted so hydration sees the same markup as the server.
   const themeIndex = isSSR ? -1 : THEMES.findIndex((entry) => entry.value === theme)
   const currentTheme = THEMES[themeIndex === -1 ? 2 : themeIndex]
@@ -103,8 +103,8 @@ export function DevBar() {
     return () => cancelAnimationFrame(raf)
   }, [dismissed, fpsOn])
 
-  // Layout sets this on <html> so the reserve is already in the server markup;
-  // this keeps it in sync once the bar can be dismissed.
+  // Layout sets this on <html> so the reserve is already in the server markup.
+  // This keeps it in sync once the bar can be dismissed.
   useEffect(() => {
     const root = document.documentElement
     if (dismissed) root.removeAttribute('data-devbar-visible')
@@ -127,7 +127,7 @@ export function DevBar() {
   useEffect(() => {
     if (!scanning) return
 
-    // react-scan persists its options; clearing them keeps this toggle
+    // react-scan persists its options, so clearing them keeps this toggle
     // authoritative over whatever its own toolbar saved last.
     localStorage.removeItem('react-scan-options')
     scan({ enabled: true, showToolbar: true })
@@ -180,7 +180,7 @@ export function DevBar() {
         data-devbar
         className="border-outline-variant bg-surface-container text-on-surface-variant fixed inset-x-0 bottom-0 z-80 flex h-(--devbar-h) items-center justify-between overflow-hidden border-t px-3 font-mono text-[11px] tracking-[0.04em] whitespace-nowrap select-none sm:px-5"
       >
-        {/* The readout is what gives way when the bar runs out of room; the
+        {/* The readout is what gives way when the bar runs out of room. The
             controls on the right must never be the thing that gets clipped. */}
         <div className="flex min-w-0 items-center overflow-hidden">
           <span className="text-primary uppercase">Dev</span>
@@ -192,8 +192,8 @@ export function DevBar() {
             <MaterialSymbol name={currentTheme.icon} className="text-sm" />
           </BarButton>
           <Divider />
-          {/* The breakpoint stays at every width; the exact size is the part that
-              gets dropped when there is no room for it. */}
+          {/* The breakpoint stays at every width. The exact size is what gets
+              dropped when there is no room for it. */}
           <span className="flex items-center gap-1.5">
             <span ref={breakpointRef} />
             <span ref={sizeRef} className="hidden sm:inline" />

@@ -62,7 +62,7 @@ const DrawerBand = ({ label, path, index, open, active, onClose }: DrawerBandPro
 type DrawerProps = {
   open: boolean
   onClose: () => void
-  /** The header wrapping the drawer; the focus trap cycles through it. */
+  /** The header wrapping the drawer. The focus trap cycles through it. */
   scopeRef: React.RefObject<HTMLElement | null>
 }
 
