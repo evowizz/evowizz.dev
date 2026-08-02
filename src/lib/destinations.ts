@@ -3,5 +3,3 @@ export const destinations = [
   { label: 'Blog', path: '/blog' },
   { label: 'Focus', path: '/focus' },
 ]
-
-export type Destination = (typeof destinations)[number]

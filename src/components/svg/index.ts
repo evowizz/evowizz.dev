@@ -32,7 +32,6 @@ import { TypeScript } from './logos/skills/typescript'
 import { VLang } from './logos/skills/vlang'
 import { VSCode } from './logos/skills/vscode'
 import XDADevelopers from './logos/media/xda'
-export { Kotlin } from './logos/skills/kotlin'
 
 export const skillLogos = {
   androidstudio: AndroidStudio,
@@ -75,12 +74,5 @@ export const mediaLogos = {
   xda: XDADevelopers,
 } as const
 
-// All logos
-export const allLogos = {
-  ...skillLogos,
-  ...mediaLogos,
-} as const
-
 export type SkillLogos = keyof typeof skillLogos
 export type MediaLogos = keyof typeof mediaLogos
-export type Logos = SkillLogos | MediaLogos

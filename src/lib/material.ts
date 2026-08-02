@@ -7,22 +7,10 @@ import {
   blueFromArgb,
   Hct,
   DynamicScheme,
-  TonalPalette,
   Variant,
 } from '@evowizz/material-color-utilities-canary'
 
-export {
-  TonalPalette,
-  Hct,
-  Variant,
-  argbFromHex,
-  argbFromRgb,
-  hexFromArgb,
-  redFromArgb,
-  greenFromArgb,
-  blueFromArgb,
-  DynamicScheme,
-}
+export { Hct, Variant, argbFromHex, argbFromRgb, hexFromArgb, redFromArgb, greenFromArgb, blueFromArgb }
 
 export type SpecVersion = '2021' | '2025'
 
@@ -131,25 +119,4 @@ function setSchemeProperties(target: HTMLElement, scheme: DynamicScheme, suffix:
     const token = key.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase()
     target.style.setProperty(`--md-sys-color-${token}${suffix}`, hexFromArgb(value))
   }
-}
-
-// Legacy API - kept for backwards compatibility
-export type SchemeOptions = ConstructorParameters<typeof DynamicScheme>[0]
-
-export function createScheme(options: SchemeOptions): DynamicScheme {
-  return new DynamicScheme(options)
-}
-
-export function createSchemeFromHex(
-  sourceColorHex: string,
-  isDark: boolean,
-  variant: Variant = Variant.TONAL_SPOT,
-  contrastLevel: number = 0,
-): DynamicScheme {
-  return new DynamicScheme({
-    sourceColorHct: Hct.fromInt(argbFromHex(sourceColorHex)),
-    variant,
-    contrastLevel,
-    isDark,
-  })
 }
