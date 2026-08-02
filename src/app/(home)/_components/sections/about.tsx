@@ -1,3 +1,4 @@
+import { type ReactNode } from 'react'
 import Link from 'next/link'
 import { Container, Label } from '@/components/elements'
 import { SectionTitle } from '@/components/section-title'
@@ -12,7 +13,16 @@ const FACTS = [
   { term: 'Bylines', detail: '9to5Google' },
 ]
 
-const textLink = 'text-primary underline-offset-4 hover:underline focus-ring'
+/** An inline link in the bio. A relative `href` routes, anything else leaves the site. */
+const TextLink = ({ href, children }: { href: string; children: ReactNode }) => {
+  const props = { className: 'text-primary focus-ring underline-offset-4 hover:underline', children }
+
+  return href.startsWith('/') ? (
+    <Link href={href} {...props} />
+  ) : (
+    <a href={href} target="_blank" rel="noopener noreferrer" {...props} />
+  )
+}
 
 export const About = () => (
   <section
@@ -39,25 +49,11 @@ export const About = () => (
           </p>
           <p className="text-on-surface-variant">
             Since 2016, I&apos;ve been spotting Android features before they&apos;re announced:{' '}
-            <a
-              href="https://9to5google.com/2019/06/29/google-android-fast-share/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={textLink}
-            >
-              Fast Share
-            </a>
-            , which you now know as Quick Share, and the rename of{' '}
-            <a
-              href="https://9to5google.com/2024/02/01/google-bard-rename-gemini/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={textLink}
-            >
-              Bard to Gemini
-            </a>
-            , days before it was official. That&apos;s how I ended up contributing to 9to5Google, where I also wrote a
-            few pieces of my own.
+            <TextLink href="https://9to5google.com/2019/06/29/google-android-fast-share/">Fast Share</TextLink>, which
+            you now know as Quick Share, and the rename of{' '}
+            <TextLink href="https://9to5google.com/2024/02/01/google-bard-rename-gemini/">Bard to Gemini</TextLink>,
+            days before it was official. That&apos;s how I ended up contributing to 9to5Google, where I also wrote a few
+            pieces of my own.
           </p>
           <p className="text-on-surface-variant">
             In 2024 I joined Beeper, where I was both a designer and a developer on their Android app. Among other
@@ -65,19 +61,12 @@ export const About = () => (
           </p>
           <p className="text-on-surface-variant">
             I sometimes dig into other people&apos;s software too. Back in 2022, I reported a flaw in{' '}
-            <Link href="/blog/huawei-appgallery-vulnerability" className={textLink}>
-              Huawei&apos;s AppGallery
-            </Link>{' '}
-            that let anyone download paid apps for free. A year later I looked into Nothing Chats, which was built on a
-            service called Sunbird, and what I found{' '}
-            <a
-              href="https://techcrunch.com/2023/11/22/sunbird-pauses-its-efforts-to-bring-imessage-to-android-amid-security-worries/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={textLink}
-            >
+            <TextLink href="/blog/huawei-appgallery-vulnerability">Huawei&apos;s AppGallery</TextLink> that let anyone
+            download paid apps for free. A year later I looked into Nothing Chats, which was built on a service called
+            Sunbird, and what I found{' '}
+            <TextLink href="https://techcrunch.com/2023/11/22/sunbird-pauses-its-efforts-to-bring-imessage-to-android-amid-security-worries/">
               got the app shut down
-            </a>
+            </TextLink>
             .
           </p>
         </article>
