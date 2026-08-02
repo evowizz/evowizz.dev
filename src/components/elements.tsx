@@ -1,4 +1,5 @@
-import { type CSSProperties, type Ref, type ReactNode } from 'react'
+import { type ComponentProps, type CSSProperties, type Ref, type ReactNode } from 'react'
+import Link from 'next/link'
 import { cn } from '@/lib/utils'
 import { MaterialSymbol } from '@/components/material-symbol'
 
@@ -8,6 +9,22 @@ export const Container = ({ className, children }: { className?: string; childre
 
 export const Label = ({ children }: { children: ReactNode }) => (
   <span className="text-on-surface-variant text-sm font-medium">{children}</span>
+)
+
+/**
+ * Routes an anchor by its `href`.
+ *
+ * A relative href routes, a hash stays on the page, anything else opens off-site in a new tab.
+ */
+export const SmartLink = ({ href = '', ...props }: ComponentProps<'a'>) => {
+  if (href.startsWith('/')) return <Link href={href} {...props} />
+  if (href.startsWith('#')) return <a href={href} {...props} />
+  return <a href={href} target="_blank" rel="noopener noreferrer" {...props} />
+}
+
+/** An inline link in body copy. `SmartLink` handles the routing. */
+export const TextLink = ({ className, ...props }: ComponentProps<'a'>) => (
+  <SmartLink {...props} className={cn('text-primary focus-ring underline-offset-4 hover:underline', className)} />
 )
 
 /** The page-level h1, holding the display scale in one place. */

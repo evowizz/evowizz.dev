@@ -1,4 +1,4 @@
-import { Container } from '@/components/elements'
+import { Container, TextLink } from '@/components/elements'
 import { SectionTitle } from '@/components/section-title'
 import { Reveal } from '@/components/reveal'
 import { PressRibbon } from '../press-ribbon'
@@ -27,14 +27,9 @@ export const Press = () => (
     <Container className="mt-10 md:mt-12">
       <p className="text-on-surface-variant variation-sans -variation-slant-10 text-right text-xs">
         Section inspired by{' '}
-        <a
-          href="https://thatjoshguy.me"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-primary focus-ring underline-offset-2 hover:underline"
-        >
+        <TextLink href="https://thatjoshguy.me" className="underline-offset-2">
           ThatJoshGuy
-        </a>
+        </TextLink>
       </p>
     </Container>
   </section>

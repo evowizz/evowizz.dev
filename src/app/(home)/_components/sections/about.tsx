@@ -1,6 +1,4 @@
-import { type ReactNode } from 'react'
-import Link from 'next/link'
-import { Container, Label } from '@/components/elements'
+import { Container, Label, TextLink } from '@/components/elements'
 import { SectionTitle } from '@/components/section-title'
 import { CountUp, Reveal } from '@/components/reveal'
 import { ScrollDrift } from '@/components/scroll-drift'
@@ -12,17 +10,6 @@ const FACTS = [
   { term: 'Previously', detail: 'Beeper' },
   { term: 'Bylines', detail: '9to5Google' },
 ]
-
-/** An inline link in the bio. A relative `href` routes, anything else leaves the site. */
-const TextLink = ({ href, children }: { href: string; children: ReactNode }) => {
-  const props = { className: 'text-primary focus-ring underline-offset-4 hover:underline', children }
-
-  return href.startsWith('/') ? (
-    <Link href={href} {...props} />
-  ) : (
-    <a href={href} target="_blank" rel="noopener noreferrer" {...props} />
-  )
-}
 
 export const About = () => (
   <section
