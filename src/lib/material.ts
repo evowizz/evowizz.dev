@@ -66,15 +66,7 @@ export function createTheme(sourceColorHex: string, options: ThemeOptions = {}):
   }
 }
 
-export type ApplyThemeOptions = {
-  target?: HTMLElement
-  brightnessSuffix?: boolean
-}
-
-/**
- * Apply a theme to the document.
- * With `brightnessSuffix: true`, applies both light and dark schemes with `-light` and `-dark` suffixes.
- */
+/** Writes both schemes onto the target as `-light` and `-dark` suffixed properties. */
 export function applyTheme(theme: Theme, target: HTMLElement = document.documentElement): void {
   setSchemeProperties(target, theme.schemes.light, '-light')
   setSchemeProperties(target, theme.schemes.dark, '-dark')

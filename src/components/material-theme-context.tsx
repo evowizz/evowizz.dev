@@ -32,7 +32,7 @@ export function MaterialThemeProvider({
   const isSSR = useIsSSR()
   const isFirstMount = useRef(true)
 
-  // HCT is derived from seedColor for display purposes
+  // Falls back to the default seed, since the picker can hold a half-typed hex.
   const hct = useMemo(() => {
     try {
       return Hct.fromInt(argbFromHex(seedColor))
@@ -41,20 +41,13 @@ export function MaterialThemeProvider({
     }
   }, [seedColor, defaultSeedColor])
 
-  const setSeedColor = useCallback((color: string) => {
-    try {
-      setSeedColorState(color)
-    } catch {
-      // Keep current color if conversion fails
-    }
-  }, [])
+  const setSeedColor = useCallback((color: string) => setSeedColorState(color), [])
 
   const reset = useCallback(() => {
     setSeedColorState(defaultSeedColor)
     setVariant(DEFAULT_VARIANT)
   }, [defaultSeedColor])
 
-  // Apply Material theme on updates (skip initial mount since CSS has default values)
   useEffect(() => {
     if (isSSR) return
 
@@ -71,7 +64,7 @@ export function MaterialThemeProvider({
       const theme = createTheme(seedColor, { variant })
       applyTheme(theme)
     } catch {
-      // Theme application failed
+      // A bad seed leaves the previous theme applied, which beats an unstyled page.
     }
   }, [seedColor, variant, isSSR, defaultSeedColor])
 
