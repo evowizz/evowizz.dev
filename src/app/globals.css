@@ -142,7 +142,7 @@
   --font-sans: var(--font-google-sans-flex), system-ui, sans-serif;
   --font-sans--font-feature-settings: 'calt';
 
-  --font-serif: Georgia, serif;
+  --font-serif: var(--font-roboto-slab), Georgia, serif;
 
   --font-mono: var(--font-google-sans-code), ui-monospace, monospace;
   --font-mono--font-feature-settings: 'ss01';
@@ -382,6 +382,7 @@
 }
 
 @utility variation-serif {
+  font-optical-sizing: auto;
   font-variation-settings: 'wdth' var(--font-wdth, 100);
 }
 

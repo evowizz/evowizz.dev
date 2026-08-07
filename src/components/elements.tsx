@@ -1,4 +1,4 @@
-import { type ComponentProps, type CSSProperties, type Ref, type ReactNode } from 'react'
+import { type ComponentProps, type Ref, type ReactNode } from 'react'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
 import { MaterialSymbol } from '@/components/material-symbol'
@@ -31,20 +31,16 @@ export const TextLink = ({ className, ...props }: ComponentProps<'a'>) => (
 export const PageTitle = ({
   ref,
   className,
-  style,
   children,
 }: {
   ref?: Ref<HTMLHeadingElement>
   className?: string
-  /** The hero passes live font-variation values through here. */
-  style?: CSSProperties
   children: ReactNode
 }) => (
   <h1
     ref={ref}
-    style={style}
     className={cn(
-      'variation-sans text-on-surface text-[clamp(3.25rem,11vw,8.5rem)] leading-none font-semibold tracking-[-0.03em]',
+      'variation-sans text-on-surface text-[clamp(3.25rem,var(--page-title-fluid,11vw),var(--page-title-max,8.5rem))] leading-none font-semibold tracking-[-0.03em]',
       className,
     )}
   >

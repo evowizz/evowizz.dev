@@ -14,7 +14,7 @@ const FACTS = [
 export const About = () => (
   <section
     id="about"
-    className="bg-surface text-on-surface border-outline-variant scroll-mt-20 border-y py-20 md:py-28"
+    className="bg-surface-container-low text-on-surface border-b-outline-variant scroll-mt-20 rounded-t-4xl border-b py-20 md:py-28"
   >
     <Container className="flex flex-col gap-10 md:gap-12">
       <SectionTitle>About</SectionTitle>

@@ -1,81 +1,137 @@
 'use client'
 
-import { useRef, useState, type ReactNode } from 'react'
+import { type ReactNode, useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
-import { reducedMotion, withMotionPreference } from '@/lib/motion-preference'
-import { Container, PageTitle } from '@/components/elements'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { withMotionPreference } from '@/lib/motion-preference'
+import { Container, TextLink } from '@/components/elements'
 import { MaterialSymbol } from '@/components/material-symbol'
 import { Reveal } from '@/components/reveal'
 import { useParisClock } from '@/hooks/use-paris-clock'
-import { AXES, REST, axesToStyle, type Axes } from '../type-axes'
-import { TypeSpecimen } from '../type-specimen'
 
-gsap.registerPlugin(useGSAP)
+gsap.registerPlugin(useGSAP, ScrollTrigger)
 
-/** The width the name breathes out from. */
-const BREATH_FROM = 74
+function HeroName() {
+  return (
+    <h1
+      aria-label="Dylan Roussel"
+      className="group/name variation-serif flex max-w-5xl flex-wrap items-baseline justify-center gap-x-[0.22em] font-[family-name:var(--font-roboto-slab)] text-[clamp(3.75rem,11vw,8.5rem)] leading-[0.88] tracking-[-0.035em] text-balance"
+    >
+      <span className="inline-block">
+        <span className="group-hover/name:text-primary inline-block transition-colors duration-500 ease-out motion-reduce:transition-none">
+          Dy
+        </span>
+        <NameAside>lan</NameAside>
+      </span>
+      <span className="inline-block">
+        <NameAside>Roussel</NameAside>
+      </span>
+    </h1>
+  )
+}
 
-/** Recedes on hover, so only the two letters he goes by stay lit. */
-const Aside = ({ children }: { children: ReactNode }) => (
-  <span className="motion-effects-slow group-hover:text-outline-variant transition-colors">{children}</span>
-)
+function NameAside({ children }: { children: ReactNode }) {
+  return (
+    <span className="group-hover/name:text-outline-variant transition-colors duration-500 ease-out motion-reduce:transition-none">
+      {children}
+    </span>
+  )
+}
 
-/** One line of the availability card. `flex-1` shares the tile height between rows. */
-const Fact = ({ icon, children }: { icon: string; children: ReactNode }) => (
-  <li className="flex flex-1 items-center gap-4 p-4">
-    <MaterialSymbol name={icon} className="text-outline shrink-0 text-lg" />
-    <span className="min-w-0">{children}</span>
-  </li>
-)
+function HeroAction() {
+  return (
+    <Link
+      href="#work"
+      className="group/action bg-primary text-on-primary focus-ring motion-effects-default inline-flex min-h-11 w-fit items-center gap-2 rounded-full px-5 py-3 text-sm font-semibold transition-[color,background-color,opacity,transform] hover:opacity-85 active:scale-[0.96]"
+    >
+      See the work
+      <MaterialSymbol
+        name="arrow_downward"
+        className="motion-spatial-fast text-lg transition-transform group-hover/action:translate-y-0.5"
+      />
+    </Link>
+  )
+}
+
+function SignatureTime({ clock }: { clock: ReturnType<typeof useParisClock> }) {
+  const [localTime, setLocalTime] = useState<string | null>(null)
+
+  useEffect(() => {
+    const readLocalTime = () =>
+      setLocalTime(
+        new Intl.DateTimeFormat('en-GB', {
+          hour: '2-digit',
+          minute: '2-digit',
+          hourCycle: 'h23',
+        }).format(new Date()),
+      )
+
+    readLocalTime()
+    const id = setInterval(readLocalTime, 30000)
+    return () => clearInterval(id)
+  }, [])
+
+  const parisTime = clock?.time ?? '\u00a0'
+  const parisZone = clock?.zone ?? ''
+  const shortZone = parisZone.replace(/\s+\(.*\)$/, '')
+  const zoneOffset = parisZone.slice(shortZone.length)
+  const visitorTime = localTime ?? parisTime
+  const canRevealLocalTime = Boolean(
+    clock && localTime && (process.env.NODE_ENV !== 'production' || localTime !== clock.time),
+  )
+
+  const parisLabel = (
+    <>
+      {parisTime} {shortZone}
+      {zoneOffset && <span className="hidden sm:inline">{zoneOffset}</span>}
+    </>
+  )
+
+  if (!canRevealLocalTime) {
+    return (
+      <span className="text-on-surface flex min-h-11 items-center gap-2 px-3 leading-none font-medium whitespace-nowrap tabular-nums">
+        <MaterialSymbol className="text-primary text-lg leading-none" name="schedule" />
+        <span>{parisLabel}</span>
+      </span>
+    )
+  }
+
+  return (
+    <button
+      type="button"
+      aria-label={`Paris time ${parisTime} ${parisZone}. Your local time ${visitorTime}.`}
+      className="group/time text-on-surface focus-ring flex min-h-11 cursor-default items-center gap-2 rounded-full px-3 leading-none font-medium whitespace-nowrap tabular-nums"
+    >
+      <MaterialSymbol
+        className="text-on-surface-variant group-hover/time:text-primary group-focus-visible/time:text-primary motion-effects-fast text-lg leading-none transition-colors"
+        name="schedule"
+      />
+      <span aria-hidden className="relative grid overflow-hidden py-1">
+        <span className="motion-effects-default col-start-1 row-start-1 transition-[translate,opacity] group-hover/time:-translate-y-1.5 group-hover/time:opacity-0 group-focus-visible/time:-translate-y-1.5 group-focus-visible/time:opacity-0 motion-reduce:translate-y-0 motion-reduce:transition-none">
+          {parisLabel}
+        </span>
+        <span className="text-primary motion-effects-default col-start-1 row-start-1 translate-y-1.5 text-left opacity-0 transition-[translate,opacity] group-hover/time:translate-y-0 group-hover/time:opacity-100 group-focus-visible/time:translate-y-0 group-focus-visible/time:opacity-100 motion-reduce:translate-y-0 motion-reduce:transition-none">
+          {visitorTime} Your time
+        </span>
+      </span>
+    </button>
+  )
+}
 
 export function Hero() {
-  const statementRef = useRef<HTMLHeadingElement>(null)
-  const [axes, setAxes] = useState<Axes>(REST)
-  const [resetting, setResetting] = useState(false)
-  const resetTween = useRef<gsap.core.Tween | null>(null)
   const clock = useParisClock()
+  const heroRef = useRef<HTMLElement>(null)
+  const contentRef = useRef<HTMLDivElement>(null)
 
-  // Reaching for a ruler cancels a reset in flight.
-  const change = (next: Axes) => {
-    resetTween.current?.kill()
-    setResetting(false)
-    setAxes(next)
-  }
-
-  // Walks the rulers home in sequence, or jumps there when motion is reduced.
-  const reset = () => {
-    resetTween.current?.kill()
-
-    if (reducedMotion()) {
-      setAxes(REST)
-      return
-    }
-
-    const walk = AXES.map((axis) => ({ id: axis.id, value: axes[axis.id] }))
-    setResetting(true)
-    resetTween.current = gsap.to(walk, {
-      value: (_index: number, target: (typeof walk)[number]) => REST[target.id],
-      duration: 1.1,
-      ease: 'power3.out',
-      stagger: 0.25,
-      onUpdate: () => setAxes(Object.fromEntries(walk.map((a) => [a.id, a.value])) as Axes),
-      onComplete: () => setResetting(false),
-    })
-  }
-
-  // React owns the axes so the specimen ruler sweeps too, GSAP owns only the filter.
   useGSAP(
     () => {
-      const el = statementRef.current
+      const el = heroRef.current
       if (!el) return
 
       return withMotionPreference(
         () => {
-          const breath = { wdth: BREATH_FROM }
-          setAxes((current) => ({ ...current, wdth: BREATH_FROM }))
-
           gsap.set(el, { filter: 'blur(20px)' })
           gsap.to(el, {
             filter: 'blur(0px)',
@@ -84,81 +140,76 @@ export function Hero() {
             ease: 'power3.out',
             onComplete: () => gsap.set(el, { clearProps: 'filter' }),
           })
-          gsap.to(breath, {
-            wdth: REST.wdth,
-            duration: 1.4,
-            delay: 0.15,
-            ease: 'power3.out',
-            onUpdate: () => setAxes((current) => ({ ...current, wdth: breath.wdth })),
-          })
         },
         () => gsap.set(el, { clearProps: 'filter' }),
       )
     },
-    { scope: statementRef },
+    { scope: heroRef },
+  )
+
+  useGSAP(
+    () => {
+      const content = contentRef.current
+      const about = document.querySelector<HTMLElement>('#about')
+      if (!content || !about) return
+
+      return withMotionPreference(
+        () => {
+          gsap.to(content, {
+            opacity: 0,
+            filter: 'blur(20px)',
+            ease: 'none',
+            scrollTrigger: {
+              trigger: about,
+              start: 'top 92%',
+              end: 'top 55%',
+              scrub: true,
+              invalidateOnRefresh: true,
+            },
+          })
+        },
+        () => gsap.set(content, { clearProps: 'filter,opacity' }),
+      )
+    },
+    { scope: contentRef },
   )
 
   return (
-    <section className="bg-surface text-on-surface flex min-h-[calc(100svh-4rem)] flex-col justify-center">
-      <Container className="py-16 md:py-20">
-        {/* At lg: name in cols 1-4 across both rows, availability then specimen in 5-6. */}
-        <Reveal immediate stagger y={30} className="grid gap-4 md:grid-cols-2 md:gap-5 lg:grid-cols-6">
-          {/* Centred, not spaced: the column stretches to the cards beside it. */}
-          <div className="flex flex-col justify-center gap-8 md:col-span-2 md:gap-10 lg:col-span-4 lg:col-start-1 lg:row-span-2 lg:row-start-1">
-            <div className="flex flex-col gap-4 md:gap-5">
-              {/* Keeps the name copyable as two words, though the blocks hide the space. */}
-              <PageTitle ref={statementRef} className="group" style={axesToStyle(axes)}>
-                <span className="block">
-                  Dy<Aside>lan</Aside>
-                </span>{' '}
-                <span className="block">
-                  <Aside>Roussel</Aside>
-                </span>
-              </PageTitle>
-
-              <p className="text-on-surface-variant text-lg font-medium md:text-xl">Android developer and designer.</p>
+    <section ref={heroRef} className="bg-surface text-on-surface flex min-h-[calc(100svh-4rem)] items-center">
+      <div ref={contentRef} data-hero-content className="w-full">
+        <Container className="py-10 pb-32 md:py-20 md:pb-32">
+          <Reveal
+            immediate
+            stagger
+            staggerEach={0.14}
+            y={28}
+            className="flex flex-col items-center gap-5 text-center md:gap-9"
+          >
+            <div className="bg-surface-container-low text-on-surface inline-flex items-center rounded-full text-xs sm:text-sm">
+              <span className="flex min-h-11 items-center gap-2 px-3 leading-none font-medium whitespace-nowrap">
+                <MaterialSymbol className="text-primary text-lg leading-none" name="location_on" />
+                Nantes, France
+              </span>
+              <span aria-hidden className="bg-outline-variant h-5 w-px" />
+              <SignatureTime clock={clock} />
             </div>
 
-            <Link
-              href="#work"
-              className="bg-primary text-on-primary group focus-ring motion-effects-default inline-flex w-fit items-center gap-2 rounded-full py-3 pr-5 pl-6 text-base font-semibold transition-opacity hover:opacity-90"
-            >
-              See the work
-              <MaterialSymbol
-                name="arrow_downward"
-                className="motion-spatial-fast text-xl transition-transform group-hover:translate-y-0.5"
-              />
-            </Link>
-          </div>
+            <HeroName />
 
-          {/* Padding lives on the rows, not the card, so the rules reach its edges. */}
-          <div className="border-outline-variant flex flex-col overflow-hidden rounded-2xl border lg:col-span-2 lg:col-start-5 lg:row-start-1">
-            <p className="flex items-center gap-4 p-4 text-xl leading-snug font-medium md:text-2xl">
-              {/* The dot rides the rows' 18px icon column, so labels share one keyline. */}
-              <span aria-hidden className="flex w-4.5 shrink-0 justify-center">
-                <span className="bg-primary size-2.5 rounded-full" />
-              </span>
-              Available for hire
-            </p>
+            <div className="border-outline-variant flex max-w-3xl flex-col items-center gap-5 border-t px-2 pt-6 md:gap-6 md:px-10 md:pt-7">
+              <p className="text-xl leading-tight font-medium md:text-2xl">
+                Developer and designer for Android and the web.
+              </p>
+              <p className="text-on-surface-variant max-w-2xl text-base leading-relaxed text-pretty md:text-lg">
+                Building for Android since 2016. Previously at{' '}
+                <TextLink href="https://www.beeper.com/">Beeper</TextLink>.
+              </p>
 
-            <ul className="divide-outline-variant border-outline-variant text-on-surface-variant flex flex-1 flex-col divide-y border-t text-base font-medium">
-              <Fact icon="location_on">Nantes, France</Fact>
-              <Fact icon="schedule">
-                <span className="block min-h-[1.5em]">{clock ? `${clock.time} ${clock.zone}` : ''}</span>
-              </Fact>
-              <Fact icon="public">Happy to work remote</Fact>
-            </ul>
-          </div>
-
-          <TypeSpecimen
-            axes={axes}
-            onChange={change}
-            onReset={reset}
-            resetting={resetting}
-            className="hidden md:col-span-2 md:flex lg:col-span-2 lg:col-start-5 lg:row-start-2"
-          />
-        </Reveal>
-      </Container>
+              <HeroAction />
+            </div>
+          </Reveal>
+        </Container>
+      </div>
     </section>
   )
 }

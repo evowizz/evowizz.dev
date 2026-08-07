@@ -1,7 +1,7 @@
 import './globals.css'
 
 import type { Metadata } from 'next'
-import { Google_Sans_Code, Google_Sans_Flex } from 'next/font/google'
+import { Google_Sans_Code, Google_Sans_Flex, Roboto_Slab } from 'next/font/google'
 import { Footer } from '@/components/footer'
 import { Header } from '@/components/header'
 import { MaterialThemeProvider } from '@/components/material-theme-context'
@@ -30,6 +30,12 @@ const googleSansCode = Google_Sans_Code({
   variable: '--font-google-sans-code',
 })
 
+const robotoSlab = Roboto_Slab({
+  subsets: ['latin'],
+  variable: '--font-roboto-slab',
+  weight: 'variable',
+})
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -40,7 +46,7 @@ export default function RootLayout({
       suppressHydrationWarning
       lang="en"
       data-devbar-visible={process.env.NODE_ENV === 'development' ? '' : undefined}
-      className={`${googleSansFlex.variable} ${googleSansCode.variable}`}
+      className={`${googleSansFlex.variable} ${googleSansCode.variable} ${robotoSlab.variable}`}
     >
       <body className="text-on-surface motion-effects-default bg-surface transition-colors">
         <ThemeProvider>
