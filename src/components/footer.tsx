@@ -10,10 +10,7 @@ const FooterLabel = ({ children }: { children: ReactNode }) => (
 
 export function Footer() {
   return (
-    <footer className="reading-hide bg-inverse-surface text-inverse-on-surface motion-effects-default transition-colors">
-      {/* Page surface over the slab. Its bottom corners form the inverted corner. */}
-      <div aria-hidden className="bg-surface motion-effects-default h-10 rounded-b-[2.5rem] transition-colors" />
-
+    <footer className="footer-outward-corners reading-hide bg-inverse-surface text-inverse-on-surface">
       <Container className="flex flex-col gap-10 pt-10 pb-14 md:flex-row md:items-start md:justify-between md:gap-6 md:pt-12 md:pb-16">
         <div className="flex flex-col gap-2">
           <FooterLabel>Contact</FooterLabel>
