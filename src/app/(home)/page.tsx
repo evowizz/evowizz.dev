@@ -1,4 +1,4 @@
-import { Hero, About, Work, Press, Skills, Contact } from './_components/sections'
+import { About, Contact, Hero, Press, Skills, Work } from './_components/sections'
 
 export default function Home() {
   return (
