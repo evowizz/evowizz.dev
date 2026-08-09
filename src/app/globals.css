@@ -799,9 +799,7 @@
     outline-offset: 2px;
   }
 
-  /* Reader preferences: the article toolbar sets these attributes on <html>.
-     Reading mode strips site chrome and the paper sheet; the scale bumps the
-     prose root size, which cascades through the em-based typography styles. */
+  /* Reader preferences live on `<html>`. Reading mode hides chrome and clears paper styling. */
   .reading-hide {
     @apply motion-effects-slow transition-[opacity,margin,visibility];
   }
@@ -818,19 +816,8 @@
     border-color: transparent;
     box-shadow: none;
   }
-  :root[data-reading-scale='lg'] .prose {
-    font-size: 1.125rem;
-  }
-  :root[data-reading-scale='xl'] .prose {
-    font-size: 1.25rem;
-  }
-
-  /* Section-map overlay: without a gutter for the ruler, the toolbar summons
-     it over a progressive scrim; only the ruler sits above the scrim. Never
-     animate opacity on the scrim parent: opacity < 1 isolates it as a group
-     whose backdrop-filter children cannot sample the page, so the blur would
-     only appear once the fade ends. The blur radius is transitioned per
-     layer instead, and only the tint layer fades. */
+  /* The ruler overlay stacks blur layers toward the edge.
+     Keep opacity on the tint. Parent opacity blocks backdrop sampling until the fade ends. */
   .ruler-scrim {
     visibility: hidden;
     pointer-events: none;
@@ -875,47 +862,6 @@
     pointer-events: auto;
   }
 
-  /* Reader text-size slider: a compact stepped slider with an M3 Expressive
-     bar handle. */
-  .reader-slider {
-    appearance: none;
-    height: 16px;
-    background: transparent;
-  }
-  .reader-slider::-webkit-slider-runnable-track {
-    height: 4px;
-    border-radius: 2px;
-    background-color: var(--color-surface-container-highest);
-  }
-  .reader-slider::-webkit-slider-thumb {
-    appearance: none;
-    margin-top: -4px;
-    height: 12px;
-    width: 4px;
-    border-radius: 2px;
-    background-color: var(--color-primary);
-    @apply motion-effects-fast transition-[width];
-  }
-  .reader-slider:active::-webkit-slider-thumb {
-    width: 2px;
-  }
-  .reader-slider::-moz-range-track {
-    height: 4px;
-    border-radius: 2px;
-    background-color: var(--color-surface-container-highest);
-  }
-  .reader-slider::-moz-range-thumb {
-    border: none;
-    height: 12px;
-    width: 4px;
-    border-radius: 2px;
-    background-color: var(--color-primary);
-    @apply motion-effects-fast transition-[width];
-  }
-  .reader-slider:active::-moz-range-thumb {
-    width: 2px;
-  }
-
   .channel-slider {
     appearance: none;
     height: 12px;
@@ -947,9 +893,6 @@
   }
 
   .prose {
-    /* Em-based type tracks the root size, so this animates the reader scale. */
-    @apply motion-effects-slow transition-[font-size];
-
     /* Links */
     a {
       @apply text-primary no-underline;
