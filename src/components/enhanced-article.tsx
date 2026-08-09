@@ -6,6 +6,8 @@ import { reducedMotion } from '@/lib/motion-preference'
 
 const TICK_COUNT = 121
 const TICKS = Array.from({ length: TICK_COUNT }, (_, index) => index)
+// Leaves 3rem below endpoint labels, including their 8px hit area.
+const RULER_BOTTOM_GAP = 48
 
 type Section = {
   id: string
@@ -19,9 +21,9 @@ export default function EnhancedArticle(props: React.HTMLAttributes<HTMLElement>
   const trackRef = useRef<HTMLDivElement>(null)
   const [sections, setSections] = useState<Section[]>([])
 
-  // Progress shares its math with the section ticks and jumps so the marker
-  // lines up with them (framer's useScroll caches offsets and drifts).
+  // Shares progress math with ticks and jumps, avoiding Framer's cached offset drift.
   const rawProgress = useMotionValue(0)
+  const rulerBottom = useMotionValue(RULER_BOTTOM_GAP)
   const progress = useSpring(rawProgress, {
     stiffness: 150,
     damping: 30,
@@ -31,8 +33,7 @@ export default function EnhancedArticle(props: React.HTMLAttributes<HTMLElement>
   const markerTop = useTransform(progress, (value) => `${Math.min(Math.max(value, 0), 1) * 100}%`)
   const readout = useTransform(progress, (value) => Math.min(Math.max(value, 0), 1).toFixed(2))
 
-  // Maps progress proportionally, so a jump to a section tick lands the marker
-  // on it, with the heading on screen at that progress.
+  // Keeps section ticks, jumps, and headings on the same proportional scale.
   useEffect(() => {
     const article = articleRef.current
     if (!article) return
@@ -57,11 +58,13 @@ export default function EnhancedArticle(props: React.HTMLAttributes<HTMLElement>
 
     const updateProgress = () => {
       const range = article.offsetHeight - window.innerHeight
+      const articleRect = article.getBoundingClientRect()
+      rulerBottom.set(Math.max(RULER_BOTTOM_GAP, window.innerHeight - articleRect.bottom + RULER_BOTTOM_GAP))
       if (range <= 0) {
         rawProgress.set(0)
         return
       }
-      const articleTop = article.getBoundingClientRect().top + window.scrollY
+      const articleTop = articleRect.top + window.scrollY
       rawProgress.set(Math.min(Math.max((window.scrollY - articleTop) / range, 0), 1))
     }
 
@@ -80,7 +83,7 @@ export default function EnhancedArticle(props: React.HTMLAttributes<HTMLElement>
       window.removeEventListener('resize', onResize)
       observer.disconnect()
     }
-  }, [rawProgress])
+  }, [rawProgress, rulerBottom])
 
   const jumpToProgress = (value: number) => {
     const article = articleRef.current
@@ -102,8 +105,6 @@ export default function EnhancedArticle(props: React.HTMLAttributes<HTMLElement>
         style={{ scaleX: progress }}
       />
 
-      {/* Section-map scrim: stacked mask-faded backdrop blurs compound into
-          a progressive blur toward the ruler. Clicking it dismisses. */}
       <div
         aria-hidden
         onClick={() => window.dispatchEvent(new Event('press-close-ruler-overlay'))}
@@ -124,10 +125,13 @@ export default function EnhancedArticle(props: React.HTMLAttributes<HTMLElement>
         <div className="from-surface/40 to-surface/90 absolute inset-0 bg-linear-to-r" />
       </div>
 
-      {/* Reading ruler, only at widths where the gutter fits it entirely:
-          the instrument must never overlap the paper. */}
-      <div className="ruler-root pointer-events-none fixed inset-y-0 right-0 z-30 hidden xl:block">
-        <div ref={trackRef} className="group/ruler pointer-events-auto absolute top-20 right-0 bottom-8 w-14">
+      {/* Shows the ruler only when the gutter keeps it clear of the paper. */}
+      <div className="ruler-root pointer-events-none fixed inset-y-0 right-0 z-30 hidden w-14 xl:block">
+        <motion.div
+          ref={trackRef}
+          style={{ bottom: rulerBottom }}
+          className="group/ruler pointer-events-auto absolute top-20 right-0 w-14"
+        >
           <div aria-hidden className="absolute inset-0">
             {TICKS.map((index) => (
               <div
@@ -168,8 +172,7 @@ export default function EnhancedArticle(props: React.HTMLAttributes<HTMLElement>
                 window.dispatchEvent(new Event('press-close-ruler-overlay'))
               }}
               style={{ top: `${section.at * 100}%`, transitionDelay: `${index * 50}ms` }}
-              // Capped to the gutter (paper right edge = 50vw + 34rem) so
-              // labels wrap beside the sheet instead of crossing onto it.
+              // `36.5rem` keeps labels beyond the 68rem paper and 2.5rem inset.
               className="ruler-label text-on-surface hover:text-primary focus-ring pointer-events-none absolute right-8 flex w-[min(11rem,50vw-36.5rem)] -translate-y-1/2 items-center justify-end text-right font-mono text-[0.625rem] leading-[1.4] tracking-[0.08em] uppercase opacity-0 transition-opacity duration-300 group-hover/ruler:pointer-events-auto group-hover/ruler:opacity-100 focus-visible:opacity-100"
             >
               {section.title}
@@ -186,7 +189,7 @@ export default function EnhancedArticle(props: React.HTMLAttributes<HTMLElement>
             </motion.span>
             <span className="bg-primary h-px w-4" />
           </motion.div>
-        </div>
+        </motion.div>
       </div>
 
       <article ref={articleRef} {...props} />
