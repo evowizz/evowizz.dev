@@ -6,7 +6,7 @@ import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { withMotionPreference } from '@/lib/motion-preference'
-import { Container, TextLink } from '@/components/elements'
+import { Container } from '@/components/elements'
 import { MaterialSymbol } from '@/components/material-symbol'
 import { Reveal } from '@/components/reveal'
 import { useParisClock } from '@/hooks/use-paris-clock'
@@ -199,9 +199,6 @@ export function Hero() {
             <div className="border-outline-variant flex max-w-3xl flex-col items-center gap-5 border-t px-2 pt-6 md:gap-6 md:px-10 md:pt-7">
               <p className="text-xl leading-tight font-medium md:text-2xl">
                 Developer and designer for Android and the web.
-              </p>
-              <p className="text-on-surface-variant max-w-2xl text-base leading-relaxed text-pretty md:text-lg">
-                Building since 2016. Previously at <TextLink href="https://www.beeper.com/">Beeper</TextLink>.
               </p>
 
               <HeroAction />
