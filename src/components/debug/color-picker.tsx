@@ -1,5 +1,3 @@
-'use client'
-
 import { argbFromHex, argbFromRgb, hexFromArgb, redFromArgb, greenFromArgb, blueFromArgb } from '@/lib/material'
 import { useMaterialTheme } from '../material-theme-context'
 import { MicroLabel } from './micro-label'

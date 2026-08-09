@@ -1,5 +1,3 @@
-'use client'
-
 import { useRef, useState } from 'react'
 import { MaterialSymbol } from '@/components/material-symbol'
 import { BarButton, Divider } from './bar-button'

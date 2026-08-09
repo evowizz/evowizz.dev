@@ -1,5 +1,3 @@
-'use client'
-
 import { cn } from '@/lib/utils'
 import { MaterialSymbol } from '@/components/material-symbol'
 import { MicroLabel } from './micro-label'
