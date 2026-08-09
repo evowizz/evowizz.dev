@@ -1,7 +1,3 @@
-'use client'
-
-import { motion } from 'framer-motion'
-import { useEffect, useState } from 'react'
 import { mediaLogos, type MediaLogos } from '@/components/svg'
 import { Container } from '@/components/elements'
 
@@ -28,11 +24,10 @@ const OUTLETS: Outlet[] = [
   { name: 'BGR', url: 'https://www.bgr.com', logo: 'bgr' },
 ]
 
-// The better-known mastheads lead the top row.
 const TOP = OUTLETS.slice(0, 8)
 const BOTTOM = OUTLETS.slice(8)
 
-/** One outlet mark. Caps the width too, since the wordmarks run 2.4:1 to 9.4:1. */
+/** Caps marks at 8rem because their aspect ratios range from 2.4:1 to 9.4:1. */
 const Mark = ({ outlet }: { outlet: Outlet }) => {
   const Logo = mediaLogos[outlet.logo]
   return (
@@ -57,51 +52,31 @@ const Row = ({ outlets }: { outlets: Outlet[] }) => (
   </div>
 )
 
-/** Three copies slide as one, so `-100%` loops with no visible seam. */
+/** Three copies move together, so `-100%` loops without a seam. */
 const Track = ({ outlets, reverse }: { outlets: Outlet[]; reverse?: boolean }) => (
   <div className="mask-fade-sides-20% flex overflow-hidden">
     {[0, 1, 2].map((copy) => (
-      <motion.div
-        key={copy}
-        initial={{ translateX: reverse ? '-100%' : '0%' }}
-        animate={{ translateX: reverse ? '0%' : '-100%' }}
-        transition={{ duration: 50, repeat: Infinity, ease: 'linear' }}
-        className="flex"
-      >
+      <div key={copy} className={reverse ? 'animate-press-ribbon-reverse flex' : 'animate-press-ribbon flex'}>
         <Row outlets={outlets} />
-      </motion.div>
+      </div>
     ))}
   </div>
 )
 
-/** Runs two rows in opposite directions behind a side fade. Both start still, since the preference is client-only. */
 export const PressRibbon = () => {
-  const [animate, setAnimate] = useState(false)
-
-  useEffect(() => {
-    const mq = window.matchMedia('(prefers-reduced-motion: reduce)')
-    const sync = () => setAnimate(!mq.matches)
-    sync()
-    mq.addEventListener('change', sync)
-    return () => mq.removeEventListener('change', sync)
-  }, [])
-
-  if (!animate) {
-    return (
-      <Container>
+  return (
+    <>
+      <Container className="hidden motion-reduce:block">
         <div className="flex flex-wrap items-center gap-x-12 gap-y-8 md:gap-x-16">
           {OUTLETS.map((outlet) => (
             <Mark key={outlet.name} outlet={outlet} />
           ))}
         </div>
       </Container>
-    )
-  }
-
-  return (
-    <div className="flex flex-col gap-8 md:gap-10">
-      <Track outlets={TOP} />
-      <Track outlets={BOTTOM} reverse />
-    </div>
+      <div className="flex flex-col gap-8 motion-reduce:hidden md:gap-10">
+        <Track outlets={TOP} />
+        <Track outlets={BOTTOM} reverse />
+      </div>
+    </>
   )
 }
