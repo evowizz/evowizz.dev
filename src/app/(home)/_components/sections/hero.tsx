@@ -201,8 +201,7 @@ export function Hero() {
                 Developer and designer for Android and the web.
               </p>
               <p className="text-on-surface-variant max-w-2xl text-base leading-relaxed text-pretty md:text-lg">
-                Building for Android since 2016. Previously at{' '}
-                <TextLink href="https://www.beeper.com/">Beeper</TextLink>.
+                Building since 2016. Previously at <TextLink href="https://www.beeper.com/">Beeper</TextLink>.
               </p>
 
               <HeroAction />

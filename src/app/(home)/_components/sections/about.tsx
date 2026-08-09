@@ -43,8 +43,9 @@ export const About = () => (
             pieces of my own.
           </p>
           <p className="text-on-surface-variant">
-            In 2024 I joined Beeper, where I was both a designer and a developer on their Android app. Among other
-            things, I rewrote the app&apos;s navigation and rebuilt its color system around Material 3.
+            In 2024 I joined Texts to work on its Electron desktop app, then moved to Beeper&apos;s Android app. I later
+            took on design work there too. Among other things, I reworked the app&apos;s navigation and overhauled its
+            color system around Material 3.
           </p>
           <p className="text-on-surface-variant">
             I sometimes dig into other people&apos;s software too. Back in 2022, I reported a flaw in{' '}
@@ -58,7 +59,7 @@ export const About = () => (
           </p>
         </article>
 
-        {/* Side by side as soon as there is room, stacked and content-sized at lg. */}
+        {/* Uses one row at `md`, then lets each card size itself at `lg`. */}
         <ScrollDrift className="flex flex-col gap-4 md:flex-row md:gap-5 lg:flex-col lg:gap-5 lg:self-start">
           <div className="bg-tertiary-container text-on-tertiary-container flex flex-1 flex-col justify-center gap-3 rounded-2xl p-6 md:p-7 lg:flex-none">
             <CountUp
@@ -71,7 +72,7 @@ export const About = () => (
             </p>
           </div>
 
-          {/* Rows split the height only at md, where the two cards stretch to match. */}
+          {/* Rows share the stretched card height at `md`. */}
           <dl className="border-outline-variant divide-outline-variant flex flex-1 flex-col divide-y overflow-hidden rounded-2xl border lg:flex-none">
             {FACTS.map((fact) => (
               <div key={fact.term} className="flex flex-1 items-center justify-between gap-4 px-5 py-3.5">
