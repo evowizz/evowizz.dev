@@ -11,7 +11,7 @@ import { ThemeOverride } from '@/components/material-theme-context'
 import { EditOnGitHub } from '@/components/edit-on-github'
 import { Container } from '@/components/elements'
 import { Reveal } from '@/components/reveal'
-import { ReaderToolbar } from '@/components/reader-toolbar'
+import { ArticleControls } from '@/components/article-controls'
 import { getViewsBySlug } from '@/app/db/queries'
 import { countWords, formatWords } from '@/lib/words'
 
@@ -83,7 +83,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
           <BackButton href="/blog" className="mb-0">
             All posts
           </BackButton>
-          <ReaderToolbar />
+          <ArticleControls />
         </div>
 
         <EnhancedArticle className="paper prose prose-quoteless dark:prose-invert w-full max-w-none">

@@ -7,7 +7,7 @@ import { ThemeOverride } from '@/components/material-theme-context'
 import { EditOnGitHub } from '@/components/edit-on-github'
 import { BackButton } from '@/components/link-button'
 import { Container } from '@/components/elements'
-import { ReaderToolbar } from '@/components/reader-toolbar'
+import { ArticleControls } from '@/components/article-controls'
 
 export async function generateStaticParams() {
   return allFoci.map((item) => ({
@@ -53,7 +53,7 @@ export default async function FocusPage({ params }: { params: Promise<{ slug: st
           <BackButton href="/focus" className="mb-0">
             All Focus
           </BackButton>
-          <ReaderToolbar />
+          <ArticleControls />
         </div>
 
         <EnhancedArticle className="paper w-full">
