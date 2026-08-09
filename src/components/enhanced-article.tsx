@@ -4,8 +4,8 @@ import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion'
 import { useEffect, useRef, useState } from 'react'
 import { reducedMotion } from '@/lib/motion-preference'
 
-const TICK_COUNT = 121
-const TICKS = Array.from({ length: TICK_COUNT }, (_, index) => index)
+const TICK_COUNT = 91
+const TICK_INTERVALS = Array.from({ length: TICK_COUNT - 1 }, (_, index) => index)
 // Leaves 3rem below endpoint labels, including their 8px hit area.
 const RULER_BOTTOM_GAP = 48
 
@@ -20,6 +20,7 @@ export default function EnhancedArticle(props: React.HTMLAttributes<HTMLElement>
   const articleRef = useRef<HTMLElement>(null)
   const trackRef = useRef<HTMLDivElement>(null)
   const [sections, setSections] = useState<Section[]>([])
+  const [activeTick, setActiveTick] = useState<number | null>(null)
 
   // Shares progress math with ticks and jumps, avoiding Framer's cached offset drift.
   const rawProgress = useMotionValue(0)
@@ -32,6 +33,12 @@ export default function EnhancedArticle(props: React.HTMLAttributes<HTMLElement>
 
   const markerTop = useTransform(progress, (value) => `${Math.min(Math.max(value, 0), 1) * 100}%`)
   const readout = useTransform(progress, (value) => Math.min(Math.max(value, 0), 1).toFixed(2))
+  const tickClassName = (index: number) => {
+    const distance = activeTick === null ? Number.POSITIVE_INFINITY : Math.abs(activeTick - index)
+    if (distance === 0) return 'bg-on-surface w-8'
+    if (distance === 1) return 'bg-on-surface-variant w-4'
+    return 'bg-outline-variant w-2'
+  }
 
   // Keeps section ticks, jumps, and headings on the same proportional scale.
   useEffect(() => {
@@ -130,22 +137,44 @@ export default function EnhancedArticle(props: React.HTMLAttributes<HTMLElement>
         <motion.div
           ref={trackRef}
           style={{ bottom: rulerBottom }}
+          onPointerLeave={() => setActiveTick(null)}
           className="group/ruler pointer-events-auto absolute top-20 right-0 w-14"
         >
           <div aria-hidden className="absolute inset-0">
-            {TICKS.map((index) => (
+            {TICK_INTERVALS.map((index) => (
               <div
                 key={index}
-                style={{ top: `${(index / (TICK_COUNT - 1)) * 100}%` }}
-                className="group/tick absolute inset-x-0 flex -translate-y-1/2 items-center justify-end pr-3"
+                style={{
+                  top: `${(index / (TICK_COUNT - 1)) * 100}%`,
+                  height: `${100 / (TICK_COUNT - 1)}%`,
+                }}
+                className="absolute inset-x-0"
               >
-                <span className="bg-outline-variant group-hover/tick:bg-on-surface h-px w-2 transition-all duration-100 group-hover/tick:w-4" />
                 <div
                   onClick={() => jumpToProgress(index / (TICK_COUNT - 1))}
-                  className="absolute inset-x-0 top-1/2 h-2 -translate-y-1/2 cursor-pointer"
-                />
+                  onPointerEnter={() => setActiveTick(index)}
+                  className="ruler-tick-hit absolute inset-x-0 top-0 flex h-full -translate-y-1/2 cursor-pointer items-center justify-end pr-3"
+                >
+                  <span className={`h-0.5 transition-all duration-150 ${tickClassName(index)}`} />
+                </div>
               </div>
             ))}
+
+            <div
+              style={{
+                top: `${100 - 100 / (TICK_COUNT - 1)}%`,
+                height: `${100 / (TICK_COUNT - 1)}%`,
+              }}
+              className="absolute inset-x-0"
+            >
+              <div
+                onClick={() => jumpToProgress(1)}
+                onPointerEnter={() => setActiveTick(TICK_COUNT - 1)}
+                className="ruler-tick-hit absolute inset-x-0 bottom-0 flex h-full translate-y-1/2 cursor-pointer items-center justify-end pr-3"
+              >
+                <span className={`h-0.5 transition-all duration-150 ${tickClassName(TICK_COUNT - 1)}`} />
+              </div>
+            </div>
 
             {sections.map((section) => (
               <div
@@ -153,7 +182,7 @@ export default function EnhancedArticle(props: React.HTMLAttributes<HTMLElement>
                 style={{ top: `${section.at * 100}%` }}
                 className="group/tick absolute inset-x-0 flex -translate-y-1/2 items-center justify-end pr-3"
               >
-                <span className="bg-on-surface-variant group-hover/tick:bg-on-surface h-px w-2 transition-all duration-100 group-hover/tick:w-4" />
+                <span className="bg-on-surface-variant group-hover/tick:bg-on-surface h-0.5 w-3 transition-all duration-100 group-hover/tick:w-4" />
                 <div
                   onClick={() => jumpToProgress(section.at)}
                   className="absolute inset-x-0 top-1/2 h-2 -translate-y-1/2 cursor-pointer"
