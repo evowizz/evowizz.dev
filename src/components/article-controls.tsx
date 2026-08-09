@@ -1,15 +1,31 @@
 'use client'
 
-import { useEffect, useState } from 'react'
-import { cn } from '@/lib/utils'
+import { type ComponentProps, useEffect, useState } from 'react'
+import { cva, type VariantProps } from 'cva'
 import { MaterialSymbol } from '@/components/material-symbol'
 
-const buttonClass = cn(
-  'group text-on-surface hover:bg-surface-container hover:text-primary focus-visible:bg-surface-container motion-effects-fast flex size-11 shrink-0 items-center justify-center rounded-full transition-colors focus-ring',
-  'aria-[expanded=true]:text-primary aria-[pressed=true]:text-primary',
+const articleControlVariants = cva(
+  'group text-on-surface hover:bg-surface-container hover:text-primary focus-visible:bg-surface-container motion-effects-fast flex size-11 shrink-0 items-center justify-center rounded-full transition-colors focus-ring aria-[expanded=true]:text-primary aria-[pressed=true]:text-primary',
+  {
+    variants: {
+      visibility: {
+        always: '',
+        beforeDesktop: 'xl:hidden',
+      },
+    },
+    defaultVariants: {
+      visibility: 'always',
+    },
+  },
 )
 
-/** Stores reader preferences on `<html>` for plain CSS selectors. */
+type ArticleControlButtonProps = ComponentProps<'button'> & VariantProps<typeof articleControlVariants>
+
+function ArticleControlButton({ visibility, className, ...props }: ArticleControlButtonProps) {
+  return <button type="button" className={articleControlVariants({ visibility, className })} {...props} />
+}
+
+/** Stores article control state on `<html>` for plain CSS selectors. */
 export function ArticleControls() {
   const [readingMode, setReadingMode] = useState(false)
   const [sectionsOpen, setSectionsOpen] = useState(false)
@@ -43,27 +59,24 @@ export function ArticleControls() {
 
   return (
     <div className="flex items-center justify-end">
-      <button
-        type="button"
+      <ArticleControlButton
         aria-label="Reading mode"
         aria-pressed={readingMode}
         onClick={() => setReadingMode((value) => !value)}
-        className={buttonClass}
       >
         <MaterialSymbol name="expand_content" className="group-hover:symbol-weight-700 text-xl" />
-      </button>
-      <button
-        type="button"
+      </ArticleControlButton>
+      <ArticleControlButton
+        visibility="beforeDesktop"
         aria-label={sectionsOpen ? 'Hide sections' : 'Sections'}
         aria-expanded={sectionsOpen}
         onClick={() => setSectionsOpen((value) => !value)}
-        className={cn(buttonClass, 'xl:hidden')}
       >
         <MaterialSymbol
           name={sectionsOpen ? 'close' : 'straighten'}
           className="group-hover:symbol-weight-700 rotate-90 text-xl"
         />
-      </button>
+      </ArticleControlButton>
     </div>
   )
 }

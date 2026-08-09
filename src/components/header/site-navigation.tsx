@@ -1,6 +1,6 @@
 'use client'
 
-import { type ReactNode, useRef, useState } from 'react'
+import { type ComponentProps, type ReactNode, useRef, useState } from 'react'
 import Link from 'next/link'
 import { useTheme } from 'next-themes'
 import { cn } from '@/lib/utils'
@@ -10,8 +10,18 @@ import { MaterialSymbol } from '@/components/material-symbol'
 import { MenuIcon } from './menu-icon'
 import { Drawer } from './drawer'
 
-const controlClass =
-  'group text-on-surface hover:bg-surface-container motion-effects-fast flex size-11 items-center justify-center rounded-full transition-colors focus-ring'
+function NavigationControl({ className, ...props }: ComponentProps<'button'>) {
+  return (
+    <button
+      type="button"
+      className={cn(
+        'group text-on-surface hover:bg-surface-container motion-effects-fast focus-ring flex size-11 items-center justify-center rounded-full transition-colors',
+        className,
+      )}
+      {...props}
+    />
+  )
+}
 
 const ThemeButton = () => {
   const { resolvedTheme, setTheme } = useTheme()
@@ -20,15 +30,9 @@ const ThemeButton = () => {
   const label = isDark ? 'Switch to light theme' : 'Switch to dark theme'
 
   return (
-    <button
-      type="button"
-      aria-label={label}
-      aria-pressed={isDark}
-      onClick={() => setTheme(isDark ? 'light' : 'dark')}
-      className={controlClass}
-    >
+    <NavigationControl aria-label={label} aria-pressed={isDark} onClick={() => setTheme(isDark ? 'light' : 'dark')}>
       <MaterialSymbol name="asterisk" className="group-hover:symbol-weight-700" />
-    </button>
+    </NavigationControl>
   )
 }
 
@@ -37,10 +41,9 @@ export const SiteNavigation = ({ wordmark }: { wordmark: ReactNode }) => {
   const headerRef = useRef<HTMLElement>(null)
 
   return (
-    // Keeping the drawer here preserves one unblurred wordmark and menu button.
-    // The inner backdrop prevents it from containing the fixed drawer.
+    // Keeps `backdrop-filter` off the header so it cannot contain the fixed drawer.
     <header ref={headerRef} className="reading-hide sticky top-0 z-40">
-      {/* The bar turns transparent while the drawer opens, avoiding a strip over its wash. */}
+      {/* Clears the bar backdrop so it cannot stripe the drawer wash. */}
       <div
         className={cn(
           'motion-effects-slow relative z-10 transition-[background-color,backdrop-filter]',
@@ -58,17 +61,15 @@ export const SiteNavigation = ({ wordmark }: { wordmark: ReactNode }) => {
           </Link>
           <div className="-mr-2 flex items-center">
             <ThemeButton />
-            <button
-              type="button"
+            <NavigationControl
               aria-label={drawerOpen ? 'Close menu' : 'Open menu'}
               aria-expanded={drawerOpen}
               aria-controls="site-drawer"
               aria-haspopup="dialog"
               onClick={() => setDrawerOpen((value) => !value)}
-              className={controlClass}
             >
               <MenuIcon isOpen={drawerOpen} className="group-hover:symbol-weight-700" />
-            </button>
+            </NavigationControl>
           </div>
         </Container>
       </div>

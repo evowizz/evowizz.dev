@@ -2,6 +2,7 @@
 
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion'
 import { useEffect, useRef, useState } from 'react'
+import { cva, type VariantProps } from 'cva'
 import { reducedMotion } from '@/lib/motion-preference'
 
 const TICK_COUNT = 91
@@ -18,6 +19,27 @@ type Section = {
   at: number
   /** Scroll distance from the article top, in pixels. */
   scrollOffset: number
+}
+
+const rulerTickVariants = cva('h-0.5 transition-all duration-150', {
+  variants: {
+    emphasis: {
+      currentSection: 'bg-primary w-8',
+      current: 'bg-on-surface w-8',
+      neighbor: 'bg-on-surface-variant w-4',
+      section: 'bg-on-surface-variant w-3',
+      rest: 'bg-outline-variant w-2',
+    },
+  },
+  defaultVariants: {
+    emphasis: 'rest',
+  },
+})
+
+type RulerTickProps = VariantProps<typeof rulerTickVariants>
+
+function RulerTick({ emphasis }: RulerTickProps) {
+  return <span className={rulerTickVariants({ emphasis })} />
 }
 
 export function ArticleRuler({ articleId }: { articleId: string }) {
@@ -39,12 +61,12 @@ export function ArticleRuler({ articleId }: { articleId: string }) {
   const sectionByTick = new Map(
     sections.map((section) => [Math.round(section.at * (TICK_COUNT - 1)), section] as const),
   )
-  const tickClassName = (index: number) => {
+  const tickEmphasis = (index: number): RulerTickProps['emphasis'] => {
     const distance = activeTick === null ? Number.POSITIVE_INFINITY : Math.abs(activeTick - index)
-    if (distance === 0) return `${sectionByTick.has(index) ? 'bg-primary' : 'bg-on-surface'} w-8`
-    if (distance === 1) return 'bg-on-surface-variant w-4'
-    if (sectionByTick.has(index)) return 'bg-on-surface-variant w-3'
-    return 'bg-outline-variant w-2'
+    if (distance === 0) return sectionByTick.has(index) ? 'currentSection' : 'current'
+    if (distance === 1) return 'neighbor'
+    if (sectionByTick.has(index)) return 'section'
+    return 'rest'
   }
 
   // Snaps headings so labels, jumps, and progress share one tick scale.
@@ -177,7 +199,7 @@ export function ArticleRuler({ articleId }: { articleId: string }) {
                   onPointerEnter={() => setActiveTick(index)}
                   className="ruler-tick-hit absolute inset-x-0 top-0 flex h-full -translate-y-1/2 cursor-pointer items-center justify-end pr-3"
                 >
-                  <span className={`h-0.5 transition-all duration-150 ${tickClassName(index)}`} />
+                  <RulerTick emphasis={tickEmphasis(index)} />
                 </div>
               </div>
             ))}
@@ -198,7 +220,7 @@ export function ArticleRuler({ articleId }: { articleId: string }) {
                 onPointerEnter={() => setActiveTick(TICK_COUNT - 1)}
                 className="ruler-tick-hit absolute inset-x-0 bottom-0 flex h-full translate-y-1/2 cursor-pointer items-center justify-end pr-3"
               >
-                <span className={`h-0.5 transition-all duration-150 ${tickClassName(TICK_COUNT - 1)}`} />
+                <RulerTick emphasis={tickEmphasis(TICK_COUNT - 1)} />
               </div>
             </div>
           </div>
