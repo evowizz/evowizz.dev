@@ -2,7 +2,7 @@ import { About, Contact, Hero, Press, Skills, Work } from './_components/section
 
 export default function Home() {
   return (
-    <main className="relative isolate">
+    <main className="isolate overflow-clip">
       <div className="sticky top-16 z-0 motion-reduce:static">
         <Hero />
       </div>

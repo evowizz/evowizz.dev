@@ -60,7 +60,7 @@ const FooterMeta = () => (
 )
 
 export const Footer = () => (
-  <footer className="footer-outward-corners reading-hide bg-inverse-surface text-inverse-on-surface">
+  <footer className="reading-hide bg-inverse-surface text-inverse-on-surface relative z-0 -mt-10 pt-10">
     <Container className="flex flex-col py-10 lg:py-12">
       <div className="grid gap-8 pb-8 lg:grid-cols-[1fr_1.2fr] lg:items-center">
         <WordmarkLink />

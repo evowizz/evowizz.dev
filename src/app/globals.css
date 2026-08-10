@@ -376,6 +376,10 @@
   button {
     @apply cursor-pointer;
   }
+
+  body > main {
+    @apply bg-surface rounded-b-5xl relative z-10;
+  }
 }
 
 @layer base {
@@ -528,32 +532,6 @@
 @utility motion-effects-slow {
   transition-timing-function: cubic-bezier(0.34, 0.88, 0.34, 1);
   transition-duration: 300ms;
-}
-
-@utility footer-outward-corners {
-  --footer-corner-radius: var(--radius-5xl);
-  @apply relative;
-
-  &::before,
-  &::after {
-    content: '';
-    top: calc(var(--footer-corner-radius) * -1);
-    width: var(--footer-corner-radius);
-    height: var(--footer-corner-radius);
-    box-shadow: 0 0 0 var(--footer-corner-radius) var(--color-inverse-surface);
-    clip-path: inset(0);
-    @apply pointer-events-none absolute;
-  }
-
-  &::before {
-    left: 0;
-    border-bottom-left-radius: var(--footer-corner-radius);
-  }
-
-  &::after {
-    right: 0;
-    border-bottom-right-radius: var(--footer-corner-radius);
-  }
 }
 
 @utility text-emphasized {
