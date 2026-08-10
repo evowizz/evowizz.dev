@@ -1,5 +1,13 @@
 export const EMAIL = 'mail@evowizz.dev'
 
+export const SITE_LOCATION = 'Nantes, France'
+
+export const DESTINATIONS = [
+  { label: 'Home', path: '/' },
+  { label: 'Blog', path: '/blog' },
+  { label: 'Focus', path: '/focus' },
+]
+
 export const SOCIALS = [
   { label: 'GitHub', href: 'https://github.com/evowizz' },
   { label: 'Twitter', href: 'https://twitter.com/evowizz' },

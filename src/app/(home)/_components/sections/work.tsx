@@ -1,10 +1,12 @@
 import Image from 'next/image'
-import { projects, type Project } from '@/lib/projects'
+import { projects, type Project } from '@/app/(home)/_data/projects'
 import { cn } from '@/lib/utils'
-import { ActionLink, Container, RowLink } from '@/components/elements'
-import { MaterialSymbol } from '@/components/material-symbol'
-import { SectionTitle } from '@/components/section-title'
-import { CountUp, Reveal } from '@/components/reveal'
+import { Container } from '@/components/ui/container'
+import { ActionLink, RowLink } from '@/components/ui/links'
+import { MaterialSymbol } from '@/components/ui/material-symbol'
+import { SectionTitle } from '../section-title'
+import { Reveal } from '@/components/ui/reveal'
+import { CountUp } from '../count-up'
 
 const SENTENCES: Record<string, string> = {
   Inware: 'An Android app I have been building since 2018 to answer one question: what is actually inside your phone?',

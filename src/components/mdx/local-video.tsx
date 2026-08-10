@@ -1,4 +1,6 @@
-import { publicFileExists } from '@/lib/server/utils'
+import 'server-only'
+
+import * as fs from 'node:fs'
 import { Video } from '@/components/ui/video'
 import { StyleableProps } from '@/types/component'
 import { cn } from '@/lib/utils'
@@ -12,6 +14,10 @@ type LocalVideoProps = {
 
 const VIDEO_PATH = '/content/posts/videos/'
 const THUMBNAIL_PATH = '/content/posts/videos/thumbnails/'
+
+function publicFileExists(path: string) {
+  return fs.existsSync(`${process.cwd()}/public${path}`)
+}
 
 export function LocalVideo({
   src,

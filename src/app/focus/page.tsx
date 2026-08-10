@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { allFoci } from '@/content'
-import { Container, PageTitle } from '@/components/elements'
+import { Container } from '@/components/ui/container'
+import { PageTitle } from '@/components/ui/typography'
 
 export const metadata = {
   title: 'Focus',

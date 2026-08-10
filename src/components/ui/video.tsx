@@ -2,7 +2,7 @@
 
 import { forwardRef, useCallback, useEffect, useRef, useState } from 'react'
 import { cn } from '@/lib/utils'
-import { MaterialSymbol } from '@/components/material-symbol'
+import { MaterialSymbol } from './material-symbol'
 
 type VideoProps = React.VideoHTMLAttributes<HTMLVideoElement>
 

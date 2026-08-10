@@ -1,13 +1,13 @@
 import type { ReactNode } from 'react'
 import Link from 'next/link'
 import { cva, type VariantProps } from 'cva'
-import { destinations } from '@/lib/destinations'
-import { Container } from '@/components/elements'
-import { MaterialSymbol } from '@/components/material-symbol'
+import { DESTINATIONS, SITE_LOCATION } from '@/config/site'
+import { Container } from '@/components/ui/container'
+import { MaterialSymbol } from '@/components/ui/material-symbol'
 import { Wordmark } from '@/components/wordmark'
 
 const year = new Date().getFullYear()
-const footerDestinations = [...destinations, { label: 'Contact', path: '/#contact' }]
+const footerDestinations = [...DESTINATIONS, { label: 'Contact', path: '/#contact' }]
 
 const footerLinkVariants = cva(
   'bg-inverse-on-surface/8 hover:bg-inverse-on-surface/15 hover:text-inverse-primary motion-effects-default focus-ring-inverse-primary flex h-full items-center justify-between gap-4 px-5 py-5 font-semibold transition-[color,background-color,border-radius] hover:rounded-3xl',
@@ -55,7 +55,7 @@ const FooterLink = ({
 const FooterMeta = () => (
   <div className="text-inverse-on-surface/60 border-inverse-on-surface/15 flex flex-wrap items-center justify-between gap-x-6 gap-y-1 border-t pt-6 text-sm">
     <p>&copy; {year} Dylan Roussel</p>
-    <p>Nantes, France</p>
+    <p>{SITE_LOCATION}</p>
   </div>
 )
 

@@ -1,8 +1,8 @@
 'use client'
 
 import { createContext, useContext, useState, useCallback, useMemo, useEffect, type ReactNode, useRef } from 'react'
-import { Variant, Hct, argbFromHex, createTheme, applyTheme } from '@/lib/material'
-import { useIsSSR } from '@/lib/use-is-ssr'
+import { Variant, Hct, argbFromHex, createTheme, applyTheme } from './material'
+import { useIsSSR } from '@/hooks/use-is-ssr'
 
 const DEFAULT_SEED_COLOR = '#33CC7A' // Inware ref :)
 const DEFAULT_VARIANT = Variant.RAINBOW

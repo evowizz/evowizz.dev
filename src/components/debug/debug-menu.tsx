@@ -3,10 +3,10 @@ import { useTheme } from 'next-themes'
 import { ColorPicker } from './color-picker'
 import { ColorTokenPreview } from './color-token-preview'
 import { MotionPreview } from './motion-preview'
-import { useMaterialTheme } from '../material-theme-context'
-import { Variant } from '@/lib/material'
+import { useMaterialTheme } from '@/theme/material-theme'
+import { Variant } from '@/theme/material'
 import { cn } from '@/lib/utils'
-import { useIsSSR } from '@/lib/use-is-ssr'
+import { useIsSSR } from '@/hooks/use-is-ssr'
 import { MicroLabel } from './micro-label'
 
 const VARIANT_NAMES: Record<Variant, string> = {

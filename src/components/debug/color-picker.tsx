@@ -1,5 +1,5 @@
-import { argbFromHex, argbFromRgb, hexFromArgb, redFromArgb, greenFromArgb, blueFromArgb } from '@/lib/material'
-import { useMaterialTheme } from '../material-theme-context'
+import { argbFromHex, argbFromRgb, hexFromArgb, redFromArgb, greenFromArgb, blueFromArgb } from '@/theme/material'
+import { useMaterialTheme } from '@/theme/material-theme'
 import { MicroLabel } from './micro-label'
 
 const CHANNELS = ['Red', 'Green', 'Blue'] as const

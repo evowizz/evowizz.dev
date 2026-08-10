@@ -1,6 +1,7 @@
-import { Container, TextLink } from '@/components/elements'
-import { SectionTitle } from '@/components/section-title'
-import { Reveal } from '@/components/reveal'
+import { Container } from '@/components/ui/container'
+import { TextLink } from '@/components/ui/links'
+import { SectionTitle } from '../section-title'
+import { Reveal } from '@/components/ui/reveal'
 import { PressRibbon } from '../press-ribbon'
 
 export const Press = () => (

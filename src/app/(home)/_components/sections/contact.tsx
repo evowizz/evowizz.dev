@@ -1,9 +1,10 @@
-import { EMAIL, SOCIALS } from '@/lib/contact'
+import { EMAIL, SITE_LOCATION, SOCIALS } from '@/config/site'
 import { cn } from '@/lib/utils'
-import { Container, RowLink } from '@/components/elements'
-import { MaterialSymbol } from '@/components/material-symbol'
-import { Reveal } from '@/components/reveal'
-import { SectionTitle } from '@/components/section-title'
+import { Container } from '@/components/ui/container'
+import { RowLink } from '@/components/ui/links'
+import { MaterialSymbol } from '@/components/ui/material-symbol'
+import { Reveal } from '@/components/ui/reveal'
+import { SectionTitle } from '../section-title'
 import { LocalTime } from '../local-time'
 
 const EmailLink = ({ className }: { className?: string }) => (
@@ -47,7 +48,7 @@ export const Contact = () => (
         </div>
 
         <div className="bg-primary-container text-on-primary-container flex flex-col justify-center gap-3 rounded-2xl p-6 md:p-7">
-          <span className="text-sm font-medium opacity-80">Nantes, France</span>
+          <span className="text-sm font-medium opacity-80">{SITE_LOCATION}</span>
           <LocalTime />
         </div>
 

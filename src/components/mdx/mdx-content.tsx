@@ -4,7 +4,7 @@ import Image, { type ImageProps } from 'next/image'
 import Pre from './pre'
 import { LocalVideo } from './local-video'
 import { NoteCard } from './note-card'
-import { SmartLink } from '@/components/elements'
+import { SmartLink } from '@/components/ui/links'
 import { Tooltip } from '@/components/ui/tooltip'
 
 const CustomImage = ({ alt = '', ...props }: Omit<ImageProps, 'width' | 'height'>) => {

@@ -2,7 +2,7 @@
 
 import { type ComponentProps, useEffect, useState } from 'react'
 import { cva, type VariantProps } from 'cva'
-import { MaterialSymbol } from '@/components/material-symbol'
+import { MaterialSymbol } from '@/components/ui/material-symbol'
 
 const articleControlVariants = cva(
   'group text-on-surface hover:bg-surface-container hover:text-primary focus-visible:bg-surface-container motion-effects-fast flex size-11 shrink-0 items-center justify-center rounded-full transition-colors focus-ring aria-[expanded=true]:text-primary aria-[pressed=true]:text-primary',

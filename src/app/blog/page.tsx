@@ -2,9 +2,10 @@ import { Suspense } from 'react'
 import Link from 'next/link'
 import dayjs from 'dayjs'
 import { allPosts } from '@/content'
-import { getViewsCount } from '@/app/db/queries'
-import { Container, PageTitle } from '@/components/elements'
-import { MaterialSymbol } from '@/components/material-symbol'
+import { getViewsCount } from '@/db/views/queries'
+import { Container } from '@/components/ui/container'
+import { PageTitle } from '@/components/ui/typography'
+import { MaterialSymbol } from '@/components/ui/material-symbol'
 
 export const metadata = {
   title: 'Blog',

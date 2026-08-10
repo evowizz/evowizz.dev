@@ -2,13 +2,10 @@ import { useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
-import { useScrollLock } from '@/hooks/use-scroll-lock'
 import { useWidthBreath } from '@/hooks/use-width-breath'
-import { destinations } from '@/lib/destinations'
-import { EMAIL, SOCIALS } from '@/lib/contact'
-import { Container } from '@/components/elements'
-
-const LOCATION = 'Nantes, France'
+import { DESTINATIONS, EMAIL, SITE_LOCATION, SOCIALS } from '@/config/site'
+import { Container } from '@/components/ui/container'
+import { useScrollLock } from './use-scroll-lock'
 
 type DrawerBandProps = {
   label: string
@@ -153,7 +150,7 @@ export const Drawer = ({ open, onClose, scopeRef }: DrawerProps) => {
       >
         <nav aria-label="Site" className="flex flex-1 flex-col">
           <ul className="divide-outline-variant border-outline-variant flex flex-1 flex-col divide-y border-y">
-            {destinations.map((destination, index) => (
+            {DESTINATIONS.map((destination, index) => (
               <DrawerBand
                 key={destination.path}
                 label={destination.label}
@@ -193,7 +190,7 @@ export const Drawer = ({ open, onClose, scopeRef }: DrawerProps) => {
               </li>
             ))}
           </ul>
-          <p className="text-on-surface-variant">{LOCATION}</p>
+          <p className="text-on-surface-variant">{SITE_LOCATION}</p>
         </Container>
       </div>
     </div>

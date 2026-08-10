@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { cva, type VariantProps } from 'cva'
-import { MaterialSymbol } from '@/components/material-symbol'
+import { MaterialSymbol } from '@/components/ui/material-symbol'
 import { cn } from '@/lib/utils'
 
 const linkButtonVariants = cva(

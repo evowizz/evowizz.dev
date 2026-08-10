@@ -1,13 +1,13 @@
 'use client'
 
-import { increment } from '@/app/db/actions'
+import { increment } from '@/db/views/actions'
 import { useEffect, useRef } from 'react'
 
-type ReportViewProps = {
+type ViewReporterProps = {
   slug: string
 }
 
-export const ReportView = ({ slug }: ReportViewProps) => {
+export const ViewReporter = ({ slug }: ViewReporterProps) => {
   const lastReportedSlug = useRef<string | null>(null)
 
   useEffect(() => {

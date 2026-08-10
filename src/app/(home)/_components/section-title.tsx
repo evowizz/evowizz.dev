@@ -1,7 +1,7 @@
 'use client'
 
 import { type ReactNode } from 'react'
-import { Reveal } from '@/components/reveal'
+import { Reveal } from '@/components/ui/reveal'
 import { useWidthBreath } from '@/hooks/use-width-breath'
 
 /** Section heading that slightly stands out and settles its width on reveal. */

@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { cn } from '@/lib/utils'
-import { MaterialSymbol } from '@/components/material-symbol'
+import { MaterialSymbol } from '@/components/ui/material-symbol'
 
 export function CopyCodeButton({ text }: { text: string }) {
   const [isCopied, setIsCopied] = useState(false)

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 import { useRootFlag } from './use-root-flag'
-import { clearContrastAudit, runContrastAudit } from './contrast'
+import { clearContrastAudit, runContrastAudit } from '../contrast'
 
 const PINNED_KEY = 'devbar-pinned'
 

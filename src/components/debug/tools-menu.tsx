@@ -1,8 +1,8 @@
 import { cn } from '@/lib/utils'
-import { MaterialSymbol } from '@/components/material-symbol'
+import { MaterialSymbol } from '@/components/ui/material-symbol'
 import { MicroLabel } from './micro-label'
 import { OVERLAYS, type Overlay } from './overlays'
-import { type Tool } from './use-tools'
+import { type Tool } from './hooks/use-tools'
 
 type ToolsMenuProps = {
   tools: Tool[]

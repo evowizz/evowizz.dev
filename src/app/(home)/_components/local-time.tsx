@@ -1,9 +1,9 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { useParisClock } from '@/hooks/use-paris-clock'
+import { useParisClock } from '@/app/(home)/_hooks/use-paris-clock'
 import { cn } from '@/lib/utils'
-import { MaterialSymbol } from '@/components/material-symbol'
+import { MaterialSymbol } from '@/components/ui/material-symbol'
 
 /** Reserves the line height, so the clock arriving shifts nothing below it. */
 export const LocalTime = ({ timeClassName, zoneClassName }: { timeClassName?: string; zoneClassName?: string }) => {

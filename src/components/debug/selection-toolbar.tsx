@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react'
-import { MaterialSymbol } from '@/components/material-symbol'
+import { MaterialSymbol } from '@/components/ui/material-symbol'
 import { BarButton, Divider } from './bar-button'
 import { cropRegion, type Selection } from './selection'
 

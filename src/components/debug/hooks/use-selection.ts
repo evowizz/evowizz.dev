@@ -6,14 +6,14 @@ import {
   topElementAtCenter,
   type RegionBounds,
   type Selection,
-} from './selection'
+} from '../selection'
 import {
   createBoxOverlay,
   createMarqueeOverlay,
   createOutlineOverlay,
   placeBoxOverlay,
   placeRect,
-} from './selection-overlays'
+} from '../selection-overlays'
 
 /**
  * Element and region picking for the dev bar. While `picking`, hovering shows

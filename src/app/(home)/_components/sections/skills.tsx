@@ -1,8 +1,10 @@
-import { skills } from '@/lib/skills'
+import { skills } from '@/app/(home)/_data/skills'
 import { skillLogos } from '@/components/svg'
-import { Container, Label, RowLink } from '@/components/elements'
-import { SectionTitle } from '@/components/section-title'
-import { Reveal } from '@/components/reveal'
+import { Container } from '@/components/ui/container'
+import { RowLink } from '@/components/ui/links'
+import { Label } from '@/components/ui/typography'
+import { SectionTitle } from '../section-title'
+import { Reveal } from '@/components/ui/reveal'
 
 const SKILL_GROUPS = [
   { label: 'Languages', kinds: ['language'] },

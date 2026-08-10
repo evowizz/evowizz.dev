@@ -3,16 +3,16 @@ import dayjs from 'dayjs'
 import { notFound } from 'next/navigation'
 import { allPosts, Post } from '@/content'
 import MDXContent from '@/components/mdx/mdx-content'
-import EnhancedArticle from '@/components/enhanced-article'
-import { ReportView } from '@/components/report-view'
-import { MaterialSymbol } from '@/components/material-symbol'
-import { BackButton } from '@/components/link-button'
-import { ThemeOverride } from '@/components/material-theme-context'
-import { EditOnGitHub } from '@/components/edit-on-github'
-import { Container } from '@/components/elements'
-import { Reveal } from '@/components/reveal'
-import { ArticleControls } from '@/components/article-controls'
-import { getViewsBySlug } from '@/app/db/queries'
+import { ArticleWithRuler } from '@/components/article/article-with-ruler'
+import { ViewReporter } from './_components/view-reporter'
+import { MaterialSymbol } from '@/components/ui/material-symbol'
+import { BackButton } from '@/components/article/article-navigation'
+import { ThemeOverride } from '@/theme/material-theme'
+import { EditOnGitHub } from '@/components/article/edit-on-github'
+import { Container } from '@/components/ui/container'
+import { Reveal } from '@/components/ui/reveal'
+import { ArticleControls } from '@/components/article/article-controls'
+import { getViewsBySlug } from '@/db/views/queries'
 import { countWords, formatWords } from '@/lib/words'
 
 export async function generateStaticParams() {
@@ -50,7 +50,7 @@ async function Views({ slug }: { slug: string }) {
 
   return (
     <>
-      <ReportView slug={slug} />
+      <ViewReporter slug={slug} />
       {count > 0 && (
         <>
           <span aria-hidden className="text-outline-variant">
@@ -86,7 +86,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
           <ArticleControls />
         </div>
 
-        <EnhancedArticle className="paper prose prose-quoteless dark:prose-invert w-full max-w-none">
+        <ArticleWithRuler className="paper prose prose-quoteless dark:prose-invert w-full max-w-none">
           <Reveal immediate stagger y={24} className="not-prose flex flex-col items-start gap-5">
             <p className="text-on-surface-variant flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-xs tracking-[0.08em] uppercase">
               <time dateTime={post.publishedAt}>{dayjs(post.publishedAt).format('MMMM DD, YYYY')}</time>
@@ -120,7 +120,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
           <div className="mt-10 md:mt-12">
             <MDXContent code={post.mdx} />
           </div>
-        </EnhancedArticle>
+        </ArticleWithRuler>
 
         <footer className="mt-4">
           <EditOnGitHub filePath={`content/posts/${slug}.mdx`} />

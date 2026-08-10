@@ -1,10 +1,14 @@
-import { Container, Label, TextLink } from '@/components/elements'
-import { SectionTitle } from '@/components/section-title'
-import { CountUp, Reveal } from '@/components/reveal'
-import { ScrollDrift } from '@/components/scroll-drift'
+import { Container } from '@/components/ui/container'
+import { TextLink } from '@/components/ui/links'
+import { Label } from '@/components/ui/typography'
+import { SectionTitle } from '../section-title'
+import { Reveal } from '@/components/ui/reveal'
+import { ScrollDrift } from '../scroll-drift'
+import { SITE_LOCATION } from '@/config/site'
+import { CountUp } from '../count-up'
 
 const FACTS = [
-  { term: 'Based', detail: 'Nantes, France' },
+  { term: 'Based', detail: SITE_LOCATION },
   { term: 'Speaks', detail: 'French, English' },
   { term: 'Building', detail: 'Since 2016' },
   { term: 'Previously', detail: 'Beeper' },

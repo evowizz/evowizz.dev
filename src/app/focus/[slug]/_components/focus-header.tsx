@@ -1,6 +1,6 @@
 import Image from 'next/image'
-import { Label } from '@/components/elements'
-import { Reveal } from '@/components/reveal'
+import { Label } from '@/components/ui/typography'
+import { Reveal } from '@/components/ui/reveal'
 
 export type FocusMeta = {
   title: string

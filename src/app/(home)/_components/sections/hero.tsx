@@ -1,8 +1,9 @@
 import { type ReactNode } from 'react'
 import Link from 'next/link'
-import { Container } from '@/components/elements'
-import { MaterialSymbol } from '@/components/material-symbol'
-import { Reveal } from '@/components/reveal'
+import { SITE_LOCATION } from '@/config/site'
+import { Container } from '@/components/ui/container'
+import { MaterialSymbol } from '@/components/ui/material-symbol'
+import { Reveal } from '@/components/ui/reveal'
 import { HeroMotion } from '../hero-motion'
 import { SignatureTime } from '../local-time'
 
@@ -62,7 +63,7 @@ export function Hero() {
           <div className="bg-surface-container-low text-on-surface inline-flex items-center rounded-full text-xs sm:text-sm">
             <span className="flex min-h-11 items-center gap-2 px-3 leading-none font-medium whitespace-nowrap">
               <MaterialSymbol className="text-primary text-lg leading-none" name="location_on" />
-              Nantes, France
+              {SITE_LOCATION}
             </span>
             <span aria-hidden className="bg-outline-variant h-5 w-px" />
             <SignatureTime />

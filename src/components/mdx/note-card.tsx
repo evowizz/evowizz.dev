@@ -1,6 +1,6 @@
 import { StyleablePropsWithChildren } from '@/types/component'
 import { cn } from '@/lib/utils'
-import { MaterialSymbol } from '@/components/material-symbol'
+import { MaterialSymbol } from '@/components/ui/material-symbol'
 
 type NoteCardProps = {
   icon?: string

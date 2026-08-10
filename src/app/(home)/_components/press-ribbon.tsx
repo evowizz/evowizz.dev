@@ -1,5 +1,5 @@
 import { mediaLogos, type MediaLogos } from '@/components/svg'
-import { Container } from '@/components/elements'
+import { Container } from '@/components/ui/container'
 
 type Outlet = { name: string; url: string; logo: MediaLogos }
 

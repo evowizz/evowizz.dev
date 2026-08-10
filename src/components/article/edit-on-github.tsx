@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { MaterialSymbol } from './material-symbol'
+import { MaterialSymbol } from '@/components/ui/material-symbol'
 
 const REPO_URL = 'https://github.com/evowizz/evowizz.dev'
 const BRANCH = 'next'

@@ -1,4 +1,4 @@
-import { SkillLogos } from '@/components/svg'
+import type { SkillLogos } from '@/components/svg'
 
 export type Skill = {
   name: string

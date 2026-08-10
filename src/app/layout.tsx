@@ -4,7 +4,7 @@ import type { Metadata } from 'next'
 import { Google_Sans_Code, Google_Sans_Flex, Roboto_Slab } from 'next/font/google'
 import { Footer } from '@/components/footer'
 import { Header } from '@/components/header'
-import { MaterialThemeProvider } from '@/components/material-theme-context'
+import { MaterialThemeProvider } from '@/theme/material-theme'
 import { DevBar } from '@/components/debug/dev-bar'
 import { ThemeProvider } from 'next-themes'
 

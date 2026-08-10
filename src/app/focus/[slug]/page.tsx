@@ -1,13 +1,13 @@
 import { notFound } from 'next/navigation'
 import { allFoci, Focus } from '@/content'
 import MDXContent from '@/components/mdx/mdx-content'
-import EnhancedArticle from '@/components/enhanced-article'
-import { FocusHeader } from '@/app/focus/_components/focus-header'
-import { ThemeOverride } from '@/components/material-theme-context'
-import { EditOnGitHub } from '@/components/edit-on-github'
-import { BackButton } from '@/components/link-button'
-import { Container } from '@/components/elements'
-import { ArticleControls } from '@/components/article-controls'
+import { ArticleWithRuler } from '@/components/article/article-with-ruler'
+import { FocusHeader } from './_components/focus-header'
+import { ThemeOverride } from '@/theme/material-theme'
+import { EditOnGitHub } from '@/components/article/edit-on-github'
+import { BackButton } from '@/components/article/article-navigation'
+import { Container } from '@/components/ui/container'
+import { ArticleControls } from '@/components/article/article-controls'
 
 export async function generateStaticParams() {
   return allFoci.map((item) => ({
@@ -56,7 +56,7 @@ export default async function FocusPage({ params }: { params: Promise<{ slug: st
           <ArticleControls />
         </div>
 
-        <EnhancedArticle className="paper w-full">
+        <ArticleWithRuler className="paper w-full">
           <FocusHeader
             meta={{
               title: item.title,
@@ -70,7 +70,7 @@ export default async function FocusPage({ params }: { params: Promise<{ slug: st
           <div className="prose prose-quoteless prose-bleed dark:prose-invert w-full max-w-none">
             <MDXContent code={item.mdx} />
           </div>
-        </EnhancedArticle>
+        </ArticleWithRuler>
 
         <footer className="mt-4">
           <EditOnGitHub filePath={`content/focus/${slug}.mdx`} />
