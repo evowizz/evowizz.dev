@@ -101,7 +101,7 @@ const focus = defineCollection({
 })
 
 export default defineConfig({
-  collections: [posts, focus],
+  content: [posts, focus],
 })
 
 async function extractColorFromImage(imagePath: string): Promise<string | null> {
