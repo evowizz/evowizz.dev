@@ -40,7 +40,7 @@
     "@content-collections/next": "^0.2.11",
     "@tailwindcss/postcss": "^4.3.3",
     "@types/mdx": "^2.0.14",
-    "@types/node": "^25",
+    "@types/node": "^24",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "colorthief": "^3.5.0",
