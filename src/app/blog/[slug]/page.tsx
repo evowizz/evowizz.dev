@@ -1,19 +1,24 @@
 import { Suspense } from 'react'
 import dayjs from 'dayjs'
 import { notFound } from 'next/navigation'
+import { connection } from 'next/server'
 import { allPosts, Post } from '@/content'
 import MDXContent from '@/components/mdx/mdx-content'
 import { ArticleWithRuler } from '@/components/article/article-with-ruler'
+import { ArticleLoadingShell, ArticlePageShell } from '@/components/article/article-page-shell'
 import { ViewReporter } from './_components/view-reporter'
 import { MaterialSymbol } from '@/components/ui/material-symbol'
-import { BackButton } from '@/components/article/article-navigation'
 import { ThemeOverride } from '@/theme/material-theme'
 import { EditOnGitHub } from '@/components/article/edit-on-github'
-import { Container } from '@/components/ui/container'
 import { Reveal } from '@/components/ui/reveal'
-import { ArticleControls } from '@/components/article/article-controls'
 import { getViewsBySlug } from '@/db/views/queries'
 import { countWords, formatWords } from '@/lib/words'
+
+export const prefetch = 'partial'
+
+type BlogPostProps = {
+  params: Promise<{ slug: string }>
+}
 
 export async function generateStaticParams() {
   return allPosts.map((post) => ({
@@ -21,7 +26,9 @@ export async function generateStaticParams() {
   }))
 }
 
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
+export async function generateMetadata({ params }: BlogPostProps) {
+  'use cache'
+
   const { slug } = await params
   const post = allPosts.find((post: Post) => post.slug === slug)
   if (!post) return
@@ -45,6 +52,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 }
 
 async function Views({ slug }: { slug: string }) {
+  await connection()
+
   const view = await getViewsBySlug(slug)
   const count = view?.count ?? 0
 
@@ -67,7 +76,17 @@ async function Views({ slug }: { slug: string }) {
   )
 }
 
-export default async function BlogPost({ params }: { params: Promise<{ slug: string }> }) {
+export default function BlogPost({ params }: BlogPostProps) {
+  return (
+    <ArticlePageShell backHref="/blog" backLabel="All posts">
+      <Suspense fallback={<ArticleLoadingShell />}>
+        <BlogPostContent params={params} />
+      </Suspense>
+    </ArticlePageShell>
+  )
+}
+
+async function BlogPostContent({ params }: BlogPostProps) {
   const { slug } = await params
   const post = allPosts.find((post: Post) => post.slug === slug)
 
@@ -76,56 +95,47 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
   }
 
   return (
-    <main className="min-h-viewport pt-10 pb-24 md:pt-16">
+    <>
       <ThemeOverride color={post.themeColor} variant={post.themeVariant} />
-      <Container>
-        <div className="mb-3 flex items-center justify-between gap-4">
-          <BackButton href="/blog" className="mb-0">
-            All posts
-          </BackButton>
-          <ArticleControls />
-        </div>
-
-        <ArticleWithRuler className="paper prose prose-quoteless dark:prose-invert w-full max-w-none">
-          <Reveal immediate stagger y={24} className="not-prose flex flex-col items-start gap-5">
-            <p className="text-on-surface-variant flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-xs tracking-[0.08em] uppercase">
-              <time dateTime={post.publishedAt}>{dayjs(post.publishedAt).format('MMMM DD, YYYY')}</time>
-              <span aria-hidden className="text-outline-variant">
-                /
-              </span>
-              <span className="inline-flex items-center gap-1.5">
-                <MaterialSymbol name="match_word" className="text-base" />
-                {formatWords(countWords(post.content))}
-                <span className="sr-only">words</span>
-              </span>
-              <Suspense>
-                <Views slug={post.slug} />
-              </Suspense>
-            </p>
-
-            <h1 className="variation-sans text-on-surface text-[clamp(2.5rem,7vw,5rem)] leading-[1.02] font-semibold tracking-tight text-balance">
-              {post.title}
-            </h1>
-
-            <p className="text-on-surface-variant max-w-176 text-lg leading-relaxed md:text-xl">{post.summary}</p>
-          </Reveal>
-
-          <p
-            aria-hidden
-            className="not-prose text-outline-variant mt-10 text-center font-mono text-sm select-none md:mt-12"
-          >
-            ----
+      <ArticleWithRuler className="paper prose prose-quoteless dark:prose-invert w-full max-w-none">
+        <Reveal immediate stagger y={24} className="not-prose flex flex-col items-start gap-5">
+          <p className="text-on-surface-variant flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-xs tracking-[0.08em] uppercase">
+            <time dateTime={post.publishedAt}>{dayjs(post.publishedAt).format('MMMM DD, YYYY')}</time>
+            <span aria-hidden className="text-outline-variant">
+              /
+            </span>
+            <span className="inline-flex items-center gap-1.5">
+              <MaterialSymbol name="match_word" className="text-base" />
+              {formatWords(countWords(post.content))}
+              <span className="sr-only">words</span>
+            </span>
+            <Suspense>
+              <Views slug={post.slug} />
+            </Suspense>
           </p>
 
-          <div className="mt-10 md:mt-12">
-            <MDXContent code={post.mdx} />
-          </div>
-        </ArticleWithRuler>
+          <h1 className="variation-sans text-on-surface text-[clamp(2.5rem,7vw,5rem)] leading-[1.02] font-semibold tracking-tight text-balance">
+            {post.title}
+          </h1>
 
-        <footer className="mt-4">
-          <EditOnGitHub filePath={`content/posts/${slug}.mdx`} />
-        </footer>
-      </Container>
-    </main>
+          <p className="text-on-surface-variant max-w-176 text-lg leading-relaxed md:text-xl">{post.summary}</p>
+        </Reveal>
+
+        <p
+          aria-hidden
+          className="not-prose text-outline-variant mt-10 text-center font-mono text-sm select-none md:mt-12"
+        >
+          ----
+        </p>
+
+        <div className="mt-10 md:mt-12">
+          <MDXContent code={post.mdx} />
+        </div>
+      </ArticleWithRuler>
+
+      <footer className="mt-4">
+        <EditOnGitHub filePath={`content/posts/${slug}.mdx`} />
+      </footer>
+    </>
   )
 }

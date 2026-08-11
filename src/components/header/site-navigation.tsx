@@ -1,6 +1,6 @@
 'use client'
 
-import { type ComponentProps, type ReactNode, useRef, useState } from 'react'
+import { Suspense, type ComponentProps, type ReactNode, useRef, useState } from 'react'
 import Link from 'next/link'
 import { useTheme } from 'next-themes'
 import { cn } from '@/lib/utils'
@@ -74,7 +74,9 @@ export const SiteNavigation = ({ wordmark }: { wordmark: ReactNode }) => {
         </Container>
       </div>
 
-      <Drawer open={drawerOpen} onClose={() => setDrawerOpen(false)} scopeRef={headerRef} />
+      <Suspense>
+        <Drawer open={drawerOpen} onClose={() => setDrawerOpen(false)} scopeRef={headerRef} />
+      </Suspense>
     </header>
   )
 }

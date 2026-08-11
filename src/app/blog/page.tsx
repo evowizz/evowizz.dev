@@ -1,5 +1,6 @@
 import { Suspense } from 'react'
 import Link from 'next/link'
+import { connection } from 'next/server'
 import dayjs from 'dayjs'
 import { allPosts } from '@/content'
 import { getViewsCount } from '@/db/views/queries'
@@ -90,6 +91,8 @@ const PostRow = ({ post, latest }: { post: PostEntry; latest?: boolean }) => (
 )
 
 async function Views({ slug }: { slug: string }) {
+  await connection()
+
   // getViewsCount uses 'use cache' with cacheLife('seconds'), so parallel
   // calls from multiple Views components share the same cached result.
   const allViews = await getViewsCount()
