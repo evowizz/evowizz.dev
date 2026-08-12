@@ -48,7 +48,7 @@ export default function RootLayout({
       data-devbar-visible={process.env.NODE_ENV === 'development' ? '' : undefined}
       className={`${googleSansFlex.variable} ${googleSansCode.variable} ${robotoSlab.variable}`}
     >
-      <body className="text-on-surface motion-effects-default bg-surface transition-colors">
+      <body className="text-on-surface motion-effects-default bg-surface flex min-h-dvh flex-col transition-colors">
         <ThemeProvider>
           <MaterialThemeProvider>
             <Header />

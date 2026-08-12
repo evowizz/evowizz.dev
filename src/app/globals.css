@@ -534,6 +534,20 @@
   transition-duration: 300ms;
 }
 
+@utility not-found-backspace-segment {
+  width: 5rem;
+  transform-origin: right center;
+  @apply motion-spatial-slow motion-reduce:transition-none;
+  transition-property: width, opacity, scale;
+
+  .group\/not-found:hover &,
+  .group\/not-found:focus-within & {
+    width: 0;
+    opacity: 0;
+    scale: 0.85 1;
+  }
+}
+
 @utility text-emphasized {
   font-weight: 700;
   --font-wdth: 115;
