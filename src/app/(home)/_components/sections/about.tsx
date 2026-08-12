@@ -24,7 +24,7 @@ export const About = () => (
       <SectionTitle>About</SectionTitle>
 
       <Reveal stagger className="grid gap-4 md:gap-5 lg:grid-cols-3">
-        <article className="text-on-surface flex max-w-2xl flex-col gap-6 text-lg leading-relaxed md:text-xl lg:col-span-2">
+        <article className="text-on-surface flex flex-col gap-6 text-lg leading-relaxed md:text-xl lg:col-span-2 lg:max-w-2xl">
           <p className="text-on-surface text-xl font-medium md:text-2xl">
             Hi, I&apos;m{' '}
             <span className="variation-sans variation-roundness-100 variation-grade-150 text-primary font-medium">
@@ -63,9 +63,8 @@ export const About = () => (
           </p>
         </article>
 
-        {/* Uses one row at `md`, then lets each card size itself at `lg`. */}
-        <ScrollDrift className="flex flex-col gap-4 md:flex-row md:gap-5 lg:flex-col lg:gap-5 lg:self-start">
-          <div className="bg-tertiary-container text-on-tertiary-container flex flex-1 flex-col justify-center gap-3 rounded-2xl p-6 md:p-7 lg:flex-none">
+        <ScrollDrift className="flex flex-col gap-4 sm:flex-row sm:gap-5 lg:flex-col lg:gap-5 lg:self-start">
+          <div className="bg-tertiary-container text-on-tertiary-container flex flex-col justify-center gap-3 rounded-2xl p-6 sm:flex-1 md:p-7 lg:flex-none">
             <CountUp
               to={630000}
               group
@@ -76,10 +75,12 @@ export const About = () => (
             </p>
           </div>
 
-          {/* Rows share the stretched card height at `md`. */}
-          <dl className="border-outline-variant divide-outline-variant flex flex-1 flex-col divide-y overflow-hidden rounded-2xl border lg:flex-none">
+          <dl className="border-outline-variant divide-outline-variant flex flex-col divide-y overflow-hidden rounded-2xl border sm:flex-1 lg:flex-none">
             {FACTS.map((fact) => (
-              <div key={fact.term} className="flex flex-1 items-center justify-between gap-4 px-5 py-3.5">
+              <div
+                key={fact.term}
+                className="flex items-center justify-between gap-4 px-5 py-3.5 sm:flex-1 lg:flex-none"
+              >
                 <dt>
                   <Label>{fact.term}</Label>
                 </dt>
