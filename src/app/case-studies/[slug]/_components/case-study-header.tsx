@@ -2,7 +2,7 @@ import Image from 'next/image'
 import { Label } from '@/components/ui/typography'
 import { Reveal } from '@/components/ui/reveal'
 
-export type FocusMeta = {
+export type CaseStudyMeta = {
   title: string
   overview: string
   stack: string[]
@@ -10,11 +10,11 @@ export type FocusMeta = {
   image?: string
 }
 
-type FocusHeaderProps = {
-  meta: FocusMeta
+type CaseStudyHeaderProps = {
+  meta: CaseStudyMeta
 }
 
-export function FocusHeader({ meta }: FocusHeaderProps) {
+export function CaseStudyHeader({ meta }: CaseStudyHeaderProps) {
   return (
     <header className="prose-bleed not-prose mb-12 flex flex-col gap-10 md:mb-16">
       <Reveal immediate stagger y={24} className="flex flex-col items-start gap-5">

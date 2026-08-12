@@ -5,7 +5,7 @@ export const SITE_LOCATION = 'Nantes, France'
 export const DESTINATIONS = [
   { label: 'Home', path: '/' },
   { label: 'Blog', path: '/blog' },
-  { label: 'Focus', path: '/focus' },
+  { label: 'Case Studies', path: '/case-studies' },
 ]
 
 export const SOCIALS = [

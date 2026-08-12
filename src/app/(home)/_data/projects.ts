@@ -1,4 +1,4 @@
-export type FocusLink = {
+export type CaseStudyLink = {
   slug: string
   label: string
 }
@@ -33,7 +33,7 @@ export type Project = {
   spotlight?: boolean // Rendered as the oversized lead block in Selected Work
   spotlightStats?: SpotlightStat[]
   deprecated?: boolean
-  focus?: FocusLink[]
+  caseStudies?: CaseStudyLink[]
   links: ProjectLink[]
 }
 
@@ -51,7 +51,7 @@ export const projects: Project[] = [
       { value: '500k+', label: 'downloads' },
       { value: '4.7', label: 'rating' },
     ],
-    focus: [{ slug: 'inware', label: 'Read More' }],
+    caseStudies: [{ slug: 'inware', label: 'Read More' }],
     links: [playStoreLink('com.evo.inware')],
   },
   {

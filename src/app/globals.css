@@ -717,8 +717,8 @@
 }
 
 @layer utilities {
-  /* Focus imagery breaks out of the text measure to the edge of the paper
-     sheet (see .paper below); without a sheet it stays in the text column. */
+  /* Case study figures bleed from the text measure to the paper edge.
+     Without `.paper`, they stay in the text column. */
   .prose-bleed figure {
     margin-inline: calc(-1 * var(--paper-pad, 0px));
     background-color: transparent;

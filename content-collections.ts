@@ -82,9 +82,9 @@ const posts = defineCollection({
   transform,
 })
 
-const focus = defineCollection({
-  name: 'focus',
-  directory: 'content/focus',
+const caseStudies = defineCollection({
+  name: 'caseStudies',
+  directory: 'content/case-studies',
   include: '**/*.mdx',
   schema: z.object({
     title: z.string(),
@@ -101,7 +101,7 @@ const focus = defineCollection({
 })
 
 export default defineConfig({
-  content: [posts, focus],
+  content: [posts, caseStudies],
 })
 
 async function extractColorFromImage(imagePath: string): Promise<string | null> {

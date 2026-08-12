@@ -1,35 +1,35 @@
 import Link from 'next/link'
-import { allFoci } from '@/content'
+import { allCaseStudies } from '@/content'
 import { Container } from '@/components/ui/container'
 import { PageTitle } from '@/components/ui/typography'
 
 export const metadata = {
-  title: 'Focus',
+  title: 'Case Studies',
   description: 'The design decisions and development process behind my projects.',
 }
 
-export default function FocusPage() {
-  const focus = allFoci.filter((item) => !item.hidden)
+export default function CaseStudiesPage() {
+  const caseStudies = allCaseStudies.filter((item) => !item.hidden)
 
   return (
     <main className="min-h-viewport py-28 md:py-40">
       <Container className="flex flex-col gap-12 md:gap-16">
         <div className="flex flex-col gap-4">
-          <PageTitle>Focus</PageTitle>
+          <PageTitle>Case Studies</PageTitle>
           <p className="text-on-surface-variant max-w-152 text-lg md:text-xl">
             One project at a time, in depth: the design decisions and the development process behind my work.
           </p>
           <p className="text-on-surface-variant flex flex-wrap items-center gap-x-2 gap-y-1 pt-2 font-mono text-xs tracking-[0.08em] uppercase">
             <span>
-              {focus.length} {focus.length === 1 ? 'project' : 'projects'}
+              {caseStudies.length} {caseStudies.length === 1 ? 'case study' : 'case studies'}
             </span>
           </p>
         </div>
 
         <ul className="divide-outline-variant -mx-4 flex flex-col divide-y md:-mx-6">
-          {focus.map((item) => (
+          {caseStudies.map((item) => (
             <li key={item.slug}>
-              <FocusRow item={item} />
+              <CaseStudyRow item={item} />
             </li>
           ))}
         </ul>
@@ -38,11 +38,11 @@ export default function FocusPage() {
   )
 }
 
-type FocusEntry = (typeof allFoci)[number]
+type CaseStudyEntry = (typeof allCaseStudies)[number]
 
-const FocusRow = ({ item }: { item: FocusEntry }) => (
+const CaseStudyRow = ({ item }: { item: CaseStudyEntry }) => (
   <Link
-    href={`/focus/${item.slug}`}
+    href={`/case-studies/${item.slug}`}
     className="group hover:bg-surface-container-low focus-visible:bg-surface-container-low motion-effects-fast focus-ring block px-4 py-5 transition-colors md:px-6 md:py-7"
   >
     <article className="flex flex-col items-start gap-2.5">
