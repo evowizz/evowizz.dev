@@ -10,7 +10,7 @@ const year = new Date().getFullYear()
 const footerDestinations = [...DESTINATIONS, { label: 'Contact', path: '/#contact' }]
 
 const footerLinkVariants = cva(
-  'bg-inverse-on-surface/8 hover:bg-inverse-on-surface/15 hover:text-inverse-primary motion-effects-default focus-ring-inverse-primary flex h-full items-center justify-between gap-4 px-5 py-5 font-semibold transition-[color,background-color,border-radius] hover:rounded-3xl',
+  'bg-surface-container-high hover:bg-secondary-container hover:text-on-secondary-container motion-effects-default focus-ring-on-tertiary-container flex h-full items-center justify-between gap-4 px-5 py-5 font-semibold transition-[color,background-color,border-radius] hover:rounded-3xl',
   {
     variants: {
       position: {
@@ -33,7 +33,7 @@ function footerLinkPosition(index: number): FooterLinkPosition {
 }
 
 const WordmarkLink = () => (
-  <Link href="/" aria-label="Home" className="focus-ring-inverse-primary w-fit">
+  <Link href="/" aria-label="Home" className="focus-ring-on-tertiary-container w-fit">
     <Wordmark className="h-auto w-20" />
   </Link>
 )
@@ -53,14 +53,14 @@ const FooterLink = ({
 )
 
 const FooterMeta = () => (
-  <div className="text-inverse-on-surface/60 border-inverse-on-surface/15 flex flex-wrap items-center justify-between gap-x-6 gap-y-1 border-t pt-6 text-sm">
+  <div className="text-on-surface-variant border-on-surface-variant/15 flex flex-wrap items-center justify-between gap-x-6 gap-y-1 border-t pt-6 text-sm">
     <p>&copy; {year} Dylan Roussel</p>
     <p>{SITE_LOCATION}</p>
   </div>
 )
 
 export const Footer = () => (
-  <footer className="reading-hide bg-inverse-surface text-inverse-on-surface relative z-0 -mt-10 pt-10">
+  <footer className="reading-hide bg-surface-dim dark:bg-surface-bright text-on-surface relative z-0 -mt-10 pt-10">
     <Container className="flex flex-col py-10 lg:py-12">
       <div className="grid gap-8 pb-8 lg:grid-cols-[1fr_1.2fr] lg:items-center">
         <WordmarkLink />
