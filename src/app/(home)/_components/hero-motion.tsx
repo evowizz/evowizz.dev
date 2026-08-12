@@ -44,12 +44,12 @@ export function HeroMotion({ children }: { children: ReactNode }) {
         () => {
           gsap.to(content, {
             opacity: 0,
-            filter: 'blur(20px)',
+            filter: 'blur(16px)',
             ease: 'none',
             scrollTrigger: {
               trigger: about,
-              start: 'top 92%',
-              end: 'top 55%',
+              start: 'clamp(top 92%)',
+              end: 'top 40%',
               scrub: true,
               invalidateOnRefresh: true,
             },
