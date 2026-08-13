@@ -1,15 +1,18 @@
 import { defineConfig } from 'drizzle-kit'
-import 'dotenv/config'
+import { loadEnvConfig } from '@next/env'
+import { z } from 'zod'
 
-if (!process.env.DRIZZLE_DATABASE_URL) {
-  throw new Error('DRIZZLE_DATABASE_URL env is missing')
-}
+loadEnvConfig(process.cwd())
+
+const { DRIZZLE_DATABASE_URL } = z
+  .object({ DRIZZLE_DATABASE_URL: z.string().min(1, 'DRIZZLE_DATABASE_URL env is missing') })
+  .parse(process.env)
 
 export default defineConfig({
   schema: './src/db/schema.ts',
   out: './src/db/migrations',
   dialect: 'postgresql',
   dbCredentials: {
-    url: process.env.DRIZZLE_DATABASE_URL,
+    url: DRIZZLE_DATABASE_URL,
   },
 })
