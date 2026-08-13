@@ -7,6 +7,7 @@ import { Header } from '@/components/header'
 import { MaterialThemeProvider } from '@/theme/material-theme'
 import { DevBar } from '@/components/debug/dev-bar'
 import { ThemeProvider } from 'next-themes'
+import { SITE_DESCRIPTION, SITE_NAME, TWITTER_HANDLE } from '@/config/site'
 
 const metadataBaseUrl =
   process.env.VERCEL_ENV === 'production'
@@ -17,6 +18,36 @@ const metadataBaseUrl =
 
 export const metadata: Metadata = {
   metadataBase: new URL(metadataBaseUrl),
+  title: {
+    default: SITE_NAME,
+    template: `%s | ${SITE_NAME}`,
+  },
+  description: SITE_DESCRIPTION,
+  applicationName: SITE_NAME,
+  authors: [{ name: SITE_NAME, url: '/' }],
+  creator: SITE_NAME,
+  publisher: SITE_NAME,
+  alternates: {
+    types: {
+      'application/rss+xml': '/rss.xml',
+    },
+  },
+  openGraph: {
+    type: 'website',
+    locale: 'en_US',
+    url: '/',
+    siteName: SITE_NAME,
+    title: SITE_NAME,
+    description: SITE_DESCRIPTION,
+    images: [{ url: `/api/og?text=${encodeURIComponent(SITE_NAME)}` }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: SITE_NAME,
+    description: SITE_DESCRIPTION,
+    creator: TWITTER_HANDLE,
+    images: [{ url: `/api/og?text=${encodeURIComponent(SITE_NAME)}` }],
+  },
 }
 
 const googleSansFlex = Google_Sans_Flex({

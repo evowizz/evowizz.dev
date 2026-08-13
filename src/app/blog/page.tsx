@@ -7,10 +7,29 @@ import { getViewsCount } from '@/db/views/queries'
 import { Container } from '@/components/ui/container'
 import { PageTitle } from '@/components/ui/typography'
 import { MaterialSymbol } from '@/components/ui/material-symbol'
+import { TWITTER_HANDLE } from '@/config/site'
+import type { Metadata } from 'next'
 
-export const metadata = {
-  title: 'Blog',
-  description: 'Thoughts and tutorials on development and design.',
+const title = 'Blog'
+const description = 'Thoughts and tutorials on development and design.'
+
+export const metadata: Metadata = {
+  title,
+  description,
+  openGraph: {
+    type: 'website',
+    url: '/blog',
+    title,
+    description,
+    images: [{ url: `/api/og?text=${encodeURIComponent(title)}` }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title,
+    description,
+    creator: TWITTER_HANDLE,
+    images: [{ url: `/api/og?text=${encodeURIComponent(title)}` }],
+  },
 }
 
 export default function BlogPage() {

@@ -13,6 +13,7 @@ import { EditOnGitHub } from '@/components/article/edit-on-github'
 import { Reveal } from '@/components/ui/reveal'
 import { getViewsBySlug } from '@/db/views/queries'
 import { countWords, formatWords } from '@/lib/words'
+import { TWITTER_HANDLE } from '@/config/site'
 
 export const prefetch = 'partial'
 
@@ -21,32 +22,35 @@ type BlogPostProps = {
 }
 
 export async function generateStaticParams() {
-  return allPosts.map((post) => ({
-    slug: post.slug,
-  }))
+  return allPosts.map((post) => ({ slug: post.slug }))
 }
 
 export async function generateMetadata({ params }: BlogPostProps) {
   'use cache'
 
   const { slug } = await params
-  const post = allPosts.find((post: Post) => post.slug === slug)
+  const post = findPost(slug)
   if (!post) return
+  const image = `/api/og?text=${encodeURIComponent(post.title)}`
 
   return {
     title: post.title,
     description: post.summary,
+    robots: post.hidden ? { index: false, follow: false } : undefined,
     openGraph: {
       title: post.title,
       description: post.summary,
       type: 'article',
       publishedTime: post.publishedAt,
       url: `https://evowizz.dev/blog/${slug}`,
-      images: [
-        {
-          url: `/api/og?text=${encodeURIComponent(post.title)}`,
-        },
-      ],
+      images: [{ url: image }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: post.title,
+      description: post.summary,
+      creator: TWITTER_HANDLE,
+      images: [{ url: image }],
     },
   }
 }
@@ -88,7 +92,7 @@ export default function BlogPost({ params }: BlogPostProps) {
 
 async function BlogPostContent({ params }: BlogPostProps) {
   const { slug } = await params
-  const post = allPosts.find((post: Post) => post.slug === slug)
+  const post = findPost(slug)
 
   if (!post) {
     notFound()
@@ -138,4 +142,8 @@ async function BlogPostContent({ params }: BlogPostProps) {
       </footer>
     </>
   )
+}
+
+function findPost(slug: string) {
+  return allPosts.find((post: Post) => post.slug === slug)
 }

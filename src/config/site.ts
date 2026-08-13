@@ -1,6 +1,14 @@
+export const SITE_URL = 'https://evowizz.dev'
+
+export const SITE_NAME = 'Dylan Roussel'
+
+export const SITE_DESCRIPTION = 'Developer and designer for Android and the web, based in Nantes, France.'
+
 export const EMAIL = 'mail@evowizz.dev'
 
 export const SITE_LOCATION = 'Nantes, France'
+
+export const TWITTER_HANDLE = '@evowizz'
 
 export const DESTINATIONS = [
   { label: 'Home', path: '/' },

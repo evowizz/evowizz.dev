@@ -7,6 +7,7 @@ import { ArticleLoadingShell, ArticlePageShell } from '@/components/article/arti
 import { CaseStudyHeader } from './_components/case-study-header'
 import { ThemeOverride } from '@/theme/material-theme'
 import { EditOnGitHub } from '@/components/article/edit-on-github'
+import { TWITTER_HANDLE } from '@/config/site'
 
 export const prefetch = 'partial'
 
@@ -15,31 +16,34 @@ type CaseStudyPageProps = {
 }
 
 export async function generateStaticParams() {
-  return allCaseStudies.map((item) => ({
-    slug: item.slug,
-  }))
+  return allCaseStudies.map((item) => ({ slug: item.slug }))
 }
 
 export async function generateMetadata({ params }: CaseStudyPageProps) {
   'use cache'
 
   const { slug } = await params
-  const item = allCaseStudies.find((caseStudy: CaseStudy) => caseStudy.slug === slug)
+  const item = findCaseStudy(slug)
   if (!item) return
+  const image = `/api/og?text=${encodeURIComponent(item.title)}`
 
   return {
     title: item.title,
     description: item.overview,
+    robots: item.hidden ? { index: false, follow: false } : undefined,
     openGraph: {
       title: item.title,
       description: item.overview,
       type: 'article',
       url: `https://evowizz.dev/case-studies/${slug}`,
-      images: [
-        {
-          url: `/api/og?text=${encodeURIComponent(item.title)}`,
-        },
-      ],
+      images: [{ url: image }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: item.title,
+      description: item.overview,
+      creator: TWITTER_HANDLE,
+      images: [{ url: image }],
     },
   }
 }
@@ -56,7 +60,7 @@ export default function CaseStudyPage({ params }: CaseStudyPageProps) {
 
 async function CaseStudyContent({ params }: CaseStudyPageProps) {
   const { slug } = await params
-  const item = allCaseStudies.find((caseStudy: CaseStudy) => caseStudy.slug === slug)
+  const item = findCaseStudy(slug)
 
   if (!item) {
     notFound()
@@ -86,4 +90,8 @@ async function CaseStudyContent({ params }: CaseStudyPageProps) {
       </footer>
     </>
   )
+}
+
+function findCaseStudy(slug: string) {
+  return allCaseStudies.find((caseStudy: CaseStudy) => caseStudy.slug === slug)
 }
