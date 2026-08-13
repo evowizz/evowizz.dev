@@ -1,13 +1,19 @@
 import './globals.css'
 
 import type { Metadata } from 'next'
+import dynamic from 'next/dynamic'
 import { Google_Sans_Code, Google_Sans_Flex, Roboto_Slab } from 'next/font/google'
 import { Footer } from '@/components/footer'
 import { Header } from '@/components/header'
 import { MaterialThemeProvider } from '@/theme/material-theme'
-import { DevBar } from '@/components/debug/dev-bar'
 import { ThemeProvider } from 'next-themes'
 import { SITE_DESCRIPTION, SITE_NAME, TWITTER_HANDLE } from '@/config/site'
+
+// Keep the development toolbar and its dependencies out of production bundles.
+const DevelopmentTools =
+  process.env.NODE_ENV === 'development'
+    ? dynamic(() => import('@/components/debug/dev-bar').then(({ DevBar }) => DevBar))
+    : () => null
 
 const metadataBaseUrl =
   process.env.VERCEL_ENV === 'production'
@@ -91,7 +97,7 @@ export default function RootLayout({
             <Header />
             {children}
             <Footer />
-            {process.env.NODE_ENV === 'development' && <DevBar />}
+            <DevelopmentTools />
           </MaterialThemeProvider>
         </ThemeProvider>
       </body>
