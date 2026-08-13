@@ -12,7 +12,7 @@ type ArticlePageShellProps = {
 
 export function ArticlePageShell({ backHref, backLabel, children }: ArticlePageShellProps) {
   return (
-    <main className="min-h-viewport overflow-x-clip pt-10 pb-24 md:pt-16">
+    <main id="main-content" tabIndex={-1} className="min-h-viewport overflow-x-clip pt-10 pb-24 md:pt-16">
       <Container>
         <div className="mb-3 flex items-center justify-between gap-4">
           <BackButton href={backHref} className="mb-0">

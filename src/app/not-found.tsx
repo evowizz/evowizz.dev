@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 export default function NotFound() {
   return (
-    <main className="bg-surface text-on-surface flex flex-1">
+    <main id="main-content" tabIndex={-1} className="bg-surface text-on-surface flex flex-1">
       <Container className="flex items-center justify-center py-24 md:py-32">
         <section className="group/not-found flex w-full max-w-4xl flex-col items-center text-center">
           <p className="flex max-w-full items-center justify-center overflow-hidden font-mono text-sm whitespace-nowrap sm:text-lg">

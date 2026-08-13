@@ -58,10 +58,13 @@ const CustomParagraph = ({ children, ...props }: React.ComponentProps<'p'>) => {
   return <p {...props}>{children}</p>
 }
 
+const CustomTopLevelHeading = (props: React.ComponentProps<'h1'>) => <h2 {...props} />
+
 const components = {
   Image: CustomImage,
   img: CustomMarkdownImage,
   p: CustomParagraph,
+  h1: CustomTopLevelHeading,
   a: SmartLink,
   pre: Pre,
   LocalVideo,

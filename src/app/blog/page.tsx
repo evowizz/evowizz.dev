@@ -43,7 +43,7 @@ export default function BlogPage() {
   const span = firstYear === lastYear ? `${firstYear}` : `${firstYear}-${lastYear}`
 
   return (
-    <main className="min-h-viewport py-28 md:py-40">
+    <main id="main-content" tabIndex={-1} className="min-h-viewport py-28 md:py-40">
       <Container className="flex flex-col gap-12 md:gap-16">
         <div className="flex flex-col gap-4">
           <PageTitle>Blog</PageTitle>

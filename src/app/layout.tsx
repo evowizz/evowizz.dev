@@ -80,6 +80,12 @@ export default function RootLayout({
       className={`${googleSansFlex.variable} ${googleSansCode.variable} ${robotoSlab.variable}`}
     >
       <body className="text-on-surface motion-effects-default bg-surface flex min-h-dvh flex-col transition-colors">
+        <a
+          href="#main-content"
+          className="bg-primary text-on-primary focus-ring-on-primary fixed top-4 left-4 z-100 -translate-y-24 rounded-full px-4 py-2 font-semibold transition-transform focus-visible:translate-y-0 motion-reduce:transition-none"
+        >
+          Skip to content
+        </a>
         <ThemeProvider>
           <MaterialThemeProvider>
             <Header />
