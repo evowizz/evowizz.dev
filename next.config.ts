@@ -19,7 +19,18 @@ const nextConfig: NextConfig = {
   },
 
   async redirects() {
-    return [redirect('/experiments/inware/privacy_policy', '/inware/privacy_policy')]
+    return [
+      redirect('/experiments/inware/privacy_policy', '/inware/privacy_policy'),
+      redirect('/inware/privacy_policy.html', '/inware/2022/privacy_policy', false),
+      redirect('/inware/privacy_policy', '/inware/2022/privacy_policy', false),
+    ]
+  },
+
+  async rewrites() {
+    return [
+      rewrite('/inware/2022/privacy_policy', '/inware/2022/privacy_policy.html'),
+      rewrite('/inware/2026/privacy_policy', '/inware/2026/privacy_policy.html'),
+    ]
   },
 
   async headers() {
@@ -34,6 +45,10 @@ const nextConfig: NextConfig = {
 
 function redirect(source: string, destination: string, permanent: boolean = true) {
   return { source, destination, permanent }
+}
+
+function rewrite(source: string, destination: string) {
+  return { source, destination }
 }
 
 const ContentSecurityPolicy = `
