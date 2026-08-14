@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
 import { useWidthBreath } from '@/hooks/use-width-breath'
-import { DESTINATIONS, EMAIL, SITE_LOCATION, SOCIALS } from '@/config/site'
+import { DESTINATIONS, EMAIL, SOCIALS } from '@/config/site'
 import { Container } from '@/components/ui/container'
 import { useScrollLock } from './use-scroll-lock'
 
@@ -190,7 +190,6 @@ export const Drawer = ({ open, onClose, scopeRef }: DrawerProps) => {
               </li>
             ))}
           </ul>
-          <p className="text-on-surface-variant">{SITE_LOCATION}</p>
         </Container>
       </div>
     </div>
