@@ -42,7 +42,7 @@ export const projects: Project[] = [
     title: 'Inware',
     description:
       "An Android app I've been building since 2018 to answer one question: what is actually inside your phone? It digs into the hardware and software (CPU, display, sensors, camera, battery) and themes itself to your wallpaper with Material You.",
-    image: '/api/placeholder/1200/750',
+    image: '/content/projects/inware-promo.png',
     techStack: ['Kotlin', 'Jetpack Compose', 'Android'],
     openSource: false,
     featured: true,

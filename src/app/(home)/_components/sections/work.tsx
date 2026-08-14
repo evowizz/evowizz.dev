@@ -36,49 +36,59 @@ const StatValue = ({ value }: { value: string }) => {
   return <CountUp to={parseInt(match[1], 10)} suffix={match[2]} />
 }
 
-/** Weights the scrim where the type sits, so white clears 11.4:1 over any shot. */
+const LeadArtwork = ({ project }: { project: Project }) => {
+  const alt = `Screens from the ${project.title} app on Android`
+
+  return (
+    <div className="relative aspect-video overflow-hidden lg:absolute lg:inset-0 lg:-z-20 lg:aspect-auto">
+      <Image
+        src={project.image}
+        alt={alt}
+        fill
+        sizes="(max-width: 72rem) 100vw, 72rem"
+        className="origin-right scale-125 object-contain object-right lg:scale-100 lg:object-right-top"
+      />
+      <div className="to-secondary-container absolute inset-0 bg-linear-to-b from-transparent from-50% lg:hidden" />
+      <div className="from-secondary-container via-secondary-container/95 to-secondary-container/0 absolute inset-0 hidden bg-linear-to-r via-40% lg:block" />
+    </div>
+  )
+}
+
 const Lead = ({ project }: { project: Project }) => (
-  <article className="relative isolate overflow-hidden rounded-4xl text-white">
-    <Image
-      src={project.image}
-      alt={`Screens from ${project.title}`}
-      fill
-      sizes="(max-width: 72rem) 100vw, 72rem"
-      className="-z-10 object-cover"
-    />
-    <div className="from-scrim/95 via-scrim/80 to-scrim/10 absolute inset-0 -z-10 bg-linear-to-t via-50%" />
+  <article className="bg-secondary-container text-on-secondary-container relative isolate overflow-hidden rounded-4xl lg:aspect-256/125">
+    <LeadArtwork project={project} />
 
-    <div className="flex flex-col gap-9 p-6 pt-48 md:p-8 md:pt-64 lg:p-10 lg:pt-72">
-      <h3 className="variation-sans text-[clamp(3rem,7vw,5.5rem)] leading-[0.95] font-medium tracking-[-0.03em]">
-        {project.title}
-      </h3>
+    <div className="flex flex-col gap-9 p-6 pt-0 md:p-8 md:pt-0 lg:h-full lg:max-w-lg lg:justify-end lg:p-10">
+      <div className="flex flex-col gap-3">
+        <h3 className="variation-sans text-[clamp(3rem,7vw,5.5rem)] leading-[0.95] font-medium tracking-[-0.03em]">
+          {project.title}
+        </h3>
+        <span className="font-mono text-sm opacity-75">{project.techStack.join(' / ')}</span>
+      </div>
 
-      <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between lg:gap-16">
-        <div className="flex flex-col items-start gap-5 lg:flex-1">
+      <div className="flex flex-col gap-8">
+        <div className="flex flex-col items-start gap-5">
           <p className="max-w-xl text-lg leading-relaxed opacity-80 md:text-xl">{sentenceFor(project)}</p>
 
-          <div className="flex flex-wrap items-center gap-x-8 gap-y-3">
-            {project.links[0] && (
-              // Not `ActionLink`: its `primary` hover is wrong over a picture.
-              <a
-                href={project.links[0].url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group focus-ring motion-effects-default inline-flex items-center gap-1.5 text-sm font-semibold underline-offset-4 hover:underline"
-              >
-                {project.links[0].label}
-                <MaterialSymbol
-                  name="arrow_outward"
-                  className="motion-spatial-fast text-base transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                />
-              </a>
-            )}
-            <span className="font-mono text-sm opacity-75">{project.techStack.join(' / ')}</span>
-          </div>
+          {project.links[0] && (
+            // Not `ActionLink`: its `primary` hover is wrong over a picture.
+            <a
+              href={project.links[0].url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group focus-ring inline-flex items-center gap-1 text-sm font-semibold"
+            >
+              <span className="underline-offset-4 group-hover:underline">{project.links[0].label}</span>
+              <MaterialSymbol
+                name="arrow_outward"
+                className="motion-spatial-fast text-base transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+              />
+            </a>
+          )}
         </div>
 
         {/* flex-col-reverse keeps a valid dt-then-dd order with the figure on top. */}
-        <dl className="flex flex-wrap gap-x-10 gap-y-5 lg:shrink-0">
+        <dl className="flex flex-wrap gap-x-10 gap-y-5">
           {project.spotlightStats?.map((stat) => (
             <div key={stat.label} className="flex flex-col-reverse gap-1.5">
               <dt className="text-sm font-medium opacity-80">{STAT_LABELS[stat.label] ?? stat.label}</dt>
