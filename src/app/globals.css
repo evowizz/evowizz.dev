@@ -907,9 +907,9 @@
   .prose {
     /* Links */
     a {
-      @apply text-primary no-underline;
+      @apply text-primary no-underline underline-offset-4;
       &:hover {
-        @apply text-primary-fixed-dim;
+        @apply underline;
       }
     }
 
