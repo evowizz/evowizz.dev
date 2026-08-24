@@ -22,7 +22,7 @@ export function CaseStudyHeader({ meta }: CaseStudyHeaderProps) {
           {meta.title}
         </h1>
 
-        <p className="text-on-surface-variant max-w-176 text-lg leading-relaxed text-pretty md:text-xl">
+        <p className="text-on-surface-variant max-w-176 text-lg leading-relaxed text-balance md:text-xl">
           {meta.overview}
         </p>
 
