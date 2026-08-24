@@ -43,7 +43,7 @@ export function CaseStudyHeader({ meta }: CaseStudyHeaderProps) {
       {meta.image && (
         <Reveal>
           <figure>
-            <div className="border-outline-variant relative aspect-2/1 overflow-hidden rounded-xl border md:rounded-none md:border-x-0">
+            <div className="border-outline-variant reading-frame relative aspect-2/1 overflow-hidden rounded-xl border md:rounded-none md:border-x-transparent">
               <Image src={meta.image} alt={meta.title} fill priority sizes="100vw" className="object-cover" />
             </div>
           </figure>

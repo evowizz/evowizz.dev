@@ -748,6 +748,12 @@
       border-radius: 0;
     }
   }
+  /* Only content figures frame their img directly. The header's hero
+     borders its container instead, via reading-frame. */
+  .prose.prose-bleed figure img {
+    border: 1px solid transparent;
+    @apply motion-effects-slow transition-[border-radius,border-color];
+  }
   .prose-bleed figcaption {
     margin-top: calc(var(--spacing) * 3);
     padding: 0 var(--paper-pad, 0px);
@@ -827,6 +833,18 @@
     background-color: transparent;
     border-color: transparent;
     box-shadow: none;
+  }
+  /* Full-bleed article media regains its frame in reading mode. */
+  .reading-frame {
+    @apply motion-effects-slow transition-[border-radius,border-color];
+  }
+  :root[data-reading-mode] .reading-frame {
+    @apply rounded-3xl;
+    border-inline-color: var(--color-outline-variant);
+  }
+  :root[data-reading-mode] .prose.prose-bleed figure img {
+    border-radius: 0.75rem;
+    border-color: var(--color-outline-variant);
   }
   /* The ruler overlay stacks blur layers toward the edge.
      Keep opacity on the tint. Parent opacity blocks backdrop sampling until the fade ends. */
