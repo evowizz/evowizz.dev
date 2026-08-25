@@ -1,4 +1,5 @@
 import { Suspense } from 'react'
+import Image from 'next/image'
 import dayjs from 'dayjs'
 import { notFound } from 'next/navigation'
 import { connection } from 'next/server'
@@ -124,6 +125,12 @@ async function BlogPostContent({ params }: BlogPostProps) {
           </h1>
 
           <p className="text-on-surface-variant max-w-176 text-lg leading-relaxed md:text-xl">{post.summary}</p>
+
+          {post.image && (
+            <figure className="border-outline-variant relative aspect-2/1 w-full overflow-hidden rounded-xl border">
+              <Image src={post.image} alt="" fill priority sizes="100vw" className="object-cover" />
+            </figure>
+          )}
         </Reveal>
 
         <p
