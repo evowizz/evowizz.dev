@@ -2,7 +2,8 @@ export const SITE_URL = 'https://evowizz.dev'
 
 export const SITE_NAME = 'Dylan Roussel'
 
-export const SITE_DESCRIPTION = 'Developer and designer for Android and the web, based in Nantes, France.'
+export const SITE_DESCRIPTION =
+  'Self-taught developer and designer, building for Android since 2016. Maker of Inware, based in Nantes, France.'
 
 export const EMAIL = 'mail@evowizz.dev'
 
