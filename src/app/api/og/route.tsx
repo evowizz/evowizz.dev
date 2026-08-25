@@ -1,3 +1,5 @@
+import { readFile } from 'node:fs/promises'
+import { cacheLife } from 'next/cache'
 import { ImageResponse } from 'next/og'
 import { NextRequest } from 'next/server'
 
@@ -6,9 +8,7 @@ export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url)
   const text = searchParams.get('text')
 
-  const fontData = await fetch(new URL('./GoogleSansFlex_120pt-SemiBold.ttf', import.meta.url)).then((res) =>
-    res.arrayBuffer(),
-  )
+  const fontData = await getFont()
 
   return new ImageResponse(
     <div
@@ -52,4 +52,13 @@ export async function GET(request: NextRequest) {
       ],
     },
   )
+}
+
+async function getFont(): Promise<ArrayBuffer> {
+  'use cache'
+  cacheLife('max')
+
+  // Node's fetch rejects file URLs, so the font is read from disk instead.
+  const file = await readFile(new URL('./GoogleSansFlex_120pt-SemiBold.ttf', import.meta.url))
+  return new Uint8Array(file).buffer
 }
