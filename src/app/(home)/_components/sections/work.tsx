@@ -45,6 +45,7 @@ const LeadArtwork = ({ project }: { project: Project }) => {
         src={project.image}
         alt={alt}
         fill
+        priority
         sizes="(max-width: 72rem) 100vw, 72rem"
         className="origin-right scale-125 object-contain object-right lg:scale-100 lg:object-right-top"
       />
