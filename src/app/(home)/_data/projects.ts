@@ -51,7 +51,7 @@ export const projects: Project[] = [
       { value: '500k+', label: 'downloads' },
       { value: '4.7', label: 'rating' },
     ],
-    caseStudies: [{ slug: 'inware', label: 'Read More' }],
+    caseStudies: [{ slug: 'inware', label: 'Case Study' }],
     links: [playStoreLink('com.evo.inware')],
   },
   {

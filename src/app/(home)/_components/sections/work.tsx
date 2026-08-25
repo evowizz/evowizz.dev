@@ -2,7 +2,7 @@ import Image from 'next/image'
 import { projects, type Project } from '@/app/(home)/_data/projects'
 import { cn } from '@/lib/utils'
 import { Container } from '@/components/ui/container'
-import { ActionLink, RowLink } from '@/components/ui/links'
+import { ActionLink, RowLink, SmartLink } from '@/components/ui/links'
 import { MaterialSymbol } from '@/components/ui/material-symbol'
 import { SectionTitle } from '../section-title'
 import { Reveal } from '@/components/ui/reveal'
@@ -70,21 +70,36 @@ const Lead = ({ project }: { project: Project }) => (
         <div className="flex flex-col items-start gap-5">
           <p className="max-w-xl text-lg leading-relaxed opacity-80 md:text-xl">{sentenceFor(project)}</p>
 
-          {project.links[0] && (
-            // Not `ActionLink`: its `primary` hover is wrong over a picture.
-            <a
-              href={project.links[0].url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group focus-ring inline-flex items-center gap-1 text-sm font-semibold"
-            >
-              <span className="underline-offset-4 group-hover:underline">{project.links[0].label}</span>
-              <MaterialSymbol
-                name="arrow_outward"
-                className="motion-spatial-fast text-base transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-              />
-            </a>
-          )}
+          <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
+            {project.caseStudies?.map((study) => (
+              <SmartLink
+                key={study.slug}
+                href={`/case-studies/${study.slug}`}
+                className="group focus-ring inline-flex items-center gap-1 text-sm font-semibold"
+              >
+                <span className="underline-offset-4 group-hover:underline">{study.label}</span>
+                <MaterialSymbol
+                  name="arrow_forward"
+                  className="motion-spatial-fast text-base transition-transform group-hover:translate-x-0.5"
+                />
+              </SmartLink>
+            ))}
+            {project.links[0] && (
+              // Not `ActionLink`: its `primary` hover is wrong over a picture.
+              <a
+                href={project.links[0].url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group focus-ring inline-flex items-center gap-1 text-sm font-semibold"
+              >
+                <span className="underline-offset-4 group-hover:underline">{project.links[0].label}</span>
+                <MaterialSymbol
+                  name="arrow_outward"
+                  className="motion-spatial-fast text-base transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                />
+              </a>
+            )}
+          </div>
         </div>
 
         {/* flex-col-reverse keeps a valid dt-then-dd order with the figure on top. */}
