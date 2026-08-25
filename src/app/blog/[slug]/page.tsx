@@ -31,7 +31,8 @@ export async function generateMetadata({ params }: BlogPostProps) {
   const { slug } = await params
   const post = findPost(slug)
   if (!post) return
-  const image = `/api/og?text=${encodeURIComponent(post.title)}`
+
+  const images = post.image ? [{ url: post.image }] : undefined
 
   return {
     title: post.title,
@@ -43,14 +44,14 @@ export async function generateMetadata({ params }: BlogPostProps) {
       type: 'article',
       publishedTime: post.publishedAt,
       url: `https://evowizz.dev/blog/${slug}`,
-      images: [{ url: image }],
+      images,
     },
     twitter: {
       card: 'summary_large_image',
       title: post.title,
       description: post.summary,
       creator: TWITTER_HANDLE,
-      images: [{ url: image }],
+      images,
     },
   }
 }

@@ -5,8 +5,8 @@ import { PageTitle } from '@/components/ui/typography'
 import { TWITTER_HANDLE } from '@/config/site'
 import type { Metadata } from 'next'
 
-const title = 'Case Studies'
-const description = 'The design decisions and development process behind my projects.'
+export const title = 'Case Studies'
+export const description = 'The design decisions and development process behind my projects.'
 
 export const metadata: Metadata = {
   title,
@@ -16,14 +16,12 @@ export const metadata: Metadata = {
     url: '/case-studies',
     title,
     description,
-    images: [{ url: `/api/og?text=${encodeURIComponent(title)}` }],
   },
   twitter: {
     card: 'summary_large_image',
     title,
     description,
     creator: TWITTER_HANDLE,
-    images: [{ url: `/api/og?text=${encodeURIComponent(title)}` }],
   },
 }
 

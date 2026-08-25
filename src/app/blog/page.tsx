@@ -10,8 +10,8 @@ import { MaterialSymbol } from '@/components/ui/material-symbol'
 import { TWITTER_HANDLE } from '@/config/site'
 import type { Metadata } from 'next'
 
-const title = 'Blog'
-const description = 'Thoughts and tutorials on development and design.'
+export const title = 'Blog'
+export const description = 'Thoughts and tutorials on development and design.'
 
 export const metadata: Metadata = {
   title,
@@ -21,14 +21,12 @@ export const metadata: Metadata = {
     url: '/blog',
     title,
     description,
-    images: [{ url: `/api/og?text=${encodeURIComponent(title)}` }],
   },
   twitter: {
     card: 'summary_large_image',
     title,
     description,
     creator: TWITTER_HANDLE,
-    images: [{ url: `/api/og?text=${encodeURIComponent(title)}` }],
   },
 }
 
