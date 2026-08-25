@@ -8,13 +8,23 @@ themeColor: '#33CC7A'
 themeVariant: 'rainbow'
 ---
 
-Inware 7 is a complete overhaul of my Android device information app. It shipped in April 2026 and has kept moving since. It's the completion of the <Tooltip content="Android's modern toolkit for building interfaces entirely in Kotlin.">Jetpack Compose</Tooltip> transition, and a complete <Tooltip content="The latest, more expressive evolution of Google's Material Design language.">Material 3 Expressive</Tooltip> redesign. I had no specific design in mind, only certain constraints. Every decision was implemented and tested live on a device so the motion could be judged for real, whether by me or by people on the betas. That is how I made sure Inware felt right.
+Inware 7 is a complete overhaul of my Android device information app. It shipped in April 2026 and has kept moving since. It's the completion of the <Tooltip content="Android's modern toolkit for building interfaces entirely in Kotlin.">Jetpack Compose</Tooltip> transition, and a complete <Tooltip content="The latest, more expressive evolution of Google's Material Design language.">Material 3 Expressive</Tooltip> redesign. I had no specific design in mind, only certain constraints. Every decision was implemented and tested live on a device so the motion could be judged for real, whether by me or by testers. That is how I made sure Inware felt right.
+
+## Jetpack Compose
+
+I started fiddling with Jetpack Compose in 2019, and tracked its progress ever since. In 2020, before Compose was even stable, I published [compose-to-edge](https://github.com/evowizz/compose-to-edge), a small library for going edge-to-edge in Compose apps. In 2022, I started implementing Compose in Inware: I knew Google was betting on it. It was showing up in Android itself, in Settings and SystemUI, and Google had built Now in Android, a reference app written with it. So while Android Views were still used at the time, Compose was a modern toolkit that was actively being used and developed. By the last 6.x release, various components of Inware were already Compose, but it was still a hybrid app.
+
+Inware 7 is the first version fully written in Compose, a decision Google confirmed earlier in 2026, when [Android UI officially went Compose first](https://android-developers.googleblog.com/2026/05/android-ui-development-is-compose-first.html).
 
 ## From 6 to 7
 
-For years, Inware relied on Overpass Mono as its brand font. The font, along with the cards of the home screen, made Inware easy to recognize up to version 6. With Inware 7, things changed. While the brand color remains `#33CC7A` and <Tooltip content="An Android feature that recolors apps with a palette taken from the wallpaper or picked by the user.">dynamic colors</Tooltip> are still supported, Google Sans Flex now replaces Overpass Mono. The cards are also gone. The refresh went all the way down to the app icon and the splash screen.
+For years, Inware relied on Overpass Mono as its brand font. The font, along with the cards of the home screen, made Inware easy to recognize up to version 6. With Inware 7, things changed. While the brand color remains `#33CC7A` and <Tooltip content="An Android feature that recolors apps with a palette taken from the wallpaper or picked by the user.">dynamic colors</Tooltip> are still supported, Google Sans Flex now replaces Overpass Mono. It is a variable font with many axes to tune, it is visually balanced, and it is the font Pixel devices use, so it feels at home on Android. Users who would rather not have it can switch to the system font in the settings. The cards are also gone. The refresh went all the way down to the app icon and the splash screen.
 
-Inware is made to embrace Android: it follows Material closely, and it should feel like it belongs on the device it describes. This is why dynamic colors are enabled by default. Like the system, the app takes the colors of the wallpaper, which is also why the screenshots on this page are not green.
+![The Inware 6 and Inware 7 app icons side by side](/content/case-studies/inware/inware-logos.png 'The Inware 6 icon on the left, the Inware 7 icon on the right.')
+
+Inware is represented by a chip as its icon, and the new logo introduced with version 7 keeps it. The old logo was a good one, but it felt too generic, too simple. And as the app evolves, so should the logo. We're entering an era where modern logos use gradients: Android app icons are getting redesigned all over the place, and as Inware is built to fit Android, its logo should follow. The changes remain small: a grid as the background, smoothed corners, tweaked colors, etc. So Inware remains easy to identify, but feels modern.
+
+Inware is made to embrace Android: it follows Material closely, and it should feel like it belongs on the device it describes. This is why dynamic colors are enabled by default. Like the system, the app can take the colors of the wallpaper. Dynamic colors are only as good as the device's implementation, though. On a Pixel, they behave the way Material intends. On Samsung's One UI, they are more of an adventure. Fixing that is on Samsung, not on apps, so Inware simply lets users turn dynamic colors off.
 
 ![The Inware 6 and Inware 7 home screens side by side](/content/case-studies/inware/home.png 'Inware 6 on the left, Inware 7 on the right')
 
@@ -24,11 +34,11 @@ In Inware 7, every destination is still there, but each one now has a descriptio
 
 ## Navigation
 
-![The floating toolbar from the Inware 7 beta](/content/case-studies/inware/toolbar.png 'The floating toolbar, deleted in March 2026.')
+![The floating toolbar from the Inware 7 beta](/content/case-studies/inware/toolbar.png 'The floating toolbar, as it appeared in the beta.')
 
 The home screen did not start out as a single screen. Initially, the dashboard, the explore page with the list of destinations, and the settings were three separate pages. The plan was to move between them with a Navigation Drawer, but I switched away from it before it was ever released: in a drawer, the dashboard would have been yet another page in a list, sitting somewhere between Device and Hardware. A floating toolbar at the bottom took its place. It worked well.
 
-A dedicated dashboard page had room to preview a lot more tiles as soon as the app opened. But people on the betas highlighted how it became harder for them to quickly jump to a specific data page.
+A dedicated dashboard page had room to preview a lot more tiles as soon as the app opened. But testers highlighted how it became harder for them to quickly jump to a specific data page.
 
 One way to do that would have been to make the explore page the default, or to make the default page configurable. But in both cases, the dashboard page would have become less useful. Instead, I merged both pages into a single screen, and one of my favorite components made it possible: the Backdrop.
 
@@ -36,7 +46,7 @@ The dashboard became a back layer of live data, the destinations became a front 
 
 ## Dashboard
 
-![A close-up of the Inware 7 tiles](/content/case-studies/inware/tiles.png 'Tiles borrow the visual language of Quick Settings without being controls. Each one shows a value, then opens the page behind it.')
+![A close-up of the Inware 7 tiles](/content/case-studies/inware/tiles.png 'Four tiles on the first page of the dashboard.')
 
 The dashboard is made of tiles. Each of its pages contains four of them. When four tiles are not enough, additional pages are just a swipe away. Every tile has the same size, which allows the grid to adapt to any screen without the tiles having to change. However, not everyone cares about the same data, which is why users can also customize their dashboard.
 
@@ -60,10 +70,20 @@ The values are the reason people open Inware, so I made them easy to take out of
 
 Material 3 places menus relative to the component that opened them, and prefers extending to the right, which for a long press often puts the menu under the thumb of a right handed user. Inware handles the menu position differently. I believe a touch context menu should open away from the hand, so Inware uses a custom position provider that opens the menu on the opposite side of the press. You usually press on the side your thumb rests on, so a long press on the right side of the app opens the menu toward the left, and a long press on the left opens it toward the right. I [shared that view](https://issuetracker.google.com/issues/499330952) with the Material team.
 
+## Bottom sheets
+
+![A confirmation presented as a bottom sheet](/content/case-studies/inware/bottom-sheet.png 'A confirmation as a bottom sheet, here for enabling developer options.')
+
+A confirmation like this is usually a dialog: a card in the middle of the screen, two small buttons in a row. On a tall phone, that puts the decision away from the thumb, and it leaves little room for the warning itself.
+
+Inware uses a bottom sheet instead, which is what the Material 3 guidelines suggest: on mobile, a modal bottom sheet [is recommended](https://m3.material.io/components/bottom-sheets/guidelines#1cb775b6-6d2b-4d50-96ad-1862727e986b) as an alternative to simple dialogs and inline menus, especially when actions need icons or longer descriptions. The page stays visible behind a scrim, the sheet sits where the hand already is, and Proceed and Cancel are full-width rows rather than dialog buttons. This one cannot be dismissed by tapping outside or by going back, and since it cannot be swiped away either, it does not show a drag handle. Enabling developer options is a real choice, so the sheet waits for one.
+
+The same sheet is used for confirmations and for lists of actions, so a warning does not look like a different kind of UI from the rest of the app.
+
 ## Big screens (in beta)
 
 ![The split layout on an unfolded foldable](/content/case-studies/inware/split.png 'The split layout on an unfolded foldable. The divider follows the hinge.')
 
 On large screens, Inware uses a <Tooltip content="A layout that shows a list next to the page of the selected item.">list detail</Tooltip> layout: the destinations stay on the left, and the selected page opens next to them. The list could not simply transform into a Navigation Drawer or a Navigation Rail, because the selected page would then be alone on the screen, either quite large or centered with empty space around it, and the dashboard would have had nowhere to sit. Material 3 provides a scaffold for this layout, and while it animates the transition between the list and a page, it does not animate the move from one page to the next, which in Inware is most of the movement. So I wrapped the Material 3 scaffold into my own and added the missing transition. It ships in 7.1.0.
 
-Inware 7 did not stop at 7.0. It is still built the same way: every change is tested live on a device, then sent to the people on the betas. The Backdrop came out of that, so did the dashboard and its editor, and so will the list detail layout. That's Inware for you.
+Inware 7 did not stop at 7.0. It is still built the same way: every change is tested live on a device, then sent to the testers. The Backdrop came out of that, so did the dashboard and its editor, and so will the list detail layout. That's Inware for you.
