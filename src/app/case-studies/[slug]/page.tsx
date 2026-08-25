@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: CaseStudyPageProps) {
   const { slug } = await params
   const item = findCaseStudy(slug)
   if (!item) return
-  const image = `/api/og?text=${encodeURIComponent(item.title)}`
+  const image = item.image
 
   return {
     title: item.title,

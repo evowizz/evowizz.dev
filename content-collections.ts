@@ -91,7 +91,7 @@ const caseStudies = defineCollection({
     overview: z.string(),
     stack: z.array(z.string()),
     role: z.string().optional(),
-    image: z.string().optional(),
+    image: z.string(),
     themeColor: z.string().optional(),
     themeVariant: z.enum(VARIANT_NAMES).optional(),
     content: z.string(),
