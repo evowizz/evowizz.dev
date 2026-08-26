@@ -1,3 +1,4 @@
+import 'server-only'
 import * as schema from './schema'
 import { drizzle } from 'drizzle-orm/neon-http'
 import { neon } from '@neondatabase/serverless'

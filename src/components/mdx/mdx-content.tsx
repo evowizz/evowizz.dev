@@ -5,6 +5,7 @@ import Pre from './pre'
 import { LocalVideo } from './local-video'
 import { NoteCard } from './note-card'
 import { Resources } from './resources'
+import { Tweet } from './tweet'
 import { SmartLink } from '@/components/ui/links'
 import { Tooltip } from '@/components/ui/tooltip'
 
@@ -72,6 +73,7 @@ const components = {
   NoteCard,
   Resources,
   Tooltip,
+  Tweet,
 }
 
 export default function MDXContent({ code }: { code: string }) {

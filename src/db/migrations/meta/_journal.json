@@ -8,6 +8,13 @@
       "when": 1786536759883,
       "tag": "0000_initial_views",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1787757465923,
+      "tag": "0001_late_glorian",
+      "breakpoints": true
     }
   ]
 }
