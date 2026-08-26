@@ -1,3 +1,5 @@
+/* eslint-disable @next/next/no-img-element */
+// The img below is satori markup, never a DOM element.
 import { readFile } from 'node:fs/promises'
 import { cacheLife } from 'next/cache'
 import { ImageResponse } from 'next/og'
@@ -11,6 +13,7 @@ type OgImageContent = {
 }
 
 export async function buildOgImage({ title, description }: OgImageContent) {
+  const background = await getBackground()
   const fontData = await getFont()
 
   return new ImageResponse(
@@ -19,65 +22,70 @@ export async function buildOgImage({ title, description }: OgImageContent) {
         width: '100%',
         height: '100%',
         display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'space-between',
-        padding: '110px 120px',
-        backgroundColor: '#f5f8f2', // surface
-        backgroundImage: 'radial-gradient(circle at 32px 32px, rgba(13, 31, 19, 0.16) 6%, transparent 0%)', // on-surface at low opacity
-        backgroundSize: '64px 64px',
+        position: 'relative',
       }}
     >
-      <div
+      <img
+        src={background}
+        alt=""
         style={{
-          display: 'flex',
-          fontFamily: 'Google Sans Flex',
-          fontSize: 44,
-          color: '#3f4b41', // on-surface-variant
-          fontWeight: 600,
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          objectFit: 'cover',
         }}
-      >
-        evowizz.dev
-      </div>
-
+      />
       <div
         style={{
+          width: '100%',
+          height: '100%',
           display: 'flex',
           flexDirection: 'column',
-          alignItems: 'flex-start',
+          justifyContent: 'flex-end',
+          padding: '110px 120px',
+          position: 'relative',
         }}
       >
         <div
           style={{
             display: 'flex',
-            fontFamily: 'Google Sans Flex',
-            fontSize: 108,
-            lineHeight: 1.12,
-            letterSpacing: '-0.02em',
-            color: '#0d1f13', // on-surface
-            fontWeight: 600,
-            whiteSpace: 'pre-wrap',
-            textWrap: 'balance',
+            flexDirection: 'column',
+            alignItems: 'flex-start',
           }}
         >
-          {title ?? SITE_NAME}
-        </div>
-        {description ? (
           <div
             style={{
               display: 'flex',
-              marginTop: 36,
+              fontSize: 108,
+              lineHeight: 1.12,
+              letterSpacing: '-0.02em',
               fontFamily: 'Google Sans Flex',
-              fontSize: 46,
-              lineHeight: 1.4,
-              color: '#3f4b41',
+              color: '#0d1f13', // on-surface
               fontWeight: 600,
-              maxWidth: 1300,
-              textWrap: 'balance',
+              whiteSpace: 'pre-wrap',
             }}
           >
-            {description}
+            {title ?? SITE_NAME}
           </div>
-        ) : null}
+          {description ? (
+            <div
+              style={{
+                display: 'flex',
+                marginTop: 36,
+                fontFamily: 'Google Sans Flex',
+                fontSize: 46,
+                lineHeight: 1.4,
+                color: '#3f4b41', // on-surface-variant
+                fontWeight: 600,
+                maxWidth: 1300,
+              }}
+            >
+              {description}
+            </div>
+          ) : null}
+        </div>
       </div>
     </div>,
     {
@@ -92,6 +100,14 @@ export async function buildOgImage({ title, description }: OgImageContent) {
       ],
     },
   )
+}
+
+async function getBackground(): Promise<string> {
+  'use cache'
+  cacheLife('max')
+
+  const file = await readFile(new URL('./background.png', import.meta.url))
+  return `data:image/png;base64,${file.toString('base64')}`
 }
 
 async function getFont(): Promise<ArrayBuffer> {
