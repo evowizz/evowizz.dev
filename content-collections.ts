@@ -54,7 +54,11 @@ async function transform<T extends TransformInput>(document: T, context: Context
     themeColor = (await extractColorFromImage(document.image)) ?? undefined
   }
 
-  const themeVariant = document.themeVariant ? VARIANT_MAP[document.themeVariant] : undefined
+  // Without a color, ThemeOverride keeps the site theme, so the variant stays unset too.
+  let themeVariant = document.themeVariant ? VARIANT_MAP[document.themeVariant] : undefined
+  if (themeVariant === undefined && themeColor) {
+    themeVariant = Variant.TONAL_SPOT
+  }
 
   return {
     ...document,
