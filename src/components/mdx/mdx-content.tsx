@@ -4,6 +4,7 @@ import Image, { type ImageProps } from 'next/image'
 import Pre from './pre'
 import { LocalVideo } from './local-video'
 import { NoteCard } from './note-card'
+import { Resources } from './resources'
 import { SmartLink } from '@/components/ui/links'
 import { Tooltip } from '@/components/ui/tooltip'
 
@@ -69,6 +70,7 @@ const components = {
   pre: Pre,
   LocalVideo,
   NoteCard,
+  Resources,
   Tooltip,
 }
 
