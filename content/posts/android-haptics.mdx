@@ -1,0 +1,157 @@
+---
+title: 'Android is evolving, and so are haptics!'
+publishedAt: '2026-04-07'
+summary: "Big changes are coming to Android haptics, and we're only seeing the tip of the iceberg."
+image: '/content/posts/img/android-haptics.jpg'
+themeColor: '#4285F4'
+---
+
+Over the past couple of months, I've been learning and keeping a close eye on Android haptics. Big changes are being added, and we're only seeing the tip of the iceberg.
+
+**Note:** This article is mostly about MSDL. I wrote about it a couple of months ago, but this article goes much deeper into it. See:
+
+<Tweet id="1982521901353255083" />
+
+## The system we grew up with
+
+For years, Android has offered a very simple system for haptic feedback. Developers select the feedback based on the action: if the user taps a button, the feedback is "CLICK." If the action is a long press, it's "LONG_PRESS."
+
+This may seem basic by today's standards, but this naming convention is what kept apps consistent. Many users have adapted to haptic feedback without even realizing it. If you type on your keyboard and a key doesn't vibrate, you notice something went wrong. It means you've adapted to haptic feedback.
+
+But haptics aren't the only form of feedback. Sound plays a role too, like the click you hear with each keystroke. Visual, haptic, and sound feedback all work together to confirm your actions, and that combination is also important for accessibility. The problem is that Android's systems for sound and haptic feedback have always been separate.
+
+But what if haptics and sound were unified?
+
+## Meet MSDL...
+
+MSDL stands for Multi-Sensory Design Language.
+
+Think of Material Design, but for your senses. MSDL defines how interactions are perceived. It combines multiple sensory feedback systems into one.
+
+Since Android 16, MSDL is part of SystemUI. Each time you toggle a QS Tile, unlock your device, drag your brightness slider... You feel a part of MSDL.
+
+MSDL isn't just about combining haptics and sound. It's a modern take on feedback. It not only combines them, but also improves them. There are quite a few new tokens (or actions), such as "START", "PAUSE", "STOP", "DRAG_INDICATOR_CONTINUOUS," etc.
+
+Not all tokens are currently being used. MSDL also defines 4 different feedback levels: "None" (no feedback), "Minimal" (Critical feedback, always play), "Default" (standard feedback), and "Expressive" (decorative feedback). We may see an option for these in Android settings in the future.
+
+**But wait, there's... no sound?**\
+That's true. Google created this entire system that combines haptics and sound, yet there's no sound. It's unclear why it was not finished. But it still appears to be a work in progress!
+
+## ... and Mechanics!
+
+As mentioned, MSDL is a modern take on feedback. Mechanics is a companion to MSDL. Mechanics is all of the physics. It translates gestures into feedback based on motion.
+
+As a companion to MSDL, it also is part of SystemUI since Android 16. Each time you've swiped a notification away and felt the magnetic pull on them, that was it! Those haptics are the results of Mechanics.
+
+In fact Google went pretty far into the physics, and the way Mechanics on its own works is absolutely worth studying.
+
+Mechanics is built on real world physics. The feedback feels natural because it's calculated using real physical laws. If you accelerate suddenly, you feel it. If you slow down, you feel that too. This is what makes effects like magnetism possible.
+
+[A study from 1969](https://link.springer.com/article/10.3758/BF03212793) found that vibration doesn't feel the way it physically vibrates. When you feel a vibration (any vibration), if the amplitude of this vibration is doubled, that vibration will not feel twice as strong because of how human skin works. This gap between the way it feels (perceived intensity) and the way it linearly changed (physical intensity) was in fact calculated by the researchers. And they found it follows a power law: perceived = physical^0.89.
+
+In Mechanics, Google is correcting skin non-linearity by correcting the output (physical = perceived^(1/0.89)) so that it feels perceptually linear to you!
+
+But Android reports touch input in pixels, and spring physics need meters and Newtons. So Google converts pixels into meters using the device's screen density. This has a nice side effect: the same gesture feels the same on any device, because the math is based on real world units, not screen dependent pixels.
+
+## Compose gets the tone
+
+While MSDL is evolving inside SystemUI, Compose has had no built-in sound infrastructure at all. You may not have noticed, but every Compose app has been silently skipping the click sounds that View-based apps have always played automatically.
+
+Fortunately, a new change currently in review adds sound infrastructure to Compose for the first time! For now, it only adds a single method: `playClickSound()`. It plays a click sound when you tap a clickable component, just like the View system has always done.
+
+But the foundation is extensible. The sound interface is abstract and swappable, which makes it exactly the kind of hook point where MSDL could plug in down the road.
+
+## And then there was Inware.
+
+For the past couple of months I've been working on haptics in Inware. It implements a system based on MSDL and inspired by Mechanics.
+
+Inware implements 18 different interactive tokens, each with a minimum feedback level. The same 4 levels exist: None, Minimal, Default and Expressive with the same logic. The level is not meant to change the feedback, but rather define which ones can be played or not. You can change this in Inware settings, and test all of them in Inware's developer options.
+
+Inware does not implement any sound token at the moment. I want Inware to feel like it belongs on Android. And adding custom sound would cause too many differences with AOSP, and other Android-based systems.
+
+```kotlin
+package dev.evowizz.inware.core.haptics
+
+import dev.evowizz.inware.core.haptics.internal.HapticToken
+
+/** Semantic interaction tokens. Each maps to a HapticToken + FeedbackLevel. */
+enum class InteractionToken(
+    val hapticToken: HapticToken,
+    val minimumLevel: FeedbackLevel,
+) {
+    // Taps
+    TAP(HapticToken.TAP_MEDIUM_EMPHASIS, FeedbackLevel.DEFAULT),
+    TAP_LOW(HapticToken.TAP_LOW_EMPHASIS, FeedbackLevel.EXPRESSIVE),
+    TAP_HIGH(HapticToken.TAP_HIGH_EMPHASIS, FeedbackLevel.EXPRESSIVE),
+    LONG_PRESS(HapticToken.LONG_PRESS, FeedbackLevel.MINIMAL),
+    DOUBLE_TAP(HapticToken.DOUBLE_TAP, FeedbackLevel.DEFAULT),
+
+    // Toggles (both use same haptic pattern)
+    TOGGLE_ON(HapticToken.POSITIVE_CONFIRMATION_MEDIUM_EMPHASIS, FeedbackLevel.DEFAULT),
+    TOGGLE_OFF(HapticToken.POSITIVE_CONFIRMATION_MEDIUM_EMPHASIS, FeedbackLevel.DEFAULT),
+
+    // Confirmations
+    CONFIRM(HapticToken.POSITIVE_CONFIRMATION_MEDIUM_EMPHASIS, FeedbackLevel.DEFAULT),
+    REJECT(HapticToken.NEGATIVE_CONFIRMATION_MEDIUM_EMPHASIS, FeedbackLevel.DEFAULT),
+    FAILURE_HIGH(HapticToken.NEGATIVE_CONFIRMATION_HIGH_EMPHASIS, FeedbackLevel.MINIMAL),
+
+    // Alerts (risky user actions)
+    ALERT(HapticToken.ALERT_MEDIUM_EMPHASIS, FeedbackLevel.DEFAULT),
+    ALERT_LOW(HapticToken.ALERT_LOW_EMPHASIS, FeedbackLevel.EXPRESSIVE),
+    ALERT_HIGH(HapticToken.ALERT_HIGH_EMPHASIS, FeedbackLevel.MINIMAL),
+
+    // Gestures
+    DRAG_THRESHOLD(HapticToken.DRAG_THRESHOLD_INDICATOR, FeedbackLevel.DEFAULT),
+    DRAG_CONTINUOUS(HapticToken.DRAG_INDICATOR_CONTINUOUS, FeedbackLevel.DEFAULT),
+    DRAG_DISCRETE(HapticToken.DRAG_INDICATOR_DISCRETE, FeedbackLevel.DEFAULT),
+
+    // Navigation
+    NAVIGATION_CHANGE(HapticToken.NAVIGATION_TICK, FeedbackLevel.EXPRESSIVE),
+    NAVIGATE_BACK(HapticToken.TAP_MEDIUM_EMPHASIS, FeedbackLevel.DEFAULT),
+}
+```
+
+## Conclusion
+
+MSDL and Mechanics are shaping the future of sound and haptic feedback on Android. They are currently limited to SystemUI, but they are preparing for much bigger changes. MSDL's sound tokens are there, they are simply waiting for their assets to be added, and the feedback level setting is ready to be implemented in Android's settings.
+
+I cannot wait to see how those will evolve in the future! And when they do, Inware will be ready :)
+
+## Key Resources
+
+<Resources
+  links={[
+    {
+      title: 'MSDL Library',
+      href: 'https://cs.android.com/android/platform/superproject/main/+/main:frameworks/libs/systemui/msdllib/',
+    },
+    {
+      title: 'MSDL Tokens',
+      href: 'https://cs.android.com/android/platform/superproject/main/+/main:frameworks/libs/systemui/msdllib/src/com/google/android/msdl/data/model/MSDLToken.kt',
+    },
+    {
+      title: 'MSDL Haptic Compositions',
+      href: 'https://cs.android.com/android/platform/superproject/main/+/main:frameworks/libs/systemui/msdllib/src/com/google/android/msdl/data/repository/MSDLRepositoryImpl.kt',
+    },
+    {
+      title: 'MSDL Sound Tokens',
+      href: 'https://cs.android.com/android/platform/superproject/main/+/main:frameworks/libs/systemui/msdllib/src/com/google/android/msdl/data/model/SoundToken.kt',
+    },
+    {
+      title: 'MSDL Player',
+      href: 'https://cs.android.com/android/platform/superproject/main/+/main:frameworks/libs/systemui/msdllib/src/com/google/android/msdl/domain/MSDLPlayer.kt',
+    },
+    {
+      title: 'Mechanics Library',
+      href: 'https://cs.android.com/android/platform/superproject/main/+/main:frameworks/libs/systemui/mechanics/',
+    },
+    {
+      title: 'SystemUI MSDL Integration',
+      href: 'https://cs.android.com/android/platform/superproject/main/+/main:frameworks/base/packages/SystemUI/src/com/android/systemui/haptics/msdl/',
+    },
+    {
+      title: 'Compose Interaction Sounds CL',
+      href: 'https://android-review.googlesource.com/c/platform/frameworks/support/+/4001953',
+    },
+  ]}
+/>
