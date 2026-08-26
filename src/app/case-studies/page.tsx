@@ -6,7 +6,7 @@ import { TWITTER_HANDLE } from '@/config/site'
 import type { Metadata } from 'next'
 
 export const title = 'Case Studies'
-export const description = 'The design decisions and development process behind my projects.'
+export const description = 'The decisions I made, and the ones I deleted.'
 
 export const metadata: Metadata = {
   title,
@@ -32,10 +32,8 @@ export default function CaseStudiesPage() {
     <main id="main-content" tabIndex={-1} className="min-h-viewport py-28 md:py-40">
       <Container className="flex flex-col gap-12 md:gap-16">
         <div className="flex flex-col gap-4">
-          <PageTitle>Case Studies</PageTitle>
-          <p className="text-on-surface-variant max-w-152 text-lg md:text-xl">
-            One project at a time, in depth: the design decisions and the development process behind my work.
-          </p>
+          <PageTitle>{title}</PageTitle>
+          <p className="text-on-surface-variant max-w-152 text-lg md:text-xl">{description}</p>
           <p className="text-on-surface-variant flex flex-wrap items-center gap-x-2 gap-y-1 pt-2 font-mono text-xs tracking-[0.08em] uppercase">
             <span>
               {caseStudies.length} {caseStudies.length === 1 ? 'case study' : 'case studies'}

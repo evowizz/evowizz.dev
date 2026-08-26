@@ -11,7 +11,7 @@ import { TWITTER_HANDLE } from '@/config/site'
 import type { Metadata } from 'next'
 
 export const title = 'Blog'
-export const description = 'Thoughts and tutorials on development and design.'
+export const description = "Whatever I've been building, breaking, or thinking about."
 
 export const metadata: Metadata = {
   title,
@@ -44,10 +44,8 @@ export default function BlogPage() {
     <main id="main-content" tabIndex={-1} className="min-h-viewport py-28 md:py-40">
       <Container className="flex flex-col gap-12 md:gap-16">
         <div className="flex flex-col gap-4">
-          <PageTitle>Blog</PageTitle>
-          <p className="text-on-surface-variant max-w-xl text-lg md:text-xl">
-            Notes on Android, web development, and design.
-          </p>
+          <PageTitle>{title}</PageTitle>
+          <p className="text-on-surface-variant max-w-xl text-lg md:text-xl">{description}</p>
           <p className="text-on-surface-variant flex flex-wrap items-center gap-x-2 gap-y-1 pt-2 font-mono text-xs tracking-[0.08em] uppercase">
             <span>
               {posts.length} {posts.length === 1 ? 'entry' : 'entries'}
