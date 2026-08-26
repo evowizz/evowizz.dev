@@ -924,7 +924,7 @@
 
   .prose {
     /* Links */
-    a {
+    a:not(:where([class~='not-prose'], [class~='not-prose'] *)) {
       @apply text-primary no-underline underline-offset-4;
       &:hover {
         @apply underline;
@@ -962,7 +962,7 @@
       @apply text-on-surface-variant border-outline-variant bg-surface-container rounded-md border px-1 py-0.5 font-normal;
     }
 
-    img {
+    img:not(:where([class~='not-prose'], [class~='not-prose'] *)) {
       @apply m-0 rounded-xl;
     }
 
