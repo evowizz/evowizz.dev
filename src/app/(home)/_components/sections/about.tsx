@@ -54,8 +54,9 @@ export const About = () => (
           <p className="text-on-surface-variant">
             I sometimes dig into other people&apos;s software too. Back in 2022, I reported a flaw in{' '}
             <TextLink href="/blog/huawei-appgallery-vulnerability">Huawei&apos;s AppGallery</TextLink> that let anyone
-            download paid apps for free. A year later I looked into Nothing Chats, which was built on a service called
-            Sunbird, and what I found{' '}
+            download paid apps for free. A year later{' '}
+            <TextLink href="https://x.com/evowizz/status/1725872540873081000">I looked into Nothing Chats</TextLink>,
+            which was built on a service called Sunbird, and what I found{' '}
             <TextLink href="https://techcrunch.com/2023/11/22/sunbird-pauses-its-efforts-to-bring-imessage-to-android-amid-security-worries/">
               got the app shut down
             </TextLink>
@@ -66,7 +67,7 @@ export const About = () => (
         <ScrollDrift className="flex flex-col gap-4 sm:flex-row sm:gap-5 lg:flex-col lg:gap-5 lg:self-start">
           <div className="bg-tertiary-container text-on-tertiary-container flex flex-col justify-center gap-3 rounded-2xl p-6 sm:flex-1 md:p-7 lg:flex-none">
             <CountUp
-              to={630000}
+              to={637780}
               group
               className="variation-sans text-[clamp(2.25rem,5vw,3.75rem)] leading-none font-bold tracking-tight tabular-nums"
             />
