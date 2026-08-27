@@ -72,19 +72,6 @@ const Lead = ({ project }: { project: Project }) => (
           <p className="max-w-xl text-lg leading-relaxed opacity-80 md:text-xl">{sentenceFor(project)}</p>
 
           <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
-            {project.caseStudies?.map((study) => (
-              <SmartLink
-                key={study.slug}
-                href={`/case-studies/${study.slug}`}
-                className="group focus-ring inline-flex items-center gap-1 text-sm font-semibold"
-              >
-                <span className="underline-offset-4 group-hover:underline">{study.label}</span>
-                <MaterialSymbol
-                  name="arrow_forward"
-                  className="motion-spatial-fast text-base transition-transform group-hover:translate-x-0.5"
-                />
-              </SmartLink>
-            ))}
             {project.links[0] && (
               // Not `ActionLink`: its `primary` hover is wrong over a picture.
               <a
@@ -100,6 +87,19 @@ const Lead = ({ project }: { project: Project }) => (
                 />
               </a>
             )}
+            {project.caseStudies?.map((study) => (
+              <SmartLink
+                key={study.slug}
+                href={`/case-studies/${study.slug}`}
+                className="group focus-ring inline-flex items-center gap-1 text-sm font-semibold"
+              >
+                <span className="underline-offset-4 group-hover:underline">{study.label}</span>
+                <MaterialSymbol
+                  name="arrow_forward"
+                  className="motion-spatial-fast text-base transition-transform group-hover:translate-x-0.5"
+                />
+              </SmartLink>
+            ))}
           </div>
         </div>
 
