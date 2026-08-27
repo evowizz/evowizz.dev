@@ -922,6 +922,29 @@
     box-shadow: 0 0 0 1px var(--color-surface-container-lowest);
   }
 
+  /* Classes applied by ui/tooltip.tsx. Engines without anchor-scope keep the
+     component's absolute fallback, clamped so the bubble never exceeds the viewport. */
+  .tooltip-bubble {
+    max-width: min(20rem, calc(100vw - 2rem));
+  }
+  @supports (anchor-scope: --tooltip) {
+    .tooltip-scope {
+      anchor-scope: --tooltip;
+    }
+    .tooltip-anchor {
+      anchor-name: --tooltip;
+    }
+    .tooltip-bubble {
+      position: fixed;
+      inset: auto;
+      position-anchor: --tooltip;
+      position-area: block-end span-inline-end;
+      position-try-fallbacks: flip-block;
+      margin-block-start: 0.25rem;
+      margin-inline-end: 0.75rem;
+    }
+  }
+
   .prose {
     /* Links */
     a:not(:where([class~='not-prose'], [class~='not-prose'] *)) {
