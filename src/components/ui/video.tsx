@@ -6,7 +6,7 @@ import { MaterialSymbol } from './material-symbol'
 
 type VideoProps = React.VideoHTMLAttributes<HTMLVideoElement>
 
-export function Video({ className, controls, autoPlay, onPlay, onPause, ...props }: VideoProps) {
+export function Video({ className, controls, autoPlay, muted, preload, onPlay, onPause, ...props }: VideoProps) {
   const videoRef = useRef<HTMLVideoElement>(null)
   const [isVideoPlaying, setIsVideoPlaying] = useState(false)
   const [isDimmed, setIsDimmed] = useState(false)
@@ -18,7 +18,7 @@ export function Video({ className, controls, autoPlay, onPlay, onPause, ...props
     if (isVideoPlaying) {
       video.pause()
     } else {
-      video.play()
+      void video.play().catch(() => {})
     }
   }, [isVideoPlaying])
 
@@ -26,9 +26,33 @@ export function Video({ className, controls, autoPlay, onPlay, onPause, ...props
     const video = videoRef.current
     if (!video) return
 
-    if (autoPlay) {
-      video.muted = true
-      video.play()
+    if (!autoPlay) return
+
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (reducedMotion.matches || !entry.isIntersecting) {
+          video.pause()
+          return
+        }
+
+        video.muted = true
+        void video.play().catch(() => {})
+      },
+      { rootMargin: '200px 0px' },
+    )
+
+    const handleMotionPreference = () => {
+      if (reducedMotion.matches) video.pause()
+      else observer.observe(video)
+    }
+
+    reducedMotion.addEventListener('change', handleMotionPreference)
+    observer.observe(video)
+
+    return () => {
+      reducedMotion.removeEventListener('change', handleMotionPreference)
+      observer.disconnect()
     }
   }, [autoPlay])
 
@@ -47,6 +71,8 @@ export function Video({ className, controls, autoPlay, onPlay, onPause, ...props
         }}
         {...props}
         controls={false}
+        muted={autoPlay || muted}
+        preload={preload ?? (autoPlay ? 'none' : 'metadata')}
         playsInline
         disablePictureInPicture
       >
@@ -61,7 +87,7 @@ export function Video({ className, controls, autoPlay, onPlay, onPause, ...props
         aria-hidden="true"
       />
 
-      {controls && (
+      {(controls || autoPlay) && (
         <>
           <div className="motion-effects-default absolute top-2 right-2 opacity-20 transition-opacity group-hover:opacity-100 md:top-4 md:right-4">
             <DimButton active={isDimmed} onClick={() => setIsDimmed(!isDimmed)} />
