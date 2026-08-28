@@ -13,7 +13,7 @@ const CustomImage = ({ alt = '', ...props }: Omit<ImageProps, 'width' | 'height'
   return (
     <Image
       alt={alt}
-      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+      sizes="(max-width: 768px) calc(100vw - 2rem), 48rem"
       className="h-auto w-full rounded-xl"
       width={800}
       height={400}
