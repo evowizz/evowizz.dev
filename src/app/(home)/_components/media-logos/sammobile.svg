@@ -1,7 +1,4 @@
-import * as React from 'react'
-
-const SamMobile = (props: React.SVGProps<SVGSVGElement>) => (
-  <svg viewBox="0 0 158 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+<svg viewBox="0 0 158 24" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path
       d="M71.2625 25.6065V0.75676H74.8915L81.9838 23.1941H82.0477L89.042 0.75676H92.4414V25.6065H90.312V2.88767H90.2455L83.1872 25.6037H80.722L73.4625 2.88767H73.3918V25.6037L71.2625 25.6065Z"
       fill="currentColor"
@@ -19,6 +16,3 @@ const SamMobile = (props: React.SVGProps<SVGSVGElement>) => (
       fill="currentColor"
     />
   </svg>
-)
-
-export default SamMobile

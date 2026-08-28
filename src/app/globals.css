@@ -399,6 +399,15 @@
   background-image: url('/static/bg/noise.png');
 }
 
+@utility media-logo {
+  display: block;
+  width: min(8rem, calc(1.75rem * var(--media-logo-ratio)));
+  height: 1.75rem;
+  background-color: currentcolor;
+  /* One shorthand: Lightning CSS drops var() longhands it merges after a shorthand. */
+  mask: var(--media-logo) no-repeat center / contain;
+}
+
 @utility variation-sans {
   font-optical-sizing: auto;
   font-variation-settings:

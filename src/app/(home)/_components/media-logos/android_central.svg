@@ -1,7 +1,4 @@
-import * as React from 'react'
-
-const AndroidCentral = (props: React.SVGProps<SVGSVGElement>) => (
-  <svg viewBox="0 0 85 9" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+<svg viewBox="0 0 85 9" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path
       d="M6.733 5.0065V1.25566C6.733 1.25566 3.78706 1.21944 3.27796 1.25566C2.76886 1.29188 -0.0362206 1.07657 2.92554e-08 4.84754C0.0362206 8.6185 3.12503 8.4374 3.12503 8.4374C7.03685 8.50783 6.733 5.0065 6.733 5.0065ZM3.62608 7.01876H2.96405C2.96405 7.01876 1.4287 6.93022 1.4287 5.20773V4.54368C1.4287 4.54368 1.35626 2.63204 3.0385 2.63204H5.29022V5.09705C5.29022 5.09705 5.39485 7.02479 3.62608 7.02479V7.01876Z"
       fill="currentColor"
@@ -57,6 +54,3 @@ const AndroidCentral = (props: React.SVGProps<SVGSVGElement>) => (
       fill="currentColor"
     />
   </svg>
-)
-
-export default AndroidCentral

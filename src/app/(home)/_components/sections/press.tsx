@@ -22,16 +22,16 @@ export const Press = () => (
 
     {/* Larger than the gap between the two rows, so the pair reads as one block. */}
     <div className="mt-16 md:mt-20">
-      <PressRibbon />
+      <PressRibbon
+        attribution={
+          <p className="text-on-surface-variant variation-sans -variation-slant-10 text-right text-xs">
+            Section inspired by{' '}
+            <TextLink href="https://thatjoshguy.me" className="underline-offset-2">
+              ThatJoshGuy
+            </TextLink>
+          </p>
+        }
+      />
     </div>
-
-    <Container className="mt-10 md:mt-12">
-      <p className="text-on-surface-variant variation-sans -variation-slant-10 text-right text-xs">
-        Section inspired by{' '}
-        <TextLink href="https://thatjoshguy.me" className="underline-offset-2">
-          ThatJoshGuy
-        </TextLink>
-      </p>
-    </Container>
   </section>
 )

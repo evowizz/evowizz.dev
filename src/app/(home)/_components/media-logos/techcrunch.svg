@@ -1,7 +1,4 @@
-import * as React from 'react'
-
-const TechCrunch = (props: React.SVGProps<SVGSVGElement>) => (
-  <svg viewBox="0 0 85 10" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+<svg viewBox="0 0 85 10" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path
       d="M20.3309 2.16799V0.126083H27.239V2.16799H20.3309ZM22.7439 8.9492V0.126083H24.8261V8.9492H22.7439Z"
       fill="currentColor"
@@ -43,6 +40,3 @@ const TechCrunch = (props: React.SVGProps<SVGSVGElement>) => (
     <path d="M17.4713 6.01104V8.94965H8.90462V3.06636H11.7602V6.01104H17.4713Z" fill="currentColor" />
     <path d="M17.4713 0.126053H11.7602V3.06463H17.4713V0.126053Z" fill="currentColor" />
   </svg>
-)
-
-export default TechCrunch

@@ -1,7 +1,4 @@
-import * as React from 'react'
-
-const Futurism = (props: React.SVGProps<SVGSVGElement>) => (
-  <svg viewBox="0 0 158 38" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+<svg viewBox="0 0 158 38" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path
       d="M105.039 8.21765L97.8574 4.87632C97.7352 4.81849 97.5985 4.79826 97.4647 4.81822C97.3309 4.83819 97.2062 4.89744 97.1065 4.98837C97.0331 5.0577 96.9752 5.14162 96.9366 5.23466C96.898 5.3277 96.8796 5.42778 96.8825 5.52839V8.273V11.0811H97.5614C97.5899 11.0811 97.617 11.0811 97.6455 11.0811H104.494C104.523 11.0811 104.551 11.0811 104.578 11.0811H105.257V8.55921C105.257 8.48756 105.236 8.41746 105.198 8.35701C105.159 8.29656 105.104 8.24825 105.039 8.21765Z"
       fill="currentColor"
@@ -39,6 +36,3 @@ const Futurism = (props: React.SVGProps<SVGSVGElement>) => (
       fill="currentColor"
     />
   </svg>
-)
-
-export default Futurism
