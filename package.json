@@ -15,7 +15,7 @@
     "format": "prettier --write .",
     "db:generate": "drizzle-kit generate --config=drizzle.config.ts",
     "db:migrate": "drizzle-kit migrate --config=drizzle.config.ts",
-    "db:push": "drizzle-kit push:pg --config=drizzle.config.ts"
+    "db:push": "drizzle-kit push --config=drizzle.config.ts"
   },
   "dependencies": {
     "@evowizz/material-color-utilities-canary": "0.4.0-canary.1",

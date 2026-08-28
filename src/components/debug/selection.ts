@@ -1,4 +1,4 @@
-export type SelectedEntry = {
+type SelectedEntry = {
   element: Element
   selector: string
 }
@@ -12,8 +12,7 @@ export type RegionBounds = {
 }
 
 export type Selection =
-  | ({ kind: 'element' } & SelectedEntry)
-  | ({ kind: 'region'; elements: SelectedEntry[] } & RegionBounds)
+  ({ kind: 'element' } & SelectedEntry) | ({ kind: 'region'; elements: SelectedEntry[] } & RegionBounds)
 
 export const isDevtoolNode = (element: Element) =>
   element.closest('[data-devbar]') !== null ||

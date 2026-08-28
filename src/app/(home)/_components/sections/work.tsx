@@ -8,26 +8,8 @@ import { SectionTitle } from '../section-title'
 import { Reveal } from '@/components/ui/reveal'
 import { CountUp } from '../count-up'
 
-const SENTENCES: Record<string, string> = {
-  Inware: 'An Android app I have been building since 2018 to answer one question: what is actually inside your phone?',
-  'Personal Website': 'The page you are reading, built with Next.js and open source from front to back.',
-  Cosmose: 'A small demo gallery of Jetpack Compose components and animations.',
-  Common: 'A Kotlin library of the utilities and extensions I kept rewriting for Android.',
-  'De-Gmojify': 'A Chrome extension that swaps Google emojis for the ones your system already ships.',
-  Actio: 'A Figma plugin that resizes frames to an aspect ratio, so nobody does the math by hand.',
-}
-
-const STAT_LABELS: Record<string, string> = {
-  downloads: 'Downloads',
-  rating: 'Rating, about 2,000 reviews',
-}
-
 const lead = projects.find((project) => project.spotlight)
 const rest = projects.filter((project) => !project.spotlight && !project.deprecated)
-
-const sentenceFor = (project: Project) => SENTENCES[project.title] ?? project.description
-
-const statValue = (stat: { value: string; label: string }) => (stat.label === 'rating' ? `${stat.value}/5` : stat.value)
 
 /** Counts "500k+" up. Leaves non-integer values like "4.7/5" static. */
 const StatValue = ({ value }: { value: string }) => {
@@ -69,7 +51,7 @@ const Lead = ({ project }: { project: Project }) => (
 
       <div className="flex flex-col gap-8">
         <div className="flex flex-col items-start gap-5">
-          <p className="max-w-xl text-lg leading-relaxed opacity-80 md:text-xl">{sentenceFor(project)}</p>
+          <p className="max-w-xl text-lg leading-relaxed opacity-80 md:text-xl">{project.description}</p>
 
           <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
             {project.links[0] && (
@@ -107,9 +89,9 @@ const Lead = ({ project }: { project: Project }) => (
         <dl className="flex flex-wrap gap-x-10 gap-y-5">
           {project.spotlightStats?.map((stat) => (
             <div key={stat.label} className="flex flex-col-reverse gap-1.5">
-              <dt className="text-sm font-medium opacity-80">{STAT_LABELS[stat.label] ?? stat.label}</dt>
+              <dt className="text-sm font-medium opacity-80">{stat.label}</dt>
               <dd className="variation-sans text-[clamp(2.5rem,4.5vw,3.25rem)] leading-none font-bold tracking-tight tabular-nums">
-                <StatValue value={statValue(stat)} />
+                <StatValue value={stat.value} />
               </dd>
             </div>
           ))}
@@ -131,7 +113,7 @@ const Row = ({ project }: { project: Project }) => {
       <h3 className="variation-sans text-on-surface shrink-0 text-xl font-medium tracking-tight md:w-56 md:text-2xl">
         {project.title}
       </h3>
-      <p className="text-on-surface-variant flex-1 text-base leading-relaxed">{sentenceFor(project)}</p>
+      <p className="text-on-surface-variant flex-1 text-base leading-relaxed">{project.description}</p>
       {link ? (
         <MaterialSymbol
           name="arrow_outward"
