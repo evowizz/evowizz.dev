@@ -1,44 +1,55 @@
 # evowizz.dev
 
-This repository hosts the source code for my personal website.
+The source for [evowizz.dev](https://evowizz.dev), my personal website and writing archive. It is built with Next.js, React, Tailwind CSS, Content Collections, Drizzle ORM, and Neon Postgres.
 
-## Getting Started
+## Local development
 
-To get a local copy up and running, follow these simple steps:
+You need [Bun](https://bun.sh) and Node.js 24.
 
-1. Clone the repository:
-```bash
-git clone https://github.com/evowizz/evowizz.dev.git
-```
+1. Clone the repository and enter it:
+
+   ```bash
+   git clone https://github.com/evowizz/evowizz.dev.git
+   cd evowizz.dev
+   ```
 
 2. Install the dependencies:
-```bash
-bun install
-```
 
-3. Run the development server:
+   ```bash
+   bun install
+   ```
+
+3. Create the local environment file:
+
+   ```bash
+   cp .env.example .env.local
+   ```
+
+4. Set `DRIZZLE_DATABASE_URL` in `.env.local` to a Postgres connection string, then apply the schema:
+
+   ```bash
+   bun run db:migrate
+   ```
+
+5. Start the development server on [localhost:3000](http://localhost:3000):
+
+   ```bash
+   bun run dev
+   ```
+
+## Quality checks
+
+Run the same checks as CI before opening a pull request:
+
 ```bash
-bun dev
+bun run lint
+bun run typecheck
 ```
 
 ## Contributing
 
-At the moment, no new features are being accepted. However, if you find a bug or have a suggestion, feel free to open an issue.
+New features are not currently being accepted, but bug reports and focused fixes are welcome. Please open an issue before larger changes.
 
 ## License
 
-```text
-Copyright 2024 Dylan Roussel
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-```
+Licensed under the [Apache License 2.0](LICENSE).

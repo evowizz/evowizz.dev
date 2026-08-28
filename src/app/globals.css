@@ -1,27 +1,1046 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@layer external;
+@import 'material-symbols/rounded.css' layer(external);
 
+@import 'tailwindcss';
+@plugin '@tailwindcss/typography';
+
+/* Default Material Design 3 Color Tokens */
 :root {
-  --color-background: oklch(98.51% 0 89.88);
+  color-scheme: light;
+
+  /* Light mode tokens */
+  --md-sys-color-primary-light: #006d3b;
+  --md-sys-color-on-primary-light: #ffffff;
+  --md-sys-color-primary-container-light: #98f7b5;
+  --md-sys-color-on-primary-container-light: #00522b;
+  --md-sys-color-inverse-primary-light: #7dda9b;
+  --md-sys-color-secondary-light: #4f6353;
+  --md-sys-color-on-secondary-light: #ffffff;
+  --md-sys-color-secondary-container-light: #d2e8d4;
+  --md-sys-color-on-secondary-container-light: #384b3c;
+  --md-sys-color-tertiary-light: #3a646f;
+  --md-sys-color-on-tertiary-light: #ffffff;
+  --md-sys-color-tertiary-container-light: #beeaf6;
+  --md-sys-color-on-tertiary-container-light: #214c57;
+  --md-sys-color-error-light: #ba1a1a;
+  --md-sys-color-on-error-light: #ffffff;
+  --md-sys-color-error-container-light: #ffdad6;
+  --md-sys-color-on-error-container-light: #93000a;
+  --md-sys-color-background-light: #f9f9f9;
+  --md-sys-color-on-background-light: #1b1b1b;
+  --md-sys-color-surface-light: #f9f9f9;
+  --md-sys-color-on-surface-light: #1b1b1b;
+  --md-sys-color-surface-variant-light: #e2e2e2;
+  --md-sys-color-on-surface-variant-light: #474747;
+  --md-sys-color-surface-dim-light: #dadada;
+  --md-sys-color-surface-bright-light: #f9f9f9;
+  --md-sys-color-surface-container-lowest-light: #ffffff;
+  --md-sys-color-surface-container-low-light: #f3f3f3;
+  --md-sys-color-surface-container-light: #eeeeee;
+  --md-sys-color-surface-container-high-light: #e8e8e8;
+  --md-sys-color-surface-container-highest-light: #e2e2e2;
+  --md-sys-color-outline-light: #777777;
+  --md-sys-color-outline-variant-light: #c6c6c6;
+  --md-sys-color-shadow-light: #000000;
+  --md-sys-color-scrim-light: #000000;
+  --md-sys-color-inverse-surface-light: #303030;
+  --md-sys-color-inverse-on-surface-light: #f1f1f1;
+  --md-sys-color-surface-tint-light: #006d3b;
+  --md-sys-color-primary-fixed-light: #98f7b5;
+  --md-sys-color-primary-fixed-dim-light: #7dda9b;
+  --md-sys-color-on-primary-fixed-light: #00210e;
+  --md-sys-color-on-primary-fixed-variant-light: #00522b;
+  --md-sys-color-secondary-fixed-light: #d2e8d4;
+  --md-sys-color-secondary-fixed-dim-light: #b6ccb9;
+  --md-sys-color-on-secondary-fixed-light: #0d1f13;
+  --md-sys-color-on-secondary-fixed-variant-light: #384b3c;
+  --md-sys-color-tertiary-fixed-light: #beeaf6;
+  --md-sys-color-tertiary-fixed-dim-light: #a2ceda;
+  --md-sys-color-on-tertiary-fixed-light: #001f26;
+  --md-sys-color-on-tertiary-fixed-variant-light: #214c57;
+
+  /* Dark mode tokens */
+  --md-sys-color-primary-dark: #7dda9b;
+  --md-sys-color-on-primary-dark: #00391c;
+  --md-sys-color-primary-container-dark: #00522b;
+  --md-sys-color-on-primary-container-dark: #98f7b5;
+  --md-sys-color-inverse-primary-dark: #006d3b;
+  --md-sys-color-secondary-dark: #b6ccb9;
+  --md-sys-color-on-secondary-dark: #223527;
+  --md-sys-color-secondary-container-dark: #384b3c;
+  --md-sys-color-on-secondary-container-dark: #d2e8d4;
+  --md-sys-color-tertiary-dark: #a2ceda;
+  --md-sys-color-on-tertiary-dark: #023640;
+  --md-sys-color-tertiary-container-dark: #214c57;
+  --md-sys-color-on-tertiary-container-dark: #beeaf6;
+  --md-sys-color-error-dark: #ffb4ab;
+  --md-sys-color-on-error-dark: #690005;
+  --md-sys-color-error-container-dark: #93000a;
+  --md-sys-color-on-error-container-dark: #ffdad6;
+  --md-sys-color-background-dark: #131313;
+  --md-sys-color-on-background-dark: #e2e2e2;
+  --md-sys-color-surface-dark: #131313;
+  --md-sys-color-on-surface-dark: #e2e2e2;
+  --md-sys-color-surface-variant-dark: #474747;
+  --md-sys-color-on-surface-variant-dark: #c6c6c6;
+  --md-sys-color-surface-dim-dark: #131313;
+  --md-sys-color-surface-bright-dark: #393939;
+  --md-sys-color-surface-container-lowest-dark: #0e0e0e;
+  --md-sys-color-surface-container-low-dark: #1b1b1b;
+  --md-sys-color-surface-container-dark: #1f1f1f;
+  --md-sys-color-surface-container-high-dark: #2a2a2a;
+  --md-sys-color-surface-container-highest-dark: #353535;
+  --md-sys-color-outline-dark: #919191;
+  --md-sys-color-outline-variant-dark: #474747;
+  --md-sys-color-shadow-dark: #000000;
+  --md-sys-color-scrim-dark: #000000;
+  --md-sys-color-inverse-surface-dark: #e2e2e2;
+  --md-sys-color-inverse-on-surface-dark: #303030;
+  --md-sys-color-surface-tint-dark: #7dda9b;
+  --md-sys-color-primary-fixed-dark: #98f7b5;
+  --md-sys-color-primary-fixed-dim-dark: #7dda9b;
+  --md-sys-color-on-primary-fixed-dark: #00210e;
+  --md-sys-color-on-primary-fixed-variant-dark: #00522b;
+  --md-sys-color-secondary-fixed-dark: #d2e8d4;
+  --md-sys-color-secondary-fixed-dim-dark: #b6ccb9;
+  --md-sys-color-on-secondary-fixed-dark: #0d1f13;
+  --md-sys-color-on-secondary-fixed-variant-dark: #384b3c;
+  --md-sys-color-tertiary-fixed-dark: #beeaf6;
+  --md-sys-color-tertiary-fixed-dim-dark: #a2ceda;
+  --md-sys-color-on-tertiary-fixed-dark: #001f26;
+  --md-sys-color-on-tertiary-fixed-variant-dark: #214c57;
 }
 
 [data-theme='dark'] {
-  --color-background: oklch(17.76% 0 89.88);
+  color-scheme: dark;
+}
+
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+@custom-variant mobile-hover (&:hover);
+
+@theme inline {
+  /* Keyframes */
+  @keyframes hero-opacity {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes press-ribbon {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-100%);
+    }
+  }
+
+  @keyframes press-ribbon-reverse {
+    from {
+      transform: translateX(-100%);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+
+  /* Animation */
+  --animate-hero-appear: hero-slide 0.5s ease-in-out forwards, hero-opacity 0.5s ease-in-out forwards;
+  --animate-hero-slide: hero-slide 0.5s ease-in-out forwards;
+  --animate-hero-opacity: hero-opacity 0.5s ease-in-out forwards;
+  --animate-press-ribbon: press-ribbon 50s linear infinite;
+  --animate-press-ribbon-reverse: press-ribbon-reverse 50s linear infinite;
+
+  /* Animation easing */
+  --ease-slow-in: cubic-bezier(0, 0, 0, 1);
+  --ease-slow-in-out: cubic-bezier(0.5, 0, 0.25, 1);
+
+  /* Font families */
+  --font-sans: var(--font-google-sans-flex), system-ui, sans-serif;
+  --font-sans--font-feature-settings: 'calt';
+
+  --font-serif: var(--font-roboto-slab), Georgia, serif;
+
+  --font-mono: var(--font-google-sans-code), ui-monospace, monospace;
+  --font-mono--font-feature-settings: 'ss01';
+
+  /* Font weights */
+  --font-weight-100: 100;
+  --font-weight-200: 200;
+  --font-weight-300: 300;
+  --font-weight-400: 400;
+  --font-weight-500: 500;
+  --font-weight-600: 600;
+  --font-weight-700: 700;
+  --font-weight-800: 800;
+  --font-weight-900: 900;
+
+  /* Border radii */
+  --radius-5xl: 2.5rem;
+
+  /* Colors - Reset and Material Design tokens */
+  --color-*: initial;
+
+  /* Base colors */
+  --color-black: oklch(0% 0 0);
+  --color-white: oklch(100% 0 0);
+
+  /* Primary */
+  --color-primary: light-dark(var(--md-sys-color-primary-light), var(--md-sys-color-primary-dark));
+  --color-on-primary: light-dark(var(--md-sys-color-on-primary-light), var(--md-sys-color-on-primary-dark));
+  --color-primary-container: light-dark(
+    var(--md-sys-color-primary-container-light),
+    var(--md-sys-color-primary-container-dark)
+  );
+  --color-on-primary-container: light-dark(
+    var(--md-sys-color-on-primary-container-light),
+    var(--md-sys-color-on-primary-container-dark)
+  );
+  --color-inverse-primary: light-dark(
+    var(--md-sys-color-inverse-primary-light),
+    var(--md-sys-color-inverse-primary-dark)
+  );
+
+  /* Secondary */
+  --color-secondary: light-dark(var(--md-sys-color-secondary-light), var(--md-sys-color-secondary-dark));
+  --color-on-secondary: light-dark(var(--md-sys-color-on-secondary-light), var(--md-sys-color-on-secondary-dark));
+  --color-secondary-container: light-dark(
+    var(--md-sys-color-secondary-container-light),
+    var(--md-sys-color-secondary-container-dark)
+  );
+  --color-on-secondary-container: light-dark(
+    var(--md-sys-color-on-secondary-container-light),
+    var(--md-sys-color-on-secondary-container-dark)
+  );
+
+  /* Tertiary */
+  --color-tertiary: light-dark(var(--md-sys-color-tertiary-light), var(--md-sys-color-tertiary-dark));
+  --color-on-tertiary: light-dark(var(--md-sys-color-on-tertiary-light), var(--md-sys-color-on-tertiary-dark));
+  --color-tertiary-container: light-dark(
+    var(--md-sys-color-tertiary-container-light),
+    var(--md-sys-color-tertiary-container-dark)
+  );
+  --color-on-tertiary-container: light-dark(
+    var(--md-sys-color-on-tertiary-container-light),
+    var(--md-sys-color-on-tertiary-container-dark)
+  );
+
+  /* Error */
+  --color-error: light-dark(var(--md-sys-color-error-light), var(--md-sys-color-error-dark));
+  --color-on-error: light-dark(var(--md-sys-color-on-error-light), var(--md-sys-color-on-error-dark));
+  --color-error-container: light-dark(
+    var(--md-sys-color-error-container-light),
+    var(--md-sys-color-error-container-dark)
+  );
+  --color-on-error-container: light-dark(
+    var(--md-sys-color-on-error-container-light),
+    var(--md-sys-color-on-error-container-dark)
+  );
+
+  /* Background */
+  --color-background: light-dark(var(--md-sys-color-background-light), var(--md-sys-color-background-dark));
+  --color-on-background: light-dark(var(--md-sys-color-on-background-light), var(--md-sys-color-on-background-dark));
+
+  /* Surface */
+  --color-surface: light-dark(var(--md-sys-color-surface-light), var(--md-sys-color-surface-dark));
+  --color-on-surface: light-dark(var(--md-sys-color-on-surface-light), var(--md-sys-color-on-surface-dark));
+  --color-surface-variant: light-dark(
+    var(--md-sys-color-surface-variant-light),
+    var(--md-sys-color-surface-variant-dark)
+  );
+  --color-on-surface-variant: light-dark(
+    var(--md-sys-color-on-surface-variant-light),
+    var(--md-sys-color-on-surface-variant-dark)
+  );
+  --color-surface-dim: light-dark(var(--md-sys-color-surface-dim-light), var(--md-sys-color-surface-dim-dark));
+  --color-surface-bright: light-dark(var(--md-sys-color-surface-bright-light), var(--md-sys-color-surface-bright-dark));
+  --color-surface-container-lowest: light-dark(
+    var(--md-sys-color-surface-container-lowest-light),
+    var(--md-sys-color-surface-container-lowest-dark)
+  );
+  --color-surface-container-low: light-dark(
+    var(--md-sys-color-surface-container-low-light),
+    var(--md-sys-color-surface-container-low-dark)
+  );
+  --color-surface-container: light-dark(
+    var(--md-sys-color-surface-container-light),
+    var(--md-sys-color-surface-container-dark)
+  );
+  --color-surface-container-high: light-dark(
+    var(--md-sys-color-surface-container-high-light),
+    var(--md-sys-color-surface-container-high-dark)
+  );
+  --color-surface-container-highest: light-dark(
+    var(--md-sys-color-surface-container-highest-light),
+    var(--md-sys-color-surface-container-highest-dark)
+  );
+  --color-inverse-surface: light-dark(
+    var(--md-sys-color-inverse-surface-light),
+    var(--md-sys-color-inverse-surface-dark)
+  );
+  --color-inverse-on-surface: light-dark(
+    var(--md-sys-color-inverse-on-surface-light),
+    var(--md-sys-color-inverse-on-surface-dark)
+  );
+  --color-surface-tint: light-dark(var(--md-sys-color-surface-tint-light), var(--md-sys-color-surface-tint-dark));
+
+  /* Outline */
+  --color-outline: light-dark(var(--md-sys-color-outline-light), var(--md-sys-color-outline-dark));
+  --color-outline-variant: light-dark(
+    var(--md-sys-color-outline-variant-light),
+    var(--md-sys-color-outline-variant-dark)
+  );
+
+  /* Other */
+  --color-shadow: light-dark(var(--md-sys-color-shadow-light), var(--md-sys-color-shadow-dark));
+  --color-scrim: light-dark(var(--md-sys-color-scrim-light), var(--md-sys-color-scrim-dark));
+
+  /* Fixed colors */
+  --color-primary-fixed: light-dark(var(--md-sys-color-primary-fixed-light), var(--md-sys-color-primary-fixed-dark));
+  --color-primary-fixed-dim: light-dark(
+    var(--md-sys-color-primary-fixed-dim-light),
+    var(--md-sys-color-primary-fixed-dim-dark)
+  );
+  --color-on-primary-fixed: light-dark(
+    var(--md-sys-color-on-primary-fixed-light),
+    var(--md-sys-color-on-primary-fixed-dark)
+  );
+  --color-on-primary-fixed-variant: light-dark(
+    var(--md-sys-color-on-primary-fixed-variant-light),
+    var(--md-sys-color-on-primary-fixed-variant-dark)
+  );
+  --color-secondary-fixed: light-dark(
+    var(--md-sys-color-secondary-fixed-light),
+    var(--md-sys-color-secondary-fixed-dark)
+  );
+  --color-secondary-fixed-dim: light-dark(
+    var(--md-sys-color-secondary-fixed-dim-light),
+    var(--md-sys-color-secondary-fixed-dim-dark)
+  );
+  --color-on-secondary-fixed: light-dark(
+    var(--md-sys-color-on-secondary-fixed-light),
+    var(--md-sys-color-on-secondary-fixed-dark)
+  );
+  --color-on-secondary-fixed-variant: light-dark(
+    var(--md-sys-color-on-secondary-fixed-variant-light),
+    var(--md-sys-color-on-secondary-fixed-variant-dark)
+  );
+  --color-tertiary-fixed: light-dark(var(--md-sys-color-tertiary-fixed-light), var(--md-sys-color-tertiary-fixed-dark));
+  --color-tertiary-fixed-dim: light-dark(
+    var(--md-sys-color-tertiary-fixed-dim-light),
+    var(--md-sys-color-tertiary-fixed-dim-dark)
+  );
+  --color-on-tertiary-fixed: light-dark(
+    var(--md-sys-color-on-tertiary-fixed-light),
+    var(--md-sys-color-on-tertiary-fixed-dark)
+  );
+  --color-on-tertiary-fixed-variant: light-dark(
+    var(--md-sys-color-on-tertiary-fixed-variant-light),
+    var(--md-sys-color-on-tertiary-fixed-variant-dark)
+  );
+}
+
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  :root {
+    font-size: clamp(1rem, 0.25vw + 0.75rem, 1.25rem);
+
+    /* Height taken off the bottom of the viewport by the dev bar. Zero in
+       production; the bar overrides it in development. Viewport-anchored
+       overlays inset by it, since they ignore the body padding reserve. */
+    --devbar-h: 0px;
+  }
+
+  ::selection {
+    @apply bg-tertiary-container text-on-tertiary-container;
+  }
+
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+
+  button {
+    @apply cursor-pointer;
+  }
+
+  body > main {
+    @apply bg-surface rounded-b-5xl relative z-10;
+  }
+}
+
+@layer base {
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    ::before,
+    ::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@utility overlay-noise {
+  background-image: url('/static/bg/noise.png');
+}
+
+@utility media-logo {
+  display: block;
+  width: min(8rem, calc(1.75rem * var(--media-logo-ratio)));
+  height: 1.75rem;
+  background-color: currentcolor;
+  /* One shorthand: Lightning CSS drops var() longhands it merges after a shorthand. */
+  mask: var(--media-logo) no-repeat center / contain;
+}
+
+@utility variation-sans {
+  font-optical-sizing: auto;
+  font-variation-settings:
+    'wdth' var(--font-wdth, 100),
+    'GRAD' var(--font-grad, 0),
+    'slnt' var(--font-slnt, 0),
+    'ROND' var(--font-rond, 0);
+}
+
+@utility variation-serif {
+  font-optical-sizing: auto;
+  font-variation-settings: 'wdth' var(--font-wdth, 100);
+}
+
+@utility variation-none {
+  font-variation-settings: normal;
+}
+
+@utility variation-width-* {
+  --font-wdth: --value(integer);
+  --font-wdth: --value([number]);
+}
+
+@utility variation-grade-* {
+  --font-grad: --value(integer);
+  --font-grad: --value([number]);
+}
+
+@utility variation-slant-* {
+  --font-slnt: --value(integer);
+  --font-slnt: --value([number]);
+}
+
+@utility -variation-slant-* {
+  --font-slnt: calc(--value(integer) * -1);
+}
+
+@utility variation-roundness-* {
+  --font-rond: --value(integer);
+  --font-rond: --value([number]);
+}
+
+@utility text-balance {
+  text-wrap: balance;
+}
+
+@utility text-display {
+  font-size: clamp(2.75rem, 9vw, 6.5rem);
+  line-height: 0.85;
+  letter-spacing: -0.03em;
+}
+
+@utility running-head {
+  @apply text-outline font-mono text-xs tracking-[0.2em] uppercase;
+  @media (min-width: 48rem) {
+    writing-mode: vertical-rl;
+    rotate: 180deg;
+  }
+}
+
+@utility animation-delay-100 {
+  animation-delay: 100ms;
+}
+
+@utility animation-delay-200 {
+  animation-delay: 200ms;
+}
+
+@utility animation-delay-300 {
+  animation-delay: 300ms;
+}
+
+@utility animation-delay-400 {
+  animation-delay: 400ms;
+}
+
+@utility animation-delay-500 {
+  animation-delay: 500ms;
+}
+
+@utility animation-delay-600 {
+  animation-delay: 600ms;
+}
+
+@utility animation-delay-700 {
+  animation-delay: 700ms;
+}
+
+@utility animation-delay-800 {
+  animation-delay: 800ms;
+}
+
+/**
+ * M3 Expressive motion specs, in two families.
+ *
+ * Reach for `spatial` when the animation changes a component's shape or bounds, and `effects`
+ * when it does not, such as a color or alpha change.
+ */
+
+/** A default spatial motion. */
+@utility motion-spatial-default {
+  transition-timing-function: cubic-bezier(0.38, 1.21, 0.22, 1);
+  transition-duration: 500ms;
+}
+
+/** A fast spatial motion. */
+@utility motion-spatial-fast {
+  transition-timing-function: cubic-bezier(0.42, 1.67, 0.21, 0.9);
+  transition-duration: 350ms;
+}
+
+/** A slow spatial motion. */
+@utility motion-spatial-slow {
+  transition-timing-function: cubic-bezier(0.39, 1.29, 0.35, 0.98);
+  transition-duration: 650ms;
+}
+
+/** A default effects motion. */
+@utility motion-effects-default {
+  transition-timing-function: cubic-bezier(0.34, 0.8, 0.34, 1);
+  transition-duration: 200ms;
+}
+
+/** A fast effects motion. */
+@utility motion-effects-fast {
+  transition-timing-function: cubic-bezier(0.31, 0.94, 0.34, 1);
+  transition-duration: 150ms;
+}
+
+/** A slow effects motion. */
+@utility motion-effects-slow {
+  transition-timing-function: cubic-bezier(0.34, 0.88, 0.34, 1);
+  transition-duration: 300ms;
+}
+
+@utility not-found-backspace-segment {
+  width: 5rem;
+  transform-origin: right center;
+  @apply motion-spatial-slow motion-reduce:transition-none;
+  transition-property: width, opacity, scale;
+
+  .group\/not-found:hover &,
+  .group\/not-found:focus-within & {
+    width: 0;
+    opacity: 0;
+    scale: 0.85 1;
+  }
+}
+
+@utility text-emphasized {
+  font-weight: 700;
+  --font-wdth: 115;
+}
+
+@utility text-poster {
+  font-size: clamp(3.25rem, 13vw, 10rem);
+  line-height: 0.82;
+  letter-spacing: -0.045em;
+}
+
+@utility text-condensed {
+  --font-wdth: 80;
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+}
+
+@utility text-measure {
+  max-inline-size: 60ch;
+}
+
+@utility drop-cap {
+  &::first-letter {
+    float: left;
+    margin-right: 0.08em;
+    font-size: 2.8em;
+    line-height: 0.72;
+    font-weight: 800;
+    font-optical-sizing: auto;
+    font-variation-settings:
+      'wdth' 110,
+      'GRAD' 0,
+      'slnt' 0,
+      'ROND' 0;
+    color: var(--color-primary);
+  }
+}
+
+@utility hide-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@layer base {
+  body[data-scroll-locked='true'] {
+    overflow: hidden;
+    padding-right: var(--scrollbar-width, 0px);
+  }
+}
+
+@utility scrollbar-stable {
+  body[data-scroll-locked='true'] & {
+    margin-right: var(--scrollbar-width, 0px);
+  }
+}
+
+@utility mask-fade-sides-* {
+  --mask-fade-value: --value(percentage);
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black var(--mask-fade-value),
+    black calc(100% - var(--mask-fade-value)),
+    transparent
+  );
+}
+
+/* Full height of the usable viewport, minus whatever the dev bar takes. */
+@utility min-h-viewport {
+  min-height: calc(100dvh - var(--devbar-h));
+}
+
+@utility focus-ring {
+  &:focus-visible {
+    outline-width: 2px;
+    outline-style: solid;
+    outline-color: var(--color-primary);
+    outline-offset: 4px;
+  }
+}
+
+@utility focus-ring-* {
+  &:focus-visible {
+    outline-width: 2px;
+    outline-style: solid;
+    outline-color: --value(--color-*);
+    outline-offset: 4px;
+  }
+}
+
+@utility hover-light {
+  @media (hover: hover) and (pointer: fine) {
+    /* Inspired by www.hover.dev/components/text#bubble-text */
+    transition: text-shadow 0.3s;
+    --light-multiplier: 1;
+    --light-offset-x: 0;
+    --light-offset-y: calc(8px * var(--light-multiplier));
+    --light-blur: 0;
+    --light-alpha: 0;
+    --light-color: color-mix(in oklch, var(--color-on-surface) calc(var(--light-alpha) * 100%), transparent);
+    text-shadow: var(--light-offset-x) var(--light-offset-y) var(--light-blur) var(--light-color);
+
+    &:hover {
+      --light-offset-x: 0px;
+      --light-alpha: 0.4;
+      --light-blur: calc(1px * var(--light-multiplier));
+    }
+
+    /* To the right */
+    &:hover + & {
+      --light-offset-x: calc(4px * var(--light-multiplier));
+      --light-alpha: 0.33;
+      --light-blur: calc(4px * var(--light-multiplier));
+    }
+
+    &:hover + & + & {
+      --light-offset-x: calc(6px * var(--light-multiplier));
+      --light-alpha: 0.25;
+      --light-blur: calc(6px * var(--light-multiplier));
+    }
+
+    /* To the left */
+    &:has(+ &:hover) {
+      --light-offset-x: calc(-4px * var(--light-multiplier));
+      --light-alpha: 0.33;
+      --light-blur: calc(4px * var(--light-multiplier));
+    }
+
+    &:has(+ & + &:hover) {
+      --bubble-offset-x: calc(-4px * var(--light-multiplier));
+      --bubble-alpha: 0.25;
+      --bubble-blur: calc(6px * var(--light-multiplier));
+    }
+  }
+}
+
+/* Material Symbols Utilities */
+.material-symbols-rounded {
+  line-height: 1;
+  font-variation-settings:
+    'FILL' var(--icon-fill, 0),
+    'wght' var(--icon-wght, 400),
+    'GRAD' var(--icon-grad, 0),
+    'opsz' 24;
+}
+
+/* Symbol fill utilities */
+@utility symbol-fill-* {
+  --icon-fill: --value('0', '1');
+}
+
+/* Symbol weight utilities */
+@utility symbol-weight-* {
+  --icon-wght: --value(integer);
+  --icon-wght: --value([number]);
+}
+
+/* Symbol grade utilities */
+@utility symbol-grade-* {
+  --icon-grad: --value(integer);
+  --icon-grad: --value([number]);
+}
+
+/* Ported blog styles */
+@utility prose-quoteless {
+  blockquote p:first-of-type::before {
+    content: none;
+  }
+  blockquote p:first-of-type::after {
+    content: none;
+  }
+  code::before {
+    content: none;
+  }
+  code::after {
+    content: none;
+  }
 }
 
 @layer utilities {
-  .overlay-noise {
-    /* Create a vignette effect on top of the noise, as a mask */
-    mask-image: radial-gradient(
-      circle,
-      rgba(0, 0, 0, 0.5) 0%,
-      rgba(0, 0, 0, 0.2) 100%
-    );
-    background-image: url('/static/bg/noise.png');
+  /* Case study figures bleed from the text measure to the paper edge.
+     Without `.paper`, they stay in the text column. */
+  .prose-bleed figure {
+    margin-inline: calc(-1 * var(--paper-pad, 0px));
+    background-color: transparent;
+    padding: 0;
+  }
+  /* Once figures bleed to the paper edge (md and up) they read as print
+     bleed: square corners, with the caption tucked back into the text
+     column. In-column images (mobile) keep their rounding. */
+  .prose-bleed figure img {
+    width: 100%;
+    border-radius: 0.75rem;
+    @media (width >= 48rem) {
+      border-radius: 0;
+    }
+  }
+  /* Only content figures frame their img directly. The header's hero
+     borders its container instead, via reading-frame. */
+  .prose.prose-bleed figure img {
+    border: 1px solid transparent;
+    @apply motion-effects-slow transition-[border-radius,border-color];
+  }
+  .prose-bleed figcaption {
+    margin-top: calc(var(--spacing) * 3);
+    padding: 0 var(--paper-pad, 0px);
+    text-align: left;
+    font-size: var(--text-sm);
+    line-height: var(--text-sm--line-height);
+    color: var(--color-on-surface-variant);
   }
 
-  .text-balance {
-    text-wrap: balance;
+  /* The sheet articles are printed on: a raised paper card from md up.
+     --paper-pad is the sheet's horizontal padding, which prose-bleed figures
+     extend into. Reading mode lifts the article off the sheet. */
+  .paper {
+    --paper-pad: 0px;
+    border: 1px solid transparent;
+    border-radius: var(--radius-md);
+    @apply motion-effects-slow transition-[background-color,border-color,box-shadow];
+  }
+  @media (width >= 48rem) {
+    .paper {
+      --paper-pad: calc(var(--spacing) * 10);
+      padding: calc(var(--spacing) * 12) var(--paper-pad);
+      background-color: var(--color-surface-container-lowest);
+      border-color: color-mix(in oklab, var(--color-outline-variant) 60%, transparent);
+      box-shadow:
+        0px 1px 4px 1px rgb(0 0 0 / 0.05),
+        0px 1px 1px 0px rgb(0 0 0 / 0.16);
+    }
+    html[data-theme='dark'] .paper {
+      background-color: var(--color-surface-container-low);
+      box-shadow: none;
+    }
+  }
+  @media (width >= 64rem) {
+    .paper {
+      --paper-pad: calc(var(--spacing) * 16);
+      padding: calc(var(--spacing) * 20) var(--paper-pad);
+    }
+  }
+
+  /* The dev bar marks <html> while it is mounted, shortening the page by its
+     height. --devbar-h is 0px otherwise, so this costs nothing in production. */
+  :root[data-devbar-visible] {
+    --devbar-h: 1.75rem;
+  }
+  :root[data-devbar-visible] body {
+    padding-bottom: var(--devbar-h);
+  }
+
+  /* Outlines every page element while the bar's Borders tool is on. Outline is
+     used over border so nothing reflows; dev surfaces are excluded. */
+  :root[data-devbar-borders]
+    body
+    *:not([data-devbar], [data-devbar] *, nextjs-portal, nextjs-portal *, #react-scan-root, #react-scan-root *) {
+    outline: 1px solid color-mix(in oklab, var(--color-error) 55%, transparent);
+    outline-offset: -1px;
+  }
+
+  :root[data-devbar-contrast] [data-contrast-fail] {
+    outline: 2px dashed var(--color-error);
+    outline-offset: 2px;
+  }
+
+  /* Reader preferences live on `<html>`. Reading mode hides chrome and clears paper styling. */
+  .reading-hide {
+    @apply motion-effects-slow transition-[opacity,margin,visibility];
+  }
+  :root[data-reading-mode] .reading-hide {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+  :root[data-reading-mode] header.reading-hide {
+    margin-top: calc(var(--spacing) * -16);
+  }
+  :root[data-reading-mode] .paper {
+    background-color: transparent;
+    border-color: transparent;
+    box-shadow: none;
+  }
+  /* Full-bleed article media regains its frame in reading mode. */
+  .reading-frame {
+    @apply motion-effects-slow transition-[border-radius,border-color];
+  }
+  :root[data-reading-mode] .reading-frame {
+    @apply rounded-3xl;
+    border-inline-color: var(--color-outline-variant);
+  }
+  :root[data-reading-mode] .prose.prose-bleed figure img {
+    border-radius: 0.75rem;
+    border-color: var(--color-outline-variant);
+  }
+  /* The ruler overlay stacks blur layers toward the edge.
+     Keep opacity on the tint. Parent opacity blocks backdrop sampling until the fade ends. */
+  .ruler-scrim {
+    visibility: hidden;
+    pointer-events: none;
+    transition: visibility 0s linear 300ms;
+  }
+  .ruler-scrim > div {
+    @apply motion-effects-slow transition-[opacity,backdrop-filter];
+  }
+  .ruler-scrim > div:nth-child(1),
+  .ruler-scrim > div:nth-child(2),
+  .ruler-scrim > div:nth-child(3) {
+    backdrop-filter: blur(0px);
+  }
+  .ruler-scrim > div:nth-child(4) {
+    opacity: 0;
+  }
+  :root[data-ruler-overlay] .ruler-scrim {
+    visibility: visible;
+    pointer-events: auto;
+    transition-delay: 0s;
+  }
+  :root[data-ruler-overlay] .ruler-scrim > div:nth-child(1) {
+    backdrop-filter: blur(4px);
+  }
+  :root[data-ruler-overlay] .ruler-scrim > div:nth-child(2) {
+    backdrop-filter: blur(12px);
+  }
+  :root[data-ruler-overlay] .ruler-scrim > div:nth-child(3) {
+    backdrop-filter: blur(24px);
+  }
+  :root[data-ruler-overlay] .ruler-scrim > div:nth-child(4) {
+    opacity: 1;
+  }
+  :root[data-ruler-overlay] .ruler-root {
+    display: block;
+    z-index: 60;
+  }
+  :root[data-ruler-overlay] .ruler-label {
+    width: max-content;
+    max-width: 11rem;
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .channel-slider {
+    appearance: none;
+    height: 12px;
+    border-radius: 2px;
+  }
+  .channel-slider::-webkit-slider-runnable-track {
+    height: 12px;
+    background: transparent;
+  }
+  .channel-slider::-webkit-slider-thumb {
+    appearance: none;
+    height: 12px;
+    width: 4px;
+    border-radius: 2px;
+    background-color: var(--color-on-surface);
+    box-shadow: 0 0 0 1px var(--color-surface-container-lowest);
+  }
+  .channel-slider::-moz-range-track {
+    height: 12px;
+    background: transparent;
+  }
+  .channel-slider::-moz-range-thumb {
+    border: none;
+    height: 12px;
+    width: 4px;
+    border-radius: 2px;
+    background-color: var(--color-on-surface);
+    box-shadow: 0 0 0 1px var(--color-surface-container-lowest);
+  }
+
+  /* Classes applied by ui/tooltip.tsx. Engines without anchor-scope keep the
+     component's absolute fallback, clamped so the bubble never exceeds the viewport. */
+  .tooltip-bubble {
+    max-width: min(20rem, calc(100vw - 2rem));
+  }
+  @supports (anchor-scope: --tooltip) {
+    .tooltip-scope {
+      anchor-scope: --tooltip;
+    }
+    .tooltip-anchor {
+      anchor-name: --tooltip;
+    }
+    .tooltip-bubble {
+      position: fixed;
+      inset: auto;
+      position-anchor: --tooltip;
+      position-area: block-end span-inline-end;
+      position-try-fallbacks: flip-block;
+      margin-block-start: 0.25rem;
+      margin-inline-end: 0.75rem;
+    }
+  }
+
+  .prose {
+    /* Links */
+    a:not(:where([class~='not-prose'], [class~='not-prose'] *)) {
+      @apply text-primary no-underline underline-offset-4;
+      &:hover {
+        @apply underline;
+      }
+    }
+
+    /* Headings adapted */
+    :where(h1, h2, h3, h4):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
+      @apply variation-sans variation-width-80 variation-grade-50 mt-8 mb-2 scroll-mt-32 font-normal;
+    }
+
+    /* Reduced italic slant */
+    em,
+    i {
+      /* not-italic so the slant comes from the variation axis, not the browser. */
+      @apply variation-sans -variation-slant-10 not-italic;
+    }
+
+    /* Pre / Code Blocks */
+    pre {
+      @apply border-outline-variant bg-surface-container relative overflow-x-auto rounded-b-xl border p-5 text-sm leading-6;
+      &::-webkit-scrollbar {
+        display: none;
+      }
+      scrollbar-width: none;
+
+      /* Joins the block to the title sitting directly above it. */
+      &:where([data-rehype-pretty-code-figure] > pre) {
+        @apply mt-0 rounded-t-none border-t-0;
+      }
+    }
+
+    /* Inline code */
+    :not(pre) > code {
+      @apply text-on-surface-variant border-outline-variant bg-surface-container rounded-md border px-1 py-0.5 font-normal;
+    }
+
+    img:not(:where([class~='not-prose'], [class~='not-prose'] *)) {
+      @apply m-0 rounded-xl;
+    }
+
+    :where(figure > div > video):not(:where([class~='not-prose'] *)) {
+      @apply m-0;
+    }
+
+    :where(h2, h3, h4) + aside {
+      @apply mt-4;
+    }
+
+    /* Rehype Pretty Code adaptation */
+    [data-rehype-pretty-code-figure] code {
+      @apply grid min-w-full rounded-none border-0 bg-transparent box-decoration-clone p-0 leading-normal wrap-break-word;
+      counter-reset: line;
+    }
+
+    [data-rehype-pretty-code-figure] [data-line]::before {
+      counter-increment: line;
+      content: counter(line);
+      @apply text-outline mr-4 inline-block w-4 text-right;
+    }
+
+    [data-rehype-pretty-code-title] {
+      @apply border-outline-variant text-on-surface-variant bg-surface-container-high flex items-center rounded-t-xl border border-b-0 px-5 py-3 font-mono text-sm select-none;
+    }
+
+    /* When title exists, ensure the pre block connects properly */
+    [data-rehype-pretty-code-title] + pre {
+      @apply mt-0 rounded-t-none;
+    }
+
+    /* If wrapped in div (rehype-pretty-code usually wraps in div or figure) */
+    [data-rehype-pretty-code-title] + div > pre {
+      @apply mt-0 rounded-t-none border-t-0;
+    }
+
+    /* Multi-theme support for rehype-pretty-code */
+    /* Use --shiki-light in light mode */
+    [data-rehype-pretty-code-figure] span[style*='--shiki'] {
+      color: var(--shiki-light);
+    }
+
+    /* Dark mode: use --shiki-dark */
+    html[data-theme='dark'] & [data-rehype-pretty-code-figure] span[style*='--shiki'] {
+      color: var(--shiki-dark);
+    }
   }
 }
