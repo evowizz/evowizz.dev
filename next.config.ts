@@ -46,6 +46,15 @@ const nextConfig: NextConfig = {
   async headers() {
     return [
       {
+        source: '/inware/:path*',
+        headers: [
+          {
+            key: 'X-Robots-Tag',
+            value: 'noindex, nofollow',
+          },
+        ],
+      },
+      {
         source: '/(.*)',
         headers: securityHeaders,
       },
@@ -61,26 +70,37 @@ function rewrite(source: string, destination: string) {
   return { source, destination }
 }
 
-const ContentSecurityPolicy = `
-  default-src 'self' vercel.live;
-  script-src 'self' 'unsafe-eval' 'unsafe-inline' cdn.vercel-insights.com vercel.live va.vercel-scripts.com;
-  style-src 'self' 'unsafe-inline';
-  img-src * blob: data:;
-  media-src 'self';
-  connect-src *;
-  font-src 'self';
-`
+const isProduction = process.env.NODE_ENV === 'production'
+const hasVercelToolbar = process.env.VERCEL_ENV === 'preview'
+
+const ContentSecurityPolicy = [
+  "default-src 'self'",
+  "base-uri 'self'",
+  "form-action 'self'",
+  "frame-ancestors 'none'",
+  "object-src 'none'",
+  `script-src 'self' 'unsafe-inline'${isProduction ? '' : " 'unsafe-eval'"} https://cdn.vercel-insights.com https://va.vercel-scripts.com${hasVercelToolbar ? ' https://vercel.live' : ''}`,
+  `style-src 'self' 'unsafe-inline'${hasVercelToolbar ? ' https://vercel.live' : ''}`,
+  "img-src 'self' blob: data: https://pbs.twimg.com https://abs.twimg.com",
+  "media-src 'self'",
+  `connect-src 'self' https://*.vercel-insights.com${isProduction ? '' : ' ws://localhost:* http://localhost:*'}${hasVercelToolbar ? ' https://vercel.live wss://ws-us3.pusher.com' : ''}`,
+  "font-src 'self'",
+  `frame-src ${hasVercelToolbar ? 'https://vercel.live' : "'none'"}`,
+  "worker-src 'self' blob:",
+  "manifest-src 'self'",
+  ...(isProduction ? ['upgrade-insecure-requests'] : []),
+].join('; ')
 
 const securityHeaders = [
   // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy
   {
     key: 'Content-Security-Policy',
-    value: ContentSecurityPolicy.replace(/\s{2,}/g, ' ').trim(),
+    value: ContentSecurityPolicy,
   },
   // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referrer-Policy
   {
     key: 'Referrer-Policy',
-    value: 'origin-when-cross-origin',
+    value: 'strict-origin-when-cross-origin',
   },
   // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-DNS-Prefetch-Control
   {
@@ -96,6 +116,14 @@ const securityHeaders = [
   {
     key: 'X-Content-Type-Options',
     value: 'nosniff',
+  },
+  {
+    key: 'Cross-Origin-Opener-Policy',
+    value: 'same-origin',
+  },
+  {
+    key: 'Cross-Origin-Resource-Policy',
+    value: 'same-origin',
   },
   // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security
   {
