@@ -2,7 +2,7 @@ import Image from 'next/image'
 import { Label } from '@/components/ui/typography'
 import { Reveal } from '@/components/ui/reveal'
 
-export type CaseStudyMeta = {
+type CaseStudyMeta = {
   title: string
   overview: string
   stack: string[]

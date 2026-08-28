@@ -155,5 +155,3 @@ const DimButton = forwardRef<HTMLButtonElement, DimButtonProps>(({ className, ac
 })
 
 DimButton.displayName = 'DimButton'
-
-export { PlayPauseButton, DimButton }

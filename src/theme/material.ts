@@ -12,7 +12,7 @@ import {
 
 export { Hct, Variant, argbFromHex, argbFromRgb, hexFromArgb, redFromArgb, greenFromArgb, blueFromArgb }
 
-export type SpecVersion = '2021' | '2025'
+type SpecVersion = '2021' | '2025'
 
 export type Theme = {
   source: number

@@ -5,7 +5,7 @@ const COLOR_REGEX = /^#?([0-9a-f]{3}|[0-9a-f]{6}|[0-9a-f]{8})$/i
 
 const STANDARD_TONES = [5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 95]
 
-export type TonalPaletteName = (typeof TARGETS)[number]
+type TonalPaletteName = (typeof TARGETS)[number]
 
 export type PaletteRequest = {
   base: string
