@@ -6,7 +6,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: '*',
       allow: '/',
-      disallow: '/inware/privacy_policy',
+      disallow: '/inware/',
     },
     sitemap: `${SITE_URL}/sitemap.xml`,
     host: SITE_URL,
