@@ -8,7 +8,7 @@ import { Header } from '@/components/header'
 import { MaterialThemeProvider } from '@/theme/material-theme'
 import { ThemeProvider } from 'next-themes'
 import { Analytics } from '@vercel/analytics/next'
-import { MASTODON_URL, SITE_DESCRIPTION, SITE_NAME, TWITTER_HANDLE } from '@/config/site'
+import { MASTODON_URL, SITE_DESCRIPTION, SITE_NAME, SITE_URL, TWITTER_HANDLE } from '@/config/site'
 
 // Keep the development toolbar and its dependencies out of production bundles.
 const DevelopmentTools =
@@ -18,7 +18,7 @@ const DevelopmentTools =
 
 const metadataBaseUrl =
   process.env.VERCEL_ENV === 'production'
-    ? 'https://evowizz.dev'
+    ? SITE_URL
     : process.env.VERCEL_URL
       ? `https://${process.env.VERCEL_URL}`
       : 'http://localhost:3000'
