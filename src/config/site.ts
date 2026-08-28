@@ -17,9 +17,11 @@ export const DESTINATIONS = [
   { label: 'Case Studies', path: '/case-studies' },
 ]
 
+export const MASTODON_URL = 'https://androiddev.social/@evo'
+
 export const SOCIALS = [
   { label: 'GitHub', href: 'https://github.com/evowizz' },
   { label: 'Twitter', href: 'https://twitter.com/evowizz' },
-  { label: 'Mastodon', href: 'https://androiddev.social/@evo' },
+  { label: 'Mastodon', href: MASTODON_URL },
   { label: 'Telegram', href: 'https://t.me/evowizz' },
 ]

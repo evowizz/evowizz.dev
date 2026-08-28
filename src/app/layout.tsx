@@ -7,7 +7,8 @@ import { Footer } from '@/components/footer'
 import { Header } from '@/components/header'
 import { MaterialThemeProvider } from '@/theme/material-theme'
 import { ThemeProvider } from 'next-themes'
-import { SITE_DESCRIPTION, SITE_NAME, TWITTER_HANDLE } from '@/config/site'
+import { Analytics } from '@vercel/analytics/next'
+import { MASTODON_URL, SITE_DESCRIPTION, SITE_NAME, TWITTER_HANDLE } from '@/config/site'
 
 // Keep the development toolbar and its dependencies out of production bundles.
 const DevelopmentTools =
@@ -34,6 +35,7 @@ export const metadata: Metadata = {
   creator: SITE_NAME,
   publisher: SITE_NAME,
   alternates: {
+    canonical: './',
     types: {
       'application/rss+xml': '/rss.xml',
     },
@@ -83,6 +85,9 @@ export default function RootLayout({
       data-devbar-visible={process.env.NODE_ENV === 'development' ? '' : undefined}
       className={`${googleSansFlex.variable} ${googleSansCode.variable} ${robotoSlab.variable}`}
     >
+      <head>
+        <link rel="me" href={MASTODON_URL} />
+      </head>
       <body className="text-on-surface motion-effects-default bg-surface flex min-h-dvh flex-col transition-colors">
         <a
           href="#main-content"
@@ -98,6 +103,7 @@ export default function RootLayout({
             <DevelopmentTools />
           </MaterialThemeProvider>
         </ThemeProvider>
+        <Analytics />
       </body>
     </html>
   )
