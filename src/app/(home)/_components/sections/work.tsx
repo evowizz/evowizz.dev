@@ -37,13 +37,13 @@ const StatValue = ({ value }: { value: string }) => {
 }
 
 const LeadArtwork = ({ project }: { project: Project }) => {
-  const alt = `Screens from the ${project.title} app on Android`
+  if (!project.image) return null
 
   return (
     <div className="relative aspect-video overflow-hidden lg:absolute lg:inset-0 lg:-z-20 lg:aspect-auto">
       <Image
-        src={project.image}
-        alt={alt}
+        src={project.image.path}
+        alt={project.image.alt}
         fill
         priority
         sizes="(max-width: 72rem) 100vw, 72rem"
