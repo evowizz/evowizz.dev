@@ -3,8 +3,8 @@ import { EmbeddedTweet, TweetNotFound, type TwitterComponents } from 'react-twee
 import { getTweet } from '@/lib/tweet'
 
 const components: TwitterComponents = {
-  AvatarImg: (props) => <Image {...props} />,
-  MediaImg: (props) => <Image {...props} fill unoptimized />,
+  AvatarImg: ({ alt, ...props }) => <Image alt={alt} {...props} />,
+  MediaImg: ({ alt, ...props }) => <Image alt={alt} {...props} fill unoptimized />,
 }
 
 export async function Tweet({ id }: { id: string }) {
